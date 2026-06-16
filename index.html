@@ -106,6 +106,59 @@
       <article class="case rv">
         <div class="case-num">01</div>
         <div class="case-body">
+          <figure class="case-figure case-figure--tall">
+            <ul class="arch-themes"><li>Causality</li><li>Fairness</li></ul>
+            <svg class="arch" viewBox="0 0 560 250" role="img" aria-labelledby="d1-t d1-d" preserveAspectRatio="xMidYMid meet">
+              <title id="d1-t">Identification strategy triangulation across 42 million mortgages</title>
+              <desc id="d1-d">HMDA microdata fans into five independent identification strategies — DFL decomposition, within-lender fixed effects, regression discontinuity at the 80% LTV threshold, difference-in-differences, and Manski bounds — which converge on a robust racial approval gap.</desc>
+              <defs>
+                <marker id="arr-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
+                <filter id="glow-1" x="-45%" y="-45%" width="190%" height="190%"><feGaussianBlur stdDeviation="2.4" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.45"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
+              </defs>
+              <g class="flow-arrows">
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M132,125 C176,125 176,31 210,31"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M132,125 C176,125 176,75 210,75"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M132,125 L210,119"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M132,125 C176,125 176,163 210,163"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M132,125 C176,125 176,207 210,207"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M364,31 C400,31 400,124 428,124"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M364,75 C400,75 400,124 428,124"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M364,119 L428,124"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M364,163 C400,163 400,124 428,124"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M364,207 C400,207 400,124 428,124"></path>
+              </g>
+              <g class="arch-nodes">
+                <g class="arch-node" tabindex="0" data-tip-title="HMDA microdata" data-tip-body="Home Mortgage Disclosure Act records — every U.S. mortgage application, 2020–2024, ~42.3M rows.">
+                  <rect x="16" y="98" width="116" height="54" rx="8"></rect>
+                  <text x="74" y="120" text-anchor="middle" class="arch-lead">HMDA microdata</text>
+                  <text x="74" y="135" text-anchor="middle" class="arch-sub">42M apps · 2020–24</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="DFL decomposition" data-tip-body="DiNardo–Fortin–Lemieux reweighting splits the raw approval gap into an explained component and an unexplained residual.">
+                  <rect x="210" y="16" width="154" height="30" rx="7"></rect><text x="287" y="35" text-anchor="middle">DFL decomposition</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Within-lender fixed effects" data-tip-body="Compares Black and White applicants at the same lender, absorbing institution-level policy and pricing.">
+                  <rect x="210" y="60" width="154" height="30" rx="7"></rect><text x="287" y="79" text-anchor="middle">Within-lender FE</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Regression discontinuity" data-tip-body="Local identification at the 80% LTV threshold, where private mortgage insurance requirements change sharply.">
+                  <rect x="210" y="104" width="154" height="30" rx="7"></rect><text x="287" y="123" text-anchor="middle">RDD · 80% LTV</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Difference-in-differences" data-tip-body="Treats the 2022–2024 credit-tightening cycle as a natural experiment shifting the approval gap.">
+                  <rect x="210" y="148" width="154" height="30" rx="7"></rect><text x="287" y="167" text-anchor="middle">DiD · 2022–24</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Manski partial-identification bounds" data-tip-body="Assumption-free bounds: even under worst-case selection on unobservables, the gap is provably ≥ 9 pp.">
+                  <rect x="210" y="192" width="154" height="30" rx="7"></rect><text x="287" y="211" text-anchor="middle">Manski bounds</text>
+                </g>
+                <g class="arch-node is-key" filter="url(#glow-1)" tabindex="0" data-tip-title="Triangulated estimate" data-tip-body="Five independent strategies converge on the same conclusion: a persistent, unexplained racial approval gap.">
+                  <rect x="428" y="94" width="120" height="60" rx="9"></rect>
+                  <text x="488" y="119" text-anchor="middle">Robust racial gap</text>
+                  <text x="488" y="134" text-anchor="middle" class="arch-sub">persistent · unexplained</text>
+                </g>
+                <g class="arch-metric"><rect x="16" y="204" width="96" height="22" rx="6"></rect><text x="64" y="219" text-anchor="middle">42.3M loans</text></g>
+                <g class="arch-metric"><rect x="448" y="170" width="84" height="22" rx="6"></rect><text x="490" y="185" text-anchor="middle">≥ 9 pp</text></g>
+              </g>
+            </svg>
+            <figcaption><b>Figure I.</b> Identification strategy triangulation across 42M mortgages.</figcaption>
+          </figure>
           <span class="case-venue">Working paper</span>
           <h3><a href="https://github.com/Rajveer-code" target="_blank" rel="noreferrer" data-cursor>Persistent Racial Disparities in U.S. Mortgage Approval</a></h3>
           <p class="case-subtitle">Evidence from 42 Million Applications, 2020–2024</p>
@@ -124,6 +177,51 @@
       <article class="case rv">
         <div class="case-num">02</div>
         <div class="case-body">
+          <figure class="case-figure">
+            <ul class="arch-themes"><li>Fairness</li><li>Trust</li><li>Robustness</li></ul>
+            <svg class="arch" viewBox="0 0 560 210" role="img" aria-labelledby="d2-t d2-d" preserveAspectRatio="xMidYMid meet">
+              <title id="d2-t">Federated training and calibration workflow</title>
+              <desc id="d2-d">Three demographically partitioned NHANES client nodes train locally and send updates to a federated aggregator, producing a global model externally validated on 1.28 million BRFSS patients with calibration repair.</desc>
+              <defs>
+                <marker id="arr-2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
+                <filter id="glow-2" x="-45%" y="-45%" width="190%" height="190%"><feGaussianBlur stdDeviation="2.4" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.45"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
+              </defs>
+              <g class="flow-arrows">
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-2)" d="M134,37 C190,37 190,99 224,97"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-2)" d="M134,105 L224,105"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-2)" d="M134,173 C190,173 190,111 224,113"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-2)" d="M354,96 C384,96 384,66 410,66"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-2)" d="M477,86 L477,120"></path>
+              </g>
+              <g class="arch-nodes">
+                <g class="arch-node" tabindex="0" data-tip-title="Demographic partition" data-tip-body="NHANES split into non-IID nodes (young-urban, elderly-rural, mixed-metro) to simulate real distribution shift across sites.">
+                  <rect x="14" y="20" width="120" height="34" rx="7"></rect><text x="74" y="40" text-anchor="middle">Young · Urban</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Demographic partition" data-tip-body="Each client holds a demographically distinct slice of NHANES; raw records never leave the node.">
+                  <rect x="14" y="88" width="120" height="34" rx="7"></rect><text x="74" y="108" text-anchor="middle">Elderly · Rural</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Demographic partition" data-tip-body="Heterogeneous client participation drives the need for drift-robust aggregation.">
+                  <rect x="14" y="156" width="120" height="34" rx="7"></rect><text x="74" y="176" text-anchor="middle">Mixed · Metro</text>
+                </g>
+                <g class="arch-node is-key" filter="url(#glow-2)" tabindex="0" data-tip-title="Federated aggregator" data-tip-body="FedAvg, FedProx (proximal term), FedNova (drift normalization) and SCAFFOLD (control variates) compared over 50 rounds.">
+                  <rect x="224" y="78" width="130" height="54" rx="9"></rect>
+                  <text x="289" y="100" text-anchor="middle">Aggregator</text>
+                  <text x="289" y="115" text-anchor="middle" class="arch-sub">4 FL strategies</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Differential privacy" data-tip-body="DP-SGD sweep (Opacus) over ε ∈ {0.5…∞}; the global model recovers utility above ε≈10.">
+                  <rect x="410" y="46" width="134" height="40" rx="7"></rect><text x="477" y="70" text-anchor="middle">Global model</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="External validation" data-tip-body="Evaluated on 1.28M BRFSS respondents with DeLong CIs; generalization gap 40% narrower than centralized training.">
+                  <rect x="410" y="122" width="134" height="44" rx="7"></rect>
+                  <text x="477" y="142" text-anchor="middle">External BRFSS</text>
+                  <text x="477" y="156" text-anchor="middle" class="arch-sub">1.28M patients</text>
+                </g>
+                <g class="arch-metric"><rect x="410" y="174" width="134" height="22" rx="6"></rect><text x="477" y="189" text-anchor="middle">AUC 0.757</text></g>
+                <g class="arch-metric"><rect x="224" y="150" width="96" height="22" rx="6"></rect><text x="272" y="165" text-anchor="middle">ECE 0.001</text></g>
+              </g>
+            </svg>
+            <figcaption><b>Figure II.</b> Federated training and calibration workflow.</figcaption>
+          </figure>
           <span class="case-venue">Submitted — CMPB, Elsevier</span>
           <h3><a href="https://github.com/Rajveer-code/Federated-Diabetes" target="_blank" rel="noreferrer" data-cursor>Privacy-Preserving Federated Learning for Diabetes Risk Prediction</a></h3>
           <p class="case-subtitle">External validation, fairness, calibration, and DP utility analysis</p>
@@ -142,6 +240,51 @@
       <article class="case rv">
         <div class="case-num">03</div>
         <div class="case-body">
+          <figure class="case-figure">
+            <ul class="arch-themes"><li>Generalization</li><li>Robustness</li></ul>
+            <svg class="arch" viewBox="0 0 560 210" role="img" aria-labelledby="d3-t d3-d" preserveAspectRatio="xMidYMid meet">
+              <title id="d3-t">Cross-domain external-validation framework</title>
+              <desc id="d3-d">A development cohort is evaluated under nested cross-validation across four model families with SHAP and subgroup fairness analysis, then externally validated on 1.28 million BRFSS respondents, where AUC declines under deployment shift.</desc>
+              <defs>
+                <marker id="arr-3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
+                <filter id="glow-3" x="-45%" y="-45%" width="190%" height="190%"><feGaussianBlur stdDeviation="2.4" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.45"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
+              </defs>
+              <g class="flow-arrows">
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M108,108 L128,108"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M220,108 C232,108 232,53 240,53"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M220,108 C232,108 232,89 240,89"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M220,108 L240,125"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M220,108 C232,108 232,161 240,161"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M326,53 C340,53 340,108 350,108"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M326,89 C340,89 340,108 350,108"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M326,125 L350,108"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M326,161 C340,161 340,108 350,108"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M446,108 L466,108"></path>
+              </g>
+              <g class="arch-nodes">
+                <g class="arch-node" tabindex="0" data-tip-title="Development cohort" data-tip-body="Clinical cohort of 15,685 used for model development under leak-free preprocessing.">
+                  <rect x="12" y="86" width="96" height="44" rx="7"></rect><text x="60" y="105" text-anchor="middle">Dev cohort</text><text x="60" y="118" text-anchor="middle" class="arch-sub">n = 15,685</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Nested cross-validation" data-tip-body="Outer/inner 5-fold CV separates hyperparameter search from performance estimation, avoiding optimistic bias.">
+                  <rect x="128" y="86" width="92" height="44" rx="7"></rect><text x="174" y="105" text-anchor="middle">Nested CV</text><text x="174" y="118" text-anchor="middle" class="arch-sub">5-fold</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Model family" data-tip-body="Four families benchmarked head-to-head: logistic regression, random forest, SVM and gradient-boosted trees.">
+                  <rect x="240" y="40" width="86" height="26" rx="6"></rect><text x="283" y="56" text-anchor="middle">LogReg</text>
+                </g>
+                <g class="arch-node"><rect x="240" y="76" width="86" height="26" rx="6"></rect><text x="283" y="92" text-anchor="middle">Random Forest</text></g>
+                <g class="arch-node"><rect x="240" y="112" width="86" height="26" rx="6"></rect><text x="283" y="128" text-anchor="middle">SVM</text></g>
+                <g class="arch-node"><rect x="240" y="148" width="86" height="26" rx="6"></rect><text x="283" y="164" text-anchor="middle">XGBoost</text></g>
+                <g class="arch-node" tabindex="0" data-tip-title="Explainability + fairness" data-tip-body="SHAP attributions and subgroup AUC expose which features drive risk and whether accuracy is equitable across groups.">
+                  <rect x="350" y="86" width="96" height="44" rx="7"></rect><text x="398" y="105" text-anchor="middle">SHAP</text><text x="398" y="118" text-anchor="middle" class="arch-sub">+ subgroup</text>
+                </g>
+                <g class="arch-node is-key" filter="url(#glow-3)" tabindex="0" data-tip-title="External validation under shift" data-tip-body="On 1.28M BRFSS respondents, AUC falls ~9.7% — strong internal validation does not survive deployment shift.">
+                  <rect x="466" y="84" width="88" height="48" rx="9"></rect><text x="510" y="103" text-anchor="middle">External</text><text x="510" y="117" text-anchor="middle" class="arch-sub">BRFSS 1.28M</text>
+                </g>
+                <g class="arch-metric"><rect x="460" y="172" width="98" height="22" rx="6"></rect><text x="509" y="187" text-anchor="middle">−9.7% AUC</text></g>
+              </g>
+            </svg>
+            <figcaption><b>Figure III.</b> Cross-domain external-validation framework.</figcaption>
+          </figure>
           <span class="case-venue">Research manuscript</span>
           <h3><a href="https://github.com/Rajveer-code" target="_blank" rel="noreferrer" data-cursor>Comprehensive Evaluation of ML for Type 2 Diabetes Risk Prediction</a></h3>
           <p class="case-subtitle">Large-scale external validation, explainability, and fairness analysis</p>
@@ -160,6 +303,50 @@
       <article class="case rv">
         <div class="case-num">04</div>
         <div class="case-body">
+          <figure class="case-figure case-figure--tall">
+            <ul class="arch-themes"><li>Fairness</li><li>Generalization</li><li>Trust</li></ul>
+            <svg class="arch" viewBox="0 0 560 250" role="img" aria-labelledby="d4-t d4-d" preserveAspectRatio="xMidYMid meet">
+              <title id="d4-t">Five-axis cross-platform fairness audit (CPFE)</title>
+              <desc id="d4-d">The CPFE framework evaluates a family of transformer models along five axes — discrimination, calibration, significance, equity, and attribution stability — arranged radially around the central protocol.</desc>
+              <defs>
+                <marker id="arr-4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
+                <filter id="glow-4" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.8" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.5"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
+              </defs>
+              <polygon class="arch-web" points="280,33 367.5,96.6 334.1,199.4 225.9,199.4 192.5,96.6"></polygon>
+              <g class="arch-spoke">
+                <line x1="280" y1="125" x2="280" y2="33"></line>
+                <line x1="280" y1="125" x2="367.5" y2="96.6"></line>
+                <line x1="280" y1="125" x2="334.1" y2="199.4"></line>
+                <line x1="280" y1="125" x2="225.9" y2="199.4"></line>
+                <line x1="280" y1="125" x2="192.5" y2="96.6"></line>
+              </g>
+              <g class="arch-nodes">
+                <g class="arch-node" tabindex="0" data-tip-title="Discriminative performance" data-tip-body="Macro one-vs-rest AUC with DeLong confidence intervals — raw class-separation ability, before and after platform shift.">
+                  <rect x="234" y="18" width="92" height="30" rx="7"></rect><text x="280" y="37" text-anchor="middle">Discrimination</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Calibration" data-tip-body="Expected calibration error over 10 bins; cross-platform ECE collapses from 0.056 to 0.54 — confident but wrong.">
+                  <rect x="321" y="82" width="92" height="30" rx="7"></rect><text x="367" y="101" text-anchor="middle">Calibration</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Statistical significance" data-tip-body="Bootstrap significance testing with Bonferroni correction across all model pairs (α′ = 0.0167).">
+                  <rect x="288" y="184" width="92" height="30" rx="7"></rect><text x="334" y="203" text-anchor="middle">Significance</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Prediction equity (novel axis)" data-tip-body="Symmetric disparate impact and equalized-odds gap across platforms; minority-class DI falls below 0.17.">
+                  <rect x="180" y="184" width="92" height="30" rx="7"></rect><text x="226" y="203" text-anchor="middle">Equity ★</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Attribution stability" data-tip-body="Gradient-saliency Jaccard@K across platforms; token overlap drops to ≈0.10 — the models attend to different words.">
+                  <rect x="146" y="82" width="92" height="30" rx="7"></rect><text x="192" y="101" text-anchor="middle">Attribution</text>
+                </g>
+                <g class="arch-node is-key" filter="url(#glow-4)" tabindex="0" data-tip-title="CPFE protocol" data-tip-body="Cross-Platform Fairness Evaluation auditing BERT, RoBERTa, Emotion-DistilRoBERTa and GoEmotions-RoBERTa trained on one platform, tested on Reddit and Twitter.">
+                  <rect x="228" y="97" width="104" height="56" rx="11"></rect>
+                  <text x="280" y="122" text-anchor="middle" font-size="15" letter-spacing="0.08em">CPFE</text>
+                  <text x="280" y="139" text-anchor="middle" class="arch-sub">4 transformers</text>
+                </g>
+                <g class="arch-metric"><rect x="14" y="20" width="92" height="24" rx="6"></rect><text x="60" y="36" text-anchor="middle">−39% AUC</text></g>
+                <g class="arch-metric"><rect x="14" y="52" width="92" height="24" rx="6"></rect><text x="60" y="68" text-anchor="middle">J ≈ 0.10</text></g>
+              </g>
+            </svg>
+            <figcaption><b>Figure IV.</b> Five-axis cross-platform fairness audit (CPFE).</figcaption>
+          </figure>
           <span class="case-venue">Submitted — IEEE TNNLS</span>
           <h3><a href="https://github.com/Rajveer-code/mental-health-fairness-nlp" target="_blank" rel="noreferrer" data-cursor>Cross-Platform Generalisation Failure in Mental Health NLP</a></h3>
           <p class="case-subtitle">A Five-Axis Fairness Audit of Transformer Models on Social Media</p>
@@ -178,6 +365,47 @@
       <article class="case rv">
         <div class="case-num">05</div>
         <div class="case-body">
+          <figure class="case-figure">
+            <ul class="arch-themes"><li>Robustness</li><li>Deployment</li></ul>
+            <svg class="arch" viewBox="0 0 560 210" role="img" aria-labelledby="d5-t d5-d" preserveAspectRatio="xMidYMid meet">
+              <title id="d5-t">Statistically gated deployment (ICGDF)</title>
+              <desc id="d5-d">Causal features feed a calibrated ensemble whose cross-sectional signal must pass both a Newey-West HAC test and a permutation test; the deployment gate opened in zero of twelve walk-forward folds.</desc>
+              <defs>
+                <marker id="arr-5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
+                <filter id="glow-5" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.6" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.5"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
+              </defs>
+              <g class="flow-arrows">
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-5)" d="M94,108 L110,108"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-5)" d="M202,108 L224,108"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-5)" d="M304,108 L326,108"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-5)" d="M418,108 L426,108"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-5)" d="M466,96 L482,86"></path>
+                <path class="flow-arrow is-faint" pathLength="1" marker-end="url(#arr-5)" d="M466,120 L482,138"></path>
+              </g>
+              <g class="arch-nodes">
+                <g class="arch-node" tabindex="0" data-tip-title="Causal features" data-tip-body="49 strictly causal OHLCV technical features — no forward-looking windows, target shifted two days to avoid lookahead.">
+                  <rect x="10" y="86" width="84" height="44" rx="7"></rect><text x="52" y="105" text-anchor="middle">49 features</text><text x="52" y="118" text-anchor="middle" class="arch-sub">causal OHLCV</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Calibrated ensemble" data-tip-body="Equal-weight CatBoost + Random Forest + MLP, isotonically calibrated per walk-forward fold.">
+                  <rect x="110" y="86" width="92" height="44" rx="7"></rect><text x="156" y="105" text-anchor="middle">Ensemble</text><text x="156" y="118" text-anchor="middle" class="arch-sub">CatBoost·RF·MLP</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Isotonic calibration" data-tip-body="Non-parametric probability calibration fitted on a held-out split and frozen before the test fold.">
+                  <rect x="224" y="86" width="80" height="44" rx="7"></rect><text x="264" y="105" text-anchor="middle">Isotonic</text><text x="264" y="118" text-anchor="middle" class="arch-sub">calibration</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Significance gate" data-tip-body="Information coefficient must clear a Newey-West HAC t-test (t&gt;1.645) AND a 1,000-draw permutation test (p&lt;0.05).">
+                  <rect x="326" y="84" width="92" height="48" rx="7"></rect><text x="372" y="104" text-anchor="middle">IC test</text><text x="372" y="118" text-anchor="middle" class="arch-sub">HAC ∧ perm</text>
+                </g>
+                <path class="arch-diamond" d="M452,82 L478,108 L452,134 L426,108 Z"></path>
+                <text class="arch-diamond-label" x="452" y="111" text-anchor="middle">GATE</text>
+                <g class="arch-node is-key" filter="url(#glow-5)" tabindex="0" data-tip-title="Gate closed" data-tip-body="Across 1,512 out-of-sample days and 12 folds the gate never opened — the honest, publishable null: no exploitable daily cross-sectional signal.">
+                  <rect x="482" y="64" width="74" height="40" rx="8"></rect><text x="519" y="81" text-anchor="middle">Gate CLOSED</text><text x="519" y="94" text-anchor="middle" class="arch-sub">never opened</text>
+                </g>
+                <g class="arch-node" opacity="0.4"><rect x="482" y="124" width="74" height="34" rx="8"></rect><text x="519" y="145" text-anchor="middle">trade top-K</text></g>
+                <g class="arch-metric"><rect x="452" y="172" width="104" height="22" rx="6"></rect><text x="504" y="187" text-anchor="middle">0 / 12 folds</text></g>
+              </g>
+            </svg>
+            <figcaption><b>Figure V.</b> Statistically gated deployment (ICGDF).</figcaption>
+          </figure>
           <span class="case-venue">Under review — Quantitative Finance &amp; Economics</span>
           <h3><a href="https://github.com/Rajveer-code" target="_blank" rel="noreferrer" data-cursor>When the Gate Stays Closed</a></h3>
           <p class="case-subtitle">Near-zero cross-sectional predictability in large-cap NASDAQ equities</p>
@@ -196,6 +424,53 @@
       <article class="case rv">
         <div class="case-num">06</div>
         <div class="case-body">
+          <figure class="case-figure case-figure--tall">
+            <ul class="arch-themes"><li>Causality</li><li>Fairness</li></ul>
+            <svg class="arch" viewBox="0 0 560 250" role="img" aria-labelledby="d6-t d6-d" preserveAspectRatio="xMidYMid meet">
+              <title id="d6-t">Heterogeneous treatment-effect estimation via double machine learning</title>
+              <desc id="d6-d">Race as treatment and 33 creditworthiness controls feed a double machine learning cross-fit; a causal forest branches into heterogeneous conditional effects, converging on an individual-level approval penalty validated by multiple designs.</desc>
+              <defs>
+                <marker id="arr-6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
+                <filter id="glow-6" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.6" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.5"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
+              </defs>
+              <g class="flow-arrows">
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-6)" d="M106,76 C132,76 132,112 150,110"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-6)" d="M106,150 C132,150 132,122 150,122"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-6)" d="M254,116 C282,116 282,72 300,72"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-6)" d="M254,116 L300,122"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-6)" d="M254,116 C282,116 282,172 300,172"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-6)" d="M420,72 C442,72 442,122 452,122"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-6)" d="M420,122 L452,122"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-6)" d="M420,172 C442,172 442,122 452,122"></path>
+                <path class="flow-arrow is-faint" pathLength="1" marker-end="url(#arr-6)" d="M360,214 C420,200 480,175 500,150"></path>
+              </g>
+              <g class="arch-nodes">
+                <g class="arch-node" tabindex="0" data-tip-title="Treatment" data-tip-body="Applicant race as the causal treatment whose effect on approval is the estimand.">
+                  <rect x="14" y="58" width="92" height="36" rx="7"></rect><text x="60" y="73" text-anchor="middle">Race</text><text x="60" y="85" text-anchor="middle" class="arch-sub">treatment</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Confounders" data-tip-body="33 creditworthiness features (income, LTV, DTI, underwriting system, geography…) adjusted for via flexible nuisance models.">
+                  <rect x="14" y="132" width="92" height="36" rx="7"></rect><text x="60" y="148" text-anchor="middle">33 controls</text><text x="60" y="160" text-anchor="middle" class="arch-sub">credit features</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Double machine learning" data-tip-body="Orthogonalized DML with LightGBM nuisance models and cross-fitting removes regularization bias from the effect estimate.">
+                  <rect x="150" y="92" width="104" height="48" rx="8"></rect><text x="202" y="112" text-anchor="middle">DML cross-fit</text><text x="202" y="125" text-anchor="middle" class="arch-sub">LightGBM</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Causal forest — heterogeneity" data-tip-body="Manual underwriting carries the largest penalty (−14.8 pp), revealing human discretion as the dominant channel.">
+                  <rect x="300" y="58" width="120" height="28" rx="6"></rect><text x="360" y="76" text-anchor="middle">Manual AUS −14.8</text>
+                </g>
+                <g class="arch-node"><rect x="300" y="108" width="120" height="28" rx="6"></rect><text x="360" y="126" text-anchor="middle">Automated −6.2</text></g>
+                <g class="arch-node"><rect x="300" y="158" width="120" height="28" rx="6"></rect><text x="360" y="176" text-anchor="middle">High-DTI −10.2</text></g>
+                <g class="arch-node is-key" filter="url(#glow-6)" tabindex="0" data-tip-title="Conditional penalty" data-tip-body="90.7% of Black applicants face a negative conditional effect; mean −9.39 pp after adjusting for 33 controls.">
+                  <rect x="452" y="96" width="100" height="52" rx="9"></rect><text x="502" y="118" text-anchor="middle">Conditional</text><text x="502" y="132" text-anchor="middle" class="arch-sub">penalty</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Robustness battery" data-tip-body="DR-Learner replication, RDD at 80% LTV, DiD over the 2022–24 cycle, and placebo tests with a 17.9× signal-to-noise ratio.">
+                  <rect x="150" y="214" width="300" height="28" rx="7"></rect><text x="300" y="232" text-anchor="middle" font-size="8.4" letter-spacing="0.04em">Validation · DR-Learner · RDD · DiD · placebo 17.9×</text>
+                </g>
+                <g class="arch-metric"><rect x="452" y="158" width="100" height="22" rx="6"></rect><text x="502" y="173" text-anchor="middle">−9.39 pp</text></g>
+                <g class="arch-metric"><rect x="150" y="182" width="120" height="22" rx="6"></rect><text x="210" y="197" text-anchor="middle">90.7% penalised</text></g>
+              </g>
+            </svg>
+            <figcaption><b>Figure VI.</b> Heterogeneous treatment-effect estimation via double ML.</figcaption>
+          </figure>
           <span class="case-venue">Working paper</span>
           <h3><a href="https://github.com/Rajveer-code/CATE-HMDA-Heterogeneous-Effects" target="_blank" rel="noreferrer" data-cursor>Who Bears the Burden?</a></h3>
           <p class="case-subtitle">Heterogeneous Racial Approval Differentials in U.S. Mortgage Lending</p>
@@ -214,6 +489,62 @@
       <article class="case rv">
         <div class="case-num">07</div>
         <div class="case-body">
+          <figure class="case-figure">
+            <ul class="arch-themes"><li>Trust</li><li>Fairness</li><li>Deployment</li></ul>
+            <svg class="arch" viewBox="0 0 560 210" role="img" aria-labelledby="d7-t d7-d" preserveAspectRatio="xMidYMid meet">
+              <title id="d7-t">Inline runtime audit envelope</title>
+              <desc id="d7-d">Each local LLM response is scored on five axes — calibration, faithfulness, consistency, equity and attribution — arranged around a composite audit envelope that decides whether to surface or withhold the response, with streaming drift monitoring.</desc>
+              <defs>
+                <marker id="arr-7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
+                <filter id="glow-7" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.6" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.5"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
+              </defs>
+              <polygon class="arch-web" points="300,27 374.2,80.9 345.8,168.1 254.2,168.1 225.8,80.9"></polygon>
+              <g class="arch-spoke">
+                <line x1="300" y1="105" x2="300" y2="27"></line>
+                <line x1="300" y1="105" x2="374.2" y2="80.9"></line>
+                <line x1="300" y1="105" x2="345.8" y2="168.1"></line>
+                <line x1="300" y1="105" x2="254.2" y2="168.1"></line>
+                <line x1="300" y1="105" x2="225.8" y2="80.9"></line>
+              </g>
+              <g class="flow-arrows">
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-7)" d="M110,106 L244,105"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-7)" d="M354,100 C400,100 400,78 448,78"></path>
+                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-7)" d="M354,110 C400,110 400,144 448,144"></path>
+              </g>
+              <g class="arch-nodes">
+                <g class="arch-node" tabindex="0" data-tip-title="Local generation" data-tip-body="Every response is produced on-device (Qwen3-8B via Ollama, RTX 4060) — zero cloud LLM calls.">
+                  <rect x="14" y="84" width="96" height="44" rx="7"></rect><text x="62" y="103" text-anchor="middle">Prompt → LLM</text><text x="62" y="116" text-anchor="middle" class="arch-sub">Qwen3-8B local</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Faithfulness" data-tip-body="HHEM 2.1 NLI scores whether each atomic claim is supported by the retrieved context.">
+                  <rect x="258" y="14" width="84" height="26" rx="6"></rect><text x="300" y="31" text-anchor="middle">Faithfulness</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Consistency" data-tip-body="Semantic entropy over N paraphrases — does the model say the same thing when asked differently?">
+                  <rect x="332" y="68" width="84" height="26" rx="6"></rect><text x="374" y="85" text-anchor="middle">Consistency</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Equity (novel axis)" data-tip-body="80+ counterfactual demographic substitutions across 6 axes; flags disparate impact (DI &lt; 0.80) other tools miss.">
+                  <rect x="304" y="155" width="84" height="26" rx="6"></rect><text x="346" y="172" text-anchor="middle">Equity ★</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Attribution" data-tip-body="Jaccard@k over retrieved supporting chunks — is the cited evidence stable across paraphrases?">
+                  <rect x="212" y="155" width="84" height="26" rx="6"></rect><text x="254" y="172" text-anchor="middle">Attribution</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Calibration" data-tip-body="Per-group expected calibration error from verbalized confidence — overconfidence is penalized.">
+                  <rect x="184" y="68" width="84" height="26" rx="6"></rect><text x="226" y="85" text-anchor="middle">Calibration</text>
+                </g>
+                <g class="arch-node is-key" filter="url(#glow-7)" tabindex="0" data-tip-title="Audit envelope" data-tip-body="Weighted composite (0–100) plus per-axis alarms, persisted as a structured AuditEnvelope before the response is surfaced.">
+                  <rect x="246" y="81" width="108" height="48" rx="10"></rect><text x="300" y="101" text-anchor="middle">AuditEnvelope</text><text x="300" y="115" text-anchor="middle" class="arch-sub">composite 0–100</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Policy gate" data-tip-body="The caller surfaces, annotates, or withholds the response based on the composite score and axis alarms.">
+                  <rect x="448" y="58" width="100" height="40" rx="7"></rect><text x="498" y="76" text-anchor="middle">surface /</text><text x="498" y="89" text-anchor="middle" class="arch-sub">withhold</text>
+                </g>
+                <g class="arch-node" tabindex="0" data-tip-title="Drift monitor" data-tip-body="Page-Hinkley CUSUM tracks each axis across a session and alarms on distributional drift.">
+                  <rect x="448" y="126" width="100" height="36" rx="7"></rect><text x="498" y="142" text-anchor="middle">drift</text><text x="498" y="154" text-anchor="middle" class="arch-sub">Page-Hinkley</text>
+                </g>
+                <g class="arch-metric"><rect x="14" y="18" width="80" height="22" rx="6"></rect><text x="54" y="33" text-anchor="middle">DI 0.82</text></g>
+                <g class="arch-metric"><rect x="14" y="46" width="80" height="22" rx="6"></rect><text x="54" y="61" text-anchor="middle">≤ 1.2 s</text></g>
+              </g>
+            </svg>
+            <figcaption><b>Figure VII.</b> Inline runtime audit envelope.</figcaption>
+          </figure>
           <span class="case-venue">Research software artifact</span>
           <h3><a href="https://github.com/Rajveer-code" target="_blank" rel="noreferrer" data-cursor>ARIA Runtime Five-Axis Fairness Audit</a></h3>
           <p class="case-subtitle">Inline policy guardrails for locally deployed LLMs</p>

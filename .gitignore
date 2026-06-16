@@ -1,3 +1,8 @@
 _previous_version/
 *.DS_Store
 Thumbs.db
+
+# local tooling — not part of the site
+.claude/
+.agents/
+skills-lock.json

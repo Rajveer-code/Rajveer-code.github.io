@@ -177,6 +177,91 @@
     });
   }
 
+  /* ── architecture diagrams (Inquiry figures) ──
+     Restrained, scholarly motion: arrows draw once on scroll-in, the gold
+     metric chip pops once, and the conclusion node breathes forever. Static
+     nodes/wheels/pentagons. Method tooltips on hover (fine pointer) and on
+     keyboard focus. Fully static + legible when this never runs. */
+  function initDiagrams() {
+    if (reduced || !hasGSAP) return;
+    var figures = document.querySelectorAll(".case-figure");
+    if (!figures.length) return;
+
+    /* one reusable tooltip */
+    var tip = document.createElement("div");
+    tip.className = "arch-tip";
+    tip.innerHTML = '<div class="arch-tip-title"></div><div class="arch-tip-body"></div>';
+    document.body.appendChild(tip);
+    var tipTitle = tip.querySelector(".arch-tip-title");
+    var tipBody = tip.querySelector(".arch-tip-body");
+    var tipVisible = false;
+
+    function showTip(node) {
+      var t = node.getAttribute("data-tip-title");
+      if (!t) return;
+      tipTitle.textContent = t;
+      tipBody.textContent = node.getAttribute("data-tip-body") || "";
+      tip.style.visibility = "hidden";
+      tip.style.left = "-9999px";
+      tip.style.top = "0px";
+      var r = node.getBoundingClientRect();
+      var tw = tip.offsetWidth, th = tip.offsetHeight;
+      var x = r.left + r.width / 2 - tw / 2;
+      var y = r.top - th - 10;
+      if (y < 8) y = r.bottom + 10;
+      x = Math.max(8, Math.min(x, window.innerWidth - tw - 8));
+      tip.style.left = x + "px";
+      tip.style.top = y + "px";
+      tip.style.visibility = "visible";
+      tipVisible = true;
+      gsap.to(tip, { opacity: 1, duration: 0.2, ease: "power2.out" });
+    }
+    function hideTip() {
+      if (!tipVisible) return;
+      tipVisible = false;
+      gsap.to(tip, { opacity: 0, duration: 0.18, onComplete: function () { tip.style.visibility = "hidden"; } });
+    }
+    function nodeFrom(e) {
+      return e.target.closest ? e.target.closest(".case-figure [data-tip-title]") : null;
+    }
+
+    document.addEventListener("mouseover", function (e) { if (finePointer) { var n = nodeFrom(e); if (n) showTip(n); } });
+    document.addEventListener("mouseout", function (e) { if (finePointer) { var n = nodeFrom(e); if (n) hideTip(); } });
+    document.addEventListener("focusin", function (e) { var n = nodeFrom(e); if (n) showTip(n); });
+    document.addEventListener("focusout", function (e) { var n = nodeFrom(e); if (n) hideTip(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") hideTip(); });
+    window.addEventListener("scroll", hideTip, { passive: true });
+
+    /* per-figure: draw arrows + pop metric on scroll-in, then breathe the key node */
+    figures.forEach(function (fig) {
+      var arrows = fig.querySelectorAll(".flow-arrow");
+      var metric = fig.querySelectorAll(".arch-metric");
+      var key = fig.querySelector(".arch-node.is-key");
+
+      if (arrows.length) gsap.set(arrows, { strokeDasharray: 1, strokeDashoffset: 1 });
+      if (metric.length) gsap.set(metric, { opacity: 0, scale: 0.6, transformOrigin: "50% 50%" });
+
+      var enter = gsap.timeline({ paused: true });
+      if (arrows.length) enter.to(arrows, { strokeDashoffset: 0, duration: 0.5, ease: "power2.inOut", stagger: 0.06 }, 0);
+      if (metric.length) enter.to(metric, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(2)", stagger: 0.12 }, 0.25);
+
+      ScrollTrigger.create({
+        trigger: fig,
+        start: "top 85%",
+        once: true,
+        onEnter: function () {
+          enter.play();
+          if (key) {
+            gsap.to(key, {
+              opacity: 0.82, scale: 1.018, transformOrigin: "50% 50%",
+              duration: 2.6, ease: "sine.inOut", repeat: -1, yoyo: true, delay: 0.6
+            });
+          }
+        }
+      });
+    });
+  }
+
   /* ── main boot ── */
   function boot() {
     renderMethods();
@@ -398,6 +483,7 @@
 
     initMagnetic();
     initTilt();
+    initDiagrams();
 
     /* keep ScrollTrigger honest once fonts/layout settle */
     window.addEventListener("load", function () { ScrollTrigger.refresh(); });
