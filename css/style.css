@@ -581,6 +581,8 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
 .arch-spoke { stroke: var(--hairline-2); stroke-width: 1; fill: none; }
 .arch-diamond { fill: rgba(18, 22, 31, 0.92); stroke: var(--hairline-2); stroke-width: 1; }
 .arch-diamond-label { font-family: var(--mono); font-size: 8px; fill: var(--dim); letter-spacing: 0.1em; }
+.arch-dot { fill: var(--faint); }
+.arch-titlebar { font-family: var(--mono); font-size: 8.5px; fill: var(--dim); letter-spacing: 0.08em; }
 
 /* caption — reads like a paper figure */
 .case-figure figcaption {
@@ -626,6 +628,15 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
   .arch-themes li { font-size: 8px; padding: 2px 7px; }
   .arch-tip { max-width: 208px; }
 }
+
+/* diagrams inside instrument cards: tighter banner, larger relative labels
+   (the cards are narrower than the Inquiry rows) */
+.instrument .case-figure { margin: 2px 0 20px; max-width: none; padding: 14px 16px 12px; }
+.instrument .arch-node text { font-size: 10px; }
+.instrument .arch-node .arch-sub { font-size: 8.4px; }
+.instrument .arch-node .arch-lead { font-size: 10.5px; }
+.instrument .arch-metric text { font-size: 10.5px; }
+.instrument .case-figure figcaption { font-size: 9.5px; }
 
 /* ═══ Instruments ═══ */
 .instruments-grid {
