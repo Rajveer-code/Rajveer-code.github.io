@@ -196,44 +196,63 @@ body::after {
   transition: r 0.28s ease, fill-opacity 0.28s ease;
 }
 .ig-dot:hover { r: 13px; fill-opacity: 1; }
-/* Ghost overlay — default prompt fades out, info card fades in */
-.ig-ghost {
+/* Central HUD — persistent panel in constellation centre */
+.impact-central-hud {
   position: absolute;
-  top: 50%; left: 50%;
+  left: 50%; top: 51.5%;
   transform: translate(-50%, -50%);
-  width: 220px; height: 112px;
-  text-align: center; pointer-events: none; z-index: 2;
-  display: flex; align-items: center; justify-content: center;
+  width: min(34%, 420px);
+  text-align: center;
+  pointer-events: none;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
 }
-.ig-prompt {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 0.57rem; letter-spacing: 0.08em; text-transform: uppercase;
-  color: rgba(236,231,219,0.2); line-height: 1.85; margin: 0;
-  transition: opacity 0.25s ease;
-}
-.ig-card {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 0.28rem; opacity: 0; transition: opacity 0.25s ease;
-}
-.ig-ghost.ig-active .ig-prompt { opacity: 0; }
-.ig-ghost.ig-active .ig-card   { opacity: 1; }
-/* value — large, category color set per node via JS */
-.ig-card-val {
+.hud-value {
   font-family: 'Space Grotesk', system-ui, sans-serif;
-  font-size: 2.15rem; font-weight: 700; line-height: 1;
+  font-size: 2.3rem;
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: #fafaf8;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
 }
-/* short descriptor */
-.ig-card-label {
+.hud-sub {
   font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
-  color: rgba(236,231,219,0.62);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.4;
+  margin-top: 3px;
 }
-/* source / detail */
-.ig-card-src {
+.hud-sub span { transition: color 0.3s ease; }
+.hud-desc {
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 0.68rem; color: rgba(236,231,219,0.3);
-  line-height: 1.5; margin: 0;
+  font-size: 0.74rem;
+  line-height: 1.48;
+  color: rgba(255,255,255,0.46);
+  max-width: 340px;
+  margin-top: 6px;
+  text-align: center;
+  transition: color 0.3s ease;
+}
+.hud-spoke-line {
+  stroke-width: 1px;
+  transition: stroke-opacity 0.3s ease, stroke-width 0.3s ease;
+}
+@keyframes centerNodePulse {
+  0%, 100% { r: 5px; fill-opacity: 0.6; }
+  50%       { r: 8px; fill-opacity: 1;   }
+}
+.hud-center-node-circle {
+  transition: fill 0.3s ease;
+  animation: centerNodePulse 2.5s ease-in-out infinite;
 }
 
 /* ── Work cards ── */
@@ -313,7 +332,7 @@ html.no-js .reveal { opacity: 1; transform: none; }
   /* impact graph — horizontal scroll on narrow screens */
   .impact-graph-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; aspect-ratio: auto; }
   .impact-svg { min-width: 720px; height: 355px; }
-  .ig-ghost { display: none; }         /* touch can't hover; hide ghost */
+  .impact-central-hud { display: none; } /* touch can't hover; hide HUD */
 }
 @media (max-width: 460px) {
   .card-grid { grid-template-columns: 1fr; }

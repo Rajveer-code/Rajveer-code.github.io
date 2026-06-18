@@ -194,15 +194,10 @@
       <div class="impact-graph-wrap" role="img" aria-label="Interactive metrics constellation — hover any point to read the study behind it">
         <svg class="impact-svg" id="impactSVG" viewBox="0 0 1300 640"
              preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
-        <div class="ig-ghost" id="igGhost" aria-hidden="true">
-          <!-- default state: small faint prompt -->
-          <p class="ig-prompt" id="igPrompt">HOVER A POINT — EVERY NUMBER IS SOURCED FROM A PAPER OR DEPLOYED SYSTEM.</p>
-          <!-- hover state: large value + structured info card -->
-          <div class="ig-card" id="igCard">
-            <div class="ig-card-val" id="igCardVal"></div>
-            <div class="ig-card-label" id="igCardLabel"></div>
-            <p class="ig-card-src" id="igCardSrc"></p>
-          </div>
+        <div class="impact-central-hud" id="impactCentralHud" aria-live="polite">
+          <div class="hud-value">31 Metrics</div>
+          <div class="hud-sub">ML Research &amp; Deployed Systems * Rajveer Singh Pall</div>
+          <div class="hud-desc">An end-to-end research portfolio spanning causal inference, federated learning, fairness audits, NLP benchmarking, and local AI systems. Hover any node to inspect the metric.</div>
         </div>
       </div>
     </section>
@@ -402,6 +397,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="js/field.js"></script>
-  <script src="js/home.js?v=2"></script>
+  <script src="js/home.js?v=3"></script>
 </body>
 </html>

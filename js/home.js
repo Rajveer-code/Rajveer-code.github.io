@@ -252,145 +252,196 @@
       for (var k in attrs) el.setAttribute(k, attrs[k]);
       return el;
     }
+    function esc(s) { var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+    function hexToRgba(hex, a) {
+      hex = hex.replace("#", "");
+      return "rgba("+parseInt(hex.slice(0,2),16)+","+parseInt(hex.slice(2,4),16)+","+parseInt(hex.slice(4,6),16)+","+a+")";
+    }
 
-    /* Hub positions exactly match Ashwin Gupta's reference heptagon minus
-       the REACH & LANGUAGES hub (no matching data). Ring polygon connects
-       the remaining 6 hubs. Coordinates are in the 1300×640 viewBox. */
+    var HCX = 650, HCY = 320;
+
     var CATS = [
       { label: "MODEL PERFORMANCE", cx: 650, cy: 110, color: "#c9a25a", nodes: [
-        { cx: 598, cy: 175, val: "~97%",   label: "AUROC · Federated Diabetes",  src: "FedAvg/SCAFFOLD across heterogeneous NHANES nodes — validated on 1.28M BRFSS records." },
-        { cx: 695, cy: 168, val: "0.98",   label: "AUC · Mental Health NLP",     src: "Within-platform on Reddit & CLPsych — collapses 30–39% off-platform (CPFE, IEEE TNNLS)." },
-        { cx: 730, cy: 128, val: "9.4 pp", label: "Approval Gap · HMDA",         src: "Black approval penalty net of 33 controls — largest under manual underwriting, 42.3M apps." },
-        { cx: 568, cy: 142, val: "89.7%",  label: "Top LLM · IndiaFinBench",     src: "Gemini 2.5 Flash zero-shot closed-book — best of 12 LLMs on SEBI/RBI regulatory text." },
-        { cx: 640, cy: 212, val: "#1 LLM", label: "Gemini Rank · IndiaFinBench", src: "Gemini 2.5 Flash ranks first of 12 models including GPT-4o on Indian regulatory zero-shot QA." }
+        { cx: 598, cy: 175, val: "~97%",   sub: "AUROC · Federated Diabetes * FedAvg/SCAFFOLD",     desc: "FedAvg/SCAFFOLD across heterogeneous NHANES nodes — validated on 1.28M BRFSS records." },
+        { cx: 695, cy: 168, val: "0.98",   sub: "AUC · Mental Health NLP * CPFE / IEEE TNNLS",      desc: "Within-platform on Reddit & CLPsych — collapses 30–39% off-platform under domain shift." },
+        { cx: 730, cy: 128, val: "9.4 pp", sub: "Racial Approval Gap · HMDA * CATE-HMDA",           desc: "Black approval penalty net of 33 controls — largest under manual underwriting, 42.3M apps." },
+        { cx: 568, cy: 142, val: "89.7%",  sub: "Top LLM Score · IndiaFinBench * Gemini 2.5 Flash", desc: "Best of 12 LLMs on SEBI/RBI regulatory text — zero-shot closed-book evaluation." },
+        { cx: 640, cy: 212, val: "#1 LLM", sub: "Gemini Rank · IndiaFinBench * vs. GPT-4o",         desc: "Gemini 2.5 Flash ranks first of 12 models including GPT-4o on Indian regulatory zero-shot QA." }
       ]},
       { label: "DATA SCALE", cx: 1010, cy: 189, color: "#38bdf8", nodes: [
-        { cx: 895,  cy: 140, val: "42.3M",    label: "Records · HMDA 2020–2024",        src: "Every U.S. mortgage application — Causal Forest Double ML on the full HMDA dataset." },
-        { cx: 958,  cy: 248, val: "1.28M",    label: "Validation · BRFSS",              src: "Never trained on — pure external generalisation test for the federated diabetes model." },
-        { cx: 1062, cy: 262, val: "14,584",   label: "Transcripts · FinSight",          src: "Earnings calls from 601 S&P 500 firms, 2018–2024 — strict walk-forward backtest." },
-        { cx: 1108, cy: 208, val: "406 QA",   label: "Items · IndiaFinBench",           src: "Expert-annotated across 192 SEBI/RBI documents — four task types, three difficulty tiers." },
-        { cx: 1118, cy: 142, val: "601",      label: "Firms · FinSight",                src: "601 S&P 500 constituents — 6-year earnings corpus with sector-level walk-forward isolation." },
-        { cx: 872,  cy: 238, val: "192 docs", label: "Regulatory Docs · IndiaFinBench", src: "192 SEBI & RBI source documents annotated into 406 expert QA pairs, four task types." }
+        { cx: 895,  cy: 140, val: "42.3M",    sub: "Mortgage Records · CATE-HMDA * 2020–2024",          desc: "Every U.S. mortgage application — Causal Forest Double ML on the full HMDA dataset." },
+        { cx: 958,  cy: 248, val: "1.28M",    sub: "BRFSS Validation Set * Federated Diabetes",         desc: "Never trained on — pure external generalisation test for the federated diabetes model." },
+        { cx: 1062, cy: 262, val: "14,584",   sub: "S&P 500 Earnings Transcripts * FinSight",           desc: "Earnings calls from 601 S&P 500 firms, 2018–2024 — strict walk-forward backtest." },
+        { cx: 1108, cy: 208, val: "406 QA",   sub: "Expert-Annotated Items * IndiaFinBench",            desc: "Expert-annotated across 192 SEBI/RBI documents — four task types, three difficulty tiers." },
+        { cx: 1118, cy: 142, val: "601",      sub: "S&P 500 Firms · FinSight * 6-Year Corpus",          desc: "601 S&P 500 constituents — 6-year earnings corpus with sector-level walk-forward isolation." },
+        { cx: 872,  cy: 238, val: "192 docs", sub: "Regulatory Documents * IndiaFinBench / SEBI & RBI", desc: "192 SEBI & RBI source documents annotated into 406 expert QA pairs, four task types." }
       ]},
       { label: "SYSTEMS BUILT", cx: 1098, cy: 367, color: "#c084fc", nodes: [
-        { cx: 1158, cy: 312, val: "0",        label: "Cloud Calls · ARIA",          src: "Entire voice-to-voice pipeline on a single RTX 4060 — faster-whisper → Qwen3-8B → TTS." },
-        { cx: 1185, cy: 400, val: "16",       label: "Tools · ARIA Pipeline",       src: "Web search, calendar, code exec, system control — all routed through local LLM, offline." },
-        { cx: 1175, cy: 448, val: "12 LLMs",  label: "Benchmarked · IndiaFinBench", src: "GPT-4o to Gemini 2.5 Flash — zero-shot closed-book on Indian financial regulatory text." },
-        { cx: 1072, cy: 452, val: "1× GPU",   label: "RTX 4060 · ARIA",             src: "≤7.1 GB VRAM — single consumer GPU runs the entire ARIA multi-tool voice assistant." },
-        { cx: 1028, cy: 418, val: "≤7.1 GB",  label: "Peak VRAM · ARIA",            src: "Entire faster-whisper → Qwen3-8B → TTS pipeline fits in 7.1 GB VRAM — consumer GPU only." }
+        { cx: 1158, cy: 312, val: "0",        sub: "Cloud LLM Calls · ARIA * Fully Local Pipeline",  desc: "Entire voice-to-voice pipeline on a single RTX 4060 — faster-whisper → Qwen3-8B → TTS." },
+        { cx: 1185, cy: 400, val: "16",       sub: "Local Tool Registry · ARIA * Offline Routing",   desc: "Web search, calendar, code exec, system control — all routed through local LLM, offline." },
+        { cx: 1175, cy: 448, val: "12 LLMs",  sub: "Models Benchmarked * IndiaFinBench / Zero-Shot", desc: "GPT-4o to Gemini 2.5 Flash — zero-shot closed-book on Indian financial regulatory text." },
+        { cx: 1072, cy: 452, val: "1× GPU",   sub: "Consumer Hardware · ARIA * RTX 4060",            desc: "≤7.1 GB VRAM — single consumer GPU runs the entire ARIA multi-tool voice assistant." },
+        { cx: 1028, cy: 418, val: "≤7.1 GB",  sub: "Peak VRAM · ARIA * RTX 4060 / 8 GB Card",       desc: "Entire faster-whisper → Qwen3-8B → TTS pipeline fits in 7.1 GB VRAM — consumer GPU only." }
       ]},
       { label: "RESEARCH OUTPUT", cx: 450, cy: 509, color: "#fcd34d", nodes: [
-        { cx: 452, cy: 442, val: "6",       label: "Manuscripts · Q1 Venues", src: "JREFE, JBI, IEEE TNNLS, QFE, EMNLP 2026, arXiv — submitted or under review." },
-        { cx: 538, cy: 470, val: "3 Q1",    label: "Top Venues · Targeted",   src: "J. Real Estate Finance & Economics · J. Biomedical Informatics · IEEE TNNLS." },
-        { cx: 542, cy: 560, val: "50/250",  label: "SIH 2025 · SereneSpace",  src: "Top 50 of 250 teams — Smart India Hackathon, anonymous student mental-health platform." },
-        { cx: 428, cy: 582, val: "5+",      label: "Live Deployments",        src: "HuggingFace Spaces · Vercel · Render · PyPI package — all publicly accessible." },
-        { cx: 355, cy: 558, val: "EMNLP",   label: "NLP Conference · 2026",   src: "Empirical Methods in NLP 2026 — top-tier venue submission for the IndiaFinBench paper." }
+        { cx: 452, cy: 442, val: "6",      sub: "Manuscripts in Pipeline * Q1 Venues",                desc: "JREFE, JBI, IEEE TNNLS, QFE, EMNLP 2026, arXiv — submitted or under review." },
+        { cx: 538, cy: 470, val: "3 Q1",   sub: "Top-Tier Journal Targets * JREFE, JBI, IEEE TNNLS",  desc: "J. Real Estate Finance & Economics · J. Biomedical Informatics · IEEE TNNLS." },
+        { cx: 542, cy: 560, val: "50/250", sub: "SIH 2025 · SereneSpace * Smart India Hackathon",     desc: "Top 50 of 250 teams — Smart India Hackathon, anonymous student mental-health platform." },
+        { cx: 428, cy: 582, val: "5+",     sub: "Live Deployments * HuggingFace · Vercel · Render",   desc: "HuggingFace Spaces · Vercel · Render · PyPI package — all publicly accessible." },
+        { cx: 355, cy: 558, val: "EMNLP",  sub: "NLP Conference Target · 2026 * IndiaFinBench Paper", desc: "Empirical Methods in NLP 2026 — top-tier venue submission for the IndiaFinBench paper." }
       ]},
       { label: "FAIRNESS & IMPACT", cx: 202, cy: 367, color: "#34d399", nodes: [
-        { cx: 132, cy: 318, val: "−40%",    label: "Gen-Gap · Federated",   src: "Federated vs. matched centralised model — 40% smaller generalisation gap on 1.28M BRFSS." },
-        { cx: 265, cy: 352, val: "0.0%",    label: "False-Deploy · ICGDF",  src: "Gate stayed closed across 12 folds and 1,512 OOS days — was 11.8% with naive deployment." },
-        { cx: 118, cy: 420, val: "33–39%",  label: "Caught · ARIA Equity",  src: "Failures caught by ARIA's equity axis that calibration, faithfulness, and consistency missed." },
-        { cx: 172, cy: 448, val: "~35%",    label: "AUC Collapse · CPFE",   src: "Mental-health classifiers scoring 0.98 in-domain collapse off-platform — fairness doesn't transfer." },
-        { cx: 308, cy: 415, val: "4 axes",  label: "ARIA Audit Dimensions", src: "Calibration, faithfulness, consistency, equity — four independent axes expose LLM blind spots." }
+        { cx: 132, cy: 318, val: "−40%",   sub: "Generalisation Gap Reduction * Federated Diabetes", desc: "Federated vs. matched centralised model — 40% smaller generalisation gap on 1.28M BRFSS." },
+        { cx: 265, cy: 352, val: "0.0%",   sub: "False Deploy Rate · ICGDF Gate * 12 Folds",         desc: "Gate stayed closed across 12 folds and 1,512 OOS days — was 11.8% with naive deployment." },
+        { cx: 118, cy: 420, val: "33–39%", sub: "Bias Caught by Equity Axis * ARIA Audit",           desc: "Failures caught by ARIA's equity axis that calibration, faithfulness, and consistency missed." },
+        { cx: 172, cy: 448, val: "~35%",   sub: "AUC Collapse Under Domain Shift * CPFE Audit",      desc: "Mental-health classifiers scoring 0.98 in-domain collapse off-platform — fairness doesn't transfer." },
+        { cx: 308, cy: 415, val: "4 axes", sub: "Audit Dimensions · ARIA * Cal, Faith, Consist, Equity", desc: "Calibration, faithfulness, consistency, equity — four independent axes expose LLM blind spots." }
       ]},
       { label: "BENCHMARKS", cx: 290, cy: 189, color: "#22d3ee", nodes: [
-        { cx: 278, cy: 125, val: "0.785",   label: "Recall@5 · RAG Hybrid",   src: "BM25 + FAISS + RRF retrieval — +9.7 pp over dense-only on IndiaFinBench." },
-        { cx: 345, cy: 138, val: "IC+0.31", label: "Alpha · FinSight Energy",  src: "Cross-sectional signal in Energy sector under strict walk-forward discipline." },
-        { cx: 198, cy: 205, val: "1,512",   label: "OOS Days · ICGDF",         src: "12 walk-forward folds — gate stayed closed across every market regime, zero false deploys." },
-        { cx: 358, cy: 242, val: "12×",     label: "Folds · ICGDF",            src: "HAC + permutation conjunctive test held closed across every market regime tested." },
-        { cx: 395, cy: 215, val: "+9.7 pp", label: "RAG Recall Gain",          src: "Hybrid BM25+FAISS+RRF vs dense-only — Recall@5 from ~0.688 to 0.785 on regulatory QA." }
+        { cx: 278, cy: 125, val: "0.785",   sub: "Recall@5 · RAG Hybrid * BM25+FAISS+RRF",        desc: "BM25 + FAISS + RRF retrieval — +9.7 pp over dense-only on IndiaFinBench." },
+        { cx: 345, cy: 138, val: "IC+0.31", sub: "Alpha Signal · FinSight Energy * Walk-Forward",  desc: "Cross-sectional information coefficient in Energy sector under strict walk-forward discipline." },
+        { cx: 198, cy: 205, val: "1,512",   sub: "OOS Trading Days · ICGDF Gate * 2018–2024",      desc: "12 walk-forward folds — gate stayed closed across every market regime, zero false deploys." },
+        { cx: 358, cy: 242, val: "12×",     sub: "Walk-Forward Folds · ICGDF * HAC Conjunctive",   desc: "HAC + permutation conjunctive test held closed across every market regime tested." },
+        { cx: 395, cy: 215, val: "+9.7 pp", sub: "RAG Recall@5 Gain * Hybrid vs. Dense-Only",      desc: "Hybrid BM25+FAISS+RRF vs dense-only — Recall@5 from ~0.688 to 0.785 on regulatory QA." }
       ]}
     ];
 
-    var ghostEl = document.getElementById("igGhost");
-    var cardVal = document.getElementById("igCardVal");
-    var cardLbl = document.getElementById("igCardLabel");
-    var cardSrc = document.getElementById("igCardSrc");
-    var fadeT;
+    var hud      = document.getElementById("impactCentralHud");
+    var hudValue = hud && hud.querySelector(".hud-value");
+    var hudSub   = hud && hud.querySelector(".hud-sub");
+    var hudDesc  = hud && hud.querySelector(".hud-desc");
+    var centerNode = null;
+    var spokeLines = null;
 
-    function showTip(n, color) {
-      clearTimeout(fadeT);
-      if (cardVal) { cardVal.textContent = n.val; cardVal.style.color = color; }
-      if (cardLbl) cardLbl.textContent = n.label;
-      if (cardSrc) cardSrc.textContent = n.src;
-      if (ghostEl) ghostEl.classList.add("ig-active");
+    var defaultHUD = {
+      val:   "31 Metrics",
+      sub:   "ML Research & Deployed Systems * Rajveer Singh Pall",
+      desc:  "An end-to-end research portfolio spanning causal inference, federated learning, fairness audits, NLP benchmarking, and local AI systems. Hover any node to inspect the metric.",
+      color: "#ffffff"
+    };
+
+    function renderSub(el, text, color) {
+      if (!el) return;
+      var parts = text.split("*");
+      if (parts.length > 1) {
+        el.innerHTML = esc(parts[0].trim())
+          + ' <span style="color:' + color + ';text-shadow:0 0 8px '
+          + hexToRgba(color, 0.32) + '">' + esc(parts[1].trim()) + "</span>";
+      } else { el.textContent = text; }
     }
-    function hideTip() {
-      if (ghostEl) ghostEl.classList.remove("ig-active");
-      fadeT = setTimeout(function () {
-        if (cardVal && ghostEl && !ghostEl.classList.contains("ig-active"))
-          cardVal.style.color = "";
-      }, 300);
+
+    function updateHUD(n, color, starLine) {
+      if (!hud) return;
+      if (hudValue) {
+        hudValue.textContent      = n.val;
+        hudValue.style.color      = color;
+        hudValue.style.textShadow = "0 0 22px " + hexToRgba(color, 0.42);
+      }
+      renderSub(hudSub, n.sub, color);
+      if (hudDesc) hudDesc.textContent = n.desc;
+      if (centerNode) centerNode.setAttribute("fill", color);
+      if (spokeLines) {
+        spokeLines.forEach(function (ln) {
+          var match = ln.getAttribute("stroke") === color;
+          ln.setAttribute("stroke-opacity", match ? "0.55" : "0.02");
+          ln.setAttribute("stroke-width",   match ? "1.75" : "1");
+        });
+      }
+      if (starLine) {
+        starLine.setAttribute("stroke-opacity", "0.62");
+        starLine.setAttribute("stroke-width",   "1.75");
+      }
+    }
+
+    function resetHUD(starLine) {
+      if (!hud) return;
+      if (hudValue) {
+        hudValue.textContent      = defaultHUD.val;
+        hudValue.style.color      = defaultHUD.color;
+        hudValue.style.textShadow = "none";
+      }
+      if (hudSub) {
+        var parts = defaultHUD.sub.split("*");
+        hudSub.innerHTML = parts.length > 1
+          ? esc(parts[0].trim()) + ' <span style="color:rgba(255,255,255,0.65)">'
+            + esc(parts[1].trim()) + "</span>"
+          : esc(defaultHUD.sub);
+      }
+      if (hudDesc) hudDesc.textContent = defaultHUD.desc;
+      if (centerNode) centerNode.setAttribute("fill", defaultHUD.color);
+      if (spokeLines) {
+        spokeLines.forEach(function (ln) {
+          ln.setAttribute("stroke-opacity", "0.05");
+          ln.setAttribute("stroke-width",   "1");
+        });
+      }
+      if (starLine) {
+        starLine.setAttribute("stroke-opacity", "0.22");
+        starLine.setAttribute("stroke-width",   "0.9");
+      }
     }
 
     var drift = [];
 
-    /* 1. Ring polygon — connect hubs in order (hexagonal outline) */
-    var ringG = e("g", { fill: "none" });
-    CATS.forEach(function (c, ci) {
-      var d = CATS[(ci + 1) % CATS.length];
-      ringG.appendChild(e("line", {
-        x1: c.cx, y1: c.cy, x2: d.cx, y2: d.cy,
-        stroke: "rgba(255,255,255,0.08)", "stroke-width": "1"
+    /* Phase 1: centre→hub spoke lines */
+    var spokeG = e("g", { fill: "none" });
+    CATS.forEach(function (c) {
+      spokeG.appendChild(e("line", {
+        x1: HCX, y1: HCY, x2: c.cx, y2: c.cy,
+        stroke: c.color, "stroke-opacity": "0.05",
+        "stroke-width": "1", class: "hud-spoke-line"
       }));
     });
-    svg.appendChild(ringG);
+    svg.appendChild(spokeG);
+    spokeLines = Array.prototype.slice.call(svg.querySelectorAll(".hud-spoke-line"));
 
-    /* 2. Branch lines: hub → data nodes */
+    /* Phase 2: hub→node branch lines */
+    var branchG = e("g", { fill: "none" });
     CATS.forEach(function (c) {
-      var g = e("g", { fill: "none", "stroke-width": "0.85" });
       c.nodes.forEach(function (n) {
-        g.appendChild(e("line", { x1: c.cx, y1: c.cy, x2: n.cx, y2: n.cy,
-          stroke: c.color, "stroke-opacity": "0.28" }));
+        n._sl = e("line", { x1: c.cx, y1: c.cy, x2: n.cx, y2: n.cy,
+          stroke: c.color, "stroke-opacity": "0.22", "stroke-width": "0.9" });
+        branchG.appendChild(n._sl);
       });
-      svg.appendChild(g);
     });
+    svg.appendChild(branchG);
 
-    /* 3. Hub nodes with pill labels (rect + text) */
+    /* Phase 3: hub circles + pill labels */
     CATS.forEach(function (c) {
       var g = e("g", { class: "ig-hub" });
-      g.appendChild(e("circle", { cx: c.cx, cy: c.cy, r: "18",
-        fill: c.color, "fill-opacity": "0.05" }));
-      g.appendChild(e("circle", { cx: c.cx, cy: c.cy, r: "10",
-        fill: c.color, "fill-opacity": "0.07" }));
-      g.appendChild(e("circle", { cx: c.cx, cy: c.cy, r: "5.5",
-        fill: c.color, "fill-opacity": "0.85" }));
-
-      /* Pill: estimate text width, draw bg rect then label text */
+      g.appendChild(e("circle", { cx: c.cx, cy: c.cy, r: "18", fill: c.color, "fill-opacity": "0.05" }));
+      g.appendChild(e("circle", { cx: c.cx, cy: c.cy, r: "10", fill: c.color, "fill-opacity": "0.07" }));
+      g.appendChild(e("circle", { cx: c.cx, cy: c.cy, r: "5.5", fill: c.color, "fill-opacity": "0.85" }));
       var charW = 6.6, padX = 8, padY = 4, capH = 9;
       var rw = c.label.length * charW + padX * 2;
       var rh = capH + padY * 2;
-      /* Always place pill above hub so it stays clear of data nodes */
       var ry0 = c.cy - 26 - rh;
       var rx0 = Math.max(4, Math.min(1300 - rw - 4, c.cx - rw / 2));
-
       g.appendChild(e("rect", { x: rx0, y: ry0, width: rw, height: rh, rx: "4",
-        fill: c.color, "fill-opacity": "0.12",
-        stroke: c.color, "stroke-opacity": "0.40", "stroke-width": "0.8" }));
-      var txt = e("text", { x: c.cx, y: ry0 + rh / 2 + capH * 0.38,
+        fill: c.color, "fill-opacity": "0.12", stroke: c.color, "stroke-opacity": "0.40", "stroke-width": "0.8" }));
+      var lbl = e("text", { x: c.cx, y: ry0 + rh / 2 + capH * 0.38,
         class: "ig-hub-label", fill: c.color, "text-anchor": "middle" });
-      txt.textContent = c.label;
-      g.appendChild(txt);
+      lbl.textContent = c.label;
+      g.appendChild(lbl);
       svg.appendChild(g);
     });
 
-    /* 4. Data nodes: halo + dot + value label */
+    /* Phase 4: data nodes */
     CATS.forEach(function (c) {
       c.nodes.forEach(function (n) {
-        /* Label below nodes in upper half of canvas, above in lower half */
+        var starLine = n._sl;
         var labY = n.cy < 320 ? 20 : -12;
         var g = e("g", { class: "ig-node" });
-        g.appendChild(e("circle", { cx: "0", cy: "0", r: "16",
-          fill: c.color, "fill-opacity": "0.06" }));
-        var dot = e("circle", { cx: "0", cy: "0", r: "7",
-          fill: c.color, class: "ig-dot" });
-        var val = e("text", { x: "0", y: String(labY),
-          class: "ig-val", "text-anchor": "middle" });
-        val.textContent = n.val;
-        dot.addEventListener("mouseenter", function () { showTip(n, c.color); });
-        dot.addEventListener("mouseleave", hideTip);
+        g.appendChild(e("circle", { cx: "0", cy: "0", r: "16", fill: c.color, "fill-opacity": "0.06" }));
+        var dot = e("circle", { cx: "0", cy: "0", r: "7", fill: c.color, class: "ig-dot" });
+        var valEl = e("text", { x: "0", y: String(labY), class: "ig-val", "text-anchor": "middle" });
+        valEl.textContent = n.val;
+        dot.addEventListener("mouseenter", function () { updateHUD(n, c.color, starLine); });
+        dot.addEventListener("mouseleave", function () { resetHUD(starLine); });
+        dot.addEventListener("focus",      function () { updateHUD(n, c.color, starLine); });
+        dot.addEventListener("blur",       function () { resetHUD(starLine); });
         g.appendChild(dot);
-        g.appendChild(val);
+        g.appendChild(valEl);
         g.setAttribute("transform", "translate(" + n.cx + "," + n.cy + ")");
         svg.appendChild(g);
         drift.push({ g: g, bx: n.cx, by: n.cy,
@@ -400,7 +451,12 @@
       });
     });
 
-    /* 5. Drift animation — each node floats independently */
+    /* Phase 5: pulsing centre node */
+    centerNode = e("circle", { cx: HCX, cy: HCY, r: "5",
+      fill: "#ffffff", id: "hudCenterNode", class: "hud-center-node-circle" });
+    svg.appendChild(centerNode);
+
+    /* Phase 6: drift animation */
     var t0 = null;
     function tick(ts) {
       if (!t0) t0 = ts;
@@ -414,6 +470,8 @@
       requestAnimationFrame(tick);
     }
     requestAnimationFrame(tick);
+
+    resetHUD(null);
   })();
 
 })();
