@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rajveer Singh Pall — Decision Systems Research</title>
-  <meta name="description" content="Rajveer Singh Pall — ML researcher studying how machine learning can understand, evaluate, and improve the systems that decide human outcomes. Seven papers across fairness, healthcare, language, and markets.">
-  <meta property="og:title" content="Rajveer Singh Pall — Decision Systems Research">
-  <meta property="og:description" content="How can machine learning understand, evaluate, and improve the systems that decide human outcomes? A research portfolio.">
+  <title>Rajveer Singh Pall — ML &amp; Decision-Systems Researcher</title>
+  <meta name="description" content="Rajveer Singh Pall — machine-learning researcher studying whether the systems that decide human outcomes are fair, honest, and hold under deployment. Six papers across lending, medicine, language, and markets, plus deployed systems.">
+  <meta name="author" content="Rajveer Singh Pall">
+  <meta property="og:title" content="Rajveer Singh Pall — ML &amp; Decision-Systems Researcher">
+  <meta property="og:description" content="Whether the systems that decide human outcomes are fair, honest, and hold under deployment — proven with causal evidence at scale and deployed systems.">
   <meta property="og:type" content="website">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2308090c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' fill='%23c9a25a' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2307080b'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' fill='%23c9a25a' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
   <script>document.documentElement.classList.replace('no-js','js');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/home.css?v=2">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -21,892 +22,386 @@
     "name": "Rajveer Singh Pall",
     "email": "mailto:rajveerpall04@gmail.com",
     "url": "https://github.com/Rajveer-code",
-    "jobTitle": "Independent ML Researcher",
-    "knowsAbout": ["Machine Learning", "Causal Inference", "Algorithmic Fairness", "Federated Learning", "NLP", "Financial Econometrics"]
+    "jobTitle": "Machine-Learning &amp; Decision-Systems Researcher",
+    "affiliation": "Gyan Ganga Institute of Technology and Sciences, Jabalpur",
+    "knowsAbout": ["Machine Learning", "Causal Inference", "Algorithmic Fairness", "Federated Learning", "Natural Language Processing", "Financial Econometrics", "LLM Evaluation"]
   }
   </script>
 </head>
-<body data-chapter="Prologue">
+<body>
 
-  <!-- ═══ Preloader ═══ -->
-  <div class="loader" id="loader" aria-hidden="true">
-    <div class="loader-inner">
-      <p class="loader-name">R&nbsp;S&nbsp;Pall</p>
-      <p class="loader-count"><span id="loaderNum">00</span></p>
-      <div class="loader-bar"><span id="loaderBar"></span></div>
-      <p class="loader-tag">Assembling the decision field</p>
-    </div>
-  </div>
-
-  <!-- ═══ WebGL field ═══ -->
+  <!-- ═══ Constellation field (Canvas 2D) ═══ -->
   <canvas id="field" aria-hidden="true"></canvas>
   <div class="vignette" aria-hidden="true"></div>
-  <div class="shield" aria-hidden="true"></div>
 
-  <!-- ═══ Cursor ═══ -->
+  <!-- ═══ Custom cursor (gold dot + ring — distinct from reference) ═══ -->
   <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
   <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
 
-  <!-- ═══ Chrome ═══ -->
-  <div class="progress" id="progress" aria-hidden="true"></div>
+  <!-- ═══ Scroll progress ═══ -->
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
+  <!-- ═══ HUD clock (geolocation nearest airport) ═══ -->
+  <div class="hud-clock" aria-hidden="true">
+    <div class="hud-row">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="hud-label">JBP</span><span class="hud-time" id="clockHome">--:--:--</span>
+    </div>
+    <div class="hud-row">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="hud-label" id="hudVisitorLabel">YOU</span><span class="hud-time" id="clockVisitor">--:--:--</span>
+    </div>
+  </div>
+
+  <!-- ═══ Bottom-right HUD ═══ -->
+  <div class="brh" id="brh" aria-hidden="true">
+    <div class="brh-session"><span class="brh-label">SESSION</span>&nbsp;<span class="brh-value" id="brhSession">00:00</span></div>
+    <div class="brh-explore"><span class="brh-label">EXPLORED</span>&nbsp;<span class="brh-value" id="brhExplore">0%</span></div>
+    <div class="brh-xy"><span class="brh-label">XY</span>&nbsp;<span class="brh-value" id="brhXY">0.00, 0.00</span></div>
+    <button class="brh-scroll-btn" id="brhScrollBtn" aria-label="Scroll to top">
+      <svg class="brh-ring" viewBox="0 0 36 36"><circle class="brh-ring-track" cx="18" cy="18" r="15"/><circle class="brh-ring-fill" id="brhRingFill" cx="18" cy="18" r="15"/></svg>
+    </button>
+  </div>
+
+  <!-- ═══ Navigation ═══ -->
   <header class="nav" id="nav">
-    <a class="nav-brand" href="#top" data-cursor>R&nbsp;S&nbsp;<b>Pall</b></a>
-    <nav class="nav-links" aria-label="Chapters">
-      <a href="#thesis" data-cursor><span class="idx">01</span>Thesis</a>
-      <a href="#inquiries" data-cursor><span class="idx">02</span>Inquiries</a>
-      <a href="#instruments" data-cursor><span class="idx">03</span>Instruments</a>
-      <a href="#methods" data-cursor><span class="idx">04</span>Methods</a>
-      <a href="#trajectory" data-cursor><span class="idx">05</span>Trajectory</a>
+    <a class="nav-brand" href="#top" data-cursor>Rajveer&nbsp;Singh&nbsp;<b>Pall</b></a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#about" data-cursor>About</a>
+      <a href="#impact" data-cursor>Impact</a>
+      <a href="#work" data-cursor>Work</a>
+      <a href="#research" data-cursor>Research</a>
+      <a href="#stack" data-cursor>Stack</a>
+      <a href="#contact" data-cursor>Contact</a>
     </nav>
   </header>
 
-  <aside class="chapter-rail" aria-hidden="true">
-    <span class="rail-line"></span>
-    <span class="rail-label" id="railLabel">Prologue</span>
-  </aside>
-
   <main id="top">
 
-    <!-- ═══ 00 · Prologue ═══ -->
-    <section class="prologue" id="hero" data-label="Prologue">
-      <div class="prologue-veil" aria-hidden="true"></div>
-      <div class="prologue-inner">
-        <p class="prologue-kicker rise">A Research Portfolio in Decision Systems</p>
-        <h1 class="prologue-question" data-split>How can machine learning <em>understand, evaluate, and improve</em> the systems that decide human outcomes?</h1>
-        <p class="prologue-byline rise"><b>Rajveer Singh Pall</b><span class="sep"></span>Independent ML Researcher</p>
+    <!-- ════════════ HERO ════════════ -->
+    <section class="hero" id="hero">
+      <!-- Spline 3D scene (behind text, over constellation) — injected lazily by home.js -->
+      <div class="hero-spline" id="heroSpline" aria-label="Decorative 3D scene" role="img"
+           data-spline="https://prod.spline.design/8SbnMxhzrQXLNLIN/scene.splinecode">
+        <div class="spline-skeleton" id="splineSkeleton" aria-hidden="true"></div>
       </div>
-      <div class="prologue-scroll rise"><span>Begin the descent</span></div>
+
+      <!-- Decorative line art (draw-on) -->
+      <svg class="hero-lineart" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g class="la-grid" stroke="currentColor" stroke-width="0.75" fill="none">
+          <path class="la-draw" d="M120,120 L1080,120" />
+          <path class="la-draw" d="M120,680 L1080,680" />
+          <path class="la-draw" d="M120,120 L120,680" />
+          <path class="la-draw" d="M1080,120 L1080,680" />
+        </g>
+        <g class="la-rings" stroke="currentColor" stroke-width="1" fill="none">
+          <circle class="la-draw" cx="600" cy="400" r="70" />
+          <circle class="la-draw" cx="600" cy="400" r="150" />
+          <circle class="la-draw" cx="600" cy="400" r="250" />
+        </g>
+        <g class="la-spokes" stroke="currentColor" stroke-width="0.75" fill="none">
+          <path class="la-draw" d="M600,400 L210,150" />
+          <path class="la-draw" d="M600,400 L990,150" />
+          <path class="la-draw" d="M600,400 L210,650" />
+          <path class="la-draw" d="M600,400 L990,650" />
+        </g>
+        <g class="la-nodes" fill="currentColor" stroke="none">
+          <circle class="la-dot" cx="210" cy="150" r="3" />
+          <circle class="la-dot" cx="990" cy="150" r="3" />
+          <circle class="la-dot" cx="210" cy="650" r="3" />
+          <circle class="la-dot" cx="990" cy="650" r="3" />
+          <circle class="la-dot" cx="600" cy="400" r="4" />
+        </g>
+      </svg>
+
+      <div class="hero-inner">
+        <p class="hero-kicker reveal">Machine-Learning &amp; Decision-Systems Research</p>
+        <h1 class="hero-name reveal">Rajveer Singh Pall</h1>
+        <p class="hero-role reveal">Researcher — fairness, deployment, and statistical honesty in the systems that decide human outcomes</p>
+        <p class="hero-tagline reveal">Not whether a model is accurate — whether the decision it drives is <em>fair, honest, and holds under load.</em></p>
+        <div class="hero-meta reveal">
+          <span class="hero-affil">CS &amp; Business Systems · GGITS, Jabalpur, India</span>
+        </div>
+        <div class="hero-actions reveal">
+          <a class="btn btn-primary" href="#contact" data-cursor>Get in touch</a>
+          <a class="btn btn-line" href="https://github.com/Rajveer-code" target="_blank" rel="noopener noreferrer" data-cursor>GitHub ↗</a>
+          <a class="btn btn-line" href="https://huggingface.co/Rajveer-code" target="_blank" rel="noopener noreferrer" data-cursor>HuggingFace ↗</a>
+        </div>
+        <div class="hero-socials reveal" aria-label="Profiles">
+          <a href="mailto:rajveerpall04@gmail.com" data-cursor aria-label="Email">Email</a>
+          <span class="dot">·</span>
+          <a href="https://github.com/Rajveer-code" target="_blank" rel="noopener noreferrer" data-cursor>GitHub</a>
+          <span class="dot">·</span>
+          <a href="https://huggingface.co/Rajveer-code" target="_blank" rel="noopener noreferrer" data-cursor>HuggingFace</a>
+          <span class="dot">·</span>
+          <a href="#" data-cursor title="Add Google Scholar URL" class="todo-link">Scholar</a>
+        </div>
+      </div>
+      <a class="hero-scroll reveal" href="#about" data-cursor aria-label="Scroll down"><span>Scroll</span></a>
     </section>
 
-    <!-- ═══ 01 · Thesis ═══ -->
-    <section class="chapter thesis" id="thesis" data-label="Thesis">
-      <div class="chapter-head rv">
-        <span class="chapter-num">01</span>
-        <h2 class="chapter-title" data-split>Thesis</h2>
-        <p class="chapter-sub">One question, pursued across lending, medicine, language, and markets.</p>
+    <!-- ════════════ ABOUT ════════════ -->
+    <section class="section about" id="about" data-label="About">
+      <div class="section-head reveal">
+        <span class="section-kicker">01 — About</span>
+        <h2 class="section-title">Accuracy is easy. Fairness under deployment isn't.</h2>
+        <p class="section-lede">I study the systems that decide human outcomes — and whether they deserve the trust we place in them.</p>
       </div>
-      <p class="thesis-text" id="thesisText">Every consequential system is a decision system. A mortgage model decides who builds wealth. A clinical model decides who gets treated. A language model decides whose words are believed. My research asks who benefits, who is harmed, where these systems fail — and proves, with causal evidence at scale, how they can be improved.</p>
-      <div class="thesis-stats rv">
-        <div class="tstat"><span class="tstat-value" data-counter="7">7</span><span class="tstat-label">Papers &amp;<br>manuscripts</span></div>
-        <div class="tstat"><span class="tstat-value"><span data-counter="42">42</span>M+</span><span class="tstat-label">Records analysed<br>across studies</span></div>
-        <div class="tstat"><span class="tstat-value" data-counter="5">5</span><span class="tstat-label">Identification<br>strategies stacked</span></div>
-        <div class="tstat"><span class="tstat-value" data-counter="6">6</span><span class="tstat-label">Systems built<br>&amp; deployed</span></div>
+      <div class="about-grid">
+        <div class="about-col reveal">
+          <h3 class="about-h">Decisions as systems</h3>
+          <p>A mortgage model decides who builds wealth. A clinical model decides who gets treated. A language model decides whose words are believed. My research treats each as a <strong>decision system</strong> and asks who benefits, who is harmed, and where it fails — then proves the answer with causal evidence at scale.</p>
+        </div>
+        <div class="about-col reveal">
+          <h3 class="about-h">Honest where it matters</h3>
+          <p>External validation over internal accuracy. Statistical gates that <strong>refuse to deploy</strong> when the signal is noise. Fairness measured at runtime, not just on a benchmark. Across lending, medicine, language, and markets, the method is the same: triangulate, stress-test, and report where the edge is thin.</p>
+        </div>
+        <div class="about-col reveal">
+          <h3 class="about-h">What I don't do</h3>
+          <p>No false alpha dressed up as a result. No one-time fairness number that breaks off-distribution. No privacy claims that quietly route data to a cloud API. If a system can't hold under deployment, I'd rather show why than ship it.</p>
+        </div>
       </div>
     </section>
 
-    <!-- ═══ 02 · Inquiries ═══ -->
-    <section class="chapter" id="inquiries" data-label="Inquiries">
-      <div class="chapter-head rv">
-        <span class="chapter-num">02</span>
-        <h2 class="chapter-title" data-split>Inquiries</h2>
-        <p class="chapter-sub">Seven case files — fairness, healthcare, language, and markets, each validated externally.</p>
+    <!-- ════════════ HONORS + EDUCATION ════════════ -->
+    <section class="section credentials" id="credentials" data-label="Background">
+      <div class="cred-grid">
+        <div class="cred-block reveal">
+          <span class="section-kicker">02 — Recognition</span>
+          <ul class="cred-list">
+            <li><span class="cred-mark">★</span><div><strong>Smart India Hackathon 2025</strong> — SereneSpace selected among the top <strong>50 of 250</strong> teams.</div></li>
+            <li><span class="cred-mark">★</span><div><strong>Six manuscripts</strong> under review / submitted at Q1 venues — QFE, JREFE, JBI, IEEE TNNLS, EMNLP, arXiv.</div></li>
+            <li><span class="cred-mark">★</span><div><strong>Open research artifacts</strong> — public datasets (HuggingFace), a PyPI package, and reproducible code for every study.</div></li>
+          </ul>
+        </div>
+        <div class="cred-block reveal">
+          <span class="section-kicker">03 — Education</span>
+          <ul class="cred-list">
+            <li><span class="cred-mark">▹</span><div><strong>B.E., Computer Science &amp; Business Systems</strong><br><span class="cred-sub">Gyan Ganga Institute of Technology and Sciences (GGITS), Jabalpur, India · <span class="todo-inline">[years TBD]</span></span></div></li>
+            <li><span class="cred-mark">▹</span><div><strong>Independent research program</strong><br><span class="cred-sub">Self-directed work across causal inference, fairness, federated learning, NLP, and financial econometrics.</span></div></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════ IMPACT ════════════ -->
+    <section class="section impact" id="impact" data-label="Impact">
+      <div class="section-head reveal">
+        <span class="section-kicker">04 — Impact</span>
+        <h2 class="section-title">Proof, not promises.</h2>
+      </div>
+      <!-- Interactive node constellation — JS-rendered in home.js -->
+      <div class="impact-graph-wrap" role="img" aria-label="Interactive metrics constellation — hover any point to read the study behind it">
+        <svg class="impact-svg" id="impactSVG" viewBox="0 0 1300 640"
+             preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
+        <div class="ig-ghost" id="igGhost" aria-hidden="true">
+          <!-- default state: small faint prompt -->
+          <p class="ig-prompt" id="igPrompt">HOVER A POINT — EVERY NUMBER IS SOURCED FROM A PAPER OR DEPLOYED SYSTEM.</p>
+          <!-- hover state: large value + structured info card -->
+          <div class="ig-card" id="igCard">
+            <div class="ig-card-val" id="igCardVal"></div>
+            <div class="ig-card-label" id="igCardLabel"></div>
+            <p class="ig-card-src" id="igCardSrc"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════ FEATURED WORK ════════════ -->
+    <section class="section work" id="work" data-label="Work">
+      <div class="section-head reveal">
+        <span class="section-kicker">05 — Featured Work</span>
+        <h2 class="section-title">Systems that had to hold.</h2>
+        <p class="section-lede">Deployed software — not notebooks. Each one carries a research result into something you can open and use.</p>
       </div>
 
-      <article class="case rv">
-        <div class="case-num">01</div>
-        <div class="case-body">
-          <figure class="case-figure case-figure--tall">
-            <ul class="arch-themes"><li>Causality</li><li>Fairness</li></ul>
-            <svg class="arch" viewBox="0 0 560 250" role="img" aria-labelledby="d1-t d1-d" preserveAspectRatio="xMidYMid meet">
-              <title id="d1-t">Identification strategy triangulation across 42 million mortgages</title>
-              <desc id="d1-d">HMDA microdata fans into five independent identification strategies — DFL decomposition, within-lender fixed effects, regression discontinuity at the 80% LTV threshold, difference-in-differences, and Manski bounds — which converge on a robust racial approval gap.</desc>
-              <defs>
-                <marker id="arr-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
-                <filter id="glow-1" x="-45%" y="-45%" width="190%" height="190%"><feGaussianBlur stdDeviation="2.4" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.45"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
-              </defs>
-              <g class="flow-arrows">
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M132,125 C176,125 176,31 210,31"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M132,125 C176,125 176,75 210,75"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M132,125 L210,119"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M132,125 C176,125 176,163 210,163"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M132,125 C176,125 176,207 210,207"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M364,31 C400,31 400,124 428,124"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M364,75 C400,75 400,124 428,124"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M364,119 L428,124"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M364,163 C400,163 400,124 428,124"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-1)" d="M364,207 C400,207 400,124 428,124"></path>
-              </g>
-              <g class="arch-nodes">
-                <g class="arch-node" tabindex="0" data-tip-title="HMDA microdata" data-tip-body="Home Mortgage Disclosure Act records — every U.S. mortgage application, 2020–2024, ~42.3M rows.">
-                  <rect x="16" y="98" width="116" height="54" rx="8"></rect>
-                  <text x="74" y="120" text-anchor="middle" class="arch-lead">HMDA microdata</text>
-                  <text x="74" y="135" text-anchor="middle" class="arch-sub">42M apps · 2020–24</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="DFL decomposition" data-tip-body="DiNardo–Fortin–Lemieux reweighting splits the raw approval gap into an explained component and an unexplained residual.">
-                  <rect x="210" y="16" width="154" height="30" rx="7"></rect><text x="287" y="35" text-anchor="middle">DFL decomposition</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Within-lender fixed effects" data-tip-body="Compares Black and White applicants at the same lender, absorbing institution-level policy and pricing.">
-                  <rect x="210" y="60" width="154" height="30" rx="7"></rect><text x="287" y="79" text-anchor="middle">Within-lender FE</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Regression discontinuity" data-tip-body="Local identification at the 80% LTV threshold, where private mortgage insurance requirements change sharply.">
-                  <rect x="210" y="104" width="154" height="30" rx="7"></rect><text x="287" y="123" text-anchor="middle">RDD · 80% LTV</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Difference-in-differences" data-tip-body="Treats the 2022–2024 credit-tightening cycle as a natural experiment shifting the approval gap.">
-                  <rect x="210" y="148" width="154" height="30" rx="7"></rect><text x="287" y="167" text-anchor="middle">DiD · 2022–24</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Manski partial-identification bounds" data-tip-body="Assumption-free bounds: even under worst-case selection on unobservables, the gap is provably ≥ 9 pp.">
-                  <rect x="210" y="192" width="154" height="30" rx="7"></rect><text x="287" y="211" text-anchor="middle">Manski bounds</text>
-                </g>
-                <g class="arch-node is-key" filter="url(#glow-1)" tabindex="0" data-tip-title="Triangulated estimate" data-tip-body="Five independent strategies converge on the same conclusion: a persistent, unexplained racial approval gap.">
-                  <rect x="428" y="94" width="120" height="60" rx="9"></rect>
-                  <text x="488" y="119" text-anchor="middle">Robust racial gap</text>
-                  <text x="488" y="134" text-anchor="middle" class="arch-sub">persistent · unexplained</text>
-                </g>
-                <g class="arch-metric"><rect x="16" y="204" width="96" height="22" rx="6"></rect><text x="64" y="219" text-anchor="middle">42.3M loans</text></g>
-                <g class="arch-metric"><rect x="448" y="170" width="84" height="22" rx="6"></rect><text x="490" y="185" text-anchor="middle">≥ 9 pp</text></g>
-              </g>
-            </svg>
-            <figcaption><b>Figure I.</b> Identification strategy triangulation across 42M mortgages.</figcaption>
-          </figure>
-          <span class="case-venue">Working paper</span>
-          <h3><a href="https://github.com/Rajveer-code" target="_blank" rel="noreferrer" data-cursor>Persistent Racial Disparities in U.S. Mortgage Approval</a></h3>
-          <p class="case-subtitle">Evidence from 42 Million Applications, 2020–2024</p>
-          <p class="case-summary">A full-scale empirical study of racial approval gaps in U.S. mortgage markets using HMDA microdata and five quasi-experimental identification strategies — stacking DFL decomposition, within-lender fixed effects, RDD at the 80% LTV threshold, DiD during the 2022–2024 tightening cycle, and Manski bounds.</p>
-          <div class="case-metrics">
-            <div class="cmetric"><strong>42M</strong><span>applications</span></div>
-            <div class="cmetric"><strong>14 pp</strong><span>raw approval gap</span></div>
-            <div class="cmetric"><strong>77%</strong><span>within-lender gap</span></div>
-            <div class="cmetric"><strong>&gt;9 pp</strong><span>Manski lower bound</span></div>
+      <article class="card reveal" style="--accent:#4ade80">
+        <div class="card-head">
+          <div>
+            <h3 class="card-title">ARIA Assistant</h3>
+            <p class="card-meta">Local-first voice AI · runtime fairness audit</p>
           </div>
-          <div class="case-tags"><span>Causal inference</span><span>HMDA</span><span>DFL</span><span>RDD</span><span>DiD</span><span>Manski bounds</span></div>
-          <a class="case-link" href="https://github.com/Rajveer-code" target="_blank" rel="noreferrer" data-cursor>Open artifact</a>
+          <span class="card-badge">Shipped · Local</span>
+        </div>
+        <div class="card-grid">
+          <div><h4>Context</h4><p>Offline fairness numbers mean little if the deployed system drifts. A personal AI should be private, capable, and accountable at runtime.</p></div>
+          <div><h4>Approach</h4><p>A fully local pipeline — faster-whisper → Qwen3-8B → a five-axis audit → Piper TTS — with 16 real tools and zero cloud LLM calls.</p></div>
+          <div><h4>System</h4><p>Runs on a single RTX 4060 (≤7.1&nbsp;GB VRAM). Every response is scored for calibration, faithfulness, consistency, equity, and attribution before it is surfaced.</p></div>
+          <div><h4>Outcome</h4><p>The equity axis catches 33–39% of failures other guardrails miss — fairness as a live property, on local hardware.</p></div>
+        </div>
+        <div class="card-links">
+          <a href="project-aria.html" data-cursor>Read the case ↗</a>
+          <a href="https://github.com/Rajveer-code/aria-assistant" target="_blank" rel="noopener noreferrer" data-cursor>GitHub ↗</a>
+          <a href="https://aria-assistant.vercel.app" target="_blank" rel="noopener noreferrer" data-cursor>Live demo ↗</a>
         </div>
       </article>
 
-      <article class="case rv">
-        <div class="case-num">02</div>
-        <div class="case-body">
-          <figure class="case-figure">
-            <ul class="arch-themes"><li>Fairness</li><li>Trust</li><li>Robustness</li></ul>
-            <svg class="arch" viewBox="0 0 560 210" role="img" aria-labelledby="d2-t d2-d" preserveAspectRatio="xMidYMid meet">
-              <title id="d2-t">Federated training and calibration workflow</title>
-              <desc id="d2-d">Three demographically partitioned NHANES client nodes train locally and send updates to a federated aggregator, producing a global model externally validated on 1.28 million BRFSS patients with calibration repair.</desc>
-              <defs>
-                <marker id="arr-2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
-                <filter id="glow-2" x="-45%" y="-45%" width="190%" height="190%"><feGaussianBlur stdDeviation="2.4" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.45"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
-              </defs>
-              <g class="flow-arrows">
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-2)" d="M134,37 C190,37 190,99 224,97"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-2)" d="M134,105 L224,105"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-2)" d="M134,173 C190,173 190,111 224,113"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-2)" d="M354,96 C384,96 384,66 410,66"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-2)" d="M477,86 L477,120"></path>
-              </g>
-              <g class="arch-nodes">
-                <g class="arch-node" tabindex="0" data-tip-title="Demographic partition" data-tip-body="NHANES split into non-IID nodes (young-urban, elderly-rural, mixed-metro) to simulate real distribution shift across sites.">
-                  <rect x="14" y="20" width="120" height="34" rx="7"></rect><text x="74" y="40" text-anchor="middle">Young · Urban</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Demographic partition" data-tip-body="Each client holds a demographically distinct slice of NHANES; raw records never leave the node.">
-                  <rect x="14" y="88" width="120" height="34" rx="7"></rect><text x="74" y="108" text-anchor="middle">Elderly · Rural</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Demographic partition" data-tip-body="Heterogeneous client participation drives the need for drift-robust aggregation.">
-                  <rect x="14" y="156" width="120" height="34" rx="7"></rect><text x="74" y="176" text-anchor="middle">Mixed · Metro</text>
-                </g>
-                <g class="arch-node is-key" filter="url(#glow-2)" tabindex="0" data-tip-title="Federated aggregator" data-tip-body="FedAvg, FedProx (proximal term), FedNova (drift normalization) and SCAFFOLD (control variates) compared over 50 rounds.">
-                  <rect x="224" y="78" width="130" height="54" rx="9"></rect>
-                  <text x="289" y="100" text-anchor="middle">Aggregator</text>
-                  <text x="289" y="115" text-anchor="middle" class="arch-sub">4 FL strategies</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Differential privacy" data-tip-body="DP-SGD sweep (Opacus) over ε ∈ {0.5…∞}; the global model recovers utility above ε≈10.">
-                  <rect x="410" y="46" width="134" height="40" rx="7"></rect><text x="477" y="70" text-anchor="middle">Global model</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="External validation" data-tip-body="Evaluated on 1.28M BRFSS respondents with DeLong CIs; generalization gap 40% narrower than centralized training.">
-                  <rect x="410" y="122" width="134" height="44" rx="7"></rect>
-                  <text x="477" y="142" text-anchor="middle">External BRFSS</text>
-                  <text x="477" y="156" text-anchor="middle" class="arch-sub">1.28M patients</text>
-                </g>
-                <g class="arch-metric"><rect x="410" y="174" width="134" height="22" rx="6"></rect><text x="477" y="189" text-anchor="middle">AUC 0.757</text></g>
-                <g class="arch-metric"><rect x="224" y="150" width="96" height="22" rx="6"></rect><text x="272" y="165" text-anchor="middle">ECE 0.001</text></g>
-              </g>
-            </svg>
-            <figcaption><b>Figure II.</b> Federated training and calibration workflow.</figcaption>
-          </figure>
-          <span class="case-venue">Submitted — CMPB, Elsevier</span>
-          <h3><a href="https://github.com/Rajveer-code/Federated-Diabetes" target="_blank" rel="noreferrer" data-cursor>Privacy-Preserving Federated Learning for Diabetes Risk Prediction</a></h3>
-          <p class="case-subtitle">External validation, fairness, calibration, and DP utility analysis</p>
-          <p class="case-summary">A privacy-preserving FL framework for type-2 diabetes risk prediction, evaluated on demographically partitioned NHANES nodes and 1.28M external BRFSS respondents. Compares FedAvg, FedProx, FedNova, and SCAFFOLD; reports subgroup fairness, calibration repair, a DP sweep, and a full reproducibility pipeline.</p>
-          <div class="case-metrics">
-            <div class="cmetric"><strong>0.757</strong><span>external AUC</span></div>
-            <div class="cmetric"><strong>1.28M</strong><span>BRFSS patients</span></div>
-            <div class="cmetric"><strong>40%</strong><span>narrower gen gap</span></div>
-            <div class="cmetric"><strong>0.001</strong><span>ECE isotonic</span></div>
+      <article class="card reveal" style="--accent:#22d3ee">
+        <div class="card-head">
+          <div>
+            <h3 class="card-title">FinSight + Web</h3>
+            <p class="card-meta">Earnings-intelligence pipeline · analytics dashboard</p>
           </div>
-          <div class="case-tags"><span>Federated learning</span><span>Healthcare AI</span><span>PyTorch</span><span>Flower</span><span>Opacus</span></div>
-          <a class="case-link" href="https://github.com/Rajveer-code/Federated-Diabetes" target="_blank" rel="noreferrer" data-cursor>Open artifact</a>
+          <span class="card-badge">Shipped · Vercel</span>
+        </div>
+        <div class="card-grid">
+          <div><h4>Context</h4><p>Can language in earnings calls predict forward returns — honestly, under walk-forward discipline that can't peek at the future?</p></div>
+          <div><h4>Approach</h4><p>14,584 transcripts from 601 S&amp;P 500 firms → FinBERT sentiment + RAG-retrieved features → strict walk-forward backtest.</p></div>
+          <div><h4>System</h4><p>A staged ML pipeline plus a deployed Next.js dashboard rendering the signal field, sector breakdowns, and equity curves.</p></div>
+          <div><h4>Outcome</h4><p>A genuine cross-sectional signal in Energy (IC +0.31) — and an honest report of where the edge is thin elsewhere.</p></div>
+        </div>
+        <div class="card-links">
+          <a href="project-finsight.html" data-cursor>Read the case ↗</a>
+          <a href="https://finsight-web-rust.vercel.app" target="_blank" rel="noopener noreferrer" data-cursor>Live dashboard ↗</a>
+          <a href="https://github.com/Rajveer-code/Finsight" target="_blank" rel="noopener noreferrer" data-cursor>GitHub ↗</a>
         </div>
       </article>
 
-      <article class="case rv">
-        <div class="case-num">03</div>
-        <div class="case-body">
-          <figure class="case-figure">
-            <ul class="arch-themes"><li>Generalization</li><li>Robustness</li></ul>
-            <svg class="arch" viewBox="0 0 560 210" role="img" aria-labelledby="d3-t d3-d" preserveAspectRatio="xMidYMid meet">
-              <title id="d3-t">Cross-domain external-validation framework</title>
-              <desc id="d3-d">A development cohort is evaluated under nested cross-validation across four model families with SHAP and subgroup fairness analysis, then externally validated on 1.28 million BRFSS respondents, where AUC declines under deployment shift.</desc>
-              <defs>
-                <marker id="arr-3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
-                <filter id="glow-3" x="-45%" y="-45%" width="190%" height="190%"><feGaussianBlur stdDeviation="2.4" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.45"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
-              </defs>
-              <g class="flow-arrows">
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M108,108 L128,108"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M220,108 C232,108 232,53 240,53"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M220,108 C232,108 232,89 240,89"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M220,108 L240,125"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M220,108 C232,108 232,161 240,161"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M326,53 C340,53 340,108 350,108"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M326,89 C340,89 340,108 350,108"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M326,125 L350,108"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M326,161 C340,161 340,108 350,108"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-3)" d="M446,108 L466,108"></path>
-              </g>
-              <g class="arch-nodes">
-                <g class="arch-node" tabindex="0" data-tip-title="Development cohort" data-tip-body="Clinical cohort of 15,685 used for model development under leak-free preprocessing.">
-                  <rect x="12" y="86" width="96" height="44" rx="7"></rect><text x="60" y="105" text-anchor="middle">Dev cohort</text><text x="60" y="118" text-anchor="middle" class="arch-sub">n = 15,685</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Nested cross-validation" data-tip-body="Outer/inner 5-fold CV separates hyperparameter search from performance estimation, avoiding optimistic bias.">
-                  <rect x="128" y="86" width="92" height="44" rx="7"></rect><text x="174" y="105" text-anchor="middle">Nested CV</text><text x="174" y="118" text-anchor="middle" class="arch-sub">5-fold</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Model family" data-tip-body="Four families benchmarked head-to-head: logistic regression, random forest, SVM and gradient-boosted trees.">
-                  <rect x="240" y="40" width="86" height="26" rx="6"></rect><text x="283" y="56" text-anchor="middle">LogReg</text>
-                </g>
-                <g class="arch-node"><rect x="240" y="76" width="86" height="26" rx="6"></rect><text x="283" y="92" text-anchor="middle">Random Forest</text></g>
-                <g class="arch-node"><rect x="240" y="112" width="86" height="26" rx="6"></rect><text x="283" y="128" text-anchor="middle">SVM</text></g>
-                <g class="arch-node"><rect x="240" y="148" width="86" height="26" rx="6"></rect><text x="283" y="164" text-anchor="middle">XGBoost</text></g>
-                <g class="arch-node" tabindex="0" data-tip-title="Explainability + fairness" data-tip-body="SHAP attributions and subgroup AUC expose which features drive risk and whether accuracy is equitable across groups.">
-                  <rect x="350" y="86" width="96" height="44" rx="7"></rect><text x="398" y="105" text-anchor="middle">SHAP</text><text x="398" y="118" text-anchor="middle" class="arch-sub">+ subgroup</text>
-                </g>
-                <g class="arch-node is-key" filter="url(#glow-3)" tabindex="0" data-tip-title="External validation under shift" data-tip-body="On 1.28M BRFSS respondents, AUC falls ~9.7% — strong internal validation does not survive deployment shift.">
-                  <rect x="466" y="84" width="88" height="48" rx="9"></rect><text x="510" y="103" text-anchor="middle">External</text><text x="510" y="117" text-anchor="middle" class="arch-sub">BRFSS 1.28M</text>
-                </g>
-                <g class="arch-metric"><rect x="460" y="172" width="98" height="22" rx="6"></rect><text x="509" y="187" text-anchor="middle">−9.7% AUC</text></g>
-              </g>
-            </svg>
-            <figcaption><b>Figure III.</b> Cross-domain external-validation framework.</figcaption>
-          </figure>
-          <span class="case-venue">Research manuscript</span>
-          <h3><a href="https://github.com/Rajveer-code" target="_blank" rel="noreferrer" data-cursor>Comprehensive Evaluation of ML for Type 2 Diabetes Risk Prediction</a></h3>
-          <p class="case-subtitle">Large-scale external validation, explainability, and fairness analysis</p>
-          <p class="case-summary">Rigorous evaluation of diabetes risk models under external deployment shift, emphasizing why strong internal validation is not enough. Benchmarks logistic regression, random forest, SVM, and XGBoost with nested CV, SHAP explanations, subgroup analysis, and reporting standards.</p>
-          <div class="case-metrics">
-            <div class="cmetric"><strong>15,685</strong><span>dev cohort</span></div>
-            <div class="cmetric"><strong>1.28M</strong><span>external validation</span></div>
-            <div class="cmetric"><strong>-9.7%</strong><span>relative AUC decline</span></div>
-            <div class="cmetric"><strong>Nested</strong><span>5-fold CV</span></div>
+      <article class="card reveal" style="--accent:#a78bfa">
+        <div class="card-head">
+          <div>
+            <h3 class="card-title">IndiaFinBench</h3>
+            <p class="card-meta">LLM evaluation benchmark · Indian financial regulation</p>
           </div>
-          <div class="case-tags"><span>XGBoost</span><span>SHAP</span><span>Fairness</span><span>External validation</span><span>BRFSS</span></div>
-          <a class="case-link" href="https://github.com/Rajveer-code" target="_blank" rel="noreferrer" data-cursor>Open artifact</a>
+          <span class="card-badge">Live · HuggingFace</span>
+        </div>
+        <div class="card-grid">
+          <div><h4>Context</h4><p>No public benchmark measured how well LLMs read Indian financial regulatory text — SEBI and RBI rulings spanning 1992–2026.</p></div>
+          <div><h4>Approach</h4><p>406 expert-annotated QA items across 192 documents, four reasoning tasks, three difficulty tiers, with a hybrid-RAG open-book demo.</p></div>
+          <div><h4>System</h4><p>12 LLMs scored zero-shot closed-book; a Flask + FAISS + BM25 retrieval demo (RRF) deployed as a HuggingFace Space.</p></div>
+          <div><h4>Outcome</h4><p>Gemini 2.5 Flash leads at 89.7%; hybrid retrieval lifts Recall@5 to 0.785 (+9.7&nbsp;pp over dense alone).</p></div>
+        </div>
+        <div class="card-links">
+          <a href="project-indiafinbench.html" data-cursor>Read the case ↗</a>
+          <a href="https://huggingface.co/spaces/Rajveer-code/IndiaFinBench" target="_blank" rel="noopener noreferrer" data-cursor>Live demo ↗</a>
+          <a href="https://github.com/Rajveer-code/IndiaFinBench" target="_blank" rel="noopener noreferrer" data-cursor>GitHub ↗</a>
         </div>
       </article>
 
-      <article class="case rv">
-        <div class="case-num">04</div>
-        <div class="case-body">
-          <figure class="case-figure case-figure--tall">
-            <ul class="arch-themes"><li>Fairness</li><li>Generalization</li><li>Trust</li></ul>
-            <svg class="arch" viewBox="0 0 560 250" role="img" aria-labelledby="d4-t d4-d" preserveAspectRatio="xMidYMid meet">
-              <title id="d4-t">Five-axis cross-platform fairness audit (CPFE)</title>
-              <desc id="d4-d">The CPFE framework evaluates a family of transformer models along five axes — discrimination, calibration, significance, equity, and attribution stability — arranged radially around the central protocol.</desc>
-              <defs>
-                <marker id="arr-4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
-                <filter id="glow-4" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.8" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.5"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
-              </defs>
-              <polygon class="arch-web" points="280,33 367.5,96.6 334.1,199.4 225.9,199.4 192.5,96.6"></polygon>
-              <g class="arch-spoke">
-                <line x1="280" y1="125" x2="280" y2="33"></line>
-                <line x1="280" y1="125" x2="367.5" y2="96.6"></line>
-                <line x1="280" y1="125" x2="334.1" y2="199.4"></line>
-                <line x1="280" y1="125" x2="225.9" y2="199.4"></line>
-                <line x1="280" y1="125" x2="192.5" y2="96.6"></line>
-              </g>
-              <g class="arch-nodes">
-                <g class="arch-node" tabindex="0" data-tip-title="Discriminative performance" data-tip-body="Macro one-vs-rest AUC with DeLong confidence intervals — raw class-separation ability, before and after platform shift.">
-                  <rect x="234" y="18" width="92" height="30" rx="7"></rect><text x="280" y="37" text-anchor="middle">Discrimination</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Calibration" data-tip-body="Expected calibration error over 10 bins; cross-platform ECE collapses from 0.056 to 0.54 — confident but wrong.">
-                  <rect x="321" y="82" width="92" height="30" rx="7"></rect><text x="367" y="101" text-anchor="middle">Calibration</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Statistical significance" data-tip-body="Bootstrap significance testing with Bonferroni correction across all model pairs (α′ = 0.0167).">
-                  <rect x="288" y="184" width="92" height="30" rx="7"></rect><text x="334" y="203" text-anchor="middle">Significance</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Prediction equity (novel axis)" data-tip-body="Symmetric disparate impact and equalized-odds gap across platforms; minority-class DI falls below 0.17.">
-                  <rect x="180" y="184" width="92" height="30" rx="7"></rect><text x="226" y="203" text-anchor="middle">Equity ★</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Attribution stability" data-tip-body="Gradient-saliency Jaccard@K across platforms; token overlap drops to ≈0.10 — the models attend to different words.">
-                  <rect x="146" y="82" width="92" height="30" rx="7"></rect><text x="192" y="101" text-anchor="middle">Attribution</text>
-                </g>
-                <g class="arch-node is-key" filter="url(#glow-4)" tabindex="0" data-tip-title="CPFE protocol" data-tip-body="Cross-Platform Fairness Evaluation auditing BERT, RoBERTa, Emotion-DistilRoBERTa and GoEmotions-RoBERTa trained on one platform, tested on Reddit and Twitter.">
-                  <rect x="228" y="97" width="104" height="56" rx="11"></rect>
-                  <text x="280" y="122" text-anchor="middle" font-size="15" letter-spacing="0.08em">CPFE</text>
-                  <text x="280" y="139" text-anchor="middle" class="arch-sub">4 transformers</text>
-                </g>
-                <g class="arch-metric"><rect x="14" y="20" width="92" height="24" rx="6"></rect><text x="60" y="36" text-anchor="middle">−39% AUC</text></g>
-                <g class="arch-metric"><rect x="14" y="52" width="92" height="24" rx="6"></rect><text x="60" y="68" text-anchor="middle">J ≈ 0.10</text></g>
-              </g>
-            </svg>
-            <figcaption><b>Figure IV.</b> Five-axis cross-platform fairness audit (CPFE).</figcaption>
-          </figure>
-          <span class="case-venue">Submitted — IEEE TNNLS</span>
-          <h3><a href="https://github.com/Rajveer-code/mental-health-fairness-nlp" target="_blank" rel="noreferrer" data-cursor>Cross-Platform Generalisation Failure in Mental Health NLP</a></h3>
-          <p class="case-subtitle">A Five-Axis Fairness Audit of Transformer Models on Social Media</p>
-          <p class="case-summary">Introduces a five-axis audit protocol showing that mental-health classifiers trained on one platform fail systematically on Reddit and Twitter. Evaluates BERT, RoBERTa, Emotion-DistilRoBERTa, and GoEmotions-RoBERTa across discrimination, calibration, significance, equity, and attribution stability.</p>
-          <div class="case-metrics">
-            <div class="cmetric"><strong>30–39%</strong><span>AUC degradation</span></div>
-            <div class="cmetric"><strong>9×</strong><span>ECE increase</span></div>
-            <div class="cmetric"><strong>DI &lt; 0.17</strong><span>equity violation</span></div>
-            <div class="cmetric"><strong>0.216</strong><span>fine-tune gain</span></div>
+      <article class="card reveal" style="--accent:#f59e0b">
+        <div class="card-head">
+          <div>
+            <h3 class="card-title">SereneSpace</h3>
+            <p class="card-meta">Anonymous student mental-health platform</p>
           </div>
-          <div class="case-tags"><span>Transformers</span><span>Mental health NLP</span><span>Calibration</span><span>Fairness</span><span>CPFE</span></div>
-          <a class="case-link" href="https://github.com/Rajveer-code/mental-health-fairness-nlp" target="_blank" rel="noreferrer" data-cursor>Open artifact</a>
+          <span class="card-badge">SIH 2025 · 50 of 250</span>
         </div>
-      </article>
-
-      <article class="case rv">
-        <div class="case-num">05</div>
-        <div class="case-body">
-          <figure class="case-figure">
-            <ul class="arch-themes"><li>Robustness</li><li>Deployment</li></ul>
-            <svg class="arch" viewBox="0 0 560 210" role="img" aria-labelledby="d5-t d5-d" preserveAspectRatio="xMidYMid meet">
-              <title id="d5-t">Statistically gated deployment (ICGDF)</title>
-              <desc id="d5-d">Causal features feed a calibrated ensemble whose cross-sectional signal must pass both a Newey-West HAC test and a permutation test; the deployment gate opened in zero of twelve walk-forward folds.</desc>
-              <defs>
-                <marker id="arr-5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
-                <filter id="glow-5" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.6" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.5"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
-              </defs>
-              <g class="flow-arrows">
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-5)" d="M94,108 L110,108"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-5)" d="M202,108 L224,108"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-5)" d="M304,108 L326,108"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-5)" d="M418,108 L426,108"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-5)" d="M466,96 L482,86"></path>
-                <path class="flow-arrow is-faint" pathLength="1" marker-end="url(#arr-5)" d="M466,120 L482,138"></path>
-              </g>
-              <g class="arch-nodes">
-                <g class="arch-node" tabindex="0" data-tip-title="Causal features" data-tip-body="49 strictly causal OHLCV technical features — no forward-looking windows, target shifted two days to avoid lookahead.">
-                  <rect x="10" y="86" width="84" height="44" rx="7"></rect><text x="52" y="105" text-anchor="middle">49 features</text><text x="52" y="118" text-anchor="middle" class="arch-sub">causal OHLCV</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Calibrated ensemble" data-tip-body="Equal-weight CatBoost + Random Forest + MLP, isotonically calibrated per walk-forward fold.">
-                  <rect x="110" y="86" width="92" height="44" rx="7"></rect><text x="156" y="105" text-anchor="middle">Ensemble</text><text x="156" y="118" text-anchor="middle" class="arch-sub">CatBoost·RF·MLP</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Isotonic calibration" data-tip-body="Non-parametric probability calibration fitted on a held-out split and frozen before the test fold.">
-                  <rect x="224" y="86" width="80" height="44" rx="7"></rect><text x="264" y="105" text-anchor="middle">Isotonic</text><text x="264" y="118" text-anchor="middle" class="arch-sub">calibration</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Significance gate" data-tip-body="Information coefficient must clear a Newey-West HAC t-test (t&gt;1.645) AND a 1,000-draw permutation test (p&lt;0.05).">
-                  <rect x="326" y="84" width="92" height="48" rx="7"></rect><text x="372" y="104" text-anchor="middle">IC test</text><text x="372" y="118" text-anchor="middle" class="arch-sub">HAC ∧ perm</text>
-                </g>
-                <path class="arch-diamond" d="M452,82 L478,108 L452,134 L426,108 Z"></path>
-                <text class="arch-diamond-label" x="452" y="111" text-anchor="middle">GATE</text>
-                <g class="arch-node is-key" filter="url(#glow-5)" tabindex="0" data-tip-title="Gate closed" data-tip-body="Across 1,512 out-of-sample days and 12 folds the gate never opened — the honest, publishable null: no exploitable daily cross-sectional signal.">
-                  <rect x="482" y="64" width="74" height="40" rx="8"></rect><text x="519" y="81" text-anchor="middle">Gate CLOSED</text><text x="519" y="94" text-anchor="middle" class="arch-sub">never opened</text>
-                </g>
-                <g class="arch-node" opacity="0.4"><rect x="482" y="124" width="74" height="34" rx="8"></rect><text x="519" y="145" text-anchor="middle">trade top-K</text></g>
-                <g class="arch-metric"><rect x="452" y="172" width="104" height="22" rx="6"></rect><text x="504" y="187" text-anchor="middle">0 / 12 folds</text></g>
-              </g>
-            </svg>
-            <figcaption><b>Figure V.</b> Statistically gated deployment (ICGDF).</figcaption>
-          </figure>
-          <span class="case-venue">Under review — Quantitative Finance &amp; Economics</span>
-          <h3><a href="https://github.com/Rajveer-code" target="_blank" rel="noreferrer" data-cursor>When the Gate Stays Closed</a></h3>
-          <p class="case-subtitle">Near-zero cross-sectional predictability in large-cap NASDAQ equities</p>
-          <p class="case-summary">A statistically gated ML deployment framework that refuses to trade when cross-sectional signal fails HAC and permutation confirmation. Combines causal feature engineering, calibrated ensembles, Newey-West IC testing, permutation confirmation, and cross-market replication on Nifty 50.</p>
-          <div class="case-metrics">
-            <div class="cmetric"><strong>1,512</strong><span>OOS trading days</span></div>
-            <div class="cmetric"><strong>12</strong><span>walk-forward folds</span></div>
-            <div class="cmetric"><strong>0/12</strong><span>gate-open folds</span></div>
-            <div class="cmetric"><strong>0.0%</strong><span>false positives</span></div>
-          </div>
-          <div class="case-tags"><span>Quant ML</span><span>ICGDF</span><span>CatBoost</span><span>MLP</span><span>Permutation tests</span></div>
-          <a class="case-link" href="https://github.com/Rajveer-code" target="_blank" rel="noreferrer" data-cursor>Open artifact</a>
+        <div class="card-grid">
+          <div><h4>Context</h4><p>The barrier to first contact in student mental health is identity. A login is often enough to stop someone reaching out.</p></div>
+          <div><h4>Approach</h4><p>A no-login entry point routing students to mood check-ins, an AI companion, activities, and peer community.</p></div>
+          <div><h4>System</h4><p>A single web app with crisis-escalation pathways and aggregate, de-identified analytics for administrators.</p></div>
+          <div><h4>Outcome</h4><p>Selected among the top 50 of 250 teams at Smart India Hackathon 2025.</p></div>
         </div>
-      </article>
-
-      <article class="case rv">
-        <div class="case-num">06</div>
-        <div class="case-body">
-          <figure class="case-figure case-figure--tall">
-            <ul class="arch-themes"><li>Causality</li><li>Fairness</li></ul>
-            <svg class="arch" viewBox="0 0 560 250" role="img" aria-labelledby="d6-t d6-d" preserveAspectRatio="xMidYMid meet">
-              <title id="d6-t">Heterogeneous treatment-effect estimation via double machine learning</title>
-              <desc id="d6-d">Race as treatment and 33 creditworthiness controls feed a double machine learning cross-fit; a causal forest branches into heterogeneous conditional effects, converging on an individual-level approval penalty validated by multiple designs.</desc>
-              <defs>
-                <marker id="arr-6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
-                <filter id="glow-6" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.6" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.5"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
-              </defs>
-              <g class="flow-arrows">
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-6)" d="M106,76 C132,76 132,112 150,110"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-6)" d="M106,150 C132,150 132,122 150,122"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-6)" d="M254,116 C282,116 282,72 300,72"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-6)" d="M254,116 L300,122"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-6)" d="M254,116 C282,116 282,172 300,172"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-6)" d="M420,72 C442,72 442,122 452,122"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-6)" d="M420,122 L452,122"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-6)" d="M420,172 C442,172 442,122 452,122"></path>
-                <path class="flow-arrow is-faint" pathLength="1" marker-end="url(#arr-6)" d="M360,214 C420,200 480,175 500,150"></path>
-              </g>
-              <g class="arch-nodes">
-                <g class="arch-node" tabindex="0" data-tip-title="Treatment" data-tip-body="Applicant race as the causal treatment whose effect on approval is the estimand.">
-                  <rect x="14" y="58" width="92" height="36" rx="7"></rect><text x="60" y="73" text-anchor="middle">Race</text><text x="60" y="85" text-anchor="middle" class="arch-sub">treatment</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Confounders" data-tip-body="33 creditworthiness features (income, LTV, DTI, underwriting system, geography…) adjusted for via flexible nuisance models.">
-                  <rect x="14" y="132" width="92" height="36" rx="7"></rect><text x="60" y="148" text-anchor="middle">33 controls</text><text x="60" y="160" text-anchor="middle" class="arch-sub">credit features</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Double machine learning" data-tip-body="Orthogonalized DML with LightGBM nuisance models and cross-fitting removes regularization bias from the effect estimate.">
-                  <rect x="150" y="92" width="104" height="48" rx="8"></rect><text x="202" y="112" text-anchor="middle">DML cross-fit</text><text x="202" y="125" text-anchor="middle" class="arch-sub">LightGBM</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Causal forest — heterogeneity" data-tip-body="Manual underwriting carries the largest penalty (−14.8 pp), revealing human discretion as the dominant channel.">
-                  <rect x="300" y="58" width="120" height="28" rx="6"></rect><text x="360" y="76" text-anchor="middle">Manual AUS −14.8</text>
-                </g>
-                <g class="arch-node"><rect x="300" y="108" width="120" height="28" rx="6"></rect><text x="360" y="126" text-anchor="middle">Automated −6.2</text></g>
-                <g class="arch-node"><rect x="300" y="158" width="120" height="28" rx="6"></rect><text x="360" y="176" text-anchor="middle">High-DTI −10.2</text></g>
-                <g class="arch-node is-key" filter="url(#glow-6)" tabindex="0" data-tip-title="Conditional penalty" data-tip-body="90.7% of Black applicants face a negative conditional effect; mean −9.39 pp after adjusting for 33 controls.">
-                  <rect x="452" y="96" width="100" height="52" rx="9"></rect><text x="502" y="118" text-anchor="middle">Conditional</text><text x="502" y="132" text-anchor="middle" class="arch-sub">penalty</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Robustness battery" data-tip-body="DR-Learner replication, RDD at 80% LTV, DiD over the 2022–24 cycle, and placebo tests with a 17.9× signal-to-noise ratio.">
-                  <rect x="150" y="214" width="300" height="28" rx="7"></rect><text x="300" y="232" text-anchor="middle" font-size="8.4" letter-spacing="0.04em">Validation · DR-Learner · RDD · DiD · placebo 17.9×</text>
-                </g>
-                <g class="arch-metric"><rect x="452" y="158" width="100" height="22" rx="6"></rect><text x="502" y="173" text-anchor="middle">−9.39 pp</text></g>
-                <g class="arch-metric"><rect x="150" y="182" width="120" height="22" rx="6"></rect><text x="210" y="197" text-anchor="middle">90.7% penalised</text></g>
-              </g>
-            </svg>
-            <figcaption><b>Figure VI.</b> Heterogeneous treatment-effect estimation via double ML.</figcaption>
-          </figure>
-          <span class="case-venue">Working paper</span>
-          <h3><a href="https://github.com/Rajveer-code/CATE-HMDA-Heterogeneous-Effects" target="_blank" rel="noreferrer" data-cursor>Who Bears the Burden?</a></h3>
-          <p class="case-subtitle">Heterogeneous Racial Approval Differentials in U.S. Mortgage Lending</p>
-          <p class="case-summary">A causal forest DML analysis estimating individual-level racial approval penalties after controlling for 33 creditworthiness features. Finds the largest penalties under manual underwriting; validates with DR-Learner replication, RDD, DiD, placebo tests, and sensitivity bounds.</p>
-          <div class="case-metrics">
-            <div class="cmetric"><strong>-9.39 pp</strong><span>conditional penalty</span></div>
-            <div class="cmetric"><strong>90.7%</strong><span>penalized applicants</span></div>
-            <div class="cmetric"><strong>17.9×</strong><span>placebo signal ratio</span></div>
-            <div class="cmetric"><strong>42.3M</strong><span>HMDA rows</span></div>
-          </div>
-          <div class="case-tags"><span>Double ML</span><span>Causal forests</span><span>LightGBM</span><span>SHAP</span><span>HMDA</span></div>
-          <a class="case-link" href="https://github.com/Rajveer-code/CATE-HMDA-Heterogeneous-Effects" target="_blank" rel="noreferrer" data-cursor>Open artifact</a>
-        </div>
-      </article>
-
-      <article class="case rv">
-        <div class="case-num">07</div>
-        <div class="case-body">
-          <figure class="case-figure">
-            <ul class="arch-themes"><li>Trust</li><li>Fairness</li><li>Deployment</li></ul>
-            <svg class="arch" viewBox="0 0 560 210" role="img" aria-labelledby="d7-t d7-d" preserveAspectRatio="xMidYMid meet">
-              <title id="d7-t">Inline runtime audit envelope</title>
-              <desc id="d7-d">Each local LLM response is scored on five axes — calibration, faithfulness, consistency, equity and attribution — arranged around a composite audit envelope that decides whether to surface or withhold the response, with streaming drift monitoring.</desc>
-              <defs>
-                <marker id="arr-7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
-                <filter id="glow-7" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.6" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.5"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
-              </defs>
-              <polygon class="arch-web" points="300,27 374.2,80.9 345.8,168.1 254.2,168.1 225.8,80.9"></polygon>
-              <g class="arch-spoke">
-                <line x1="300" y1="105" x2="300" y2="27"></line>
-                <line x1="300" y1="105" x2="374.2" y2="80.9"></line>
-                <line x1="300" y1="105" x2="345.8" y2="168.1"></line>
-                <line x1="300" y1="105" x2="254.2" y2="168.1"></line>
-                <line x1="300" y1="105" x2="225.8" y2="80.9"></line>
-              </g>
-              <g class="flow-arrows">
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-7)" d="M110,106 L244,105"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-7)" d="M354,100 C400,100 400,78 448,78"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-7)" d="M354,110 C400,110 400,144 448,144"></path>
-              </g>
-              <g class="arch-nodes">
-                <g class="arch-node" tabindex="0" data-tip-title="Local generation" data-tip-body="Every response is produced on-device (Qwen3-8B via Ollama, RTX 4060) — zero cloud LLM calls.">
-                  <rect x="14" y="84" width="96" height="44" rx="7"></rect><text x="62" y="103" text-anchor="middle">Prompt → LLM</text><text x="62" y="116" text-anchor="middle" class="arch-sub">Qwen3-8B local</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Faithfulness" data-tip-body="HHEM 2.1 NLI scores whether each atomic claim is supported by the retrieved context.">
-                  <rect x="258" y="14" width="84" height="26" rx="6"></rect><text x="300" y="31" text-anchor="middle">Faithfulness</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Consistency" data-tip-body="Semantic entropy over N paraphrases — does the model say the same thing when asked differently?">
-                  <rect x="332" y="68" width="84" height="26" rx="6"></rect><text x="374" y="85" text-anchor="middle">Consistency</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Equity (novel axis)" data-tip-body="80+ counterfactual demographic substitutions across 6 axes; flags disparate impact (DI &lt; 0.80) other tools miss.">
-                  <rect x="304" y="155" width="84" height="26" rx="6"></rect><text x="346" y="172" text-anchor="middle">Equity ★</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Attribution" data-tip-body="Jaccard@k over retrieved supporting chunks — is the cited evidence stable across paraphrases?">
-                  <rect x="212" y="155" width="84" height="26" rx="6"></rect><text x="254" y="172" text-anchor="middle">Attribution</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Calibration" data-tip-body="Per-group expected calibration error from verbalized confidence — overconfidence is penalized.">
-                  <rect x="184" y="68" width="84" height="26" rx="6"></rect><text x="226" y="85" text-anchor="middle">Calibration</text>
-                </g>
-                <g class="arch-node is-key" filter="url(#glow-7)" tabindex="0" data-tip-title="Audit envelope" data-tip-body="Weighted composite (0–100) plus per-axis alarms, persisted as a structured AuditEnvelope before the response is surfaced.">
-                  <rect x="246" y="81" width="108" height="48" rx="10"></rect><text x="300" y="101" text-anchor="middle">AuditEnvelope</text><text x="300" y="115" text-anchor="middle" class="arch-sub">composite 0–100</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Policy gate" data-tip-body="The caller surfaces, annotates, or withholds the response based on the composite score and axis alarms.">
-                  <rect x="448" y="58" width="100" height="40" rx="7"></rect><text x="498" y="76" text-anchor="middle">surface /</text><text x="498" y="89" text-anchor="middle" class="arch-sub">withhold</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Drift monitor" data-tip-body="Page-Hinkley CUSUM tracks each axis across a session and alarms on distributional drift.">
-                  <rect x="448" y="126" width="100" height="36" rx="7"></rect><text x="498" y="142" text-anchor="middle">drift</text><text x="498" y="154" text-anchor="middle" class="arch-sub">Page-Hinkley</text>
-                </g>
-                <g class="arch-metric"><rect x="14" y="18" width="80" height="22" rx="6"></rect><text x="54" y="33" text-anchor="middle">DI 0.82</text></g>
-                <g class="arch-metric"><rect x="14" y="46" width="80" height="22" rx="6"></rect><text x="54" y="61" text-anchor="middle">≤ 1.2 s</text></g>
-              </g>
-            </svg>
-            <figcaption><b>Figure VII.</b> Inline runtime audit envelope.</figcaption>
-          </figure>
-          <span class="case-venue">Research software artifact</span>
-          <h3><a href="https://github.com/Rajveer-code" target="_blank" rel="noreferrer" data-cursor>ARIA Runtime Five-Axis Fairness Audit</a></h3>
-          <p class="case-subtitle">Inline policy guardrails for locally deployed LLMs</p>
-          <p class="case-summary">A runtime audit harness scoring LLM responses for calibration, faithfulness, consistency, equity, and attribution before surfacing them. Bridges offline evaluation and inline guardrails with structured AuditEnvelope outputs, drift monitoring, and persisted audit traces.</p>
-          <div class="case-metrics">
-            <div class="cmetric"><strong>5</strong><span>audit axes</span></div>
-            <div class="cmetric"><strong>80+</strong><span>substitution pairs</span></div>
-            <div class="cmetric"><strong>6</strong><span>demographic axes</span></div>
-            <div class="cmetric"><strong>RTX 4060</strong><span>local rig</span></div>
-          </div>
-          <div class="case-tags"><span>LLM auditing</span><span>Fairness</span><span>Calibration</span><span>Faithfulness</span><span>Ollama</span></div>
-          <a class="case-link" href="https://github.com/Rajveer-code" target="_blank" rel="noreferrer" data-cursor>Open artifact</a>
+        <div class="card-links">
+          <a href="https://serenespace-e5ev.onrender.com/" target="_blank" rel="noopener noreferrer" data-cursor>Live site ↗</a>
         </div>
       </article>
     </section>
 
-    <!-- ═══ 03 · Instruments ═══ -->
-    <section class="chapter" id="instruments" data-label="Instruments">
-      <div class="chapter-head rv">
-        <span class="chapter-num">03</span>
-        <h2 class="chapter-title" data-split>Instruments</h2>
-        <p class="chapter-sub">Research doesn&rsquo;t end at the paper. These are the systems the questions demanded.</p>
+    <!-- ════════════ RESEARCH / PUBLICATIONS ════════════ -->
+    <section class="section research" id="research" data-label="Research">
+      <div class="section-head reveal">
+        <span class="section-kicker">06 — Research</span>
+        <h2 class="section-title">Six papers, one question.</h2>
+        <p class="section-lede">Fairness, healthcare, language, and markets — each result validated externally, each manuscript at a Q1 venue.</p>
       </div>
-      <div class="instruments-grid">
 
-        <article class="instrument rv" data-tilt>
-          <figure class="case-figure">
-            <ul class="arch-themes"><li>NLP</li><li>Benchmark</li><li>Deployment</li></ul>
-            <svg class="arch" viewBox="0 0 560 210" role="img" aria-labelledby="d8-t d8-d" preserveAspectRatio="xMidYMid meet">
-              <title id="d8-t">Benchmark construction and model leaderboard</title>
-              <desc id="d8-d">A SEBI and RBI regulatory corpus is turned into an expert question bank spanning four task types, evaluated across twelve LLMs to produce a ranked leaderboard that exceeds the human-expert baseline.</desc>
-              <defs>
-                <marker id="arr-8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
-                <filter id="glow-8" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.6" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.5"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
-              </defs>
-              <g class="flow-arrows">
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-8)" d="M64,80 L64,118"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-8)" d="M116,138 C140,138 140,41 150,41"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-8)" d="M116,138 C140,138 140,73 150,73"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-8)" d="M116,138 L150,107"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-8)" d="M116,138 C140,138 140,137 150,137"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-8)" d="M242,41 C272,41 272,104 300,104"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-8)" d="M242,73 C272,73 272,104 300,104"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-8)" d="M242,105 L300,104"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-8)" d="M242,137 C272,137 272,104 300,104"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-8)" d="M396,104 C420,104 420,80 440,80"></path>
-              </g>
-              <g class="arch-nodes">
-                <g class="arch-node" tabindex="0" data-tip-title="Regulatory corpus" data-tip-body="192 official SEBI and RBI circulars and master directions (1992–2026), parsed to text.">
-                  <rect x="12" y="40" width="104" height="40" rx="7"></rect><text x="64" y="58" text-anchor="middle">192 docs</text><text x="64" y="71" text-anchor="middle" class="arch-sub">SEBI · RBI</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Expert question bank" data-tip-body="406 expert-annotated QA items; 3-round inter-annotator agreement 77% (κ=0.65 on contradiction).">
-                  <rect x="12" y="118" width="104" height="40" rx="7"></rect><text x="64" y="136" text-anchor="middle">406 QA</text><text x="64" y="149" text-anchor="middle" class="arch-sub">expert-annotated</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Four task types" data-tip-body="Regulatory interpretation, numerical reasoning, contradiction detection and temporal reasoning.">
-                  <rect x="150" y="30" width="92" height="22" rx="6"></rect><text x="196" y="45" text-anchor="middle">REG</text>
-                </g>
-                <g class="arch-node"><rect x="150" y="62" width="92" height="22" rx="6"></rect><text x="196" y="77" text-anchor="middle">NUM</text></g>
-                <g class="arch-node"><rect x="150" y="94" width="92" height="22" rx="6"></rect><text x="196" y="109" text-anchor="middle">CON</text></g>
-                <g class="arch-node"><rect x="150" y="126" width="92" height="22" rx="6"></rect><text x="196" y="141" text-anchor="middle">TMP</text></g>
-                <g class="arch-node" tabindex="0" data-tip-title="Evaluation harness" data-tip-body="Closed-book scoring of 12 LLMs plus a hybrid BM25+dense RAG demo; bootstrap significance + Wilson CIs.">
-                  <rect x="300" y="80" width="96" height="48" rx="7"></rect><text x="348" y="100" text-anchor="middle">Eval harness</text><text x="348" y="114" text-anchor="middle" class="arch-sub">12 LLMs</text>
-                </g>
-                <g class="arch-node is-key" filter="url(#glow-8)" tabindex="0" data-tip-title="Leaderboard" data-tip-body="Every model clears the 69% human-expert baseline; Gemini 2.5 Flash leads at 89.7% with statistically distinct tiers.">
-                  <rect x="440" y="58" width="112" height="44" rx="9"></rect><text x="496" y="78" text-anchor="middle">Leaderboard</text><text x="496" y="92" text-anchor="middle" class="arch-sub">12 LLMs ranked</text>
-                </g>
-                <g class="arch-metric"><rect x="440" y="116" width="104" height="14" rx="3"></rect><text x="492" y="127" text-anchor="middle">Gemini 89.7%</text></g>
-                <g class="arch-node"><rect x="440" y="136" width="80" height="14" rx="3"></rect><text x="480" y="147" text-anchor="middle">Human 69%</text></g>
-              </g>
-            </svg>
-            <figcaption><b>Figure VIII.</b> Benchmark construction and model leaderboard.</figcaption>
-          </figure>
-          <span class="instrument-venue">Live benchmark + HuggingFace</span>
-          <h3>IndiaFinBench</h3>
-          <p class="case-subtitle">Indian financial regulatory LLM evaluation benchmark</p>
-          <p class="case-summary">The first public benchmark for LLM performance on Indian financial regulatory text, with a live leaderboard and hybrid RAG demo — task breakdowns for regulatory interpretation, numerical reasoning, contradiction detection, and temporal reasoning.</p>
-          <div class="case-metrics">
-            <div class="cmetric"><strong>406</strong><span>expert QA items</span></div>
-            <div class="cmetric"><strong>192</strong><span>SEBI / RBI docs</span></div>
-            <div class="cmetric"><strong>12</strong><span>LLMs evaluated</span></div>
-          </div>
-          <a class="case-link" href="https://huggingface.co/spaces/Rajveer-code/IndiaFinBench" target="_blank" rel="noreferrer" data-cursor>View system</a>
-        </article>
+      <a class="pub reveal" href="project-cate-hmda.html" data-cursor style="--accent:#60a5fa">
+        <div class="pub-main">
+          <h3 class="pub-title">Who Bears the Burden? Heterogeneous Racial Approval Differentials in U.S. Mortgage Lending</h3>
+          <p class="pub-sub">Causal Forest Double Machine Learning on 42.3M HMDA applications, 2020–2024 — a 9.4&nbsp;pp Black approval penalty net of 33 controls, largest under manual underwriting.</p>
+          <div class="pub-tags"><span>Causal inference</span><span>EconML</span><span>DML</span><span>HMDA</span></div>
+        </div>
+        <div class="pub-side"><span class="pub-venue">J. Real Estate Finance &amp; Economics</span><span class="pub-status">Submitted · 2026</span><span class="pub-arrow">↗</span></div>
+      </a>
 
-        <article class="instrument rv" data-tilt>
-          <figure class="case-figure">
-            <ul class="arch-themes"><li>Trust</li><li>Deployment</li></ul>
-            <svg class="arch" viewBox="0 0 560 210" role="img" aria-labelledby="d9-t d9-d" preserveAspectRatio="xMidYMid meet">
-              <title id="d9-t">Anonymous-first student support platform</title>
-              <desc id="d9-d">A no-login entry point opens into a support hub offering mood check-ins, an AI companion, activities and peer community, with crisis escalation and aggregate admin analytics as outputs.</desc>
-              <defs>
-                <marker id="arr-9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
-                <filter id="glow-9" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.6" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.5"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
-              </defs>
-              <g class="flow-arrows">
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-9)" d="M110,106 L180,108"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-9)" d="M290,100 C325,100 325,36 360,36"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-9)" d="M290,104 C325,104 325,70 360,70"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-9)" d="M290,108 L360,104"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-9)" d="M290,112 C325,112 325,138 360,138"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-9)" d="M235,132 C260,170 300,178 300,178"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-9)" d="M270,130 C360,168 430,178 430,178"></path>
-              </g>
-              <g class="arch-nodes">
-                <g class="arch-node" tabindex="0" data-tip-title="Private first contact" data-tip-body="No account, no login — students reach support anonymously, lowering the barrier to first contact.">
-                  <rect x="14" y="86" width="96" height="40" rx="7"></rect><text x="62" y="104" text-anchor="middle">Anonymous</text><text x="62" y="117" text-anchor="middle" class="arch-sub">no login</text>
-                </g>
-                <g class="arch-node is-key" filter="url(#glow-9)" tabindex="0" data-tip-title="SereneSpace hub" data-tip-body="A single no-login web app routing students to the right support surface; selected (50 of 250 teams) at SIH 2025.">
-                  <rect x="180" y="84" width="110" height="48" rx="9"></rect><text x="235" y="104" text-anchor="middle">SereneSpace</text><text x="235" y="118" text-anchor="middle" class="arch-sub">support hub</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Mood check-ins" data-tip-body="Lightweight recurring mood logging that builds a private trend over time.">
-                  <rect x="360" y="24" width="118" height="24" rx="6"></rect><text x="419" y="40" text-anchor="middle">Mood check-in</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="AI companion" data-tip-body="A conversational companion for low-stakes support and signposting to resources.">
-                  <rect x="360" y="58" width="118" height="24" rx="6"></rect><text x="419" y="74" text-anchor="middle">AI companion</text>
-                </g>
-                <g class="arch-node"><rect x="360" y="92" width="118" height="24" rx="6"></rect><text x="419" y="108" text-anchor="middle">Activities</text></g>
-                <g class="arch-node"><rect x="360" y="126" width="118" height="24" rx="6"></rect><text x="419" y="142" text-anchor="middle">Peer community</text></g>
-                <g class="arch-node" tabindex="0" data-tip-title="Crisis escalation" data-tip-body="Risk signals route to escalation pathways for timely human intervention.">
-                  <rect x="240" y="166" width="118" height="26" rx="6"></rect><text x="299" y="183" text-anchor="middle">Crisis escalation</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Institutional insight" data-tip-body="Aggregate, de-identified analytics give administrators population-level wellbeing signals.">
-                  <rect x="370" y="166" width="118" height="26" rx="6"></rect><text x="429" y="183" text-anchor="middle">Admin analytics</text>
-                </g>
-                <g class="arch-metric"><rect x="14" y="20" width="110" height="22" rx="6"></rect><text x="69" y="35" text-anchor="middle">50 / 250 teams</text></g>
-              </g>
-            </svg>
-            <figcaption><b>Figure IX.</b> Anonymous-first student support platform.</figcaption>
-          </figure>
-          <span class="instrument-venue">SIH 2025 — selected prototype</span>
-          <h3>SereneSpace</h3>
-          <p class="case-subtitle">Anonymous student mental-health support platform</p>
-          <p class="case-summary">A no-login web app for student mental-health support with mood check-ins, an AI companion, activities, peer communities, and admin analytics — designed around private first contact, crisis escalation, and institutional insight.</p>
-          <div class="case-metrics">
-            <div class="cmetric"><strong>50/250</strong><span>teams selected</span></div>
-            <div class="cmetric"><strong>Zero</strong><span>login required</span></div>
-            <div class="cmetric"><strong>Live</strong><span>deployed</span></div>
-          </div>
-          <a class="case-link" href="https://serenespace-e5ev.onrender.com/" target="_blank" rel="noreferrer" data-cursor>View system</a>
-        </article>
+      <a class="pub reveal" href="project-icgdf.html" data-cursor style="--accent:#a78bfa">
+        <div class="pub-main">
+          <h3 class="pub-title">When the Gate Stays Closed: Near-Zero Cross-Sectional Predictability in Large-Cap NASDAQ Equities</h3>
+          <p class="pub-sub">An IC-gated deployment framework with a conjunctive HAC + permutation test — the gate never opened across 12 folds and 1,512 OOS days, cutting false deployment from 11.8% to 0.0%.</p>
+          <div class="pub-tags"><span>Quant ML</span><span>Walk-forward</span><span>CatBoost</span><span>Permutation tests</span></div>
+        </div>
+        <div class="pub-side"><span class="pub-venue">Quantitative Finance &amp; Economics</span><span class="pub-status">Under review · 2025</span><span class="pub-arrow">↗</span></div>
+      </a>
 
-        <article class="instrument rv" data-tilt>
-          <figure class="case-figure">
-            <ul class="arch-themes"><li>Local-first</li><li>Trust</li><li>Systems</li></ul>
-            <svg class="arch" viewBox="0 0 560 200" role="img" aria-labelledby="d10-t d10-d" preserveAspectRatio="xMidYMid meet">
-              <title id="d10-t">Local voice-agent loop</title>
-              <desc id="d10-d">A closed on-device loop: microphone to Whisper speech-to-text, intent router, local Qwen3-8B with BM25/BGE-M3 retrieval and tools, a five-axis audit, Piper text-to-speech, then back to the speaker — with zero cloud LLM calls.</desc>
-              <defs>
-                <marker id="arr-10" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
-                <filter id="glow-10" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.6" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.5"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
-              </defs>
-              <g class="flow-arrows">
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-10)" d="M60,76 L70,76"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-10)" d="M144,76 L154,76"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-10)" d="M216,76 L226,76"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-10)" d="M320,76 L332,76"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-10)" d="M402,76 L414,76"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-10)" d="M476,76 L488,76"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-10)" d="M522,94 C522,152 34,152 34,98"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-10)" d="M267,44 L267,54"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-10)" d="M279,54 L279,44"></path>
-              </g>
-              <g class="arch-nodes">
-                <g class="arch-node" tabindex="0" data-tip-title="Wake + capture" data-tip-body="openWakeWord / double-clap wake, then microphone capture — all on-device.">
-                  <rect x="8" y="58" width="52" height="36" rx="6"></rect><text x="34" y="80" text-anchor="middle">Mic</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Speech-to-text" data-tip-body="faster-whisper distil-large-v3 on GPU (~1.5 GB), loaded on demand and unloaded after transcription.">
-                  <rect x="70" y="58" width="74" height="36" rx="6"></rect><text x="107" y="80" text-anchor="middle">Whisper</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Intent router" data-tip-body="Compiled-regex voice router dispatches to one of 16 tools, or falls through to the LLM on no match.">
-                  <rect x="154" y="58" width="62" height="36" rx="6"></rect><text x="185" y="80" text-anchor="middle">Router</text>
-                </g>
-                <g class="arch-node is-key" filter="url(#glow-10)" tabindex="0" data-tip-title="Local reasoning" data-tip-body="Qwen3-8B (Q4_K_M, always resident ~5.6 GB) reasons over BGE-M3 + BM25 retrieval; peak system VRAM stays ≤ 7.1 GB.">
-                  <rect x="226" y="54" width="94" height="44" rx="9"></rect><text x="273" y="73" text-anchor="middle">Qwen3-8B</text><text x="273" y="87" text-anchor="middle" class="arch-sub">100% local</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Audit envelope" data-tip-body="Each response is scored on five fairness axes (CPFE) before it is spoken; equity drops flag the answer.">
-                  <rect x="332" y="58" width="70" height="36" rx="6"></rect><text x="367" y="80" text-anchor="middle">Audit ✶</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Text-to-speech" data-tip-body="Piper synthesizes the reply locally (CPU, 0 GB VRAM) — no speech ever leaves the machine.">
-                  <rect x="414" y="58" width="62" height="36" rx="6"></rect><text x="445" y="80" text-anchor="middle">Piper</text>
-                </g>
-                <g class="arch-node"><rect x="488" y="58" width="68" height="36" rx="6"></rect><text x="522" y="80" text-anchor="middle">Speaker</text></g>
-                <g class="arch-node" tabindex="0" data-tip-title="Tools + retrieval" data-tip-body="16 voice tools (vision, mail, calendar, code REPL, papers RAG…) and BM25/BGE-M3 retrieval feed the LLM.">
-                  <rect x="226" y="14" width="94" height="30" rx="6"></rect><text x="273" y="33" text-anchor="middle">Tools · RAG</text>
-                </g>
-                <g class="arch-metric"><rect x="8" y="14" width="104" height="22" rx="6"></rect><text x="60" y="29" text-anchor="middle">0 cloud LLM</text></g>
-                <g class="arch-metric"><rect x="120" y="14" width="84" height="22" rx="6"></rect><text x="162" y="29" text-anchor="middle">7.1 GB</text></g>
-              </g>
-            </svg>
-            <figcaption><b>Figure X.</b> Local voice-agent loop — microphone to speaker, zero cloud calls.</figcaption>
-          </figure>
-          <span class="instrument-venue">Working local AI system</span>
-          <h3>ARIA Assistant</h3>
-          <p class="case-subtitle">Local-first personal AI with runtime fairness audits</p>
-          <p class="case-summary">A personal AI that answers, retrieves, audits, and executes tools on local hardware — faster-whisper speech, Piper TTS, Qwen3 8B, BM25/BGE-M3 retrieval, Gmail and Calendar integrations, screen vision, and audit envelopes. Zero cloud LLM calls.</p>
-          <div class="case-metrics">
-            <div class="cmetric"><strong>16</strong><span>voice tools</span></div>
-            <div class="cmetric"><strong>7.1 GB</strong><span>peak VRAM</span></div>
-            <div class="cmetric"><strong>0</strong><span>cloud LLM calls</span></div>
-          </div>
-          <a class="case-link" href="https://github.com/Rajveer-code/aria-assistant" target="_blank" rel="noreferrer" data-cursor>View system</a>
-        </article>
+      <a class="pub reveal" href="project-federated-diabetes.html" data-cursor style="--accent:#10b981">
+        <div class="pub-main">
+          <h3 class="pub-title">Privacy-Preserving Federated Learning for Diabetes Risk Across Demographically Heterogeneous Nodes</h3>
+          <p class="pub-sub">FedAvg / FedProx / FedNova / SCAFFOLD on partitioned NHANES, externally validated on 1.28M BRFSS records — a 40% smaller generalisation gap than a matched centralised model.</p>
+          <div class="pub-tags"><span>Federated learning</span><span>PyTorch</span><span>Flower</span><span>Differential privacy</span></div>
+        </div>
+        <div class="pub-side"><span class="pub-venue">J. Biomedical Informatics</span><span class="pub-status">Under review · 2026</span><span class="pub-arrow">↗</span></div>
+      </a>
 
-        <article class="instrument rv" data-tilt>
-          <figure class="case-figure">
-            <ul class="arch-themes"><li>NLP</li><li>Systems</li><li>Deployment</li></ul>
-            <svg class="arch" viewBox="0 0 560 210" role="img" aria-labelledby="d11-t d11-d" preserveAspectRatio="xMidYMid meet">
-              <title id="d11-t">Earnings-signal pipeline</title>
-              <desc id="d11-d">Earnings-call transcripts feed two parallel NLP tracks — FinBERT sentiment and RAG semantic features — which merge into a 34-feature matrix, train walk-forward models, and feed a backtest and sector analysis.</desc>
-              <defs>
-                <marker id="arr-11" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
-                <filter id="glow-11" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.6" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.5"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
-              </defs>
-              <g class="flow-arrows">
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-11)" d="M110,106 C140,106 140,66 150,66"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-11)" d="M110,106 C140,106 140,144 150,144"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-11)" d="M254,66 C275,66 275,106 290,106"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-11)" d="M254,144 C275,144 275,106 290,106"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-11)" d="M386,106 C405,106 405,66 420,66"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-11)" d="M480,82 L480,118"></path>
-              </g>
-              <g class="arch-nodes">
-                <g class="arch-node" tabindex="0" data-tip-title="Transcript corpus" data-tip-body="14,584 S&amp;P 500 earnings-call transcripts (2018–2024) aligned with 1M+ daily price rows.">
-                  <rect x="10" y="84" width="100" height="44" rx="7"></rect><text x="60" y="103" text-anchor="middle">14,584</text><text x="60" y="116" text-anchor="middle" class="arch-sub">transcripts</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="FinBERT sentiment" data-tip-body="ProsusAI/FinBERT scores management vs. Q&amp;A tone — 14 sentiment features per call.">
-                  <rect x="150" y="50" width="104" height="32" rx="7"></rect><text x="202" y="63" text-anchor="middle">FinBERT</text><text x="202" y="75" text-anchor="middle" class="arch-sub">14 sentiment</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="RAG features" data-tip-body="380k transcript chunks in ChromaDB; 5 semantic probes (guidance, risk, confidence…) → 10 features.">
-                  <rect x="150" y="128" width="104" height="32" rx="7"></rect><text x="202" y="141" text-anchor="middle">RAG · Chroma</text><text x="202" y="153" text-anchor="middle" class="arch-sub">10 features</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Feature matrix" data-tip-body="FinBERT + RAG + temporal features merged and aligned to forward returns — 34 columns, 13,442 rows.">
-                  <rect x="290" y="84" width="96" height="44" rx="7"></rect><text x="338" y="103" text-anchor="middle">Feature matrix</text><text x="338" y="116" text-anchor="middle" class="arch-sub">34 features</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Walk-forward models" data-tip-body="Six models (LightGBM, LSTM, XGBoost, RAG-only, FinBERT-only, baseline) trained train-on-past, test-on-future.">
-                  <rect x="420" y="50" width="120" height="32" rx="7"></rect><text x="480" y="63" text-anchor="middle">LightGBM · LSTM</text><text x="480" y="75" text-anchor="middle" class="arch-sub">walk-forward</text>
-                </g>
-                <g class="arch-node is-key" filter="url(#glow-11)" tabindex="0" data-tip-title="Backtest + sectors" data-tip-body="Long-short backtest with PEAD horizon effects; sector breakdown shows Energy IC +0.31 (83× Tech).">
-                  <rect x="420" y="118" width="120" height="48" rx="9"></rect><text x="480" y="138" text-anchor="middle">Backtest</text><text x="480" y="152" text-anchor="middle" class="arch-sub">+ sector IC</text>
-                </g>
-                <g class="arch-metric"><rect x="420" y="174" width="120" height="22" rx="6"></rect><text x="480" y="189" text-anchor="middle">Energy IC +.31</text></g>
-              </g>
-            </svg>
-            <figcaption><b>Figure XI.</b> Earnings-signal pipeline — FinBERT + RAG, walk-forward validated.</figcaption>
-          </figure>
-          <span class="instrument-venue">Research pipeline + deployed demos</span>
-          <h3>FinSight</h3>
-          <p class="case-subtitle">LLM-powered earnings intelligence research system</p>
-          <p class="case-summary">An end-to-end ML system extracting alpha signals from S&amp;P 500 earnings call transcripts — staged pipeline of transcript ingestion, sentiment and RAG features, model training, walk-forward backtesting, sector analysis, and deployed interfaces.</p>
-          <div class="case-metrics">
-            <div class="cmetric"><strong>14,584</strong><span>transcripts</span></div>
-            <div class="cmetric"><strong>1M+</strong><span>price rows</span></div>
-            <div class="cmetric"><strong>34</strong><span>NLP features</span></div>
-          </div>
-          <a class="case-link" href="https://finsight-web-rust.vercel.app" target="_blank" rel="noreferrer" data-cursor>View system</a>
-        </article>
+      <a class="pub reveal" href="project-cpfe.html" data-cursor style="--accent:#2dd4bf">
+        <div class="pub-main">
+          <h3 class="pub-title">Cross-Platform Generalisation Failure in Mental-Health NLP: A Five-Axis Fairness Audit</h3>
+          <p class="pub-sub">Transformer classifiers that score AUC 0.98 within-platform collapse 30–39% off-platform, with calibration and equity failing in lockstep — fairness that doesn't transfer.</p>
+          <div class="pub-tags"><span>NLP</span><span>Fairness</span><span>Transformers</span><span>Calibration</span></div>
+        </div>
+        <div class="pub-side"><span class="pub-venue">IEEE TNNLS</span><span class="pub-status">Submitted · 2026</span><span class="pub-arrow">↗</span></div>
+      </a>
 
-        <article class="instrument rv wide" data-tilt>
-          <figure class="case-figure">
-            <ul class="arch-themes"><li>Systems</li><li>Deployment</li><li>NLP</li></ul>
-            <svg class="arch" viewBox="0 0 560 190" role="img" aria-labelledby="d12-t d12-d" preserveAspectRatio="xMidYMid meet">
-              <title id="d12-t">Production analytics dashboard architecture</title>
-              <desc id="d12-d">A statically prerendered Next.js 14 app reads one quantized field dataset and renders six scroll-driven analytics views, centered on an interactive WebGL signal field, deployed on Vercel.</desc>
-              <defs>
-                <marker id="arr-12" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c9a25a"></path></marker>
-                <filter id="glow-12" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.6" result="b"></feGaussianBlur><feFlood flood-color="#c9a25a" flood-opacity="0.5"></feFlood><feComposite in2="b" operator="in"></feComposite><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter>
-              </defs>
-              <g class="arch-node"><rect x="16" y="14" width="528" height="162" rx="12"></rect></g>
-              <circle class="arch-dot" cx="36" cy="30" r="3.5"></circle>
-              <circle class="arch-dot" cx="48" cy="30" r="3.5"></circle>
-              <circle class="arch-dot" cx="60" cy="30" r="3.5"></circle>
-              <text class="arch-titlebar" x="76" y="34">finsight-web · Next 14 · TypeScript</text>
-              <line class="arch-spoke" x1="24" y1="46" x2="536" y2="46"></line>
-              <g class="flow-arrows">
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-12)" d="M114,101 C300,101 360,75 400,75"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-12)" d="M114,92 L132,77"></path>
-                <path class="flow-arrow" pathLength="1" marker-end="url(#arr-12)" d="M114,110 L132,125"></path>
-              </g>
-              <g class="arch-nodes">
-                <g class="arch-node" tabindex="0" data-tip-title="Quantized field data" data-tip-body="One ~100 KB gzipped JSON of 11,551 earnings calls exported from the FinSight research pipeline.">
-                  <rect x="32" y="78" width="82" height="46" rx="7"></rect><text x="73" y="98" text-anchor="middle">field.json</text><text x="73" y="112" text-anchor="middle" class="arch-sub">11,551 pts</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Reading" data-tip-body="FinBERT tone view — management vs. analyst sentiment over time.">
-                  <rect x="132" y="58" width="124" height="34" rx="7"></rect><text x="194" y="78" text-anchor="middle">Reading</text>
-                </g>
-                <g class="arch-node" tabindex="0" data-tip-title="Retrieval" data-tip-body="RAG feature view — the five semantic probes over the transcript corpus.">
-                  <rect x="266" y="58" width="124" height="34" rx="7"></rect><text x="328" y="78" text-anchor="middle">Retrieval</text>
-                </g>
-                <g class="arch-node is-key" filter="url(#glow-12)" tabindex="0" data-tip-title="Signal field (WebGL)" data-tip-body="Interactive Three.js point cloud of 11,551 calls — language feature vs. forward return, morphing per chapter.">
-                  <rect x="400" y="58" width="124" height="34" rx="8"></rect><text x="462" y="78" text-anchor="middle">Signal field</text>
-                </g>
-                <g class="arch-node"><rect x="132" y="110" width="124" height="34" rx="7"></rect><text x="194" y="130" text-anchor="middle">Models</text></g>
-                <g class="arch-node"><rect x="266" y="110" width="124" height="34" rx="7"></rect><text x="328" y="130" text-anchor="middle">Sectors</text></g>
-                <g class="arch-node" tabindex="0" data-tip-title="Verdict" data-tip-body="Backtest view — equity curves and Sharpe across 5-day and 20-day horizons.">
-                  <rect x="400" y="110" width="124" height="34" rx="7"></rect><text x="462" y="130" text-anchor="middle">Verdict</text>
-                </g>
-                <g class="arch-metric"><rect x="434" y="20" width="100" height="20" rx="6"></rect><text x="484" y="34" text-anchor="middle">Live · Vercel</text></g>
-              </g>
-            </svg>
-            <figcaption><b>Figure XII.</b> Production analytics dashboard — six views over one field dataset.</figcaption>
-          </figure>
-          <span class="instrument-venue">Production dashboard — Vercel</span>
-          <h3>FinSight Web</h3>
-          <p class="case-subtitle">Interactive analytics dashboard for earnings intelligence</p>
-          <p class="case-summary">A production-grade Next.js 14 analytics interface for the FinSight research project — project pages, six analytics views, and dashboard workflows for interpreting earnings-call ML signals, deployed live on Vercel.</p>
-          <div class="case-metrics">
-            <div class="cmetric"><strong>Next 14</strong><span>frontend</span></div>
-            <div class="cmetric"><strong>6</strong><span>analytics pages</span></div>
-            <div class="cmetric"><strong>Live</strong><span>Vercel deploy</span></div>
-          </div>
-          <a class="case-link" href="https://finsight-web-rust.vercel.app" target="_blank" rel="noreferrer" data-cursor>View system</a>
-        </article>
+      <a class="pub reveal" href="project-indiafinbench.html" data-cursor style="--accent:#22d3ee">
+        <div class="pub-main">
+          <h3 class="pub-title">IndiaFinBench: Evaluating LLM Performance on Indian Financial Regulatory Text</h3>
+          <p class="pub-sub">The first benchmark over SEBI and RBI regulation — 406 expert QA items, 192 documents, 12 LLMs scored zero-shot, plus a hybrid-RAG demo lifting Recall@5 to 0.785.</p>
+          <div class="pub-tags"><span>LLM evaluation</span><span>RAG</span><span>FAISS</span><span>Benchmark</span></div>
+        </div>
+        <div class="pub-side"><span class="pub-venue">Target: EMNLP 2026</span><span class="pub-status">In preparation</span><span class="pub-arrow">↗</span></div>
+      </a>
 
-      </div>
+      <a class="pub reveal" href="project-aria.html" data-cursor style="--accent:#4ade80">
+        <div class="pub-main">
+          <h3 class="pub-title">ARIA: A Runtime Five-Axis Fairness Audit Harness for Locally-Deployed LLMs</h3>
+          <p class="pub-sub">Inline counterfactual Disparate-Impact and Equalized-Odds scoring on free-form output — catching 33–39% of failures other guardrails miss, with zero cloud calls.</p>
+          <div class="pub-tags"><span>LLM auditing</span><span>Equity</span><span>Guardrails</span><span>arXiv</span></div>
+        </div>
+        <div class="pub-side"><span class="pub-venue">arXiv preprint</span><span class="pub-status">2026</span><span class="pub-arrow">↗</span></div>
+      </a>
     </section>
 
-    <!-- ═══ 04 · Methods ═══ -->
-    <section class="chapter methods" id="methods" data-label="Methods">
-      <div class="chapter-head rv">
-        <span class="chapter-num">04</span>
-        <h2 class="chapter-title" data-split>Methods</h2>
-        <p class="chapter-sub">Every tool below appears in at least one paper or deployed system above.</p>
+    <!-- ════════════ STACK ════════════ -->
+    <section class="section stack" id="stack" data-label="Stack">
+      <div class="section-head reveal">
+        <span class="section-kicker">07 — Stack</span>
+        <h2 class="section-title">What I build with.</h2>
+        <p class="section-lede">Tools that appear in at least one paper or deployed system above.</p>
       </div>
-      <div class="methods-grid rv" id="methodsGrid"></div>
+      <div class="stack-groups" id="stackGroups"></div>
     </section>
 
-    <!-- ═══ 05 · Trajectory ═══ -->
-    <section class="chapter trajectory" id="trajectory" data-label="Trajectory">
-      <div class="rv">
-        <div class="trajectory-portrait"><img src="assets/portrait.jpg" alt="Portrait of Rajveer Singh Pall"></div>
-        <h2 class="trajectory-heading" data-split>The questions are getting larger. <em>The next phase requires a lab.</em></h2>
-        <p class="trajectory-note">I am applying to graduate research programs to keep working on fairness, causal inference, and trustworthy ML — with the mentorship and scale that high-stakes questions deserve.</p>
-        <div class="trajectory-ctas">
-          <a class="btn-gold" href="mailto:rajveerpall04@gmail.com" data-magnetic data-cursor>Start a conversation</a>
-          <a class="btn-line" href="https://github.com/Rajveer-code" target="_blank" rel="noreferrer" data-magnetic data-cursor>Review the evidence</a>
+    <!-- ════════════ CONTACT ════════════ -->
+    <section class="section contact" id="contact" data-label="Contact">
+      <div class="contact-inner reveal">
+        <span class="section-kicker">08 — Contact</span>
+        <h2 class="contact-title">Hard problems welcome.</h2>
+        <p class="contact-tag">Optimising for: <em>decisions that hold</em> &nbsp;·&nbsp; Not: leaderboard wins</p>
+        <div class="contact-links">
+          <a href="mailto:rajveerpall04@gmail.com" data-cursor>Email</a>
+          <a href="https://github.com/Rajveer-code" target="_blank" rel="noopener noreferrer" data-cursor>GitHub</a>
+          <a href="https://huggingface.co/Rajveer-code" target="_blank" rel="noopener noreferrer" data-cursor>HuggingFace</a>
+          <a href="#" class="todo-link" title="Add LinkedIn URL" data-cursor>LinkedIn</a>
+          <a href="#" class="todo-link" title="Add Google Scholar URL" data-cursor>Scholar</a>
         </div>
-        <div class="trajectory-meta">
-          <a href="mailto:rajveerpall04@gmail.com" data-cursor>rajveerpall04@gmail.com</a>
-          <a href="https://github.com/Rajveer-code" target="_blank" rel="noreferrer" data-cursor>github.com/Rajveer-code</a>
-          <a href="https://huggingface.co/Rajveer-code" target="_blank" rel="noreferrer" data-cursor>huggingface.co/Rajveer-code</a>
-        </div>
+        <p class="contact-loc">Jabalpur, India · <span id="contactClock">--:--</span> local</p>
       </div>
     </section>
 
   </main>
 
-  <footer class="footer">
+  <footer class="site-footer">
     <span>© 2026 Rajveer Singh Pall</span>
-    <span class="footer-mid" aria-hidden="true">· · ·</span>
-    <span>Decision Systems · Research Portfolio</span>
+    <span class="footer-mid">·</span>
+    <span>Decision-Systems Research</span>
+    <span class="footer-mid">·</span>
+    <span>Built with Claude Code · Canvas-2D constellation field</span>
   </footer>
 
-  <!-- Three.js (module, CDN) exposed to classic scripts -->
-  <script type="module">
-    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
-    window.THREE = THREE;
-    window.dispatchEvent(new Event("three-ready"));
-  </script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="js/field.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/home.js?v=2"></script>
 </body>
 </html>

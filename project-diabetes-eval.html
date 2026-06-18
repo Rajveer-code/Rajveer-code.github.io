@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diabetes ML Evaluation — Rajveer Singh Pall</title>
+  <meta name="description" content="External validation on 1.28M BRFSS patients exposes a deployment shift that strong internal cross-validation completely hides.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2306080c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' fill='%23f5ca40' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="bottom-fade" aria-hidden="true"></div>
+  <div class="cursor-wrap" id="cursorWrap" aria-hidden="true">
+    <svg class="cursor-lattice" width="44" height="44" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="2.5" fill="currentColor"/>
+      <line x1="20" y1="6" x2="20" y2="34" stroke="currentColor" stroke-width="0.75"/>
+      <line x1="6" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="0.75"/>
+      <line x1="10" y1="10" x2="30" y2="30" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.6"/>
+      <line x1="30" y1="10" x2="10" y2="30" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.6"/>
+      <rect x="17" y="17" width="6" height="6" fill="none" stroke="currentColor" stroke-width="0.65"/>
+      <path class="cursor-arc cursor-arc-1" d="M14,12 Q20,6 26,12" fill="none" stroke="currentColor" stroke-width="0.55"/>
+      <path class="cursor-arc cursor-arc-2" d="M12,10 Q20,3 28,10" fill="none" stroke="currentColor" stroke-width="0.4"/>
+      <path class="cursor-arc cursor-arc-3" d="M10,8 Q20,0 30,8" fill="none" stroke="currentColor" stroke-width="0.3"/>
+    </svg>
+  </div>
+  <div class="scroll-rail" aria-hidden="true"><div class="scroll-rail-fill" id="scrollRailFill"></div></div>
+  <div class="hud-clock" aria-hidden="true">
+    <div class="hud-row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="hud-label">BLR</span><span class="hud-time" id="clockIST">--:--:--</span>
+    </div>
+    <div class="hud-row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="hud-label" id="hudVisitorLabel">NAG</span><span class="hud-time" id="clockUTC">--:--:--</span>
+    </div>
+  </div>
+
+  <div class="spatial-scene">
+    <div class="thinking-scroll">
+      <div class="thinking-body">
+        <a href="index.html#research" class="back-link">← Back to research</a>
+        <header class="th-header">
+          <div class="th-badge" style="color:#10b981">Manuscript · Diabetes ML</div>
+          <h1 class="th-title">Diabetes ML Evaluation</h1>
+          <p class="th-subtitle">When external validation exposes the deployment shift that strong internal cross-validation hides entirely.</p>
+        </header>
+        <div class="th-divider"></div>
+        <div class="metrics-grid">
+          <div class="metric-block"><span class="metric-value" style="color:#10b981">1.28M</span><span class="metric-label">External patients (BRFSS)</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#10b981">−9.7%</span><span class="metric-label">Relative AUC decline</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#10b981">5-fold</span><span class="metric-label">Nested cross-validation</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#10b981">SHAP</span><span class="metric-label">+ subgroup analysis</span></div>
+        </div>
+        <div class="th-divider"></div>
+        <section class="th-section">
+          <h2 class="th-section-title">The Problem</h2>
+          <p class="th-body">Strong internal validation does not predict external performance under cohort shift. A model that looks excellent on a held-out split of its own training population can silently lose accuracy the moment it meets a different cohort — and standard reporting never surfaces it.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Approach</h2>
+          <p class="th-body">Models are tuned with <strong>nested 5-fold cross-validation</strong> on the source cohort, then evaluated unchanged on <strong>1.28M BRFSS</strong> respondents — a genuinely external population. <strong>SHAP</strong> attribution and stratified subgroup analysis trace where and for whom the degradation concentrates.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Outcome</h2>
+          <p class="th-body">External AUC falls <strong>−9.7%</strong> relative to the internal estimate — a deployment shift entirely invisible to the internal cross-validation that reported strong, stable performance. The lesson generalises: external validation is not an optional extra, it is the only honest measure of clinical readiness.</p>
+        </section>
+        <section class="th-section">
+  <h2 class="th-section-title">Methodology Pipeline</h2>
+  <div class="method-diagram" style="padding: 2rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: linear-gradient(180deg, rgba(255,255,255,0.015) 0%, transparent 100%); margin-bottom: 2rem;">
+    <svg viewBox="0 0 700 120" fill="none" style="width:100%;height:auto;">
+      <rect x="44.0" y="35" width="120" height="50" rx="6" stroke="#10b981" stroke-width="1" fill="rgba(16, 185, 129,0.08)" />
+      <text x="104.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">SOURCE COHORT</text>
+      <line x1="169.0" y1="60.0" x2="195.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+      <polygon points="195.0,56.0 203.0,60.0 195.0,64.0" fill="rgba(255,255,255,0.2)" />
+      <rect x="208.0" y="35" width="120" height="50" rx="6" stroke="#10b981" stroke-width="1" fill="rgba(16, 185, 129,0.08)" />
+      <text x="268.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">5-FOLD NESTED CV</text>
+      <line x1="333.0" y1="60.0" x2="359.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+      <polygon points="359.0,56.0 367.0,60.0 359.0,64.0" fill="rgba(255,255,255,0.2)" />
+      <rect x="372.0" y="35" width="120" height="50" rx="6" stroke="#10b981" stroke-width="1" fill="rgba(16, 185, 129,0.08)" />
+      <text x="432.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">1.28M BRFSS</text>
+      <line x1="497.0" y1="60.0" x2="523.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+      <polygon points="523.0,56.0 531.0,60.0 523.0,64.0" fill="rgba(255,255,255,0.2)" />
+      <rect x="536.0" y="35" width="120" height="50" rx="6" stroke="#10b981" stroke-width="1" fill="rgba(16, 185, 129,0.08)" />
+      <text x="596.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">SHAP ANALYSIS</text>
+    </svg>
+  </div>
+</section>
+<div style="margin-bottom:3rem;">
+          <a href="https://github.com/Rajveer-code" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#10b981;border-color:rgba(16,185,129,0.4);">↗ View on GitHub</a>
+        </div>
+        <div class="th-footer">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="brh" id="brh" aria-hidden="true">
+    <div class="brh-session"><span class="brh-label">SESSION</span>&nbsp;<span class="brh-value" id="brhSession">00:00</span></div>
+    <div class="brh-explore"><span class="brh-label">EXPLORED</span>&nbsp;<span class="brh-value" id="brhExplore">0%</span></div>
+    <div class="brh-xy"><span class="brh-label">XY</span>&nbsp;<span class="brh-value" id="brhXY">0.00, 0.00</span></div>
+    <button class="brh-scroll-btn" id="brhScrollBtn" aria-label="Scroll to top">
+      <svg class="brh-ring" viewBox="0 0 36 36">
+        <circle class="brh-ring-track" cx="18" cy="18" r="15"/>
+        <circle class="brh-ring-fill" id="brhRingFill" cx="18" cy="18" r="15"/>
+      </svg>
+    </button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="js/field.js"></script>
+  <script src="js/detail.js"></script>
+</body>
+</html>

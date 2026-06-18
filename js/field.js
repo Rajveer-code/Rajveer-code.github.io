@@ -1,486 +1,209 @@
 /* ═══════════════════════════════════════════════════════════
-   THE DECISION FIELD — scroll-morphing particle universe
-   One continuous WebGL point cloud that travels through six
-   formations as the visitor scrolls:
-
-     0 · Galaxy        — the unexamined universe of decisions
-     1 · Neural lattice— the model that decides
-     2 · Constellation — seven case files, seven clusters
-     3 · Cube grid     — engineered order: the systems built
-     4 · Torus         — the orbit of methods
-     5 · Singularity   — convergence: the next phase
-
-   Exposes window.FIELD = { setMorph, setVelocity, ready }
-   Degrades gracefully: if WebGL/THREE fails, page still works.
+   SPATIAL FIELD — animated constellation background
+   Faithful vanilla port of the reference AIBackground:
+   drifting stars + connection lattice + traveling glint-paths
+   + activation pulses + mouse repulsion, opaque-black canvas,
+   cached scanline texture, paused while the tab is hidden.
    ═══════════════════════════════════════════════════════════ */
 
 (function () {
   "use strict";
 
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var canvas = document.getElementById("field");
+  if (!canvas) return;
+  var ctx = canvas.getContext("2d");
+  if (!ctx) return;
 
-  /* Public API stub — main.js can call these even if WebGL never boots */
-  var FIELD = {
-    setMorph: function () {},
-    setVelocity: function () {},
-    ready: false,
-    onReady: null
-  };
-  window.FIELD = FIELD;
+  function mq(q) { return window.matchMedia(q).matches; }
+  var mobile = mq("(max-width: 767px)");
+  var touch = mq("(hover: none) and (pointer: coarse)");
 
-  function boot() {
-    var THREE = window.THREE;
-    var canvas = document.getElementById("field");
-    if (!THREE || !canvas) return;
+  var STAR = mobile ? 40 : 110;
+  var SHIM = mobile ? 40 : 75;
+  var LINK = mobile ? 80 : 500;
+  var LINK2 = LINK * LINK;
+  var PATHS = mobile ? 80 : 600;
+  var SPAWN = 20, PMIN = 0.001, PMAX = 0.004, SVEL = 0.4;
 
-    var renderer;
-    try {
-      renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
-        antialias: false,
-        alpha: true,
-        powerPreference: "high-performance"
-      });
-    } catch (e) {
-      console.warn("[field] WebGL unavailable:", e);
-      return;
+  /* waypoints for the long glint paths (mx/my = fraction of travel, kx = kink stage) */
+  var WP = [
+    { t: 0, mx: -0.52, my: -0.52, kx: 0 }, { t: 0.22, mx: -0.22, my: -0.2, kx: 0 },
+    { t: 0.36, mx: -0.08, my: -0.06, kx: 1 }, { t: 0.51, mx: 0.1, my: 0.1, kx: 0 },
+    { t: 0.67, mx: 0.26, my: 0.24, kx: 2 }, { t: 0.82, mx: 0.42, my: 0.4, kx: 0 },
+    { t: 1, mx: 0.56, my: 0.56, kx: 0 }
+  ];
+
+  var stars = [], shim = [], paths = [], pulses = [], links = [];
+  var frame = 0, mouse = { x: -9999, y: -9999 }, scan = null, raf = 0, running = true;
+
+  function pathPos(p, prog, W, H) {
+    var T = prog % 1, b = 0;
+    while (b < WP.length - 1 && !(T < WP[b + 1].t)) b++;
+    var h = WP[b], q = WP[b + 1] || h, a = q.t === h.t ? 0 : (T - h.t) / (q.t - h.t);
+    var ox = h.mx * p.travelX + a * (q.mx * p.travelX - h.mx * p.travelX);
+    var oy = h.my * p.travelY + a * (q.my * p.travelY - h.my * p.travelY);
+    var kx = 0, ky = 0;
+    if (h.kx === 1) { kx = p.k1x * (1 - a); ky = p.k1y * (1 - a); } else if (h.kx === 2) { kx = p.k2x * (1 - a); ky = p.k2y * (1 - a); }
+    if (q.kx === 1) { kx += p.k1x * a; ky += p.k1y * a; } else if (q.kx === 2) { kx += p.k2x * a; ky += p.k2y * a; }
+    return { x: p.baseX / 100 * W + ox + kx, y: p.baseY / 100 * H + oy + ky };
+  }
+  function shimO(prog) { var e = prog % 1; return 0.07 + 0.15 * (0.5 - 0.5 * Math.cos(e * Math.PI * 2)); }
+
+  function makeScan(W, H) {
+    if (mobile) { scan = null; return; }
+    var k = document.createElement("canvas"); k.width = W; k.height = H;
+    var m = k.getContext("2d"); m.fillStyle = "rgba(255,255,255,0.015)";
+    for (var v = 0; v < H; v += 4) m.fillRect(0, v, W, 1);
+    scan = k;
+  }
+  function genStars(W, H) {
+    stars = [];
+    for (var i = 0; i < STAR; i++) {
+      var L = Math.floor(Math.random() * 3), vf = SVEL * (0.5 + L * 0.3);
+      stars.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * vf, vy: (Math.random() - 0.5) * vf,
+        radius: 0.8 + L * 0.4 + Math.random() * 0.3, pulse: Math.random() * Math.PI * 2, pulseSpeed: 0.04 + Math.random() * 0.03,
+        layer: L, act: 0, actDur: 30 + Math.floor(Math.random() * 25) });
     }
-
-    var isMobile = window.innerWidth < 768 || /Mobi|Android/i.test(navigator.userAgent);
-    var DPR = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 1.75);
-    var COUNT = isMobile ? 7000 : 14000;
-    var SEGMENTS = 5; /* transitions between 6 formations */
-
-    renderer.setPixelRatio(DPR);
-    renderer.setClearColor(0x000000, 0);
-
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera(50, 1, 0.1, 240);
-
-    /* ── seeded helpers ── */
-    var seedState = 1337;
-    function rand() {
-      seedState = (seedState * 16807) % 2147483647;
-      return (seedState - 1) / 2147483646;
-    }
-    function gauss() {
-      var u = 0, v = 0;
-      while (u === 0) u = rand();
-      while (v === 0) v = rand();
-      return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
-    }
-
-    /* ── formation generators (each returns Float32Array COUNT*3) ── */
-
-    function makeGalaxy() {
-      var a = new Float32Array(COUNT * 3);
-      for (var i = 0; i < COUNT; i++) {
-        var j = i * 3;
-        if (i < COUNT * 0.08) { /* core bulge */
-          a[j] = gauss() * 1.6;
-          a[j + 1] = gauss() * 1.0;
-          a[j + 2] = gauss() * 1.6;
-          continue;
-        }
-        var arm = i % 3;
-        var rT = Math.pow(rand(), 0.62);
-        var r = rT * 16;
-        var ang = arm * (Math.PI * 2 / 3) + rT * 4.4 + (rand() - 0.5) * 0.4;
-        a[j] = Math.cos(ang) * r;
-        a[j + 1] = gauss() * 1.15 * (1 - rT * 0.72);
-        a[j + 2] = Math.sin(ang) * r;
-      }
-      return a;
-    }
-
-    function makeLattice() {
-      var a = new Float32Array(COUNT * 3);
-      var LAYERS = 6, PER = 7;
-      var nodes = [];
-      for (var l = 0; l < LAYERS; l++) {
-        for (var n = 0; n < PER; n++) {
-          var ny = ((n % 3) - 1) * 5.2 + (rand() - 0.5) * 1.6;
-          var nz = (Math.floor(n / 3) - 1) * 5.2 + (rand() - 0.5) * 1.6;
-          nodes.push([-13 + l * (26 / (LAYERS - 1)), ny, nz]);
-        }
-      }
-      for (var i = 0; i < COUNT; i++) {
-        var j = i * 3;
-        if (rand() < 0.5) { /* cluster on a node */
-          var nd = nodes[Math.floor(rand() * nodes.length)];
-          a[j] = nd[0] + gauss() * 0.55;
-          a[j + 1] = nd[1] + gauss() * 0.55;
-          a[j + 2] = nd[2] + gauss() * 0.55;
-        } else { /* travel along an edge between adjacent layers */
-          var la = Math.floor(rand() * (LAYERS - 1));
-          var n1 = nodes[la * PER + Math.floor(rand() * PER)];
-          var n2 = nodes[(la + 1) * PER + Math.floor(rand() * PER)];
-          var t = rand();
-          a[j] = n1[0] + (n2[0] - n1[0]) * t + (rand() - 0.5) * 0.24;
-          a[j + 1] = n1[1] + (n2[1] - n1[1]) * t + (rand() - 0.5) * 0.24;
-          a[j + 2] = n1[2] + (n2[2] - n1[2]) * t + (rand() - 0.5) * 0.24;
-        }
-      }
-      return a;
-    }
-
-    function makeConstellation() {
-      var a = new Float32Array(COUNT * 3);
-      var CL = 7;
-      var centers = [];
-      for (var c = 0; c < CL; c++) {
-        var ang = (c / CL) * Math.PI * 2 + 0.4;
-        centers.push([
-          Math.cos(ang) * 10.5,
-          ((c % 3) - 1) * 3.4 + Math.sin(c * 2.1) * 1.4,
-          Math.sin(ang) * 10.5
-        ]);
-      }
-      for (var i = 0; i < COUNT; i++) {
-        var j = i * 3;
-        if (rand() < 0.78) { /* member of a case cluster */
-          var ce = centers[i % CL];
-          a[j] = ce[0] + gauss() * 1.7;
-          a[j + 1] = ce[1] + gauss() * 1.7;
-          a[j + 2] = ce[2] + gauss() * 1.7;
-        } else { /* archival dust shell */
-          var u = rand() * Math.PI * 2, v = Math.acos(2 * rand() - 1);
-          var r = 15 + rand() * 4;
-          a[j] = Math.sin(v) * Math.cos(u) * r;
-          a[j + 1] = Math.cos(v) * r * 0.6;
-          a[j + 2] = Math.sin(v) * Math.sin(u) * r;
-        }
-      }
-      return a;
-    }
-
-    function makeCube() {
-      var a = new Float32Array(COUNT * 3);
-      var side = Math.floor(Math.cbrt(COUNT));
-      var spacing = 19 / (side - 1);
-      var i = 0;
-      for (var x = 0; x < side && i < COUNT; x++)
-        for (var y = 0; y < side && i < COUNT; y++)
-          for (var z = 0; z < side && i < COUNT; z++) {
-            var j = i * 3;
-            a[j] = (x - (side - 1) / 2) * spacing + (rand() - 0.5) * 0.16;
-            a[j + 1] = (y - (side - 1) / 2) * spacing + (rand() - 0.5) * 0.16;
-            a[j + 2] = (z - (side - 1) / 2) * spacing + (rand() - 0.5) * 0.16;
-            i++;
-          }
-      for (; i < COUNT; i++) { /* leftovers drift inside */
-        var k = i * 3;
-        a[k] = (rand() - 0.5) * 19;
-        a[k + 1] = (rand() - 0.5) * 19;
-        a[k + 2] = (rand() - 0.5) * 19;
-      }
-      return a;
-    }
-
-    function makeTorus() {
-      var a = new Float32Array(COUNT * 3);
-      for (var i = 0; i < COUNT; i++) {
-        var j = i * 3;
-        if (i % 5 === 0) { /* inner counter-ring */
-          var u2 = rand() * Math.PI * 2;
-          a[j] = Math.cos(u2) * 5.2 + gauss() * 0.3;
-          a[j + 1] = Math.sin(u2) * 5.2 * 0.35 + gauss() * 0.3;
-          a[j + 2] = Math.sin(u2) * 5.2 + gauss() * 0.3;
-        } else {
-          var u = rand() * Math.PI * 2;
-          var v = rand() * Math.PI * 2;
-          var R = 10.5, r = 2.6 * Math.sqrt(rand());
-          a[j] = (R + r * Math.cos(v)) * Math.cos(u);
-          a[j + 1] = r * Math.sin(v) * 0.9;
-          a[j + 2] = (R + r * Math.cos(v)) * Math.sin(u);
-        }
-      }
-      return a;
-    }
-
-    function makeSingularity() {
-      var a = new Float32Array(COUNT * 3);
-      for (var i = 0; i < COUNT; i++) {
-        var j = i * 3;
-        var p = rand();
-        if (p < 0.66) { /* dense core — lifted above the closing copy */
-          a[j] = gauss() * 1.0;
-          a[j + 1] = 6.5 + gauss() * 1.0;
-          a[j + 2] = gauss() * 1.0;
-        } else if (p < 0.86) { /* vertical beam */
-          a[j] = gauss() * 0.35;
-          a[j + 1] = (rand() - 0.5) * 32;
-          a[j + 2] = gauss() * 0.35;
-        } else { /* far halo */
-          var u = rand() * Math.PI * 2, v = Math.acos(2 * rand() - 1);
-          var r = 16 + rand() * 6;
-          a[j] = Math.sin(v) * Math.cos(u) * r;
-          a[j + 1] = Math.cos(v) * r;
-          a[j + 2] = Math.sin(v) * Math.sin(u) * r;
-        }
-      }
-      return a;
-    }
-
-    var formations = [
-      makeGalaxy(),
-      makeLattice(),
-      makeConstellation(),
-      makeCube(),
-      makeTorus(),
-      makeSingularity()
-    ];
-
-    /* ── camera keyframes per formation ── */
-    var camKeys = [
-      { x: 0, y: 10, z: 26 },
-      { x: 0, y: 2, z: 30 },
-      { x: 0, y: 5, z: 29 },
-      { x: 11, y: 9, z: 26 },
-      { x: 0, y: 15, z: 24 },
-      { x: 0, y: 0, z: 21 }
-    ];
-
-    /* ── geometry + per-particle attributes ── */
-    var positions = new Float32Array(formations[0]); /* copy of galaxy */
-    var colors = new Float32Array(COUNT * 3);
-    var scales = new Float32Array(COUNT);
-    var seeds = new Float32Array(COUNT);
-
-    for (var i = 0; i < COUNT; i++) {
-      var roll = rand();
-      var int_ = 0.45 + rand() * 0.55;
-      if (roll < 0.16) { /* gold */
-        colors[i * 3] = 0.85 * int_; colors[i * 3 + 1] = 0.68 * int_; colors[i * 3 + 2] = 0.38 * int_;
-      } else if (roll < 0.21) { /* ember (the rejected) */
-        colors[i * 3] = 0.6 * int_; colors[i * 3 + 1] = 0.3 * int_; colors[i * 3 + 2] = 0.3 * int_;
-      } else { /* warm ivory */
-        colors[i * 3] = 0.93 * int_; colors[i * 3 + 1] = 0.9 * int_; colors[i * 3 + 2] = 0.84 * int_;
-      }
-      var s = rand();
-      scales[i] = 0.5 + s * s * 2.8 + (rand() < 0.015 ? 2.5 : 0);
-      seeds[i] = rand() * 100;
-    }
-
-    var geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    geo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-    geo.setAttribute("aScale", new THREE.BufferAttribute(scales, 1));
-    geo.setAttribute("aSeed", new THREE.BufferAttribute(seeds, 1));
-
-    var mat = new THREE.ShaderMaterial({
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-      vertexColors: true,
-      uniforms: {
-        uTime: { value: 0 },
-        uSize: { value: 80 * DPR },
-        uAgitation: { value: 0 },
-        uFade: { value: 1 },
-        uClear: { value: 0 }
-      },
-      vertexShader: [
-        "attribute float aScale;",
-        "attribute float aSeed;",
-        "uniform float uTime;",
-        "uniform float uSize;",
-        "uniform float uAgitation;",
-        "uniform float uClear;",
-        "varying vec3 vColor;",
-        "varying float vTw;",
-        "varying float vClear;",
-        "void main() {",
-        "  vec3 p = position;",
-        "  float amp = 0.14 + uAgitation;",
-        "  p.x += sin(uTime * 0.31 + aSeed * 17.0) * amp;",
-        "  p.y += cos(uTime * 0.27 + aSeed * 23.0) * amp;",
-        "  p.z += sin(uTime * 0.23 + aSeed * 29.0) * amp;",
-        "  vec4 mv = modelViewMatrix * vec4(p, 1.0);",
-        "  gl_PointSize = uSize * aScale / max(0.001, -mv.z);",
-        "  vTw = 0.72 + 0.28 * sin(uTime * 1.6 + aSeed * 51.0);",
-        "  vColor = color;",
-        "  vec4 clip = projectionMatrix * mv;",
-        "  /* the field parts around the reading column: particles whose",
-        "     screen-x falls inside the column get pushed to the margins",
-        "     and faded, proportional to uClear (set per chapter) */",
-        "  float nx = clip.x / max(0.0001, clip.w);",
-        "  float inCol = 1.0 - smoothstep(0.5, 1.15, abs(nx));",
-        "  float push = uClear * inCol;",
-        "  float dir = nx >= 0.0 ? 1.0 : -1.0;",
-        "  /* per-particle ease so the curtain feels organic, not mechanical */",
-        "  float ease = 0.75 + 0.25 * sin(aSeed * 7.3);",
-        "  clip.x += dir * push * ease * 1.05 * clip.w;",
-        "  vClear = 1.0 - uClear * inCol * 0.85;",
-        "  gl_Position = clip;",
-        "}"
-      ].join("\n"),
-      fragmentShader: [
-        "uniform float uFade;",
-        "varying vec3 vColor;",
-        "varying float vTw;",
-        "varying float vClear;",
-        "void main() {",
-        "  float d = length(gl_PointCoord - 0.5);",
-        "  float a = smoothstep(0.5, 0.04, d);",
-        "  a *= a;",
-        "  gl_FragColor = vec4(vColor * vTw, a * 0.9 * uFade * vClear);",
-        "}"
-      ].join("\n")
-    });
-
-    var points = new THREE.Points(geo, mat);
-    scene.add(points);
-
-    /* ── distant static stars ── */
-    var starGeo = new THREE.BufferGeometry();
-    var starCount = isMobile ? 400 : 900;
-    var starPos = new Float32Array(starCount * 3);
-    for (var st = 0; st < starCount; st++) {
-      var su = rand() * Math.PI * 2, sv = Math.acos(2 * rand() - 1);
-      var sr = 70 + rand() * 50;
-      starPos[st * 3] = Math.sin(sv) * Math.cos(su) * sr;
-      starPos[st * 3 + 1] = Math.cos(sv) * sr;
-      starPos[st * 3 + 2] = Math.sin(sv) * Math.sin(su) * sr;
-    }
-    starGeo.setAttribute("position", new THREE.BufferAttribute(starPos, 3));
-    var stars = new THREE.Points(starGeo, new THREE.PointsMaterial({
-      color: 0xece7db,
-      size: 1.3,
-      sizeAttenuation: false,
-      transparent: true,
-      opacity: 0.38,
-      depthWrite: false
-    }));
-    scene.add(stars);
-
-    /* ── morph state ── */
-    var morphTarget = 0;   /* continuous 0..SEGMENTS */
-    var morphShown = 0;
-    var velocity = 0;
-    var mouse = { x: 0, y: 0 };
-    var camDrift = { x: 0, y: 0 };
-    var needsPos = true;
-
-    FIELD.setMorph = function (segment, t) {
-      morphTarget = Math.max(0, Math.min(SEGMENTS, segment + t));
-    };
-    FIELD.setVelocity = function (v) {
-      velocity = Math.min(1, Math.abs(v));
-    };
-    var fadeTarget = 1;
-    FIELD.setFade = function (v) {
-      fadeTarget = Math.max(0.2, Math.min(1, v));
-    };
-    var clearTarget = 0;
-    FIELD.setClear = function (v) {
-      clearTarget = Math.max(0, Math.min(1, v));
-    };
-
-    function smoothstep01(t) { return t * t * (3 - 2 * t); }
-
-    function updatePositions() {
-      var g = morphShown;
-      var i0 = Math.min(SEGMENTS, Math.floor(g));
-      var i1 = Math.min(SEGMENTS, i0 + 1);
-      var t = g - i0;
-      var A = formations[i0], B = formations[i1];
-      var arr = geo.attributes.position.array;
-      for (var i = 0; i < COUNT; i++) {
-        /* per-particle stagger so morphs ripple instead of snapping */
-        var off = (seeds[i] % 10) * 0.022;
-        var tp = smoothstep01(Math.max(0, Math.min(1, (t - off) / (1 - 0.22))));
-        var j = i * 3;
-        arr[j] = A[j] + (B[j] - A[j]) * tp;
-        arr[j + 1] = A[j + 1] + (B[j + 1] - A[j + 1]) * tp;
-        arr[j + 2] = A[j + 2] + (B[j + 2] - A[j + 2]) * tp;
-      }
-      geo.attributes.position.needsUpdate = true;
-    }
-
-    function updateCamera() {
-      var g = morphShown;
-      var i0 = Math.min(SEGMENTS, Math.floor(g));
-      var i1 = Math.min(SEGMENTS, i0 + 1);
-      var t = smoothstep01(g - i0);
-      var a = camKeys[i0], b = camKeys[i1];
-      camDrift.x += (mouse.x * 1.6 - camDrift.x) * 0.04;
-      camDrift.y += (mouse.y * 1.0 - camDrift.y) * 0.04;
-      camera.position.set(
-        a.x + (b.x - a.x) * t + camDrift.x,
-        a.y + (b.y - a.y) * t - camDrift.y,
-        a.z + (b.z - a.z) * t
-      );
-      camera.lookAt(0, 0, 0);
-    }
-
-    function resize() {
-      var w = window.innerWidth, h = window.innerHeight;
-      renderer.setSize(w, h, false);
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-    }
-    resize();
-    window.addEventListener("resize", function () { resize(); if (reduced) renderOnce(); });
-
-    if (!isMobile) {
-      window.addEventListener("mousemove", function (e) {
-        mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = (e.clientY / window.innerHeight) * 2 - 1;
-      }, { passive: true });
-    }
-
-    /* ── render loop ── */
-    var clock = new THREE.Clock();
-    var running = true;
-
-    function tick() {
-      if (!running) return;
-      var t = clock.getElapsedTime();
-      mat.uniforms.uTime.value = t;
-      mat.uniforms.uAgitation.value += (velocity * 0.9 - mat.uniforms.uAgitation.value) * 0.06;
-      mat.uniforms.uFade.value += (fadeTarget - mat.uniforms.uFade.value) * 0.07;
-      mat.uniforms.uClear.value += (clearTarget - mat.uniforms.uClear.value) * 0.055;
-      velocity *= 0.94;
-
-      var prev = morphShown;
-      morphShown += (morphTarget - morphShown) * 0.085;
-      if (needsPos || Math.abs(morphShown - prev) > 0.00035) {
-        updatePositions();
-        needsPos = false;
-      }
-
-      points.rotation.y = t * 0.035;
-      stars.rotation.y = t * 0.005;
-      updateCamera();
-      renderer.render(scene, camera);
-      requestAnimationFrame(tick);
-    }
-
-    function renderOnce() {
-      mat.uniforms.uTime.value = 1.5;
-      updatePositions();
-      updateCamera();
-      renderer.render(scene, camera);
-    }
-
-    if (reduced) {
-      /* static, dignified galaxy — dimmed so text always wins */
-      FIELD.setMorph = function () {};
-      mat.uniforms.uFade.value = 0.45;
-      renderOnce();
-    } else {
-      requestAnimationFrame(tick);
-      document.addEventListener("visibilitychange", function () {
-        if (document.hidden) { running = false; }
-        else if (!running) { running = true; clock.start(); requestAnimationFrame(tick); }
+  }
+  function genShim(W, H) {
+    shim = [];
+    for (var i = 0; i < SHIM; i++) shim.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3, radius: 0.5 + Math.random() * 1.5, alpha: 0.1 + Math.random() * 0.3, life: Math.random() });
+  }
+  function genPaths(W, H) {
+    paths = [];
+    var kw = W / 100, kh = H / 100;
+    for (var i = 0; i < PATHS; i++) {
+      var near = Math.random() < 0.42, dir = Math.random() < 0.86 ? 1 : -1;
+      paths.push({
+        baseX: Math.random() * 100, baseY: Math.random() * 100,
+        travelX: dir * (near ? 60 + Math.random() * 58 : 40 + Math.random() * 40) * kw,
+        travelY: (near ? -18 + Math.random() * 36 : -12 + Math.random() * 24) * kh,
+        k1x: near ? -16 + Math.random() * 32 : -10 + Math.random() * 20, k1y: near ? -12 + Math.random() * 24 : -8 + Math.random() * 16,
+        k2x: near ? -14 + Math.random() * 28 : -9 + Math.random() * 18, k2y: near ? -10 + Math.random() * 20 : -7 + Math.random() * 14,
+        pathDur: near ? (22 + Math.random() * 16) * 60 : (32 + Math.random() * 22) * 60,
+        shimDur: near ? (4.2 + Math.random() * 2.4) * 60 : (6 + Math.random() * 3) * 60,
+        phase: Math.random(), size: near ? 2.8 + Math.random() * 4 : 1.5 + Math.random() * 2.6, near: near, offX: 0, offY: 0
       });
     }
-
-    FIELD.ready = true;
-    if (typeof FIELD.onReady === "function") FIELD.onReady();
+  }
+  function size() {
+    var W = window.innerWidth, H = window.innerHeight;
+    canvas.width = W; canvas.height = H;
+    genStars(W, H); genShim(W, H); genPaths(W, H); makeScan(W, H);
+  }
+  function spawn() {
+    var f = Math.floor(Math.random() * stars.length), k = stars[f], c = [];
+    for (var i = 0; i < stars.length; i++) { if (i === f) continue; var dx = stars[i].x - k.x, dy = stars[i].y - k.y; if (dx * dx + dy * dy < LINK2) c.push(i); }
+    if (!c.length) return;
+    var to = c[Math.floor(Math.random() * c.length)];
+    stars[f].act = stars[f].actDur;
+    pulses.push({ from: f, to: to, prog: 0, speed: PMIN + Math.random() * (PMAX - PMIN) });
+  }
+  function grid(W, H) {
+    if (mobile) return;
+    var s = 50, off = frame * 0.02 % s;
+    ctx.strokeStyle = "rgba(255,255,255,0.03)"; ctx.lineWidth = 0.5;
+    for (var i = -off; i < W + s; i += s) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, H); ctx.stroke(); }
+    for (var j = -off; j < H + s; j += s) { ctx.beginPath(); ctx.moveTo(0, j); ctx.lineTo(W, j); ctx.stroke(); }
   }
 
-  if (window.THREE) boot();
-  else window.addEventListener("three-ready", boot, { once: true });
+  function draw() {
+    if (!running) return;
+    var W = canvas.width, H = canvas.height;
+    ctx.fillStyle = "rgba(0,0,0,1)"; ctx.fillRect(0, 0, W, H);
+    grid(W, H);
+    if (scan) ctx.drawImage(scan, 0, 0);
+    frame++;
+    if (frame % SPAWN === 0) spawn();
+
+    var i;
+    /* traveling glints */
+    for (i = 0; i < paths.length; i++) {
+      var p = paths[i];
+      var d = pathPos(p, (frame + p.phase * p.pathDur) % p.pathDur / p.pathDur, W, H);
+      var a = shimO((frame + p.phase * p.shimDur) % p.shimDur / p.shimDur);
+      if (!touch) {
+        var px = d.x - mouse.x, py = d.y - mouse.y, p2 = px * px + py * py, R = 150;
+        if (p2 < R * R && p2 > 0) { var pd = Math.sqrt(p2), pf = (R - pd) / R * 42; p.offX += px / pd * pf; p.offY += py / pd * pf; }
+      }
+      p.offX *= 0.85; p.offY *= 0.85;
+      if (p.offX > 200) p.offX = 200; if (p.offX < -200) p.offX = -200;
+      if (p.offY > 200) p.offY = 200; if (p.offY < -200) p.offY = -200;
+      var X = d.x + p.offX, Y = d.y + p.offY;
+      if (X < -50 || X > W + 50 || Y < -50 || Y > H + 50) continue;
+      ctx.save(); ctx.globalAlpha = a; ctx.shadowBlur = p.near ? 24 : 14;
+      ctx.shadowColor = p.near ? "rgba(235,242,255,0.56)" : "rgba(229,236,252,0.34)";
+      ctx.fillStyle = "rgba(248,250,255,0.97)";
+      ctx.beginPath(); ctx.arc(X, Y, p.size * 0.5, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+    }
+    /* drifting shimmer dust */
+    for (i = 0; i < shim.length; i++) {
+      var s = shim[i]; s.x += s.vx; s.y += s.vy; s.life += 0.01; s.alpha = 0.2 + Math.sin(s.life) * 0.15;
+      if (s.x < 0 || s.x > W) s.vx *= -1; if (s.y < 0 || s.y > H) s.vy *= -1;
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2); ctx.fillStyle = "rgba(255,255,255," + s.alpha + ")"; ctx.fill();
+    }
+    /* nodes move + mouse repulsion */
+    for (i = 0; i < stars.length; i++) {
+      var t = stars[i]; t.x += t.vx; t.y += t.vy; t.pulse += t.pulseSpeed; if (t.act > 0) t.act--;
+      if (!touch) {
+        var sx = t.x - mouse.x, sy = t.y - mouse.y, sd = sx * sx + sy * sy;
+        if (sd < 32400 && sd > 0) { var sdist = Math.sqrt(sd), sf = (180 - sdist) / 180; t.x += sx / sdist * sf * 5.5; t.y += sy / sdist * sf * 5.5; }
+      }
+      if (t.x < 0 || t.x > W) { t.vx *= -1; t.x = Math.max(0, Math.min(W, t.x)); }
+      if (t.y < 0 || t.y > H) { t.vy *= -1; t.y = Math.max(0, Math.min(H, t.y)); }
+    }
+    /* recompute connection list every 3 frames */
+    if (frame % 3 === 0) {
+      links = [];
+      for (var u = 0; u < stars.length; u++) for (var w2 = u + 1; w2 < stars.length; w2++) {
+        var ddx = stars[w2].x - stars[u].x, ddy = stars[w2].y - stars[u].y, dd = ddx * ddx + ddy * ddy;
+        if (dd < LINK2) links.push({ i: u, j: w2, fade: 1 - Math.sqrt(dd) / LINK });
+      }
+    }
+    ctx.lineWidth = 0.3;
+    for (i = 0; i < links.length; i++) {
+      var L = links[i];
+      var lo = (stars[L.i].act > 0 || stars[L.j].act > 0) ? L.fade * 0.18 : L.fade * 0.05;
+      ctx.beginPath(); ctx.moveTo(stars[L.i].x, stars[L.i].y); ctx.lineTo(stars[L.j].x, stars[L.j].y);
+      ctx.strokeStyle = "rgba(255,255,255," + lo.toFixed(3) + ")"; ctx.stroke();
+    }
+    /* node dots */
+    for (i = 0; i < stars.length; i++) {
+      var t2 = stars[i], sc = 1 + Math.sin(t2.pulse) * 0.25;
+      if (t2.act > 0) {
+        var aa = t2.act / t2.actDur;
+        ctx.beginPath(); ctx.arc(t2.x, t2.y, t2.radius * sc, 0, Math.PI * 2); ctx.fillStyle = "rgba(255,255,255," + (aa * 0.25).toFixed(3) + ")"; ctx.fill();
+      } else {
+        var yy = 0.08 + t2.layer * 0.04;
+        ctx.beginPath(); ctx.arc(t2.x, t2.y, t2.radius * sc, 0, Math.PI * 2); ctx.fillStyle = "rgba(255,255,255," + yy.toFixed(3) + ")"; ctx.fill();
+      }
+    }
+    /* signal pulses traveling between nodes */
+    pulses = pulses.filter(function (t) {
+      t.prog += t.speed;
+      if (t.prog >= 1) { stars[t.to].act = stars[t.to].actDur; return false; }
+      var s0 = stars[t.from], s1 = stars[t.to];
+      var dx = s0.x + (s1.x - s0.x) * t.prog, dy = s0.y + (s1.y - s0.y) * t.prog;
+      var tb = Math.max(0, t.prog - 0.25), X0 = s0.x + (s1.x - s0.x) * tb, Y0 = s0.y + (s1.y - s0.y) * tb;
+      var g = ctx.createLinearGradient(X0, Y0, dx, dy);
+      g.addColorStop(0, "rgba(255,255,255,0)"); g.addColorStop(0.6, "rgba(255,255,255,0.06)"); g.addColorStop(1, "rgba(255,255,255,0.12)");
+      ctx.beginPath(); ctx.moveTo(X0, Y0); ctx.lineTo(dx, dy); ctx.strokeStyle = g; ctx.lineWidth = 0.8; ctx.stroke();
+      var rg = ctx.createRadialGradient(dx, dy, 0, dx, dy, 3);
+      rg.addColorStop(0, "rgba(255,255,255,0.18)"); rg.addColorStop(1, "rgba(255,255,255,0)");
+      ctx.beginPath(); ctx.arc(dx, dy, 3, 0, Math.PI * 2); ctx.fillStyle = rg; ctx.fill();
+      return true;
+    });
+
+    raf = requestAnimationFrame(draw);
+  }
+
+  if (!touch) window.addEventListener("mousemove", function (e) { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
+  var rt; window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(size, 150); }, { passive: true });
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) { running = false; cancelAnimationFrame(raf); }
+    else if (!running) { running = true; raf = requestAnimationFrame(draw); }
+  });
+
+  size();
+  raf = requestAnimationFrame(draw);
 })();

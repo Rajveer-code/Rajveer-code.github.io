@@ -239,7 +239,7 @@ body.cursor-hover .cursor-ring {
 }
 .prologue-inner {
   position: relative;
-  max-width: 1020px;
+  max-width: 1240px;
   text-align: center;
   display: flex; flex-direction: column; align-items: center;
 }
@@ -253,9 +253,9 @@ body.cursor-hover .cursor-ring {
 .prologue-question {
   margin-top: 34px;
   font-family: var(--serif);
-  font-size: clamp(34px, 5.4vw, 68px);
+  font-size: clamp(42px, 6vw, 82px);
   font-weight: 500;
-  line-height: 1.16;
+  line-height: 1.14;
   letter-spacing: -0.005em;
   color: var(--ivory);
   text-wrap: balance;
@@ -300,9 +300,9 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
 /* ═══ Shared chapter scaffold ═══ */
 .chapter {
   position: relative;
-  max-width: 1120px;
+  max-width: 1340px;
   margin: 0 auto;
-  padding: clamp(110px, 13vw, 190px) clamp(20px, 4vw, 24px);
+  padding: clamp(110px, 13vw, 190px) clamp(24px, 5vw, 56px);
 }
 .chapter-head {
   display: flex; align-items: baseline; gap: 20px;
@@ -316,8 +316,8 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
 }
 .chapter-title {
   font-family: var(--serif);
-  font-size: clamp(34px, 4.6vw, 54px);
-  font-weight: 500; line-height: 1.05;
+  font-size: clamp(40px, 5.4vw, 66px);
+  font-weight: 500; line-height: 1.04;
   color: var(--ivory);
 }
 .chapter-sub {
@@ -330,12 +330,12 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
 
 /* ═══ Thesis ═══ */
 .thesis-text {
-  max-width: 880px;
+  max-width: 1020px;
   margin: 0 auto;
   font-family: var(--serif);
-  font-size: clamp(26px, 3.6vw, 44px);
+  font-size: clamp(30px, 4.2vw, 54px);
   font-weight: 500;
-  line-height: 1.42;
+  line-height: 1.4;
   text-wrap: pretty;
 }
 .thesis-text .w { color: #6c695f; transition: color 0.3s linear; }
@@ -343,7 +343,7 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
 .thesis-text .w.gold-w.lit { color: var(--gold-bright); font-style: italic; }
 .thesis-stats {
   display: grid; grid-template-columns: repeat(4, 1fr);
-  max-width: 880px;
+  max-width: 1020px;
   margin: clamp(56px, 7vw, 90px) auto 0;
   border-block: 1px solid var(--hairline);
   background: rgba(9, 11, 15, 0.72);
@@ -859,4 +859,261 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
   .flow-arrow.is-faint { stroke-dasharray: 3 4 !important; }
   .arch-metric { opacity: 1 !important; }
   .arch-node.is-key { opacity: 1 !important; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   DETAIL PAGES — project-*.html
+   Stars canvas shared from field.js; Playfair Display + DM fonts
+   ══════════════════════════════════════════════════════════════ */
+
+.bottom-fade {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: 220px;
+  background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ── ISS lattice cursor ── */
+.cursor-wrap {
+  position: fixed; top: 0; left: 0;
+  width: 44px; height: 44px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  color: rgba(249, 246, 238, 0.85);
+}
+.cursor-arc { opacity: 0; }
+.cursor-arc-1 { animation: dp-arc 2.4s ease-in-out infinite; }
+.cursor-arc-2 { animation: dp-arc 2.4s ease-in-out 0.4s infinite; }
+.cursor-arc-3 { animation: dp-arc 2.4s ease-in-out 0.8s infinite; }
+@keyframes dp-arc {
+  0%, 100% { opacity: 0; }
+  50%       { opacity: 1; }
+}
+.cursor-wrap.is-hovering .cursor-arc-1 { animation-duration: 1.2s; }
+.cursor-wrap.is-hovering .cursor-arc-2 { animation-duration: 1.2s; animation-delay: 0.2s; }
+.cursor-wrap.is-hovering .cursor-arc-3 { animation-duration: 1.2s; animation-delay: 0.4s; }
+
+/* ── Scroll rail ── */
+.scroll-rail {
+  position: fixed; right: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: rgba(255,255,255,0.06);
+  z-index: 100;
+}
+.scroll-rail-fill {
+  position: absolute; top: 0; left: 0; right: 0;
+  background: rgba(249, 246, 238, 0.45);
+  height: 8%;
+}
+
+/* ── HUD clock ── */
+.hud-clock {
+  position: fixed; bottom: 2.25rem; left: 2rem;
+  z-index: 100;
+  display: flex; flex-direction: column; gap: 5px;
+  font-family: 'DM Mono', 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+  color: rgba(249, 246, 238, 0.35);
+  pointer-events: none;
+}
+.hud-row { display: flex; align-items: center; gap: 7px; }
+.hud-row svg { opacity: 0.4; flex-shrink: 0; }
+.hud-label { color: rgba(249, 246, 238, 0.28); }
+.hud-time  { color: rgba(249, 246, 238, 0.6); font-variant-numeric: tabular-nums; }
+
+/* ── Page layout ── */
+.spatial-scene { position: relative; z-index: 10; }
+.thinking-scroll { /* plain flow container; window scrolls */ }
+.thinking-body {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 7rem 2rem 5rem;
+}
+
+/* ── Back link ── */
+.back-link {
+  display: inline-block;
+  font-family: 'DM Mono', 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(249, 246, 238, 0.38);
+  text-decoration: none;
+  margin-bottom: 3.5rem;
+  transition: color 0.2s ease;
+}
+.back-link:hover { color: rgba(249, 246, 238, 0.75); }
+
+/* ── Header ── */
+.th-header { margin-bottom: 2rem; }
+.th-badge {
+  display: inline-block;
+  font-family: 'DM Mono', 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 1.1rem;
+}
+.th-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 800;
+  font-style: italic;
+  line-height: 1.08;
+  color: rgba(249, 246, 238, 0.95);
+  margin: 0 0 1rem;
+  letter-spacing: -0.025em;
+}
+.th-subtitle {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(249, 246, 238, 0.58);
+  margin: 0;
+  max-width: 580px;
+}
+
+/* ── Divider ── */
+.th-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  margin: 2.5rem 0;
+}
+
+/* ── Metrics ── */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 1.5rem 1rem;
+  margin-bottom: 0.5rem;
+}
+.metric-block { display: flex; flex-direction: column; gap: 5px; }
+.metric-value {
+  font-family: 'DM Mono', 'JetBrains Mono', monospace;
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.metric-label {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(249, 246, 238, 0.38);
+}
+
+/* ── Body sections ── */
+.th-section { margin-bottom: 2.5rem; }
+.th-section-title {
+  font-family: 'DM Mono', 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(249, 246, 238, 0.42);
+  margin: 0 0 0.8rem;
+}
+.th-body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.78;
+  color: rgba(249, 246, 238, 0.72);
+  margin: 0;
+}
+.th-body strong { color: rgba(249, 246, 238, 0.95); font-weight: 600; }
+.th-body em     { color: rgba(249, 246, 238, 0.85); }
+
+/* ── Method diagram ── */
+.method-diagram { margin: 0.5rem 0 2.5rem; }
+
+/* ── CTA link ── */
+.cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'DM Mono', 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid;
+  border-radius: 3px;
+  transition: opacity 0.2s ease;
+}
+.cta-link:hover { opacity: 0.7; }
+
+/* ── Footer ── */
+.th-footer {
+  font-family: 'DM Mono', 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(249, 246, 238, 0.18);
+  padding-top: 3.5rem;
+  margin-top: 4rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+/* ── Bottom Right HUD ── */
+.brh {
+  position: fixed; bottom: 2rem; right: 2.5rem;
+  z-index: 200;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 0.55rem;
+  font-family: 'DM Mono', 'JetBrains Mono', monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.09em;
+  color: rgba(249, 246, 238, 0.3);
+  pointer-events: none;
+  user-select: none;
+}
+.brh-session, .brh-explore, .brh-xy {
+  display: flex; align-items: center; gap: 0.55rem;
+}
+.brh-label { color: rgba(249,246,238,0.18); }
+.brh-value { color: rgba(249,246,238,0.48); font-variant-numeric: tabular-nums; }
+.brh-scroll-btn {
+  pointer-events: all;
+  background: none; border: none;
+  cursor: pointer; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  transform: scale(0.88);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  margin-top: 0.2rem;
+}
+.brh-scroll-btn.visible { opacity: 1; transform: scale(1); }
+.brh-ring {
+  width: 34px; height: 34px;
+  transform: rotate(-90deg);
+}
+.brh-ring-track { fill: none; stroke: rgba(255,255,255,0.08); stroke-width: 2; }
+.brh-ring-fill  {
+  fill: none; stroke-width: 2; stroke-linecap: round;
+  stroke-dasharray: 94.25;
+  stroke-dashoffset: 94.25;
+  transition: stroke-dashoffset 0.15s linear, stroke 0.6s ease;
+}
+.brh-arc-red    .brh-ring-fill { stroke: #f87171; }
+.brh-arc-yellow .brh-ring-fill { stroke: #facc15; }
+.brh-arc-blue   .brh-ring-fill { stroke: #60a5fa; }
+.brh-arc-green  .brh-ring-fill { stroke: #4ade80; }
+
+/* ── Detail page responsive ── */
+@media (max-width: 768px) {
+  .cursor-wrap { display: none; }
+  .thinking-body { padding: 5rem 1.25rem 3.5rem; }
+  .th-title { font-size: clamp(1.8rem, 8vw, 2.8rem); }
+  .th-subtitle { font-size: 0.95rem; }
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .hud-clock { bottom: 1rem; left: 1rem; font-size: 0.62rem; }
+  .brh { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-arc { animation: none !important; }
+  .th-section { opacity: 1 !important; transform: none !important; }
 }

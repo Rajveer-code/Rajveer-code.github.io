@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Persistent Racial Disparities — Rajveer Singh Pall</title>
+  <meta name="description" content="Five independent identification strategies confirm a persistent racial approval gap across 42M HMDA mortgage applications.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2306080c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' fill='%23f5ca40' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="bottom-fade" aria-hidden="true"></div>
+  <div class="cursor-wrap" id="cursorWrap" aria-hidden="true">
+    <svg class="cursor-lattice" width="44" height="44" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="2.5" fill="currentColor"/>
+      <line x1="20" y1="6" x2="20" y2="34" stroke="currentColor" stroke-width="0.75"/>
+      <line x1="6" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="0.75"/>
+      <line x1="10" y1="10" x2="30" y2="30" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.6"/>
+      <line x1="30" y1="10" x2="10" y2="30" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.6"/>
+      <rect x="17" y="17" width="6" height="6" fill="none" stroke="currentColor" stroke-width="0.65"/>
+      <path class="cursor-arc cursor-arc-1" d="M14,12 Q20,6 26,12" fill="none" stroke="currentColor" stroke-width="0.55"/>
+      <path class="cursor-arc cursor-arc-2" d="M12,10 Q20,3 28,10" fill="none" stroke="currentColor" stroke-width="0.4"/>
+      <path class="cursor-arc cursor-arc-3" d="M10,8 Q20,0 30,8" fill="none" stroke="currentColor" stroke-width="0.3"/>
+    </svg>
+  </div>
+  <div class="scroll-rail" aria-hidden="true"><div class="scroll-rail-fill" id="scrollRailFill"></div></div>
+  <div class="hud-clock" aria-hidden="true">
+    <div class="hud-row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="hud-label">BLR</span><span class="hud-time" id="clockIST">--:--:--</span>
+    </div>
+    <div class="hud-row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="hud-label" id="hudVisitorLabel">NAG</span><span class="hud-time" id="clockUTC">--:--:--</span>
+    </div>
+  </div>
+
+  <div class="spatial-scene">
+    <div class="thinking-scroll">
+      <div class="thinking-body">
+        <a href="index.html#research" class="back-link">← Back to research</a>
+        <header class="th-header">
+          <div class="th-badge" style="color:#60a5fa">Working Paper · HMDA</div>
+          <h1 class="th-title">Persistent Racial Disparities</h1>
+          <p class="th-subtitle">Five independent identification strategies, one conclusion: the racial approval gap in U.S. mortgage lending survives every robustness check.</p>
+        </header>
+        <div class="th-divider"></div>
+        <div class="metrics-grid">
+          <div class="metric-block"><span class="metric-value" style="color:#60a5fa">42M</span><span class="metric-label">HMDA applications</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#60a5fa">5</span><span class="metric-label">Identification strategies</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#60a5fa">&gt;9 pp</span><span class="metric-label">Manski lower bound</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#60a5fa">2020–24</span><span class="metric-label">Coverage window</span></div>
+        </div>
+        <div class="th-divider"></div>
+        <section class="th-section">
+          <h2 class="th-section-title">The Problem</h2>
+          <p class="th-body">Raw approval gaps conflate creditworthiness with discrimination. A single regression can always be dismissed as an omitted-variable artifact — so the real question is whether the unexplained component survives when the identification assumptions are stressed from five different directions.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Approach</h2>
+          <p class="th-body">The headline gap is stress-tested with <strong>DiNardo–Fortin–Lemieux decomposition</strong>, <strong>within-lender fixed effects</strong>, <strong>regression discontinuity</strong> at the PMI threshold, <strong>difference-in-differences</strong> across the 2022–24 credit tightening, and <strong>Manski partial-identification bounds</strong> that make no functional-form assumption at all.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Outcome</h2>
+          <p class="th-body">The gap persists under every method. Even the worst-case Manski bound — which assumes maximally adversarial selection on unobservables — leaves a <strong>&gt;9 pp</strong> lower bound. When five methods with different failure modes all agree, the result is no longer an artifact of any one of them.</p>
+        </section>
+        <section class="th-section">
+  <h2 class="th-section-title">Methodology Pipeline</h2>
+  <div class="method-diagram" style="padding: 2rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: linear-gradient(180deg, rgba(255,255,255,0.015) 0%, transparent 100%); margin-bottom: 2rem;">
+    <svg viewBox="0 0 700 120" fill="none" style="width:100%;height:auto;">
+      <rect x="44.0" y="35" width="120" height="50" rx="6" stroke="#60a5fa" stroke-width="1" fill="rgba(96, 165, 250,0.08)" />
+      <text x="104.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">DFL DECOMP</text>
+      <line x1="169.0" y1="60.0" x2="195.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+      <polygon points="195.0,56.0 203.0,60.0 195.0,64.0" fill="rgba(255,255,255,0.2)" />
+      <rect x="208.0" y="35" width="120" height="50" rx="6" stroke="#60a5fa" stroke-width="1" fill="rgba(96, 165, 250,0.08)" />
+      <text x="268.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">WITHIN-LENDER</text>
+      <line x1="333.0" y1="60.0" x2="359.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+      <polygon points="359.0,56.0 367.0,60.0 359.0,64.0" fill="rgba(255,255,255,0.2)" />
+      <rect x="372.0" y="35" width="120" height="50" rx="6" stroke="#60a5fa" stroke-width="1" fill="rgba(96, 165, 250,0.08)" />
+      <text x="432.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">PMI RDD</text>
+      <line x1="497.0" y1="60.0" x2="523.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+      <polygon points="523.0,56.0 531.0,60.0 523.0,64.0" fill="rgba(255,255,255,0.2)" />
+      <rect x="536.0" y="35" width="120" height="50" rx="6" stroke="#60a5fa" stroke-width="1" fill="rgba(96, 165, 250,0.08)" />
+      <text x="596.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">MANSKI BOUNDS</text>
+    </svg>
+  </div>
+</section>
+<div style="margin-bottom:3rem;">
+          <a href="https://github.com/Rajveer-code" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#60a5fa;border-color:rgba(96,165,250,0.4);">↗ View on GitHub</a>
+        </div>
+        <div class="th-footer">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="brh" id="brh" aria-hidden="true">
+    <div class="brh-session"><span class="brh-label">SESSION</span>&nbsp;<span class="brh-value" id="brhSession">00:00</span></div>
+    <div class="brh-explore"><span class="brh-label">EXPLORED</span>&nbsp;<span class="brh-value" id="brhExplore">0%</span></div>
+    <div class="brh-xy"><span class="brh-label">XY</span>&nbsp;<span class="brh-value" id="brhXY">0.00, 0.00</span></div>
+    <button class="brh-scroll-btn" id="brhScrollBtn" aria-label="Scroll to top">
+      <svg class="brh-ring" viewBox="0 0 36 36">
+        <circle class="brh-ring-track" cx="18" cy="18" r="15"/>
+        <circle class="brh-ring-fill" id="brhRingFill" cx="18" cy="18" r="15"/>
+      </svg>
+    </button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="js/field.js"></script>
+  <script src="js/detail.js"></script>
+</body>
+</html>

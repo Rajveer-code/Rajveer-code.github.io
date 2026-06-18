@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Who Bears the Burden? — Rajveer Singh Pall</title>
+  <meta name="description" content="Heterogeneous racial approval differentials in U.S. mortgage lending — causal forest double ML on 42.3M HMDA applications.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2306080c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' fill='%23f5ca40' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="bottom-fade" aria-hidden="true"></div>
+  <div class="cursor-wrap" id="cursorWrap" aria-hidden="true">
+    <svg class="cursor-lattice" width="44" height="44" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="2.5" fill="currentColor"/>
+      <line x1="20" y1="6" x2="20" y2="34" stroke="currentColor" stroke-width="0.75"/>
+      <line x1="6" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="0.75"/>
+      <line x1="10" y1="10" x2="30" y2="30" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.6"/>
+      <line x1="30" y1="10" x2="10" y2="30" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.6"/>
+      <rect x="17" y="17" width="6" height="6" fill="none" stroke="currentColor" stroke-width="0.65"/>
+      <path class="cursor-arc cursor-arc-1" d="M14,12 Q20,6 26,12" fill="none" stroke="currentColor" stroke-width="0.55"/>
+      <path class="cursor-arc cursor-arc-2" d="M12,10 Q20,3 28,10" fill="none" stroke="currentColor" stroke-width="0.4"/>
+      <path class="cursor-arc cursor-arc-3" d="M10,8 Q20,0 30,8" fill="none" stroke="currentColor" stroke-width="0.3"/>
+    </svg>
+  </div>
+  <div class="scroll-rail" aria-hidden="true"><div class="scroll-rail-fill" id="scrollRailFill"></div></div>
+  <div class="hud-clock" aria-hidden="true">
+    <div class="hud-row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="hud-label">BLR</span><span class="hud-time" id="clockIST">--:--:--</span>
+    </div>
+    <div class="hud-row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="hud-label" id="hudVisitorLabel">NAG</span><span class="hud-time" id="clockUTC">--:--:--</span>
+    </div>
+  </div>
+
+  <div class="spatial-scene">
+    <div class="thinking-scroll">
+      <div class="thinking-body">
+        <a href="index.html#research" class="back-link">← Back to research</a>
+        <header class="th-header">
+          <div class="th-badge" style="color:#eab308">Submitted · J. Real Estate Finance &amp; Economics · 2026</div>
+          <h1 class="th-title">Who Bears the Burden?</h1>
+          <p class="th-subtitle">Heterogeneous Racial Approval Differentials in U.S. Mortgage Lending — causal forest double ML on 42.3 million applications.</p>
+        </header>
+        <div class="th-divider"></div>
+        <div class="metrics-grid">
+          <div class="metric-block"><span class="metric-value" style="color:#eab308">42.3M</span><span class="metric-label">HMDA applications</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#eab308">−9.39 pp</span><span class="metric-label">Conditional penalty</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#eab308">90.7%</span><span class="metric-label">Applicants penalised</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#eab308">17.9×</span><span class="metric-label">Placebo signal-to-noise</span></div>
+        </div>
+        <div class="th-divider"></div>
+        <section class="th-section">
+          <h2 class="th-section-title">The Question</h2>
+          <p class="th-body">Across <strong>42.3 million</strong> HMDA mortgage applications (2020–2024), the raw Black–White approval gap is <strong>14.95 percentage points</strong>. The interesting question is causal, not descriptive: how much of that gap survives once genuine creditworthiness is accounted for — and who, specifically, bears it?</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Approach</h2>
+          <p class="th-body">I estimate individual-level conditional average treatment effects with <strong>double machine learning</strong> (LightGBM nuisance models, cross-fitting) and <strong>causal forests</strong>, adjusting for <strong>33 creditworthiness controls</strong> — income, LTV, DTI, loan purpose and type, automated-vs-manual underwriting, and geography. Cross-fitting removes regularization bias so the effect estimate is not contaminated by the prediction models.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Triangulation</h2>
+          <p class="th-body">The headline estimate is triangulated across five independent identification strategies — <strong>DFL decomposition</strong>, <strong>within-lender fixed effects</strong>, <strong>RDD</strong> at the 80% LTV PMI threshold, <strong>difference-in-differences</strong> across the 2022–24 tightening, and <strong>Manski partial-identification bounds</strong>. A race-shuffle placebo yields a <strong>17.9× signal-to-noise ratio</strong>; the DR-Learner replicates the estimate within 0.15 pp.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Outcome</h2>
+          <p class="th-body">A <strong>−9.39 pp</strong> mean conditional penalty remains after controls — <strong>62.8%</strong> of the raw gap is left unexplained by observable creditworthiness. <strong>90.7%</strong> of Black applicants face a negative conditional effect, and the penalty is largest under <strong>manual underwriting (−14.8 pp)</strong> versus automated systems (−6.2 pp), implicating human discretion over algorithmic scoring as the dominant channel.</p>
+        </section>
+        <section class="th-section">
+  <h2 class="th-section-title">Methodology Pipeline</h2>
+  <div class="method-diagram" style="padding: 2rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: linear-gradient(180deg, rgba(255,255,255,0.015) 0%, transparent 100%); margin-bottom: 2rem;">
+    <svg viewBox="0 0 700 120" fill="none" style="width:100%;height:auto;">
+      <rect x="44.0" y="35" width="120" height="50" rx="6" stroke="#eab308" stroke-width="1" fill="rgba(234, 179, 8,0.08)" />
+      <text x="104.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">42.3M RECORDS</text>
+      <line x1="169.0" y1="60.0" x2="195.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+      <polygon points="195.0,56.0 203.0,60.0 195.0,64.0" fill="rgba(255,255,255,0.2)" />
+      <rect x="208.0" y="35" width="120" height="50" rx="6" stroke="#eab308" stroke-width="1" fill="rgba(234, 179, 8,0.08)" />
+      <text x="268.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">CAUSAL FOREST</text>
+      <line x1="333.0" y1="60.0" x2="359.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+      <polygon points="359.0,56.0 367.0,60.0 359.0,64.0" fill="rgba(255,255,255,0.2)" />
+      <rect x="372.0" y="35" width="120" height="50" rx="6" stroke="#eab308" stroke-width="1" fill="rgba(234, 179, 8,0.08)" />
+      <text x="432.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">DR-LEARNER</text>
+      <line x1="497.0" y1="60.0" x2="523.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+      <polygon points="523.0,56.0 531.0,60.0 523.0,64.0" fill="rgba(255,255,255,0.2)" />
+      <rect x="536.0" y="35" width="120" height="50" rx="6" stroke="#eab308" stroke-width="1" fill="rgba(234, 179, 8,0.08)" />
+      <text x="596.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">AUDIT CHANNEL</text>
+    </svg>
+  </div>
+</section>
+<div style="margin-bottom:3rem;">
+          <a href="https://github.com/Rajveer-code/CATE-HMDA-Heterogeneous-Effects" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#eab308;border-color:rgba(234,179,8,0.4);">↗ View on GitHub</a>
+        </div>
+        <div class="th-footer">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="brh" id="brh" aria-hidden="true">
+    <div class="brh-session"><span class="brh-label">SESSION</span>&nbsp;<span class="brh-value" id="brhSession">00:00</span></div>
+    <div class="brh-explore"><span class="brh-label">EXPLORED</span>&nbsp;<span class="brh-value" id="brhExplore">0%</span></div>
+    <div class="brh-xy"><span class="brh-label">XY</span>&nbsp;<span class="brh-value" id="brhXY">0.00, 0.00</span></div>
+    <button class="brh-scroll-btn" id="brhScrollBtn" aria-label="Scroll to top">
+      <svg class="brh-ring" viewBox="0 0 36 36">
+        <circle class="brh-ring-track" cx="18" cy="18" r="15"/>
+        <circle class="brh-ring-fill" id="brhRingFill" cx="18" cy="18" r="15"/>
+      </svg>
+    </button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="js/field.js"></script>
+  <script src="js/detail.js"></script>
+</body>
+</html>
