@@ -158,6 +158,12 @@ body.cursor-hover .cursor-ring {
   width: 56px; height: 56px;
   border-color: rgba(227, 192, 126, 0.8);
 }
+.cursor-ring.is-hover {
+  width: 54px; height: 54px;
+  background: rgba(201, 162, 90, 0.08);
+  border-color: rgba(227, 192, 126, 0.8);
+}
+.cursor-ring.is-click { width: 24px; height: 24px; }
 @media (pointer: coarse) { .cursor-dot, .cursor-ring { display: none; } }
 
 /* ═══ Chrome ═══ */
