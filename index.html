@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rajveer Singh Pall — ML &amp; Decision-Systems Researcher</title>
-  <meta name="description" content="Rajveer Singh Pall — machine-learning researcher studying whether the systems that decide human outcomes are fair, honest, and hold under deployment. Seven papers across lending, medicine, language, and markets, plus deployed systems.">
+  <meta name="description" content="Rajveer Singh Pall — machine-learning researcher studying whether the systems that decide human outcomes are fair, honest, and hold under deployment. Eight papers across lending, medicine, language, and markets, plus deployed systems.">
   <meta name="author" content="Rajveer Singh Pall">
   <meta property="og:title" content="Rajveer Singh Pall — ML &amp; Decision-Systems Researcher">
   <meta property="og:description" content="Whether the systems that decide human outcomes are fair, honest, and hold under deployment — proven with causal evidence at scale and deployed systems.">
@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/home.css?v=2">
+  <link rel="stylesheet" href="css/home.css?v=8">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -26,6 +26,9 @@
     "affiliation": "Gyan Ganga Institute of Technology and Sciences, Jabalpur",
     "knowsAbout": ["Machine Learning", "Causal Inference", "Algorithmic Fairness", "Federated Learning", "Natural Language Processing", "Financial Econometrics", "LLM Evaluation"]
   }
+  </script>
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" } }
   </script>
 </head>
 <body>
@@ -80,13 +83,12 @@
 
     <!-- ════════════ HERO ════════════ -->
     <section class="hero" id="hero">
-      <!-- Spline 3D scene (behind text, over constellation) — injected lazily by home.js -->
-      <div class="hero-spline" id="heroSpline" aria-label="Decorative 3D scene" role="img"
-           data-spline="https://prod.spline.design/8SbnMxhzrQXLNLIN/scene.splinecode">
+      <!-- Spline stub kept for home.js null-check; hidden via CSS -->
+      <div class="hero-spline" id="heroSpline" aria-hidden="true">
         <div class="spline-skeleton" id="splineSkeleton" aria-hidden="true"></div>
       </div>
 
-      <!-- Decorative line art (draw-on) -->
+      <!-- Decorative line art (draw-on animations) -->
       <svg class="hero-lineart" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <g class="la-grid" stroke="currentColor" stroke-width="0.75" fill="none">
           <path class="la-draw" d="M120,120 L1080,120" />
@@ -114,29 +116,63 @@
         </g>
       </svg>
 
-      <div class="hero-inner">
-        <p class="hero-kicker reveal">Machine-Learning &amp; Decision-Systems Research</p>
-        <h1 class="hero-name reveal">Rajveer Singh Pall</h1>
-        <p class="hero-role reveal">Researcher — fairness, deployment, and statistical honesty in the systems that decide human outcomes</p>
-        <p class="hero-tagline reveal">Not whether a model is accurate — whether the decision it drives is <em>fair, honest, and holds under load.</em></p>
-        <div class="hero-meta reveal">
-          <span class="hero-affil">CS &amp; Business Systems · GGITS, Jabalpur, India</span>
+      <!-- LEFT COLUMN — content -->
+      <div class="hero-left">
+        <p class="hero-kicker reveal">Not whether a model is accurate — whether the decision it drives is fair, honest, and holds under load.</p>
+        <h1 class="hero-name reveal">Rajveer<br>Singh Pall</h1>
+        <div class="hero-meta-row reveal">
+          <div>
+            <span class="hero-meta-label">Focus</span>
+            <span class="hero-meta-value">ML &amp; Decision-Systems Research</span>
+          </div>
+          <div>
+            <span class="hero-meta-label">Institution</span>
+            <span class="hero-meta-value">GGITS, Jabalpur<br>B.E. CS &amp; Business Systems</span>
+          </div>
         </div>
         <div class="hero-actions reveal">
-          <a class="btn btn-primary" href="#contact" data-cursor>Get in touch</a>
-          <a class="btn btn-line" href="https://github.com/Rajveer-code" target="_blank" rel="noopener noreferrer" data-cursor>GitHub ↗</a>
-          <a class="btn btn-line" href="https://huggingface.co/Rajveer-code" target="_blank" rel="noopener noreferrer" data-cursor>HuggingFace ↗</a>
+          <div style="display: flex; gap: 0.8rem; margin-bottom: 0.8rem; flex-wrap: wrap;">
+            <a class="hero-icon-btn" href="mailto:rajveerpall04@gmail.com" data-cursor aria-label="Email">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </a>
+            <a class="hero-icon-btn" href="https://github.com/Rajveer-code" target="_blank" rel="noopener noreferrer" data-cursor aria-label="GitHub">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            </a>
+            <a class="hero-icon-btn" href="https://www.linkedin.com/in/rajveer-singh-pall/" target="_blank" rel="noopener noreferrer" data-cursor aria-label="LinkedIn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <a class="hero-icon-btn" href="https://scholar.google.com/citations?hl=en&user=47CvVCcAAAAJ" target="_blank" rel="noopener noreferrer" data-cursor aria-label="Google Scholar">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            </a>
+            <a class="hero-resume-btn" href="#" data-cursor style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              DOWNLOAD RESUME
+            </a>
+          </div>
+          <div style="display: flex; gap: 0.8rem;">
+            <a class="hero-resume-btn" href="#research" data-cursor style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              VIEW RESEARCH
+            </a>
+          </div>
         </div>
-        <div class="hero-socials reveal" aria-label="Profiles">
-          <a href="mailto:rajveerpall04@gmail.com" data-cursor aria-label="Email">Email</a>
-          <span class="dot">·</span>
-          <a href="https://github.com/Rajveer-code" target="_blank" rel="noopener noreferrer" data-cursor>GitHub</a>
-          <span class="dot">·</span>
-          <a href="https://huggingface.co/Rajveer-code" target="_blank" rel="noopener noreferrer" data-cursor>HuggingFace</a>
-          <span class="dot">·</span>
-          <a href="#" data-cursor title="Add Google Scholar URL" class="todo-link">Scholar</a>
+        <div class="hero-status reveal">
+          <span class="status-dot"></span>
+          OPTIMISING: DECISIONS · NOT: LEADERBOARDS
         </div>
       </div>
+
+      <!-- RIGHT COLUMN - portrait -->
+      <div class="hero-photo-col" aria-hidden="true">
+        <div class="hero-photo-wrapper">
+          <img class="hero-photo" src="assets/portrait.jpg" alt="Rajveer Singh Pall" loading="eager" fetchpriority="high">
+        </div>
+        <div class="hero-photo-bar">
+          <span>ML RESEARCH • JABALPUR, INDIA</span>
+          <span>PYTHON • PYTORCH • XGBOOST • SHAP</span>
+        </div>
+      </div>
+
       <a class="hero-scroll reveal" href="#about" data-cursor aria-label="Scroll down"><span>Scroll</span></a>
     </section>
 
@@ -163,24 +199,170 @@
       </div>
     </section>
 
-    <!-- ════════════ HONORS + EDUCATION ════════════ -->
-    <section class="section credentials" id="credentials" data-label="Background">
-      <div class="cred-grid">
-        <div class="cred-block reveal">
-          <span class="section-kicker">02 — Recognition</span>
-          <ul class="cred-list">
-            <li><span class="cred-mark">★</span><div><strong>Smart India Hackathon 2025</strong> — SereneSpace selected among the top <strong>50 of 250</strong> teams.</div></li>
-            <li><span class="cred-mark">★</span><div><strong>Seven manuscripts</strong> under review / submitted at Q1 venues — JHE, JREFE, QFE, JBI, IEEE, IEEE TNNLS, EMNLP.</div></li>
-            <li><span class="cred-mark">★</span><div><strong>Open research artifacts</strong> — public datasets (HuggingFace), a PyPI package, and reproducible code for every study.</div></li>
-          </ul>
+    <!-- ════════════ TRAJECTORY ════════════ -->
+    <section class="section trajectory" id="trajectory" data-label="Experience">
+      <div class="traj-header reveal">
+        <span class="section-kicker">02 — Experience & Education</span>
+        <h2 class="section-title">The trajectory.</h2>
+      </div>
+      
+      <div class="traj-container">
+        <div class="traj-line"></div>
+        
+        <!-- Node 1 -->
+        <div class="traj-node left reveal">
+          <div class="traj-dot"></div>
+          <div class="traj-date">Mid July 2025</div>
+          <div class="traj-card system">
+            <h3 class="traj-card-title">ARIA Assistant</h3>
+            <span class="traj-card-meta">System</span>
+            <ul class="traj-card-list">
+              <li>Local-first voice AI with runtime fairness audit.</li>
+              <li>A fully local pipeline — faster-whisper → Qwen3-8B → five-axis audit → Piper TTS.</li>
+            </ul>
+          </div>
         </div>
-        <div class="cred-block reveal">
-          <span class="section-kicker">03 — Education</span>
-          <ul class="cred-list">
-            <li><span class="cred-mark">▹</span><div><strong>B.E., Computer Science &amp; Business Systems</strong><br><span class="cred-sub">Gyan Ganga Institute of Technology and Sciences (GGITS), Jabalpur, India · <span class="todo-inline">[years TBD]</span></span></div></li>
-            <li><span class="cred-mark">▹</span><div><strong>Independent research program</strong><br><span class="cred-sub">Self-directed work across causal inference, fairness, federated learning, NLP, and financial econometrics.</span></div></li>
-          </ul>
+
+        <!-- Node 2 -->
+        <div class="traj-node right reveal">
+          <div class="traj-dot"></div>
+          <div class="traj-date">Mid Aug 2025</div>
+          <div class="traj-card research">
+            <h3 class="traj-card-title">Type 2 Diabetes ML Evaluation</h3>
+            <span class="traj-card-meta">Research Paper</span>
+            <ul class="traj-card-list">
+              <li>Comprehensive Evaluation of Machine Learning for Type 2 Diabetes Risk Prediction.</li>
+              <li>XGBoost internally reached 0.794 AUC; quantified a 9.7% deployment gap externally.</li>
+            </ul>
+          </div>
         </div>
+
+        <!-- Node 3 -->
+        <div class="traj-node left reveal">
+          <div class="traj-dot"></div>
+          <div class="traj-date">Mid Sept 2025</div>
+          <div class="traj-card system">
+            <h3 class="traj-card-title">FinSight + Web</h3>
+            <span class="traj-card-meta">System</span>
+            <ul class="traj-card-list">
+              <li>Earnings-intelligence pipeline and analytics dashboard.</li>
+              <li>14,584 transcripts from 601 S&P 500 firms → FinBERT sentiment + RAG-retrieved features.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Node 4 -->
+        <div class="traj-node right reveal">
+          <div class="traj-dot"></div>
+          <div class="traj-date">Mid Oct 2025</div>
+          <div class="traj-card research">
+            <h3 class="traj-card-title">Cross-Platform Generalisation Failure</h3>
+            <span class="traj-card-meta">Research Paper</span>
+            <ul class="traj-card-list">
+              <li>A Five-Axis Fairness Audit in Mental-Health NLP.</li>
+              <li>Models fail catastrophicly across demographic slices when transferring between datasets.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Node 5 -->
+        <div class="traj-node left reveal">
+          <div class="traj-dot"></div>
+          <div class="traj-date">Mid Nov 2025</div>
+          <div class="traj-card system">
+            <h3 class="traj-card-title">C-PFE</h3>
+            <span class="traj-card-meta">System</span>
+            <ul class="traj-card-list">
+              <li>Causal-Predictive Framework for Financial Equities.</li>
+              <li>Causal discovery algorithms matching predictive residuals against macroeconomic structures.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Node 6 -->
+        <div class="traj-node right reveal">
+          <div class="traj-dot"></div>
+          <div class="traj-date">Mid Dec 2025</div>
+          <div class="traj-card research">
+            <h3 class="traj-card-title">Privacy-Preserving Federated Learning</h3>
+            <span class="traj-card-meta">Research Paper</span>
+            <ul class="traj-card-list">
+              <li>Privacy-Preserving Federated Learning for Diabetes Risk Across Demographically Heterogeneous Nodes.</li>
+              <li>SCAFFOLD adaptation improving minority representation in distributed models.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Node 7 -->
+        <div class="traj-node left reveal">
+          <div class="traj-dot"></div>
+          <div class="traj-date">Mid Jan 2026</div>
+          <div class="traj-card system">
+            <h3 class="traj-card-title">ICGDF</h3>
+            <span class="traj-card-meta">System</span>
+            <ul class="traj-card-list">
+              <li>Information Criteria-Gated Deployment Framework.</li>
+              <li>A rigorous backtesting and deployment engine preventing overfitting via AIC/BIC thresholds.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Node 8 -->
+        <div class="traj-node right reveal">
+          <div class="traj-dot"></div>
+          <div class="traj-date">Mid Feb 2026</div>
+          <div class="traj-card research">
+            <h3 class="traj-card-title">IndiaFinBench</h3>
+            <span class="traj-card-meta">Research Paper</span>
+            <ul class="traj-card-list">
+              <li>Evaluating LLM Performance on Indian Financial Regulatory Text.</li>
+              <li>406 expert QA items, 192 documents, 12 LLMs scored zero-shot.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Node 9 -->
+        <div class="traj-node right reveal">
+          <div class="traj-dot"></div>
+          <div class="traj-date">Mid March 2026</div>
+          <div class="traj-card research">
+            <h3 class="traj-card-title">When the Gate Stays Closed</h3>
+            <span class="traj-card-meta">Research Paper</span>
+            <ul class="traj-card-list">
+              <li>Near-Zero Cross-Sectional Predictability in Large-Cap NASDAQ Equities.</li>
+              <li>Empirical validation of the IC-gated deployment hypothesis.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Node 10 -->
+        <div class="traj-node right reveal">
+          <div class="traj-dot"></div>
+          <div class="traj-date">Mid May 2026</div>
+          <div class="traj-card research">
+            <h3 class="traj-card-title">Persistent Racial Disparities</h3>
+            <span class="traj-card-meta">Research Paper</span>
+            <ul class="traj-card-list">
+              <li>Evidence from 42 Million Applications, 2020–2024.</li>
+              <li>Confirmed a 14.95 pp Black–White approval gap surviving maximally adversarial assumptions.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Node 11 -->
+        <div class="traj-node right reveal">
+          <div class="traj-dot"></div>
+          <div class="traj-date">Mid June 2026</div>
+          <div class="traj-card research">
+            <h3 class="traj-card-title">Who Bears the Burden?</h3>
+            <span class="traj-card-meta">Research Paper</span>
+            <ul class="traj-card-list">
+              <li>Heterogeneous Racial Approval Differentials in U.S. Mortgage Lending.</li>
+              <li>Machine learning-driven intersectional fairness analysis using Double Machine Learning (DML).</li>
+            </ul>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -247,6 +429,7 @@
         </div>
         <div class="card-links">
           <a href="project-finsight.html" data-cursor>Read the case ↗</a>
+          <a href="project-finsight-web.html" data-cursor>Read the web case ↗</a>
           <a href="https://finsight-web-rust.vercel.app" target="_blank" rel="noopener noreferrer" data-cursor>Live dashboard ↗</a>
           <a href="https://github.com/Rajveer-code/Finsight" target="_blank" rel="noopener noreferrer" data-cursor>GitHub ↗</a>
         </div>
@@ -288,6 +471,7 @@
           <div><h4>Outcome</h4><p>Selected among the top 50 of 250 teams at Smart India Hackathon 2025.</p></div>
         </div>
         <div class="card-links">
+          <a href="project-serenespace.html" data-cursor>Read the case ↗</a>
           <a href="https://serenespace-e5ev.onrender.com/" target="_blank" rel="noopener noreferrer" data-cursor>Live site ↗</a>
         </div>
       </article>
@@ -297,53 +481,37 @@
     <section class="section research" id="research" data-label="Research">
       <div class="section-head reveal">
         <span class="section-kicker">06 — Research</span>
-        <h2 class="section-title">Seven papers, one question.</h2>
-        <p class="section-lede">Fairness, healthcare, language, and markets — each result validated externally, each manuscript at a Q1 venue.</p>
+        <h2 class="section-title">Eight papers, one question.</h2>
+        <p class="section-lede">Fairness, healthcare, language, and markets — each result validated externally, ranked here by how far each has gone.</p>
+        <div class="research-view-toggle" id="researchViewToggle">
+          <button class="rv-btn is-active" data-view="spiral" data-cursor>spiral</button>
+          <span class="rv-dot"></span>
+          <button class="rv-btn" data-view="list" data-cursor>list</button>
+        </div>
       </div>
 
-      <a class="pub reveal" href="project-cate-hmda.html" data-cursor style="--accent:#60a5fa">
-        <div class="pub-main">
-          <h3 class="pub-title">Who Bears the Burden? Heterogeneous Racial Approval Differentials in U.S. Mortgage Lending</h3>
-          <p class="pub-sub">Causal Forest Double Machine Learning on 42.3M HMDA applications, 2020–2024 — a 9.4&nbsp;pp Black approval penalty net of 33 controls, largest under manual underwriting.</p>
-          <div class="pub-tags"><span>Causal inference</span><span>EconML</span><span>DML</span><span>HMDA</span></div>
+      <div class="research-scroll-track" id="researchTrack">
+        <div class="research-sticky-container">
+          <div class="gl-research" id="gl-research"></div>
+          <div class="research-hud" id="researchHud">
+            <div class="research-hud-inner">
+              <span class="work-label__index" id="workIndex">01</span>
+              <span class="work-label__line"></span>
+              <span class="work-label__title" id="workTitle"></span>
+            </div>
+            <div class="work-label__click" id="workClickHint">Click card to view</div>
+          </div>
         </div>
-        <div class="pub-side"><span class="pub-venue">J. Real Estate Finance &amp; Economics</span><span class="pub-status">Submitted · 2026</span><span class="pub-arrow">↗</span></div>
-      </a>
+      </div>
 
-      <a class="pub reveal" href="project-icgdf.html" data-cursor style="--accent:#a78bfa">
+      <div class="pub-list is-hidden" id="pubList">
+      <a class="pub reveal" href="project-diabetes-eval.html" data-cursor style="--accent:#10b981">
         <div class="pub-main">
-          <h3 class="pub-title">When the Gate Stays Closed: Near-Zero Cross-Sectional Predictability in Large-Cap NASDAQ Equities</h3>
-          <p class="pub-sub">An IC-gated deployment framework with a conjunctive HAC + permutation test — the gate never opened across 12 folds and 1,512 OOS days, cutting false deployment from 11.8% to 0.0%.</p>
-          <div class="pub-tags"><span>Quant ML</span><span>Walk-forward</span><span>CatBoost</span><span>Permutation tests</span></div>
+          <h3 class="pub-title">Comprehensive Evaluation of Machine Learning for Type 2 Diabetes Risk Prediction</h3>
+          <p class="pub-sub">XGBoost leads at 0.794 AUC internally but falls to 0.717 on an external population 83&times; larger — a 9.7% deployment gap. Elderly patients reach only 0.607, 13.5&nbsp;pp below young adults. Age and BMI dominate SHAP; race/ethnicity ranks 4th, requiring explicit fairness audit.</p>
+          <div class="pub-tags"><span>XGBoost</span><span>SHAP</span><span>Fairness</span><span>External validation</span></div>
         </div>
-        <div class="pub-side"><span class="pub-venue">Quantitative Finance &amp; Economics</span><span class="pub-status">Under review · 2025</span><span class="pub-arrow">↗</span></div>
-      </a>
-
-      <a class="pub reveal" href="project-federated-diabetes.html" data-cursor style="--accent:#10b981">
-        <div class="pub-main">
-          <h3 class="pub-title">Privacy-Preserving Federated Learning for Diabetes Risk Across Demographically Heterogeneous Nodes</h3>
-          <p class="pub-sub">FedAvg / FedProx / FedNova / SCAFFOLD on partitioned NHANES, externally validated on 1.28M BRFSS records — a 40% smaller generalisation gap than a matched centralised model.</p>
-          <div class="pub-tags"><span>Federated learning</span><span>PyTorch</span><span>Flower</span><span>Differential privacy</span></div>
-        </div>
-        <div class="pub-side"><span class="pub-venue">J. Biomedical Informatics</span><span class="pub-status">Under review · 2026</span><span class="pub-arrow">↗</span></div>
-      </a>
-
-      <a class="pub reveal" href="project-cpfe.html" data-cursor style="--accent:#2dd4bf">
-        <div class="pub-main">
-          <h3 class="pub-title">Cross-Platform Generalisation Failure in Mental-Health NLP: A Five-Axis Fairness Audit</h3>
-          <p class="pub-sub">Transformer classifiers that score AUC 0.98 within-platform collapse 30–39% off-platform, with calibration and equity failing in lockstep — fairness that doesn't transfer.</p>
-          <div class="pub-tags"><span>NLP</span><span>Fairness</span><span>Transformers</span><span>Calibration</span></div>
-        </div>
-        <div class="pub-side"><span class="pub-venue">IEEE TNNLS</span><span class="pub-status">Submitted · 2026</span><span class="pub-arrow">↗</span></div>
-      </a>
-
-      <a class="pub reveal" href="project-indiafinbench.html" data-cursor style="--accent:#22d3ee">
-        <div class="pub-main">
-          <h3 class="pub-title">IndiaFinBench: Evaluating LLM Performance on Indian Financial Regulatory Text</h3>
-          <p class="pub-sub">The first benchmark over SEBI and RBI regulation — 406 expert QA items, 192 documents, 12 LLMs scored zero-shot, plus a hybrid-RAG demo lifting Recall@5 to 0.785.</p>
-          <div class="pub-tags"><span>LLM evaluation</span><span>RAG</span><span>FAISS</span><span>Benchmark</span></div>
-        </div>
-        <div class="pub-side"><span class="pub-venue">Target: EMNLP 2026</span><span class="pub-status">In preparation</span><span class="pub-arrow">↗</span></div>
+        <div class="pub-side"><span class="pub-venue">IEEE</span><span class="pub-status">Accepted · 2025</span><span class="pub-arrow">↗</span></div>
       </a>
 
       <a class="pub reveal" href="project-disparities.html" data-cursor style="--accent:#f59e0b">
@@ -355,24 +523,72 @@
         <div class="pub-side"><span class="pub-venue">J. Housing Economics</span><span class="pub-status">Submitted · March 2026</span><span class="pub-arrow">↗</span></div>
       </a>
 
-      <a class="pub reveal" href="project-diabetes-eval.html" data-cursor style="--accent:#10b981">
+      <a class="pub reveal" href="project-cpfe.html" data-cursor style="--accent:#2dd4bf">
         <div class="pub-main">
-          <h3 class="pub-title">Comprehensive Evaluation of Machine Learning for Type 2 Diabetes Risk Prediction</h3>
-          <p class="pub-sub">XGBoost leads at 0.794 AUC internally but falls to 0.717 externally on NHANES — a 9.7% deployment gap. Elderly patients reach only 0.607, 13.5&nbsp;pp below young adults. Age and BMI dominate SHAP; race/ethnicity ranks 4th, requiring explicit fairness audit.</p>
-          <div class="pub-tags"><span>XGBoost</span><span>SHAP</span><span>Fairness</span><span>External validation</span></div>
+          <h3 class="pub-title">Cross-Platform Generalisation Failure in Mental-Health NLP: A Five-Axis Fairness Audit</h3>
+          <p class="pub-sub">Transformer classifiers that score AUC 0.98 within-platform collapse 30–39% off-platform, with calibration and equity failing in lockstep — fairness that doesn't transfer.</p>
+          <div class="pub-tags"><span>NLP</span><span>Fairness</span><span>Transformers</span><span>Calibration</span></div>
         </div>
-        <div class="pub-side"><span class="pub-venue">IEEE</span><span class="pub-status">Accepted · 2025</span><span class="pub-arrow">↗</span></div>
+        <div class="pub-side"><span class="pub-venue">IEEE TNNLS</span><span class="pub-status">Submitted · 2026</span><span class="pub-arrow">↗</span></div>
       </a>
+
+      <a class="pub reveal" href="project-cate-hmda.html" data-cursor style="--accent:#60a5fa">
+        <div class="pub-main">
+          <h3 class="pub-title">Who Bears the Burden? Heterogeneous Racial Approval Differentials in U.S. Mortgage Lending</h3>
+          <p class="pub-sub">Causal Forest Double Machine Learning on 42.3M HMDA applications, 2020–2024 — a 9.4&nbsp;pp Black approval penalty net of 33 controls, largest under manual underwriting.</p>
+          <div class="pub-tags"><span>Causal inference</span><span>EconML</span><span>DML</span><span>HMDA</span></div>
+        </div>
+        <div class="pub-side"><span class="pub-venue">J. Real Estate Finance &amp; Economics</span><span class="pub-status">Submitted · 2026</span><span class="pub-arrow">↗</span></div>
+      </a>
+
+      <a class="pub reveal" href="project-federated-diabetes.html" data-cursor style="--accent:#10b981">
+        <div class="pub-main">
+          <h3 class="pub-title">Privacy-Preserving Federated Learning for Diabetes Risk Across Demographically Heterogeneous Nodes</h3>
+          <p class="pub-sub">FedAvg / FedProx / FedNova / SCAFFOLD on partitioned NHANES, externally validated on 1.28M BRFSS records — a 40% smaller generalisation gap than a matched centralised model.</p>
+          <div class="pub-tags"><span>Federated learning</span><span>PyTorch</span><span>Flower</span><span>Differential privacy</span></div>
+        </div>
+        <div class="pub-side"><span class="pub-venue">J. Biomedical Informatics</span><span class="pub-status">Under review · 2026</span><span class="pub-arrow">↗</span></div>
+      </a>
+
+      <a class="pub reveal" href="project-icgdf.html" data-cursor style="--accent:#a78bfa">
+        <div class="pub-main">
+          <h3 class="pub-title">When the Gate Stays Closed: Near-Zero Cross-Sectional Predictability in Large-Cap NASDAQ Equities</h3>
+          <p class="pub-sub">An IC-gated deployment framework with a conjunctive HAC + permutation test — the gate never opened across 12 folds and 1,512 OOS days, cutting false deployment from 11.8% to 0.0%.</p>
+          <div class="pub-tags"><span>Quant ML</span><span>Walk-forward</span><span>CatBoost</span><span>Permutation tests</span></div>
+        </div>
+        <div class="pub-side"><span class="pub-venue">Quantitative Finance &amp; Economics</span><span class="pub-status">Under review · 2025</span><span class="pub-arrow">↗</span></div>
+      </a>
+
+      <a class="pub reveal" href="project-indiafinbench.html" data-cursor style="--accent:#22d3ee">
+        <div class="pub-main">
+          <h3 class="pub-title">IndiaFinBench: Evaluating LLM Performance on Indian Financial Regulatory Text</h3>
+          <p class="pub-sub">The first benchmark over SEBI and RBI regulation — 406 expert QA items, 192 documents, 12 LLMs scored zero-shot, plus a hybrid-RAG demo lifting Recall@5 to 0.785.</p>
+          <div class="pub-tags"><span>LLM evaluation</span><span>RAG</span><span>FAISS</span><span>Benchmark</span></div>
+        </div>
+        <div class="pub-side"><span class="pub-venue">Target: EMNLP 2026</span><span class="pub-status">In preparation</span><span class="pub-arrow">↗</span></div>
+      </a>
+
+      <a class="pub reveal" href="project-aria-audit.html" data-cursor style="--accent:#f5ca40">
+        <div class="pub-main">
+          <h3 class="pub-title">ARIA: Runtime 5-Axis Fairness Audit for Free-Form LLM Output</h3>
+          <p class="pub-sub">Inline counterfactual disparate-impact and equalized-odds scoring on a model's actual generated text, not a fixed offline benchmark. Catches 33–39% of failures other guardrails miss, in ~1.2s, with zero cloud calls.</p>
+          <div class="pub-tags"><span>LLM fairness</span><span>Runtime audit</span><span>Counterfactual testing</span></div>
+        </div>
+        <div class="pub-side"><span class="pub-venue">arXiv preprint</span><span class="pub-status">Sep 2026</span><span class="pub-arrow">↗</span></div>
+      </a>
+      </div>
     </section>
 
-    <!-- ════════════ STACK ════════════ -->
+        <!-- ════════════ STACK ════════════ -->
     <section class="section stack" id="stack" data-label="Stack">
-      <div class="section-head reveal">
-        <span class="section-kicker">07 — Stack</span>
-        <h2 class="section-title">What I build with.</h2>
-        <p class="section-lede">Tools that appear in at least one paper or deployed system above.</p>
+      <div class="stack-layout reveal">
+        <div class="stack-layout-left">
+          <span class="section-kicker">07 — Stack</span>
+          <h2 class="stack-fable-title">What I build with.</h2>
+          <p class="stack-fable-lede">Tools that appear in at least one paper or deployed system above.</p>
+        </div>
+        <div class="stack-layout-right" id="stackGroups"></div>
       </div>
-      <div class="stack-groups" id="stackGroups"></div>
     </section>
 
     <!-- ════════════ CONTACT ════════════ -->
@@ -405,7 +621,8 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/field.js"></script>
-  <script src="js/home.js?v=3"></script>
+  <script src="js/field.js?v=1"></script>
+  <script src="js/home.js?v=5"></script>
+  <script type="module" src="js/spiral.js?v=6"></script>
 </body>
 </html>

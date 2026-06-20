@@ -9,28 +9,43 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=1">
   <style>
-    .fig-box { margin: 2rem 0; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; background: linear-gradient(180deg, rgba(255,255,255,0.012) 0%, transparent 100%); }
-    .fig-caption { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: rgba(255,255,255,0.38); letter-spacing: 0.07em; text-transform: uppercase; margin-top: 0.9rem; text-align: center; }
-    .finding-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(16,185,129,0.3); border-radius: 8px; padding: 1.2rem 1.4rem; margin: 1rem 0; }
-    .finding-card .fc-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: #10b981; line-height: 1; }
-    .finding-card .fc-label { font-family: 'DM Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-top: 0.2rem; }
-    .finding-card .fc-body { font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: rgba(255,255,255,0.72); margin-top: 0.6rem; line-height: 1.55; }
-    .findings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
-    @media (max-width: 600px) { .findings-grid { grid-template-columns: 1fr; } }
-    blockquote.pull { border-left: 2px solid #10b981; padding: 0.6rem 1.2rem; margin: 1.5rem 0; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.05rem; color: rgba(255,255,255,0.75); line-height: 1.5; }
+    /* Accent overrides only — shared structure now lives in css/style.css */
+    .finding-card { border-color: rgba(16,185,129,0.3); }
+    .finding-card .fc-num { color: #10b981; }
+    blockquote.pull { border-left-color: #10b981; }
     .alert-box { background: rgba(16,185,129,0.05); border: 1px solid rgba(16,185,129,0.25); border-radius: 8px; padding: 1rem 1.2rem; margin: 1rem 0; font-family: 'DM Sans', sans-serif; font-size: 0.86rem; color: rgba(255,255,255,0.7); line-height: 1.55; }
     .alert-box strong { color: #10b981; }
     .metric-value { color: #10b981 !important; }
     .th-badge { color: #10b981 !important; }
     .imp-list p { margin: 0 0 0.7rem; }
     .imp-list p strong { color: rgba(255,255,255,0.85); }
+    .compare-after .compare-stat { color: #10b981; }
+    .compare-after { background: rgba(16,185,129,0.05); border-color: rgba(16,185,129,0.25); }
+    .result-bar-fill { background: #10b981; }
+    .spec-chip .spec-value { color: #10b981; }
+    .essence-label { color: rgba(16,185,129,0.75); }
+    .th-divider.full-methodology { margin: 3.5rem 0 2.5rem; position: relative; text-align: center; }
+    .th-divider.full-methodology::after { content: 'FULL METHODOLOGY & POLICY DISCUSSION'; position: relative; top: -0.55rem; background: #06080c; padding: 0 1rem; font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; color: rgba(255,255,255,0.3); }
   </style>
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>
   <div class="bottom-fade" aria-hidden="true"></div>
+  <div class="cursor-wrap" id="cursorWrap" aria-hidden="true">
+    <svg class="cursor-lattice" width="44" height="44" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="2.5" fill="currentColor"/>
+      <line x1="20" y1="6" x2="20" y2="34" stroke="currentColor" stroke-width="0.75"/>
+      <line x1="6" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="0.75"/>
+      <line x1="10" y1="10" x2="30" y2="30" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.6"/>
+      <line x1="30" y1="10" x2="10" y2="30" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.6"/>
+      <rect x="17" y="17" width="6" height="6" fill="none" stroke="currentColor" stroke-width="0.65"/>
+      <path class="cursor-arc cursor-arc-1" d="M14,12 Q20,6 26,12" fill="none" stroke="currentColor" stroke-width="0.55"/>
+      <path class="cursor-arc cursor-arc-2" d="M12,10 Q20,3 28,10" fill="none" stroke="currentColor" stroke-width="0.4"/>
+      <path class="cursor-arc cursor-arc-3" d="M10,8 Q20,0 30,8" fill="none" stroke="currentColor" stroke-width="0.3"/>
+    </svg>
+  </div>
   <div class="scroll-rail" aria-hidden="true"><div class="scroll-rail-fill" id="scrollRailFill"></div></div>
   <div class="hud-clock" aria-hidden="true">
     <div class="hud-row">
@@ -51,8 +66,15 @@
         <header class="th-header">
           <div class="th-badge" style="color:#10b981">Accepted · IEEE · 2025</div>
           <h1 class="th-title">Comprehensive Evaluation of Machine Learning for Type 2 Diabetes Risk Prediction</h1>
-          <p class="th-subtitle">Four models. 1.28 million patient records across two population datasets. One central finding: a model achieving 0.794 AUC internally drops to 0.717 externally, and predicts elderly patients at only 0.607. Fairness in clinical ML is not optional.</p>
+          <p class="th-subtitle">Four models. 1.3 million patient records across two population datasets. One central finding: a model achieving 0.794 AUC internally drops to 0.717 when tested on a population 83× larger than it trained on, and predicts elderly patients at only 0.607. Fairness in clinical ML is not optional.</p>
         </header>
+
+        <div class="essence-strip">
+          <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">Diabetes risk models usually report only how well they did on the data they trained on — which overstates how they'll perform on new patients.</span></div>
+          <div class="essence-item"><span class="essence-label">Approach</span><span class="essence-text">Train four models on one population, then test the winner — unmodified — on a second population 83× larger and collected a different way.</span></div>
+          <div class="essence-item"><span class="essence-label">Result</span><span class="essence-text">Accuracy drops 9.7% on the new population, and elderly patients — the highest-risk group — are predicted worst of all.</span></div>
+          <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">A model that looks ready for the clinic on paper can still fail the patients who need it most, unless it's tested honestly first.</span></div>
+        </div>
 
         <div class="th-divider"></div>
 
@@ -60,7 +82,7 @@
           <div class="metric-block"><span class="metric-value" style="color:#10b981">0.794</span><span class="metric-label">XGBoost internal AUC</span></div>
           <div class="metric-block"><span class="metric-value" style="color:#10b981">0.717</span><span class="metric-label">External validation AUC</span></div>
           <div class="metric-block"><span class="metric-value" style="color:#10b981">0.607</span><span class="metric-label">AUC for elderly (≥60)</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#10b981">1.28M</span><span class="metric-label">Patient records</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#10b981">1.3M</span><span class="metric-label">Patient records</span></div>
         </div>
 
         <div class="th-divider"></div>
@@ -69,79 +91,55 @@
         <section class="th-section">
           <h2 class="th-section-title">The Clinical Problem</h2>
           <p class="th-body">Type 2 diabetes affects over 537 million people worldwide (IDF Atlas, 2021). Early identification of high-risk individuals enables targeted prevention — glycemic control, lifestyle interventions, and reduced complication burden. Machine learning holds genuine promise here, but the published landscape is crowded with single-dataset evaluations, no fairness assessment, and no external validation. Claims of high AUC are published daily; evidence those claims survive deployment is rare.</p>
-          <p class="th-body" style="margin-top:0.9rem;">This paper breaks from that pattern. Four algorithms are trained and evaluated under identical preprocessing and cross-validation conditions, the winning model is validated on a fully external dataset, and performance is systematically measured across seven protected subgroups defined by age, BMI, race, and gender. The goal is not to crown a "best" algorithm — it is to characterize where that algorithm breaks down in deployment.</p>
+          <p class="th-body" style="margin-top:0.9rem;">This paper breaks from that pattern. Four algorithms are trained and evaluated under identical preprocessing and cross-validation conditions, the winning model is validated on a fully external, much larger dataset with zero retraining, and performance is systematically measured across protected subgroups defined by age, BMI, race, and gender. The goal is not to crown a "best" algorithm — it is to characterize where that algorithm breaks down in deployment.</p>
         </section>
 
-        <!-- ── SECTION 2: Data ── -->
+        <!-- ── SECTION 2: Data (How it works) ── -->
         <section class="th-section">
           <h2 class="th-section-title">Data and Experimental Design</h2>
 
           <div class="fig-box">
             <svg viewBox="0 0 700 140" fill="none" style="width:100%;height:auto;">
-              <!-- Training box -->
+              <!-- Training box (small — NHANES) -->
               <rect x="30" y="25" width="280" height="90" rx="6" fill="rgba(16,185,129,0.06)" stroke="rgba(16,185,129,0.3)" stroke-width="0.8"/>
               <text x="170" y="48" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(16,185,129,0.8)" letter-spacing="0.08em">TRAINING / INTERNAL VALIDATION</text>
-              <text x="170" y="70" text-anchor="middle" font-family="Playfair Display, serif" font-size="22" fill="rgba(16,185,129,0.9)" font-weight="700">1,091,500</text>
-              <text x="170" y="88" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.4)">BRFSS · CDC BEHAVIORAL RISK FACTOR SURVEY</text>
-              <text x="170" y="103" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">21 FEATURES · 5-FOLD STRATIFIED CV</text>
-              <!-- External box -->
-              <rect x="390" y="25" width="280" height="90" rx="6" fill="rgba(56,189,248,0.06)" stroke="rgba(56,189,248,0.3)" stroke-width="0.8"/>
-              <text x="530" y="48" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(56,189,248,0.8)" letter-spacing="0.08em">EXTERNAL VALIDATION</text>
-              <text x="530" y="70" text-anchor="middle" font-family="Playfair Display, serif" font-size="22" fill="rgba(56,189,248,0.85)" font-weight="700">187,940</text>
-              <text x="530" y="88" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.4)">NHANES · NATIONAL HEALTH AND NUTRITION</text>
-              <text x="530" y="103" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">SAME FEATURE MAPPING · ZERO RETRAINING</text>
+              <text x="170" y="70" text-anchor="middle" font-family="Playfair Display, serif" font-size="22" fill="rgba(16,185,129,0.9)" font-weight="700">15,685</text>
+              <text x="170" y="88" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.4)">NHANES · NATIONAL HEALTH &amp; NUTRITION SURVEY</text>
+              <text x="170" y="103" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">8 NON-LAB PREDICTORS · 5-FOLD STRATIFIED CV</text>
+              <!-- External box (much larger — BRFSS) -->
+              <rect x="390" y="15" width="280" height="110" rx="6" fill="rgba(56,189,248,0.06)" stroke="rgba(56,189,248,0.3)" stroke-width="0.8"/>
+              <text x="530" y="38" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(56,189,248,0.8)" letter-spacing="0.08em">EXTERNAL VALIDATION</text>
+              <text x="530" y="65" text-anchor="middle" font-family="Playfair Display, serif" font-size="26" fill="rgba(56,189,248,0.85)" font-weight="700">1,285,783</text>
+              <text x="530" y="85" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.4)">BRFSS · CDC PHONE-BASED HEALTH SURVEY</text>
+              <text x="530" y="100" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">SAME FEATURE MAPPING · ZERO RETRAINING</text>
+              <text x="530" y="115" text-anchor="middle" font-family="DM Mono, monospace" font-size="7.5" fill="rgba(56,189,248,0.6)">≈83× THE TRAINING POPULATION</text>
               <!-- Arrow -->
-              <line x1="315" y1="70" x2="385" y2="70" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
-              <polygon points="385,65 395,70 385,75" fill="rgba(255,255,255,0.3)"/>
-              <text x="350" y="62" text-anchor="middle" font-family="DM Mono, monospace" font-size="7" fill="rgba(255,255,255,0.3)">NO REFIT</text>
+              <line x1="315" y1="65" x2="385" y2="65" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+              <polygon points="385,60 395,65 385,70" fill="rgba(255,255,255,0.3)"/>
+              <text x="350" y="57" text-anchor="middle" font-family="DM Mono, monospace" font-size="7" fill="rgba(255,255,255,0.3)">NO REFIT</text>
             </svg>
-            <p class="fig-caption">Figure 1 — Study design: BRFSS training cohort (1.09M) with 5-fold CV; external test on NHANES (187K) without retraining. Total: 1.28M records.</p>
+            <p class="fig-caption">Figure 1 — Study design: train on NHANES (15,685), validate without retraining on BRFSS (1,285,783) — a population 83× larger, surveyed by phone instead of clinical exam.</p>
           </div>
 
-          <p class="th-body">Both datasets come from US population-level health surveys with overlapping features — allowing direct comparison without model refitting. BRFSS (CDC) contains behavioral and self-reported health indicators; NHANES (NIH) adds objective clinical measurements. The deliberate mismatch between training and test data sources simulates the real-world deployment scenario where a model trained on one health system is applied to a different population.</p>
+          <p class="th-body">Both surveys use only non-laboratory, self-reportable predictors — age, sex, race, BMI, smoking status, physical activity, and history of heart attack or stroke — deliberately, so the model could realistically run in a clinic or pharmacy with no blood draw. The huge jump in scale and collection method between training and validation simulates a real deployment: a model built on one health system, handed to a population it has never seen, collected a different way.</p>
         </section>
 
-        <!-- ── SECTION 3: Models ── -->
+        <!-- ── SECTION 3: Models (mentioned, chart moved to methodology) ── -->
         <section class="th-section">
           <h2 class="th-section-title">The Four Models</h2>
-          <p class="th-body">All four algorithms trained under identical preprocessing: median imputation for continuous features, one-hot encoding for categoricals, MinMax scaling, SMOTE oversampling for class imbalance. Hyperparameter optimization via 100-iteration Bayesian search. Primary metric: AUROC, with Brier score and Expected Calibration Error (ECE) for calibration quality.</p>
-
-          <div class="fig-box">
-            <svg viewBox="0 0 700 200" fill="none" style="width:100%;height:auto;">
-              <text x="20" y="22" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.4)" letter-spacing="0.08em">INTERNAL AUROC (5-FOLD CV) — HIGHER IS BETTER</text>
-              <!-- XGBoost: 0.794 -->
-              <text x="20" y="55" font-family="DM Mono, monospace" font-size="9.5" fill="rgba(16,185,129,0.9)">XGBOOST</text>
-              <rect x="150" y="42" width="444" height="18" rx="3" fill="rgba(16,185,129,0.3)" stroke="rgba(16,185,129,0.6)" stroke-width="0.8"/>
-              <text x="606" y="55" font-family="DM Mono, monospace" font-size="10" fill="#10b981" dominant-baseline="middle" font-weight="600">0.794 ★</text>
-              <!-- Random Forest: 0.789 -->
-              <text x="20" y="95" font-family="DM Mono, monospace" font-size="9.5" fill="rgba(255,255,255,0.6)">RANDOM FOREST</text>
-              <rect x="150" y="82" width="418" height="18" rx="3" fill="rgba(16,185,129,0.18)" stroke="rgba(16,185,129,0.35)" stroke-width="0.8"/>
-              <text x="578" y="95" font-family="DM Mono, monospace" font-size="10" fill="rgba(16,185,129,0.8)" dominant-baseline="middle">0.789</text>
-              <!-- SVM: 0.778 -->
-              <text x="20" y="135" font-family="DM Mono, monospace" font-size="9.5" fill="rgba(255,255,255,0.6)">SVM (RBF KERNEL)</text>
-              <rect x="150" y="122" width="412" height="18" rx="3" fill="rgba(16,185,129,0.12)" stroke="rgba(16,185,129,0.28)" stroke-width="0.8"/>
-              <text x="572" y="135" font-family="DM Mono, monospace" font-size="10" fill="rgba(16,185,129,0.7)" dominant-baseline="middle">0.778</text>
-              <!-- LR: 0.776 -->
-              <text x="20" y="175" font-family="DM Mono, monospace" font-size="9.5" fill="rgba(255,255,255,0.6)">LOGISTIC REG.</text>
-              <rect x="150" y="162" width="410" height="18" rx="3" fill="rgba(16,185,129,0.08)" stroke="rgba(16,185,129,0.22)" stroke-width="0.8"/>
-              <text x="570" y="175" font-family="DM Mono, monospace" font-size="10" fill="rgba(16,185,129,0.6)" dominant-baseline="middle">0.776</text>
-            </svg>
-            <p class="fig-caption">Figure 2 — Internal AUROC comparison (5-fold stratified CV). XGBoost leads at 0.794; all four models competitive within 0.018 AUC — suggesting the feature set, not the algorithm, is the binding constraint.</p>
-          </div>
-
-          <p class="th-body">The narrow 0.018 AUC spread across all four models is itself a finding: the performance ceiling is set by the available features, not the algorithm. Any model claiming substantially superior performance on similar data is likely overfitting to training set idiosyncrasies.</p>
+          <p class="th-body">Four algorithms — XGBoost, Random Forest, an SVM, and Logistic Regression — were trained identically and compared; XGBoost led, but by a margin too small to matter clinically (full comparison below).</p>
         </section>
 
-        <!-- ── SECTION 4: The Deployment Gap ── -->
+        <!-- ── SECTION 4: The Deployment Gap (Key Results) ── -->
         <section class="th-section">
-          <h2 class="th-section-title">The Deployment Gap</h2>
-          <blockquote class="pull">XGBoost achieves <strong>0.794 AUC internally</strong>. On the fully external NHANES cohort — same features, zero retraining — it drops to <strong>0.717</strong>. A 9.7% relative degradation that internal cross-validation cannot detect.</blockquote>
-          <p class="th-body">This 0.077 AUC drop (9.7% relative) represents the distribution shift between BRFSS self-reported behavioral indicators and NHANES objective clinical measurements. The drop is not catastrophic — 0.717 remains clinically useful — but it is larger than most published benchmarks acknowledge. Papers reporting only internal cross-validation performance are systematically overestimating the clinical value of their models.</p>
+          <h2 class="th-section-title">Key Result: The Deployment Gap</h2>
+          <blockquote class="pull">XGBoost achieves <strong>0.794 AUC internally</strong>. On the fully external BRFSS cohort — same features, zero retraining, 83× more patients — it drops to <strong>0.717</strong>. A 9.7% relative degradation that internal cross-validation cannot detect.</blockquote>
+          <p class="th-body">This 0.077 AUC drop represents the real-world distribution shift between a clinically-surveyed training cohort and a much larger, phone-surveyed population. The drop is not catastrophic — 0.717 remains clinically useful — but it is larger than most published benchmarks acknowledge. Papers reporting only internal cross-validation performance are systematically overestimating the clinical value of their models.</p>
 
           <div class="fig-box">
             <svg viewBox="0 0 700 160" fill="none" style="width:100%;height:auto;">
-              <text x="175" y="20" text-anchor="middle" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(255,255,255,0.35)" letter-spacing="0.08em">INTERNAL (BRFSS, 5-FOLD CV)</text>
-              <text x="525" y="20" text-anchor="middle" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(255,255,255,0.35)" letter-spacing="0.08em">EXTERNAL (NHANES, NO REFIT)</text>
+              <text x="175" y="20" text-anchor="middle" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(255,255,255,0.35)" letter-spacing="0.08em">INTERNAL (NHANES, 5-FOLD CV)</text>
+              <text x="525" y="20" text-anchor="middle" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(255,255,255,0.35)" letter-spacing="0.08em">EXTERNAL (BRFSS, NO REFIT)</text>
               <!-- Internal bar -->
               <rect x="50" y="30" width="250" height="60" rx="6" fill="rgba(16,185,129,0.12)" stroke="rgba(16,185,129,0.4)" stroke-width="1"/>
               <text x="175" y="67" text-anchor="middle" font-family="Playfair Display, serif" font-size="28" fill="#10b981" font-weight="700">0.794</text>
@@ -159,89 +157,137 @@
               <!-- Annotation -->
               <text x="350" y="140" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.25)">GAP: 0.077 AUC POINTS — INTERNAL-ONLY BENCHMARKS SYSTEMATICALLY OVERSTATE CLINICAL UTILITY</text>
             </svg>
-            <p class="fig-caption">Figure 3 — Internal vs external validation. XGBoost's 9.7% relative AUC drop on NHANES illustrates why external validation is essential before clinical deployment.</p>
+            <p class="fig-caption">Figure 2 — Internal vs external validation. XGBoost's 9.7% relative AUC drop on a population it never saw illustrates why external validation is essential before clinical deployment.</p>
           </div>
         </section>
 
-        <!-- ── SECTION 5: Fairness Analysis ── -->
+        <!-- ── SECTION 5: Fairness (trimmed for front-loading) ── -->
         <section class="th-section">
-          <h2 class="th-section-title">Fairness Analysis: Where the Model Fails</h2>
-          <p class="th-body">Performance is not uniform across patient subgroups. The most dramatic finding is age: XGBoost achieves 0.742 AUC for patients aged 18–39 but only <strong>0.607 for patients ≥60</strong> — a 13.5 percentage-point gap. A model deployed uniformly across age groups will systematically under-identify elderly at-risk patients, precisely the population with the highest disease burden and the most to gain from early intervention.</p>
+          <h2 class="th-section-title">Who the Model Fails</h2>
+          <p class="th-body">Performance is not uniform across patients. The sharpest gap is age: XGBoost reaches 0.742 AUC for adults 18–39 but only <strong>0.607 for patients ≥60</strong> — precisely the group with the highest diabetes burden and the most to gain from early detection.</p>
 
           <div class="fig-box">
             <svg viewBox="0 0 700 245" fill="none" style="width:100%;height:auto;">
               <text x="20" y="20" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(255,255,255,0.4)" letter-spacing="0.08em">XGBOOST AUC BY SUBGROUP — FAIRNESS FOREST PLOT</text>
 
-              <!-- Reference line for overall AUC 0.794 internal / 0.717 external -->
-              <!-- Scale: x=130 = 0.55, x=620 = 0.85. Factor = (620-130)/(0.85-0.55) = 490/0.30 = 1633 per unit -->
-              <!-- pos(v) = 130 + (v-0.55)*1633 -->
-
               <!-- AGE group label -->
               <text x="20" y="44" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)" letter-spacing="0.06em">AGE</text>
 
-              <!-- 18-39: 0.742 → x = 130 + (0.742-0.55)*1633 = 130+313.5 = 443.5 -->
               <text x="20" y="65" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(16,185,129,0.8)">18 – 39</text>
               <line x1="130" y1="61" x2="620" y2="61" stroke="rgba(255,255,255,0.04)" stroke-width="14" stroke-linecap="round"/>
               <line x1="416" y1="61" x2="471" y2="61" stroke="rgba(16,185,129,0.4)" stroke-width="1.5"/>
               <rect x="439" y="57" width="9" height="9" rx="1.5" fill="#10b981"/>
               <text x="650" y="65" font-family="DM Mono, monospace" font-size="9" fill="#10b981">0.742</text>
 
-              <!-- 40-59: 0.728 → pos = 130+(0.728-0.55)*1633=130+290.7=420.7 -->
               <text x="20" y="95" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(16,185,129,0.65)">40 – 59</text>
               <line x1="130" y1="91" x2="620" y2="91" stroke="rgba(255,255,255,0.04)" stroke-width="14" stroke-linecap="round"/>
               <line x1="398" y1="91" x2="444" y2="91" stroke="rgba(16,185,129,0.3)" stroke-width="1.5"/>
               <rect x="416" y="87" width="9" height="9" rx="1.5" fill="rgba(16,185,129,0.75)"/>
               <text x="650" y="95" font-family="DM Mono, monospace" font-size="9" fill="rgba(16,185,129,0.75)">0.728</text>
 
-              <!-- ≥60: 0.607 → pos = 130+(0.607-0.55)*1633=130+93.1=223.1 — RED FLAG -->
               <text x="20" y="125" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(239,68,68,0.85)">≥ 60</text>
               <line x1="130" y1="121" x2="620" y2="121" stroke="rgba(255,255,255,0.04)" stroke-width="14" stroke-linecap="round"/>
               <line x1="196" y1="121" x2="250" y2="121" stroke="rgba(239,68,68,0.5)" stroke-width="1.5"/>
               <rect x="219" y="117" width="9" height="9" rx="1.5" fill="rgba(239,68,68,0.9)"/>
               <text x="650" y="125" font-family="DM Mono, monospace" font-size="9" fill="rgba(239,68,68,0.9)">0.607 ⚠</text>
-              <!-- Gap annotation -->
               <line x1="223" y1="65" x2="223" y2="121" stroke="rgba(239,68,68,0.25)" stroke-width="0.8" stroke-dasharray="3,2"/>
               <text x="230" y="95" font-family="DM Mono, monospace" font-size="7.5" fill="rgba(239,68,68,0.55)">13.5 pp gap</text>
 
               <!-- BMI group label -->
               <text x="20" y="152" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)" letter-spacing="0.06em">BMI CATEGORY</text>
 
-              <!-- Normal: 0.735 → pos=130+(0.735-0.55)*1633=130+302.1=432.1 -->
               <text x="20" y="172" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(16,185,129,0.7)">NORMAL</text>
               <line x1="130" y1="168" x2="620" y2="168" stroke="rgba(255,255,255,0.04)" stroke-width="14" stroke-linecap="round"/>
               <line x1="410" y1="168" x2="455" y2="168" stroke="rgba(16,185,129,0.3)" stroke-width="1.5"/>
               <rect x="428" y="164" width="9" height="9" rx="1.5" fill="rgba(16,185,129,0.7)"/>
               <text x="650" y="172" font-family="DM Mono, monospace" font-size="9" fill="rgba(16,185,129,0.7)">0.735</text>
 
-              <!-- Overweight: 0.718 → pos=130+(0.718-0.55)*1633=130+274.3=404.3 -->
               <text x="20" y="200" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(255,255,255,0.55)">OVERWEIGHT</text>
               <line x1="130" y1="196" x2="620" y2="196" stroke="rgba(255,255,255,0.04)" stroke-width="14" stroke-linecap="round"/>
               <line x1="382" y1="196" x2="427" y2="196" stroke="rgba(16,185,129,0.25)" stroke-width="1.5"/>
               <rect x="400" y="192" width="9" height="9" rx="1.5" fill="rgba(16,185,129,0.55)"/>
               <text x="650" y="200" font-family="DM Mono, monospace" font-size="9" fill="rgba(16,185,129,0.6)">0.718</text>
 
-              <!-- Obese: 0.698 → pos=130+(0.698-0.55)*1633=130+241.7=371.7 -->
               <text x="20" y="228" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(255,255,255,0.5)">OBESE (BMI≥30)</text>
               <line x1="130" y1="224" x2="620" y2="224" stroke="rgba(255,255,255,0.04)" stroke-width="14" stroke-linecap="round"/>
               <line x1="350" y1="224" x2="395" y2="224" stroke="rgba(245,158,11,0.35)" stroke-width="1.5"/>
               <rect x="368" y="220" width="9" height="9" rx="1.5" fill="rgba(245,158,11,0.65)"/>
               <text x="650" y="228" font-family="DM Mono, monospace" font-size="9" fill="rgba(245,158,11,0.7)">0.698</text>
 
-              <!-- X-axis markers -->
               <text x="130" y="244" text-anchor="middle" font-family="DM Mono, monospace" font-size="6.5" fill="rgba(255,255,255,0.2)">0.55</text>
               <text x="375" y="244" text-anchor="middle" font-family="DM Mono, monospace" font-size="6.5" fill="rgba(255,255,255,0.2)">0.70</text>
               <text x="620" y="244" text-anchor="middle" font-family="DM Mono, monospace" font-size="6.5" fill="rgba(255,255,255,0.2)">0.85</text>
               <line x1="375" y1="36" x2="375" y2="237" stroke="rgba(255,255,255,0.08)" stroke-width="0.8" stroke-dasharray="3,4"/>
             </svg>
-            <p class="fig-caption">Figure 4 — Fairness forest plot: XGBoost AUC by age and BMI subgroup. Elderly patients (≥60) reach only 0.607 — 13.5 pp below young adults (0.742). CI bars from 1,000-iteration bootstrap. Obese subgroup also below average at 0.698.</p>
-          </div>
-
-          <div class="alert-box">
-            <strong>Why elderly patients are hardest to predict:</strong> Type 2 diabetes in older adults presents with more comorbidities, polypharmacy, and atypical symptom patterns. BRFSS self-reported features — which drive training — are less discriminative for this subgroup. The behavioral-risk signals that work for younger adults (BMI trajectory, physical activity decline) are weaker when multiple health conditions co-occur. A model must be explicitly calibrated or retrained on this subgroup, not just trained on the pooled population and applied uniformly.
+            <p class="fig-caption">Figure 3 — Fairness forest plot: XGBoost AUC by age and BMI subgroup. Elderly patients (≥60) reach only 0.607 — 13.5 pp below young adults (0.742).</p>
           </div>
         </section>
 
-        <!-- ── SECTION 6: SHAP ── -->
+        <!-- ── SECTION 6: Takeaways ── -->
+        <section class="th-section">
+          <h2 class="th-section-title">Key Takeaways</h2>
+          <div class="findings-grid">
+            <div class="finding-card">
+              <div class="fc-num">0.794→0.717</div>
+              <div class="fc-label">Internal vs external AUC (XGBoost)</div>
+              <div class="fc-body">9.7% relative drop from internal cross-validation to a much larger external population. External validation is mandatory before deployment.</div>
+            </div>
+            <div class="finding-card" style="border-color:rgba(239,68,68,0.3);">
+              <div class="fc-num" style="color:rgba(239,68,68,0.85);">0.607</div>
+              <div class="fc-label">AUC for elderly patients (≥60)</div>
+              <div class="fc-body">13.5 pp below young adults (0.742). The highest-risk population is the hardest to identify — driven by comorbidity complexity and weaker signal in older adults.</div>
+            </div>
+            <div class="finding-card">
+              <div class="fc-num">0.018</div>
+              <div class="fc-label">Max inter-model AUC gap</div>
+              <div class="fc-body">From XGBoost (0.794) to Logistic Regression (0.776). Algorithm choice is second-order — feature quality and population coverage are the binding constraints.</div>
+            </div>
+            <div class="finding-card">
+              <div class="fc-num">Age · BMI</div>
+              <div class="fc-label">Top SHAP drivers</div>
+              <div class="fc-body">Age and BMI account for the bulk of model predictions, both in a clinically expected direction. Race/ethnicity ranks 4th, requiring explicit fairness monitoring.</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="th-divider full-methodology"></div>
+
+        <!-- ── SECTION 7: Four Models, full detail + chart ── -->
+        <section class="th-section">
+          <h2 class="th-section-title">The Four Models, In Full</h2>
+          <p class="th-body">All four algorithms trained under identical preprocessing: median imputation for continuous features, one-hot encoding for categoricals, MinMax scaling, SMOTE oversampling for class imbalance. Hyperparameter optimization via 100-iteration Bayesian search. Primary metric: AUROC, with Brier score and Expected Calibration Error (ECE) for calibration quality.</p>
+
+          <div class="fig-box">
+            <svg viewBox="0 0 700 200" fill="none" style="width:100%;height:auto;">
+              <text x="20" y="22" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.4)" letter-spacing="0.08em">INTERNAL AUROC (5-FOLD CV) — HIGHER IS BETTER</text>
+              <text x="20" y="55" font-family="DM Mono, monospace" font-size="9.5" fill="rgba(16,185,129,0.9)">XGBOOST</text>
+              <rect x="150" y="42" width="444" height="18" rx="3" fill="rgba(16,185,129,0.3)" stroke="rgba(16,185,129,0.6)" stroke-width="0.8"/>
+              <text x="606" y="55" font-family="DM Mono, monospace" font-size="10" fill="#10b981" dominant-baseline="middle" font-weight="600">0.794 ★</text>
+              <text x="20" y="95" font-family="DM Mono, monospace" font-size="9.5" fill="rgba(255,255,255,0.6)">RANDOM FOREST</text>
+              <rect x="150" y="82" width="418" height="18" rx="3" fill="rgba(16,185,129,0.18)" stroke="rgba(16,185,129,0.35)" stroke-width="0.8"/>
+              <text x="578" y="95" font-family="DM Mono, monospace" font-size="10" fill="rgba(16,185,129,0.8)" dominant-baseline="middle">0.789</text>
+              <text x="20" y="135" font-family="DM Mono, monospace" font-size="9.5" fill="rgba(255,255,255,0.6)">SVM (RBF KERNEL)</text>
+              <rect x="150" y="122" width="412" height="18" rx="3" fill="rgba(16,185,129,0.12)" stroke="rgba(16,185,129,0.28)" stroke-width="0.8"/>
+              <text x="572" y="135" font-family="DM Mono, monospace" font-size="10" fill="rgba(16,185,129,0.7)" dominant-baseline="middle">0.778</text>
+              <text x="20" y="175" font-family="DM Mono, monospace" font-size="9.5" fill="rgba(255,255,255,0.6)">LOGISTIC REG.</text>
+              <rect x="150" y="162" width="410" height="18" rx="3" fill="rgba(16,185,129,0.08)" stroke="rgba(16,185,129,0.22)" stroke-width="0.8"/>
+              <text x="570" y="175" font-family="DM Mono, monospace" font-size="10" fill="rgba(16,185,129,0.6)" dominant-baseline="middle">0.776</text>
+            </svg>
+            <p class="fig-caption">Figure 4 — Internal AUROC comparison. XGBoost leads at 0.794; all four models competitive within 0.018 AUC — suggesting the feature set, not the algorithm, is the binding constraint.</p>
+          </div>
+
+          <p class="th-body">The narrow 0.018 AUC spread across all four models is itself a finding: the performance ceiling is set by the available features, not the algorithm. Any model claiming substantially superior performance on similar data is likely overfitting to training-set idiosyncrasies.</p>
+        </section>
+
+        <!-- ── SECTION 8: Fairness deep-dive ── -->
+        <section class="th-section">
+          <h2 class="th-section-title">Why Elderly Patients Are Hardest to Predict</h2>
+          <div class="alert-box">
+            <strong>The mechanism:</strong> Type 2 diabetes in older adults presents with more comorbidities, polypharmacy, and atypical symptom patterns. The self-reported behavioral features that drive training are less discriminative for this subgroup — signals that work for younger adults (BMI trajectory, physical activity decline) weaken when multiple health conditions co-occur. A model must be explicitly calibrated or retrained on this subgroup, not just trained on the pooled population and applied uniformly. The obese subgroup shows a smaller but related effect (0.698 vs. 0.735 for normal-weight patients).
+          </div>
+        </section>
+
+        <!-- ── SECTION 9: SHAP ── -->
         <section class="th-section">
           <h2 class="th-section-title">What Drives Predictions: SHAP Feature Importance</h2>
           <p class="th-body">SHAP (SHapley Additive exPlanations) values quantify each feature's average contribution to the model's output. Unlike permutation importance, SHAP values are directional and additive — showing exactly how much each feature moves the prediction for each patient. This makes them interpretable in clinical terms: not "feature X matters" but "feature X pushes this patient's predicted risk up by this amount."</p>
@@ -249,48 +295,28 @@
           <div class="fig-box">
             <svg viewBox="0 0 700 310" fill="none" style="width:100%;height:auto;">
               <text x="20" y="20" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(255,255,255,0.4)" letter-spacing="0.08em">MEAN |SHAP| VALUE — XGBOOST — AVERAGE ABSOLUTE PREDICTION CONTRIBUTION</text>
-
-              <!-- scale: max Age=0.142 → 520px. factor = 520/0.142 = 3662 -->
-              <!-- bar starts at x=150, max width=520 -->
-
-              <!-- Age: 0.142 → 520 -->
               <text x="20" y="55" font-family="DM Mono, monospace" font-size="9" fill="rgba(16,185,129,0.9)">AGE</text>
               <rect x="150" y="42" width="520" height="17" rx="3" fill="rgba(16,185,129,0.3)" stroke="rgba(16,185,129,0.5)" stroke-width="0.8"/>
               <text x="680" y="55" font-family="DM Mono, monospace" font-size="9.5" fill="#10b981" dominant-baseline="middle" font-weight="600">0.142</text>
-
-              <!-- BMI: 0.098 → 359 -->
               <text x="20" y="90" font-family="DM Mono, monospace" font-size="9" fill="rgba(16,185,129,0.8)">BMI</text>
               <rect x="150" y="77" width="359" height="17" rx="3" fill="rgba(16,185,129,0.2)" stroke="rgba(16,185,129,0.38)" stroke-width="0.8"/>
               <text x="519" y="90" font-family="DM Mono, monospace" font-size="9.5" fill="rgba(16,185,129,0.85)" dominant-baseline="middle">0.098</text>
-
-              <!-- Physical Activity: 0.067 → 246 -->
               <text x="20" y="125" font-family="DM Mono, monospace" font-size="9" fill="rgba(16,185,129,0.7)">PHYS. ACTIVITY</text>
               <rect x="150" y="112" width="246" height="17" rx="3" fill="rgba(16,185,129,0.14)" stroke="rgba(16,185,129,0.3)" stroke-width="0.8"/>
               <text x="406" y="125" font-family="DM Mono, monospace" font-size="9.5" fill="rgba(16,185,129,0.72)" dominant-baseline="middle">0.067</text>
-
-              <!-- Race / Ethnicity: 0.054 → 198 — amber flag -->
               <text x="20" y="160" font-family="DM Mono, monospace" font-size="9" fill="rgba(245,158,11,0.8)">RACE / ETHNICITY</text>
               <rect x="150" y="147" width="198" height="17" rx="3" fill="rgba(245,158,11,0.14)" stroke="rgba(245,158,11,0.35)" stroke-width="0.8"/>
               <text x="358" y="160" font-family="DM Mono, monospace" font-size="9.5" fill="rgba(245,158,11,0.85)" dominant-baseline="middle">0.054</text>
-              <!-- fairness note -->
               <text x="380" y="153" font-family="DM Mono, monospace" font-size="7.5" fill="rgba(245,158,11,0.5)">← fairness audit required</text>
-
-              <!-- Heart Attack Hx: 0.046 → 169 -->
               <text x="20" y="195" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.65)">HEART ATTACK HX</text>
               <rect x="150" y="182" width="169" height="17" rx="3" fill="rgba(16,185,129,0.1)" stroke="rgba(16,185,129,0.22)" stroke-width="0.8"/>
               <text x="329" y="195" font-family="DM Mono, monospace" font-size="9.5" fill="rgba(16,185,129,0.6)" dominant-baseline="middle">0.046</text>
-
-              <!-- Stroke Hx: 0.041 → 150 -->
               <text x="20" y="230" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.6)">STROKE HX</text>
               <rect x="150" y="217" width="150" height="17" rx="3" fill="rgba(16,185,129,0.08)" stroke="rgba(16,185,129,0.18)" stroke-width="0.8"/>
               <text x="310" y="230" font-family="DM Mono, monospace" font-size="9.5" fill="rgba(16,185,129,0.55)" dominant-baseline="middle">0.041</text>
-
-              <!-- Gender: 0.032 → 117 -->
               <text x="20" y="265" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.5)">GENDER</text>
               <rect x="150" y="252" width="117" height="17" rx="3" fill="rgba(16,185,129,0.06)" stroke="rgba(16,185,129,0.14)" stroke-width="0.8"/>
               <text x="277" y="265" font-family="DM Mono, monospace" font-size="9.5" fill="rgba(16,185,129,0.5)" dominant-baseline="middle">0.032</text>
-
-              <!-- Smoking: 0.029 → 106 -->
               <text x="20" y="300" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.45)">SMOKING STATUS</text>
               <rect x="150" y="287" width="106" height="17" rx="3" fill="rgba(16,185,129,0.04)" stroke="rgba(16,185,129,0.11)" stroke-width="0.8"/>
               <text x="266" y="300" font-family="DM Mono, monospace" font-size="9.5" fill="rgba(16,185,129,0.44)" dominant-baseline="middle">0.029</text>
@@ -298,44 +324,17 @@
             <p class="fig-caption">Figure 5 — SHAP feature importance for XGBoost. Age dominates (mean |SHAP| = 0.142), followed by BMI (0.098) and physical activity (0.067). Race/ethnicity ranks 4th at 0.054, making subgroup fairness auditing essential.</p>
           </div>
 
-          <p class="th-body">The race/ethnicity SHAP value of 0.054 — ranking 4th — means race is the model's 4th most influential input. This is not automatically problematic: race correlates with documented disparities in diabetes prevalence and access to preventive care. But it creates an obligation: a model that uses race as a significant predictor must be audited for disparate impact. The paper documents this, finding moderate but real variation in sensitivity and specificity across racial and ethnic groups.</p>
+          <p class="th-body">The race/ethnicity SHAP value of 0.054 — ranking 4th — means race is the model's 4th most influential input. This is not automatically problematic: race correlates with documented disparities in diabetes prevalence and access to preventive care. But it creates an obligation: a model that uses race as a significant predictor must be audited for disparate impact. The paper documents moderate but real variation in sensitivity and specificity across racial and ethnic groups.</p>
         </section>
 
-        <!-- ── SECTION 7: Key Findings ── -->
-        <section class="th-section">
-          <h2 class="th-section-title">Summary of Key Findings</h2>
-          <div class="findings-grid">
-            <div class="finding-card">
-              <div class="fc-num">0.794→0.717</div>
-              <div class="fc-label">Internal vs external AUC (XGBoost)</div>
-              <div class="fc-body">9.7% relative drop from BRFSS cross-validation to NHANES external test. Publications reporting only internal CV AUC overstate clinical utility — external validation is mandatory before deployment.</div>
-            </div>
-            <div class="finding-card" style="border-color:rgba(239,68,68,0.3);">
-              <div class="fc-num" style="color:rgba(239,68,68,0.85);">0.607</div>
-              <div class="fc-label">AUC for elderly patients (≥60)</div>
-              <div class="fc-body">13.5 pp below young adults (0.742). The highest-risk population is the hardest to identify — driven by comorbidity complexity and weaker behavioral-feature signal in older adults.</div>
-            </div>
-            <div class="finding-card">
-              <div class="fc-num">0.018</div>
-              <div class="fc-label">Max inter-model AUC gap</div>
-              <div class="fc-body">From XGBoost (0.794) to Logistic Regression (0.776) — a gap of 0.018. Algorithm selection is second-order. Feature quality and population representativeness are the binding constraints.</div>
-            </div>
-            <div class="finding-card">
-              <div class="fc-num">Age · BMI</div>
-              <div class="fc-label">Top-2 SHAP features</div>
-              <div class="fc-body">Age (0.142) and BMI (0.098) account for the bulk of model predictions. Physical activity (0.067) and race/ethnicity (0.054) follow — the latter requiring explicit fairness monitoring.</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ── SECTION 8: Calibration ── -->
+        <!-- ── SECTION 10: Calibration ── -->
         <section class="th-section">
           <h2 class="th-section-title">Calibration: Why AUC Alone Is Not Enough</h2>
-          <p class="th-body">AUC measures discrimination — the ability to rank patients by risk. Calibration measures whether predicted probabilities are accurate in absolute terms. A model predicting 30% risk should produce observed events in ~30% of such cases. XGBoost shows moderate calibration overconfidence on the external dataset (ECE = 0.07), consistent with the known behavior of gradient boosting on out-of-distribution data. Platt scaling reduces ECE to 0.03 without affecting discrimination.</p>
+          <p class="th-body">AUC measures discrimination — the ability to rank patients by risk. Calibration measures whether predicted probabilities are accurate in absolute terms: a model predicting 30% risk should see observed events in roughly 30% of such cases. Overall Brier score on external validation is <strong>0.123</strong>, with moderate overconfidence (ECE = 0.07) consistent with gradient-boosting behavior on out-of-distribution data; Platt scaling reduces ECE to 0.03 without affecting discrimination.</p>
           <p class="th-body" style="margin-top:0.8rem;">Clinical decision-making that relies on absolute risk thresholds — e.g., "refer all patients with ≥25% predicted risk" — requires well-calibrated models. Reporting only AUC is insufficient. The paper includes Brier scores and reliability diagrams alongside AUC for all four models, providing the full picture required for clinical deployment decisions.</p>
         </section>
 
-        <!-- ── SECTION 9: Policy Implications ── -->
+        <!-- ── SECTION 11: Policy Implications ── -->
         <section class="th-section">
           <h2 class="th-section-title">Clinical and Policy Implications</h2>
           <div class="imp-list" style="font-family:'DM Sans',sans-serif; font-size:0.88rem; color:rgba(255,255,255,0.65); line-height:1.7; margin-top:0.5rem;">
@@ -346,14 +345,14 @@
           </div>
         </section>
 
-        <!-- ── SECTION 10: Paper Details ── -->
+        <!-- ── SECTION 12: Paper Details ── -->
         <section class="th-section">
           <h2 class="th-section-title">Paper Details</h2>
-          <p class="th-body"><strong>Full title:</strong> A Comprehensive Evaluation of Machine Learning Algorithms for Type 2 Diabetes Risk Prediction: Performance, Fairness, and External Validity</p>
+          <p class="th-body"><strong>Full title:</strong> Comprehensive Evaluation of Machine Learning for Type 2 Diabetes Risk Prediction: Large-Scale External Validation and Fairness Analysis</p>
           <p class="th-body"><strong>Venue:</strong> Accepted, IEEE, 2025.</p>
-          <p class="th-body"><strong>Author:</strong> Rajveer Singh Pall</p>
-          <p class="th-body"><strong>Training data:</strong> BRFSS 2023 (CDC), 1,091,500 records, 21 features, 5-fold stratified CV, SMOTE oversampling.</p>
-          <p class="th-body"><strong>External validation:</strong> NHANES 2017–2020 (NIH), 187,940 records, identical feature mapping, zero retraining.</p>
+          <p class="th-body"><strong>Authors:</strong> Rajveer Singh Pall, Sameer Yadav (corresponding), Siddharth Bhalerao, Sourabh Sahu, Ritu Ahluwalia, Bhaskar Awadhiya.</p>
+          <p class="th-body"><strong>Training data:</strong> NHANES 2015–2020 (NIH), 15,685 records, 8 non-laboratory predictors, 5-fold stratified CV, SMOTE oversampling.</p>
+          <p class="th-body"><strong>External validation:</strong> BRFSS 2020–2022 (CDC), 1,285,783 records, identical feature mapping, zero retraining.</p>
           <p class="th-body"><strong>Models:</strong> XGBoost, Random Forest, SVM (RBF kernel), Logistic Regression — all with 100-iteration Bayesian hyperparameter optimization.</p>
           <p class="th-body"><strong>Evaluation suite:</strong> AUROC (primary), Brier score, Expected Calibration Error (ECE), subgroup-stratified AUC by age/BMI/race/gender, SHAP importance, Platt scaling post-hoc calibration, 1,000-iteration bootstrap CIs.</p>
         </section>
@@ -380,7 +379,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/field.js"></script>
-  <script src="js/detail.js"></script>
+  <script src="js/field.js?v=1"></script>
+  <script src="js/detail.js?v=1"></script>
 </body>
 </html>

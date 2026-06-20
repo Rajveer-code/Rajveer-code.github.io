@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FinSight + Web — Rajveer Singh Pall</title>
+  <meta name="description" content="A scroll-driven research monograph — the explorable frontend for the FinSight earnings-intelligence pipeline, told in eight acts.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2306080c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' fill='%23f5ca40' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=1">
+</head>
+<body>
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="bottom-fade" aria-hidden="true"></div>
+  <div class="cursor-wrap" id="cursorWrap" aria-hidden="true">
+    <svg class="cursor-lattice" width="44" height="44" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="2.5" fill="currentColor"/>
+      <line x1="20" y1="6" x2="20" y2="34" stroke="currentColor" stroke-width="0.75"/>
+      <line x1="6" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="0.75"/>
+      <line x1="10" y1="10" x2="30" y2="30" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.6"/>
+      <line x1="30" y1="10" x2="10" y2="30" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.6"/>
+      <rect x="17" y="17" width="6" height="6" fill="none" stroke="currentColor" stroke-width="0.65"/>
+      <path class="cursor-arc cursor-arc-1" d="M14,12 Q20,6 26,12" fill="none" stroke="currentColor" stroke-width="0.55"/>
+      <path class="cursor-arc cursor-arc-2" d="M12,10 Q20,3 28,10" fill="none" stroke="currentColor" stroke-width="0.4"/>
+      <path class="cursor-arc cursor-arc-3" d="M10,8 Q20,0 30,8" fill="none" stroke="currentColor" stroke-width="0.3"/>
+    </svg>
+  </div>
+  <div class="scroll-rail" aria-hidden="true"><div class="scroll-rail-fill" id="scrollRailFill"></div></div>
+  <div class="hud-clock" aria-hidden="true">
+    <div class="hud-row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="hud-label">BLR</span><span class="hud-time" id="clockIST">--:--:--</span>
+    </div>
+    <div class="hud-row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="hud-label" id="hudVisitorLabel">NAG</span><span class="hud-time" id="clockUTC">--:--:--</span>
+    </div>
+  </div>
+
+  <div class="spatial-scene">
+    <div class="thinking-scroll">
+      <div class="thinking-body">
+        <a href="index.html#work" class="back-link">← Back to work</a>
+        <header class="th-header">
+          <div class="th-badge" style="color:#22d3ee">Shipped · Vercel · Three.js</div>
+          <h1 class="th-title">FinSight + Web</h1>
+          <p class="th-subtitle">Not a dashboard — a scroll-driven research monograph that turns the FinSight pipeline's findings into something you can explore, told in eight acts.</p>
+        </header>
+        <div class="essence-strip">
+          <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">A research pipeline's real findings usually stay locked in a notebook that only the author can read.</span></div>
+          <div class="essence-item"><span class="essence-label">Approach</span><span class="essence-text">Rebuild the same 14,584-transcript corpus as an explorable, scroll-driven story — eight acts, one shared 3D dataset.</span></div>
+          <div class="essence-item"><span class="essence-label">Result</span><span class="essence-text">The same honestly-reported signal from the research pipeline — concentrated in the energy sector — made spatially explorable.</span></div>
+          <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">Proof that rigorous research and an inviting, explorable interface aren't a tradeoff.</span></div>
+        </div>
+        <div class="th-divider"></div>
+        <div class="metrics-grid">
+          <div class="metric-block"><span class="metric-value" style="color:#22d3ee">8</span><span class="metric-label">Narrative acts</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#22d3ee">+0.31</span><span class="metric-label">Energy-sector IC</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#22d3ee">3D</span><span class="metric-label">Explorable signal field</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#22d3ee">1</span><span class="metric-label">Shared dataset, 8 views</span></div>
+        </div>
+        <div class="th-divider"></div>
+        <section class="th-section">
+          <h2 class="th-section-title">What Is This</h2>
+          <p class="th-body">This is the explorable counterpart to <a href="project-finsight.html" data-cursor style="color:#22d3ee;">FinSight's research pipeline</a> — not a dashboard with filters and dropdowns, but a guided, scroll-driven monograph. The same earnings-call corpus that backs the research is restaged eight times, each act revealing it from a different angle.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Why It Was Built</h2>
+          <p class="th-body">A walk-forward backtest and an honest null result are easy to bury in a PDF. FinSight + Web exists to give those findings a form a non-technical reader can actually sit with and explore — without ever overstating what the underlying research found.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">How It Works</h2>
+          <div class="method-diagram" style="padding: 2rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: linear-gradient(180deg, rgba(255,255,255,0.015) 0%, transparent 100%); margin-bottom: 2rem;">
+            <svg viewBox="0 0 700 120" fill="none" style="width:100%;height:auto;">
+              <rect x="14.0" y="35" width="160" height="50" rx="6" stroke="#22d3ee" stroke-width="1" fill="rgba(34,211,238,0.08)" />
+              <text x="94.0" y="57.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(255,255,255,0.7)" letter-spacing="0.04em">CORPUS &amp;</text>
+              <text x="94.0" y="69.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(255,255,255,0.7)" letter-spacing="0.04em">READING</text>
+              <line x1="179.0" y1="60.0" x2="200.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+              <polygon points="200.0,56.0 208.0,60.0 200.0,64.0" fill="rgba(255,255,255,0.2)" />
+              <rect x="213.0" y="35" width="160" height="50" rx="6" stroke="#22d3ee" stroke-width="1" fill="rgba(34,211,238,0.08)" />
+              <text x="293.0" y="57.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(255,255,255,0.7)" letter-spacing="0.04em">RETRIEVAL &amp;</text>
+              <text x="293.0" y="69.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(255,255,255,0.7)" letter-spacing="0.04em">SIGNAL FIELD</text>
+              <line x1="378.0" y1="60.0" x2="399.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+              <polygon points="399.0,56.0 407.0,60.0 399.0,64.0" fill="rgba(255,255,255,0.2)" />
+              <rect x="412.0" y="35" width="160" height="50" rx="6" stroke="#22d3ee" stroke-width="1" fill="rgba(34,211,238,0.08)" />
+              <text x="492.0" y="57.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(255,255,255,0.7)" letter-spacing="0.04em">HONEST MODELS &amp;</text>
+              <text x="492.0" y="69.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(255,255,255,0.7)" letter-spacing="0.04em">ATTRIBUTION</text>
+              <line x1="577.0" y1="60.0" x2="598.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+              <polygon points="598.0,56.0 606.0,60.0 598.0,64.0" fill="rgba(255,255,255,0.2)" />
+              <rect x="611.0" y="35" width="78" height="50" rx="6" stroke="#22d3ee" stroke-width="1" fill="rgba(34,211,238,0.08)" />
+              <text x="650.0" y="57.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.7)" letter-spacing="0.03em">SECTOR &amp;</text>
+              <text x="650.0" y="69.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.7)" letter-spacing="0.03em">VERDICT</text>
+            </svg>
+          </div>
+          <p class="th-body">The eight acts group into four movements: the corpus is archived and read for tone, then turned into a searchable signal field; walk-forward models are tested honestly and their reasoning attributed; finally the signal is located sector-by-sector and condensed into a verdict. One dataset, four movements, eight ways of looking at it.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Key Result</h2>
+          <div class="fig-box">
+            <div class="spec-row">
+              <div class="spec-chip is-large"><span class="spec-value" style="color:#22d3ee;">+0.31 IC</span><span class="spec-label">Energy sector — where the signal lives</span></div>
+            </div>
+            <p class="fig-caption" style="margin-top:1.2rem;">The same finding from the research pipeline, now visualized as a sector constellation on the live site — not a new number, a new way to see it</p>
+          </div>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Why It Matters</h2>
+          <p class="th-body">This is what deploying honest research looks like when it's given a real interface: the same walk-forward discipline that refuses to overstate a thin edge, presented so a reader can feel where the signal is strong and where it genuinely isn't — archival aesthetic, real numbers, no inflated claims.</p>
+        </section>
+        <div style="margin-bottom:3rem;display:flex;gap:1.2rem;flex-wrap:wrap;align-items:center;">
+          <a href="https://finsight-web-rust.vercel.app" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#22d3ee;border-color:rgba(34,211,238,0.4);">↗ View live monograph</a>
+          <a href="project-finsight.html" data-cursor style="font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.08em;color:rgba(249,246,238,0.45);text-decoration:none;">→ See the research pipeline</a>
+        </div>
+        <div class="th-footer">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="brh" id="brh" aria-hidden="true">
+    <div class="brh-session"><span class="brh-label">SESSION</span>&nbsp;<span class="brh-value" id="brhSession">00:00</span></div>
+    <div class="brh-explore"><span class="brh-label">EXPLORED</span>&nbsp;<span class="brh-value" id="brhExplore">0%</span></div>
+    <div class="brh-xy"><span class="brh-label">XY</span>&nbsp;<span class="brh-value" id="brhXY">0.00, 0.00</span></div>
+    <button class="brh-scroll-btn" id="brhScrollBtn" aria-label="Scroll to top">
+      <svg class="brh-ring" viewBox="0 0 36 36">
+        <circle class="brh-ring-track" cx="18" cy="18" r="15"/>
+        <circle class="brh-ring-fill" id="brhRingFill" cx="18" cy="18" r="15"/>
+      </svg>
+    </button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="js/field.js?v=1"></script>
+  <script src="js/detail.js?v=1"></script>
+</body>
+</html>

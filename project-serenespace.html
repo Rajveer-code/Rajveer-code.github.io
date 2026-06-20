@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SereneSpace — Rajveer Singh Pall</title>
+  <meta name="description" content="An anonymous, no-login mental-health platform for students — mood-based entry, crisis detection, and a real path to help. SIH 2025: selected among the top 50 of 250 teams.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2306080c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' fill='%23f5ca40' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=1">
+</head>
+<body>
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="bottom-fade" aria-hidden="true"></div>
+  <div class="cursor-wrap" id="cursorWrap" aria-hidden="true">
+    <svg class="cursor-lattice" width="44" height="44" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="2.5" fill="currentColor"/>
+      <line x1="20" y1="6" x2="20" y2="34" stroke="currentColor" stroke-width="0.75"/>
+      <line x1="6" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="0.75"/>
+      <line x1="10" y1="10" x2="30" y2="30" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.6"/>
+      <line x1="30" y1="10" x2="10" y2="30" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.6"/>
+      <rect x="17" y="17" width="6" height="6" fill="none" stroke="currentColor" stroke-width="0.65"/>
+      <path class="cursor-arc cursor-arc-1" d="M14,12 Q20,6 26,12" fill="none" stroke="currentColor" stroke-width="0.55"/>
+      <path class="cursor-arc cursor-arc-2" d="M12,10 Q20,3 28,10" fill="none" stroke="currentColor" stroke-width="0.4"/>
+      <path class="cursor-arc cursor-arc-3" d="M10,8 Q20,0 30,8" fill="none" stroke="currentColor" stroke-width="0.3"/>
+    </svg>
+  </div>
+  <div class="scroll-rail" aria-hidden="true"><div class="scroll-rail-fill" id="scrollRailFill"></div></div>
+  <div class="hud-clock" aria-hidden="true">
+    <div class="hud-row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="hud-label">BLR</span><span class="hud-time" id="clockIST">--:--:--</span>
+    </div>
+    <div class="hud-row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="hud-label" id="hudVisitorLabel">NAG</span><span class="hud-time" id="clockUTC">--:--:--</span>
+    </div>
+  </div>
+
+  <div class="spatial-scene">
+    <div class="thinking-scroll">
+      <div class="thinking-body">
+        <a href="index.html#work" class="back-link">← Back to work</a>
+        <header class="th-header">
+          <div class="th-badge" style="color:#f59e0b">SIH 2025 · Selected, 50 of 250</div>
+          <h1 class="th-title">SereneSpace</h1>
+          <p class="th-subtitle">An anonymous, no-login mental-health platform for students — mood-based entry, crisis detection, and a real path to help, with no account required.</p>
+        </header>
+        <div class="essence-strip">
+          <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">Stigma keeps students from using campus counseling even when it exists — logging in with your name is itself a barrier.</span></div>
+          <div class="essence-item"><span class="essence-label">Approach</span><span class="essence-text">Remove the login entirely. Enter anonymously by picking how you feel, and land straight on tools and a path to real help.</span></div>
+          <div class="essence-item"><span class="essence-label">Result</span><span class="essence-text">Selected among the top 50 of 250 teams at Smart India Hackathon 2025's college-level screening.</span></div>
+          <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">Shows a no-account, crisis-aware design is buildable and judge-validated — not just a pitch.</span></div>
+        </div>
+        <div class="th-divider"></div>
+        <div class="metrics-grid">
+          <div class="metric-block"><span class="metric-value" style="color:#f59e0b">5</span><span class="metric-label">Mood states at entry</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#f59e0b">0</span><span class="metric-label">Login required</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#f59e0b">50 / 250</span><span class="metric-label">SIH 2025 selection</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#f59e0b">3</span><span class="metric-label">Languages supported</span></div>
+        </div>
+        <div class="th-divider"></div>
+        <section class="th-section">
+          <h2 class="th-section-title">The Idea</h2>
+          <p class="th-body">No account, no name, no history. A student picks how they're feeling from five states and lands straight on a dashboard built around that mood — a short wellness check-in, breathing exercises, a drawing board, journaling, an AI companion that speaks English, Hindi, or Urdu, and anonymous peer forums. Everything is reachable in seconds, by design.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">The Problem</h2>
+          <p class="th-body">Most Indian colleges already have counseling infrastructure — what's missing is access. Appointment delays, daytime-only hours, and the simple fact of being seen walking into a counselor's office keep students away precisely when they're struggling most. SereneSpace was built for Smart India Hackathon 2025, problem statement SIH25092 (MedTech / Health Tech), around a single bet: remove identity from the equation and people will actually use the tools.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">The System</h2>
+          <div class="method-diagram" style="padding: 2rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: linear-gradient(180deg, rgba(255,255,255,0.015) 0%, transparent 100%); margin-bottom: 2rem;">
+            <svg viewBox="0 0 700 120" fill="none" style="width:100%;height:auto;">
+              <rect x="14.0" y="35" width="150" height="50" rx="6" stroke="#f59e0b" stroke-width="1" fill="rgba(245,158,11,0.08)" />
+              <text x="89.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">MOOD CHECK-IN</text>
+              <line x1="169.0" y1="60.0" x2="190.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+              <polygon points="190.0,56.0 198.0,60.0 190.0,64.0" fill="rgba(255,255,255,0.2)" />
+              <rect x="203.0" y="35" width="150" height="50" rx="6" stroke="#f59e0b" stroke-width="1" fill="rgba(245,158,11,0.08)" />
+              <text x="278.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">DASHBOARD</text>
+              <line x1="358.0" y1="60.0" x2="379.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+              <polygon points="379.0,56.0 387.0,60.0 379.0,64.0" fill="rgba(255,255,255,0.2)" />
+              <rect x="392.0" y="35" width="150" height="50" rx="6" stroke="#f59e0b" stroke-width="1" fill="rgba(245,158,11,0.08)" />
+              <text x="467.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">CRISIS DETECTION</text>
+              <line x1="547.0" y1="60.0" x2="568.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
+              <polygon points="568.0,56.0 576.0,60.0 568.0,64.0" fill="rgba(255,255,255,0.2)" />
+              <rect x="581.0" y="35" width="105" height="50" rx="6" stroke="#f59e0b" stroke-width="1" fill="rgba(245,158,11,0.08)" />
+              <text x="633.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">HELP</text>
+            </svg>
+          </div>
+          <p class="th-body">Crisis-relevant keywords anywhere on the platform escalate straight to an always-reachable crisis page — no session check required, since a student in crisis shouldn't be one click further from help than anyone else. The same path leads to live counselors and emergency helplines. On the institution side, an anonymized dashboard surfaces mood trends, usage, and crisis frequency, so administrators can see patterns without ever seeing names.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Key Result</h2>
+          <div class="fig-box">
+            <div class="spec-row">
+              <div class="spec-chip is-large"><span class="spec-value" style="color:#f59e0b;">50 / 250</span><span class="spec-label">Teams selected, SIH 2025 college screening</span></div>
+            </div>
+            <p class="fig-caption" style="margin-top:1.2rem;">Judged validation that a no-login, crisis-aware design works as a real product, not just a concept</p>
+          </div>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Why It Matters</h2>
+          <p class="th-body">The bet was simple: students will use mental-health tools they'd otherwise avoid, if using them costs nothing in exposure. Reaching the top 50 of 250 teams at SIH 2025 is evidence that bet holds up under outside scrutiny — and a working pattern for anonymous-first, crisis-aware design that other student platforms could reuse.</p>
+        </section>
+        <div style="margin-bottom:3rem;">
+          <a href="https://serenespace-e5ev.onrender.com/" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#f59e0b;border-color:rgba(245,158,11,0.4);">↗ View live site</a>
+        </div>
+        <div class="th-footer">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="brh" id="brh" aria-hidden="true">
+    <div class="brh-session"><span class="brh-label">SESSION</span>&nbsp;<span class="brh-value" id="brhSession">00:00</span></div>
+    <div class="brh-explore"><span class="brh-label">EXPLORED</span>&nbsp;<span class="brh-value" id="brhExplore">0%</span></div>
+    <div class="brh-xy"><span class="brh-label">XY</span>&nbsp;<span class="brh-value" id="brhXY">0.00, 0.00</span></div>
+    <button class="brh-scroll-btn" id="brhScrollBtn" aria-label="Scroll to top">
+      <svg class="brh-ring" viewBox="0 0 36 36">
+        <circle class="brh-ring-track" cx="18" cy="18" r="15"/>
+        <circle class="brh-ring-fill" id="brhRingFill" cx="18" cy="18" r="15"/>
+      </svg>
+    </button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="js/field.js?v=1"></script>
+  <script src="js/detail.js?v=1"></script>
+</body>
+</html>

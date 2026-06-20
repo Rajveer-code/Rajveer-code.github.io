@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FinSight + Web — Rajveer Singh Pall</title>
+  <title>FinSight — Rajveer Singh Pall</title>
   <meta name="description" content="An earnings-intelligence pipeline turning 14,584 transcripts into walk-forward alpha, with a shipped Next.js analytics dashboard.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2306080c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' fill='%23f5ca40' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=1">
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>
@@ -44,16 +44,22 @@
       <div class="thinking-body">
         <a href="index.html#work" class="back-link">← Back to work</a>
         <header class="th-header">
-          <div class="th-badge" style="color:#22d3ee">Shipped · Vercel · Next 14</div>
-          <h1 class="th-title">FinSight + Web</h1>
-          <p class="th-subtitle">An earnings-intelligence pipeline and analytics dashboard — from 14,584 raw transcripts to a walk-forward alpha signal.</p>
+          <div class="th-badge" style="color:#22d3ee">Shipped · Research pipeline</div>
+          <h1 class="th-title">FinSight</h1>
+          <p class="th-subtitle">An earnings-intelligence research pipeline — from 14,584 raw transcripts to a walk-forward alpha signal.</p>
         </header>
+        <div class="essence-strip">
+          <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">Earnings-call language is full of sentiment signal, but most of it doesn't survive honest, look-ahead-free testing.</span></div>
+          <div class="essence-item"><span class="essence-label">Approach</span><span class="essence-text">Parse 14,584 transcripts into sentiment and retrieval-based features, then score every signal only on data it could have seen at trade time.</span></div>
+          <div class="essence-item"><span class="essence-label">Result</span><span class="essence-text">A real signal survives in the energy sector — everywhere else, the edge is reported as thin rather than inflated.</span></div>
+          <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">Honest reporting of where a signal does and doesn't work is rarer in quant research than the signal itself.</span></div>
+        </div>
         <div class="th-divider"></div>
         <div class="metrics-grid">
           <div class="metric-block"><span class="metric-value" style="color:#22d3ee">14,584</span><span class="metric-label">Earnings transcripts</span></div>
           <div class="metric-block"><span class="metric-value" style="color:#22d3ee">+0.31</span><span class="metric-label">Energy-sector IC</span></div>
           <div class="metric-block"><span class="metric-value" style="color:#22d3ee">FinBERT</span><span class="metric-label">+ RAG features</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#22d3ee">Next 14</span><span class="metric-label">Live dashboard</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#22d3ee">601</span><span class="metric-label">Companies covered</span></div>
         </div>
         <div class="th-divider"></div>
         <section class="th-section">
@@ -89,8 +95,23 @@
     </svg>
   </div>
 </section>
-<div style="margin-bottom:3rem;">
+<section class="th-section">
+  <h2 class="th-section-title">Key Result</h2>
+  <div class="fig-box">
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Energy sector</span><span class="result-bar-value">+0.31 IC</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:88%;background:#22d3ee;"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Other sectors</span><span class="result-bar-value">weaker / not significant</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill is-muted" style="width:30%;"></div></div>
+    </div>
+    <p class="fig-caption">The edge is real, but it doesn't live everywhere — and the pipeline says so</p>
+  </div>
+</section>
+<div style="margin-bottom:1rem;display:flex;gap:1.2rem;flex-wrap:wrap;align-items:center;">
           <a href="https://finsight-web-rust.vercel.app" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#22d3ee;border-color:rgba(34,211,238,0.4);">↗ View live dashboard</a>
+          <a href="project-finsight-web.html" data-cursor style="font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.08em;color:rgba(249,246,238,0.45);text-decoration:none;">→ See the explorable version</a>
         </div>
         <div class="th-footer">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
       </div>
@@ -112,7 +133,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/field.js"></script>
-  <script src="js/detail.js"></script>
+  <script src="js/field.js?v=1"></script>
+  <script src="js/detail.js?v=1"></script>
 </body>
 </html>

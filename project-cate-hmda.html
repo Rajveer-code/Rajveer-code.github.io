@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=1">
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>
@@ -48,6 +48,12 @@
           <h1 class="th-title">Who Bears the Burden?</h1>
           <p class="th-subtitle">Heterogeneous Racial Approval Differentials in U.S. Mortgage Lending — causal forest double ML on 42.3 million applications.</p>
         </header>
+        <div class="essence-strip">
+          <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">Black mortgage applicants are approved far less often than White applicants — the open question is how much of that survives once creditworthiness is accounted for.</span></div>
+          <div class="essence-item"><span class="essence-label">Approach</span><span class="essence-text">Causal machine learning estimates an individual-level penalty for every applicant, then checks who specifically carries it.</span></div>
+          <div class="essence-item"><span class="essence-label">Result</span><span class="essence-text">A 9.39-point penalty survives controls for 90.7% of Black applicants — and it's far larger under manual review than automated scoring.</span></div>
+          <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">Points the cause at human discretion in underwriting, not the algorithms — the opposite of where bias concerns usually focus.</span></div>
+        </div>
         <div class="th-divider"></div>
         <div class="metrics-grid">
           <div class="metric-block"><span class="metric-value" style="color:#eab308">42.3M</span><span class="metric-label">HMDA applications</span></div>
@@ -93,6 +99,20 @@
     </svg>
   </div>
 </section>
+<section class="th-section">
+  <h2 class="th-section-title">Key Result</h2>
+  <div class="fig-box">
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Manual underwriting</span><span class="result-bar-value">−14.8 pp</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:100%;"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Automated underwriting</span><span class="result-bar-value">−6.2 pp</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:42%;"></div></div>
+    </div>
+    <p class="fig-caption">The gap is driven by human discretion, not automated scoring</p>
+  </div>
+</section>
 <div style="margin-bottom:3rem;">
           <a href="https://github.com/Rajveer-code/CATE-HMDA-Heterogeneous-Effects" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#eab308;border-color:rgba(234,179,8,0.4);">↗ View on GitHub</a>
         </div>
@@ -116,7 +136,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/field.js"></script>
-  <script src="js/detail.js"></script>
+  <script src="js/field.js?v=1"></script>
+  <script src="js/detail.js?v=1"></script>
 </body>
 </html>

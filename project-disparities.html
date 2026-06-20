@@ -9,33 +9,47 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=1">
   <style>
-    .fig-box { margin: 2rem 0; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; background: linear-gradient(180deg, rgba(255,255,255,0.012) 0%, transparent 100%); }
-    .fig-caption { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: rgba(255,255,255,0.38); letter-spacing: 0.07em; text-transform: uppercase; margin-top: 0.9rem; text-align: center; }
-    .finding-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(245,158,11,0.2); border-radius: 8px; padding: 1.2rem 1.4rem; margin: 1rem 0; }
-    .finding-card .fc-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: #f59e0b; line-height: 1; }
-    .finding-card .fc-label { font-family: 'DM Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-top: 0.2rem; }
-    .finding-card .fc-body { font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: rgba(255,255,255,0.72); margin-top: 0.6rem; line-height: 1.55; }
-    .findings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
-    @media (max-width: 600px) { .findings-grid { grid-template-columns: 1fr; } }
-    .method-row { display: flex; align-items: flex-start; gap: 1rem; padding: 0.85rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
-    .method-row:last-child { border-bottom: none; }
-    .method-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: #f59e0b; letter-spacing: 0.1em; min-width: 1.8rem; padding-top: 0.15rem; }
-    .method-title { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: rgba(255,255,255,0.8); font-weight: 500; margin-bottom: 0.25rem; }
-    .method-desc { font-family: 'DM Sans', sans-serif; font-size: 0.84rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
-    .method-result { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: #f59e0b; margin-top: 0.3rem; }
+    /* Accent overrides only — shared structure now lives in css/style.css */
+    .finding-card { border-color: rgba(245,158,11,0.2); }
+    .finding-card .fc-num { color: #f59e0b; }
+    .method-num, .method-result { color: #f59e0b; }
+    blockquote.pull { border-left-color: #f59e0b; }
     .data-table { width: 100%; border-collapse: collapse; font-family: 'DM Mono', monospace; font-size: 0.72rem; margin: 1rem 0; }
     .data-table th { color: rgba(255,255,255,0.4); font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.5rem 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; }
     .data-table td { padding: 0.5rem 0.8rem; color: rgba(255,255,255,0.7); border-bottom: 1px solid rgba(255,255,255,0.04); }
     .data-table tr:last-child td { border-bottom: none; }
     .data-table .hi { color: #f59e0b; font-weight: 500; }
-    blockquote.pull { border-left: 2px solid #f59e0b; padding: 0.6rem 1.2rem; margin: 1.5rem 0; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.05rem; color: rgba(255,255,255,0.75); line-height: 1.5; }
+    .compare-after .compare-stat { color: #f59e0b; }
+    .compare-after { background: rgba(245,158,11,0.05); border-color: rgba(245,158,11,0.25); }
+    .result-bar-fill { background: #f59e0b; }
+    .spec-chip .spec-value { color: #f59e0b; }
+    .essence-label { color: rgba(245,158,11,0.75); }
+    .th-divider.full-methodology { margin: 3.5rem 0 2.5rem; position: relative; text-align: center; }
+    .th-divider.full-methodology::after { content: 'FULL METHODOLOGY — FIVE STRATEGIES, IN DETAIL'; position: relative; top: -0.55rem; background: #06080c; padding: 0 1rem; font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.15em; color: rgba(255,255,255,0.3); }
+    .glance-row { display: flex; gap: 0.9rem; padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); align-items: baseline; }
+    .glance-row:last-child { border-bottom: none; }
+    .glance-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: #f59e0b; letter-spacing: 0.1em; min-width: 1.6rem; }
+    .glance-text { font-family: 'DM Sans', sans-serif; font-size: 0.86rem; color: rgba(255,255,255,0.68); line-height: 1.5; }
   </style>
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>
   <div class="bottom-fade" aria-hidden="true"></div>
+  <div class="cursor-wrap" id="cursorWrap" aria-hidden="true">
+    <svg class="cursor-lattice" width="44" height="44" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="2.5" fill="currentColor"/>
+      <line x1="20" y1="6" x2="20" y2="34" stroke="currentColor" stroke-width="0.75"/>
+      <line x1="6" y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="0.75"/>
+      <line x1="10" y1="10" x2="30" y2="30" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.6"/>
+      <line x1="30" y1="10" x2="10" y2="30" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.6"/>
+      <rect x="17" y="17" width="6" height="6" fill="none" stroke="currentColor" stroke-width="0.65"/>
+      <path class="cursor-arc cursor-arc-1" d="M14,12 Q20,6 26,12" fill="none" stroke="currentColor" stroke-width="0.55"/>
+      <path class="cursor-arc cursor-arc-2" d="M12,10 Q20,3 28,10" fill="none" stroke="currentColor" stroke-width="0.4"/>
+      <path class="cursor-arc cursor-arc-3" d="M10,8 Q20,0 30,8" fill="none" stroke="currentColor" stroke-width="0.3"/>
+    </svg>
+  </div>
   <div class="scroll-rail" aria-hidden="true"><div class="scroll-rail-fill" id="scrollRailFill"></div></div>
   <div class="hud-clock" aria-hidden="true">
     <div class="hud-row">
@@ -59,6 +73,13 @@
           <p class="th-subtitle">Evidence from 42.3 million HMDA applications, 2020–2024. Five independent identification strategies — DFL decomposition, within-lender fixed effects, regression discontinuity, difference-in-differences, and partial identification bounds — all reach the same conclusion.</p>
         </header>
 
+        <div class="essence-strip">
+          <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">Black mortgage applicants are approved far less often than White applicants — and a single regression can always be dismissed as missing some hidden variable.</span></div>
+          <div class="essence-item"><span class="essence-label">Approach</span><span class="essence-text">Test the same question five independent ways, each with different assumptions and different ways it could fail, across 42.3 million applications.</span></div>
+          <div class="essence-item"><span class="essence-label">Result</span><span class="essence-text">All five agree: most of the gap is not explained by creditworthiness, and it's largest inside the same lender, not between lenders.</span></div>
+          <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">≈126,000 fewer approvals a year for Black applicants than the data can otherwise account for.</span></div>
+        </div>
+
         <div class="th-divider"></div>
 
         <div class="metrics-grid">
@@ -70,63 +91,137 @@
 
         <div class="th-divider"></div>
 
-        <!-- ── SECTION 1: The Problem ── -->
+        <!-- ── FRONT: Why this matters ── -->
         <section class="th-section">
           <h2 class="th-section-title">Why This Question Matters</h2>
-          <p class="th-body">For most American households, a mortgage is the primary vehicle for wealth accumulation. Who receives mortgage credit shapes individual financial trajectories, neighbourhood composition, and the persistent racial wealth gap. A substantial literature has documented for three decades that Black households face systematically higher denial rates than observably similar White households. But a single regression can always be dismissed as an omitted-variable artifact.</p>
+          <p class="th-body"><strong>This paper measures how much of the racial gap in mortgage approvals survives once creditworthiness is accounted for, and tests the answer five independent ways.</strong> A mortgage is the primary vehicle for wealth accumulation in most American households — who receives credit shapes financial trajectories, neighbourhood composition, and the persistent racial wealth gap. A substantial literature has documented for three decades that Black households face systematically higher denial rates than observably similar White households. But a single regression can always be dismissed as an omitted-variable artifact.</p>
           <p class="th-body" style="margin-top:0.9rem;">This paper asks three questions: How large is the <em>within-lender</em> racial approval differential — and has it changed over a macroeconomically turbulent five-year period? Does it concentrate at specific institutional rule boundaries? How does it behave under conservative, partial-identification assumptions about unobserved creditworthiness?</p>
         </section>
 
-        <!-- ── SECTION 2: The Data ── -->
+        <!-- ── FRONT: Five strategies at a glance (plain English) ── -->
+        <section class="th-section">
+          <h2 class="th-section-title">Five Strategies at a Glance</h2>
+          <div class="fig-box">
+            <div class="glance-row"><span class="glance-num">01</span><span class="glance-text">Compare what similar applicants got — controlling for income, loan amount, property value, and loan-to-value ratio.</span></div>
+            <div class="glance-row"><span class="glance-num">02</span><span class="glance-text">Compare Black and White applicants evaluated by the <em>same</em> lender, in the same year — to rule out applicants simply choosing stricter lenders.</span></div>
+            <div class="glance-row"><span class="glance-num">03</span><span class="glance-text">Look for a sharp jump in the gap right at a rule boundary (mandatory insurance above 80% loan-to-value) — a discontinuity that's hard to explain any other way.</span></div>
+            <div class="glance-row"><span class="glance-num">04</span><span class="glance-text">Check whether the gap moved when the Fed sharply tightened credit in 2022 — a real-world stress test of the lending system.</span></div>
+            <div class="glance-row"><span class="glance-num">05</span><span class="glance-text">Assume the most generous possible case for hidden creditworthiness factors, and check how much gap survives even then.</span></div>
+          </div>
+        </section>
+
+        <!-- ── FRONT: Key results — method convergence ── -->
+        <section class="th-section">
+          <h2 class="th-section-title">Key Result: Five Methods, One Answer</h2>
+          <blockquote class="pull">The raw Black–White approval gap is <strong>14.95 percentage points</strong>. Even after reweighting on every characteristic HMDA observes, 98.6% of this gap remains. The estimated scale: 126,000 fewer annual approvals for Black applicants.</blockquote>
+          <div class="fig-box">
+            <svg viewBox="0 0 700 320" fill="none" style="width:100%;height:auto;">
+              <line x1="200" y1="20" x2="200" y2="290" stroke="rgba(255,255,255,0.06)" stroke-width="0.8"/>
+              <line x1="320" y1="20" x2="320" y2="290" stroke="rgba(255,255,255,0.06)" stroke-width="0.8"/>
+              <line x1="440" y1="20" x2="440" y2="290" stroke="rgba(255,255,255,0.06)" stroke-width="0.8"/>
+              <line x1="560" y1="20" x2="560" y2="290" stroke="rgba(255,255,255,0.06)" stroke-width="0.8"/>
+              <line x1="680" y1="20" x2="680" y2="290" stroke="rgba(255,255,255,0.06)" stroke-width="0.8"/>
+              <text x="200" y="308" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">0 pp</text>
+              <text x="320" y="308" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">4 pp</text>
+              <text x="440" y="308" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">8 pp</text>
+              <text x="560" y="308" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">12 pp</text>
+              <text x="680" y="308" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">16 pp</text>
+              <text x="10" y="58" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.5)" dominant-baseline="middle">RAW GAP</text>
+              <rect x="200" y="42" width="450" height="16" rx="3" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.5)" stroke-width="0.8"/>
+              <rect x="200" y="42" width="450" height="16" rx="3" fill="rgba(245,158,11,0.25)"/>
+              <text x="660" y="50" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b" dominant-baseline="middle">14.95 pp</text>
+              <text x="10" y="98" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.5)" dominant-baseline="middle">DFL RESIDUAL</text>
+              <rect x="200" y="82" width="445" height="16" rx="3" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.4)" stroke-width="0.8"/>
+              <rect x="200" y="82" width="445" height="16" rx="3" fill="rgba(245,158,11,0.2)"/>
+              <text x="654" y="90" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b" dominant-baseline="middle">14.75 pp</text>
+              <text x="10" y="138" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.5)" dominant-baseline="middle">WITHIN-LENDER FE</text>
+              <rect x="200" y="122" width="333" height="16" rx="3" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.4)" stroke-width="0.8"/>
+              <rect x="200" y="122" width="333" height="16" rx="3" fill="rgba(245,158,11,0.2)"/>
+              <text x="543" y="130" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b" dominant-baseline="middle">11.14 pp</text>
+              <text x="10" y="178" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.5)" dominant-baseline="middle">PMI RDD EFFECT</text>
+              <rect x="200" y="162" width="60" height="16" rx="3" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.4)" stroke-width="0.8"/>
+              <rect x="200" y="162" width="60" height="16" rx="3" fill="rgba(245,158,11,0.2)"/>
+              <text x="272" y="170" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b" dominant-baseline="middle">+2.0 pp</text>
+              <text x="10" y="218" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.5)" dominant-baseline="middle">MANSKI LOWER BD.</text>
+              <rect x="200" y="202" width="240" height="16" rx="3" fill="rgba(245,158,11,0.08)" stroke="rgba(245,158,11,0.35)" stroke-width="0.8" stroke-dasharray="4,2"/>
+              <text x="450" y="210" font-family="DM Mono, monospace" font-size="9" fill="rgba(245,158,11,0.7)" dominant-baseline="middle">≥6.37 pp</text>
+              <text x="10" y="258" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.5)" dominant-baseline="middle">DiD WIDENING</text>
+              <rect x="200" y="242" width="45" height="16" rx="3" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.4)" stroke-width="0.8"/>
+              <rect x="200" y="242" width="45" height="16" rx="3" fill="rgba(245,158,11,0.2)"/>
+              <text x="255" y="250" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b" dominant-baseline="middle">+1.5 pp post-2022</text>
+              <line x1="200" y1="20" x2="200" y2="285" stroke="rgba(245,158,11,0.3)" stroke-width="1.5"/>
+            </svg>
+            <p class="fig-caption">Five independent strategies, five different failure modes if any one were wrong — all point the same direction</p>
+          </div>
+        </section>
+
+        <!-- ── FRONT: Takeaways ── -->
+        <section class="th-section">
+          <h2 class="th-section-title">Key Takeaways</h2>
+          <div class="findings-grid">
+            <div class="finding-card">
+              <div class="fc-num">14.95 pp</div>
+              <div class="fc-label">Raw Black–White approval gap</div>
+              <div class="fc-body">Persistent across the entire 2020–2024 window, surviving both pandemic boom and tightening cycle.</div>
+            </div>
+            <div class="finding-card">
+              <div class="fc-num">74.6%</div>
+              <div class="fc-label">Within-lender share</div>
+              <div class="fc-body">Most of the gap is within the same institution — not explained by sorting of Black applicants toward stricter lenders.</div>
+            </div>
+            <div class="finding-card">
+              <div class="fc-num">+2.0 pp</div>
+              <div class="fc-label">PMI threshold discontinuity</div>
+              <div class="fc-body">The gap is 2.0 pp larger above the 80% LTV institutional boundary, concentrated in purchase loans. Absent in refinancings.</div>
+            </div>
+            <div class="finding-card">
+              <div class="fc-num">126K</div>
+              <div class="fc-label">Fewer approvals per year (est.)</div>
+              <div class="fc-body">The scale of the gap translates to an estimated 126,000 fewer annual approvals for Black applicants — a figure that motivates documenting conditions under which the gap is largest.</div>
+            </div>
+          </div>
+        </section>
+
+        <div class="th-divider full-methodology"></div>
+
+        <!-- ── SECONDARY: The Data ── -->
         <section class="th-section">
           <h2 class="th-section-title">The Data</h2>
           <p class="th-body">The analysis covers a near-universe of mortgage applications filed with HMDA-reporting lenders between January 2020 and December 2024 — <strong>42.3 million records</strong> spanning more than <strong>5,500 lending institutions</strong>. This five-year window captures extraordinary macroeconomic variation: a pandemic-driven refinancing boom during 2020–2021 (federal funds rate at zero lower bound), followed by the sharpest monetary tightening cycle in four decades (rates rising to 5.5% by 2023, cutting application volume by more than half).</p>
 
           <div class="fig-box" style="margin-top:1.5rem;">
             <svg viewBox="0 0 700 180" fill="none" style="width:100%;height:auto;">
-              <!-- Timeline bar -->
               <rect x="40" y="80" width="620" height="4" rx="2" fill="rgba(255,255,255,0.08)"/>
-              <!-- Year markers -->
               <line x1="40" y1="72" x2="40" y2="92" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
               <line x1="164" y1="72" x2="164" y2="92" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
               <line x1="288" y1="72" x2="288" y2="92" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
               <line x1="412" y1="72" x2="412" y2="92" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
               <line x1="536" y1="72" x2="536" y2="92" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
               <line x1="660" y1="72" x2="660" y2="92" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
-              <!-- Year labels -->
               <text x="40" y="110" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.4)">2020</text>
               <text x="164" y="110" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.4)">2021</text>
               <text x="288" y="110" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.4)">2022</text>
               <text x="412" y="110" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.4)">2023</text>
               <text x="536" y="110" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.4)">2024</text>
-              <!-- Phase labels -->
               <rect x="44" y="30" width="235" height="28" rx="4" fill="rgba(56,189,248,0.08)" stroke="rgba(56,189,248,0.3)" stroke-width="0.8"/>
               <text x="161" y="49" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(56,189,248,0.8)" letter-spacing="0.05em">PANDEMIC REFI BOOM · RATES AT ZLB</text>
               <rect x="284" y="30" width="248" height="28" rx="4" fill="rgba(245,158,11,0.08)" stroke="rgba(245,158,11,0.3)" stroke-width="0.8"/>
               <text x="408" y="49" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(245,158,11,0.8)" letter-spacing="0.05em">FED TIGHTENING · RATES → 5.5% · VOLUME −50%</text>
-              <!-- Data dots on timeline -->
               <circle cx="40" cy="82" r="5" fill="#f59e0b" fill-opacity="0.9"/>
               <circle cx="164" cy="82" r="5" fill="#f59e0b" fill-opacity="0.9"/>
               <circle cx="288" cy="82" r="5" fill="#f59e0b" fill-opacity="0.9"/>
               <circle cx="412" cy="82" r="5" fill="#f59e0b" fill-opacity="0.9"/>
               <circle cx="536" cy="82" r="5" fill="#f59e0b" fill-opacity="0.9"/>
-              <!-- Record count -->
               <text x="350" y="155" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" fill="rgba(255,255,255,0.5)" letter-spacing="0.05em">42,361,440 APPLICATIONS · 5,500+ LENDERS · ALL 50 STATES</text>
             </svg>
             <p class="fig-caption">Figure 1 — Sample coverage: 2020–2024, spanning two distinct macro regimes</p>
           </div>
+          <p class="th-body" style="margin-top:1rem;">The 14.95 pp raw gap is not a new finding — but its persistence across a five-year window spanning a pandemic boom and the sharpest credit tightening in 40 years is new. This paper's contribution is documenting the <em>institutional structure</em> of the gap in detail: where it concentrates, how it responds to rule boundaries, and how it behaves when unobservable creditworthiness is bounded.</p>
         </section>
 
-        <!-- ── SECTION 3: The Gap ── -->
+        <!-- ── SECONDARY: Five strategies, full detail ── -->
         <section class="th-section">
-          <h2 class="th-section-title">The Headline Finding</h2>
-          <blockquote class="pull">The raw Black–White approval gap is <strong>14.95 percentage points</strong>. Even after DFL reweighting on all HMDA-observable characteristics, 98.6% of this gap remains. The estimated scale: 126,000 fewer annual approvals for Black applicants.</blockquote>
-          <p class="th-body">The 14.95 pp raw gap is not a new finding — but its persistence across a five-year window spanning a pandemic boom and the sharpest credit tightening in 40 years is new. More importantly, this paper documents the <em>institutional structure</em> of the gap: where it concentrates, how it responds to rule boundaries, and how it behaves when unobservable creditworthiness is bounded.</p>
-        </section>
-
-        <!-- ── SECTION 4: Empirical Strategy ── -->
-        <section class="th-section">
-          <h2 class="th-section-title">Five Identification Strategies</h2>
+          <h2 class="th-section-title">Five Identification Strategies, In Full</h2>
           <p class="th-body">The headline estimate is stress-tested from five independent directions. Each has different identifying assumptions and different potential failure modes — when they all agree, the result is no longer attributable to any single one.</p>
 
           <div style="margin-top: 1.2rem;">
@@ -173,202 +268,110 @@
           </div>
         </section>
 
-        <!-- ── FIGURE 2: Method Convergence ── -->
-        <section class="th-section">
-          <h2 class="th-section-title">Method Convergence</h2>
-          <div class="fig-box">
-            <svg viewBox="0 0 700 320" fill="none" style="width:100%;height:auto;">
-              <!-- Background grid -->
-              <line x1="200" y1="20" x2="200" y2="290" stroke="rgba(255,255,255,0.06)" stroke-width="0.8"/>
-              <line x1="320" y1="20" x2="320" y2="290" stroke="rgba(255,255,255,0.06)" stroke-width="0.8"/>
-              <line x1="440" y1="20" x2="440" y2="290" stroke="rgba(255,255,255,0.06)" stroke-width="0.8"/>
-              <line x1="560" y1="20" x2="560" y2="290" stroke="rgba(255,255,255,0.06)" stroke-width="0.8"/>
-              <line x1="680" y1="20" x2="680" y2="290" stroke="rgba(255,255,255,0.06)" stroke-width="0.8"/>
-              <!-- X-axis labels -->
-              <text x="200" y="308" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">0 pp</text>
-              <text x="320" y="308" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">4 pp</text>
-              <text x="440" y="308" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">8 pp</text>
-              <text x="560" y="308" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">12 pp</text>
-              <text x="680" y="308" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">16 pp</text>
-
-              <!-- Method 1: Raw gap -->
-              <text x="10" y="58" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.5)" dominant-baseline="middle">RAW GAP</text>
-              <rect x="200" y="42" width="450" height="16" rx="3" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.5)" stroke-width="0.8"/>
-              <rect x="200" y="42" width="450" height="16" rx="3" fill="rgba(245,158,11,0.25)"/>
-              <text x="660" y="50" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b" dominant-baseline="middle">14.95 pp</text>
-
-              <!-- Method 2: DFL residual -->
-              <text x="10" y="98" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.5)" dominant-baseline="middle">DFL RESIDUAL</text>
-              <rect x="200" y="82" width="445" height="16" rx="3" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.4)" stroke-width="0.8"/>
-              <rect x="200" y="82" width="445" height="16" rx="3" fill="rgba(245,158,11,0.2)"/>
-              <text x="654" y="90" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b" dominant-baseline="middle">14.75 pp</text>
-
-              <!-- Method 3: Within-lender FE -->
-              <text x="10" y="138" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.5)" dominant-baseline="middle">WITHIN-LENDER FE</text>
-              <rect x="200" y="122" width="333" height="16" rx="3" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.4)" stroke-width="0.8"/>
-              <rect x="200" y="122" width="333" height="16" rx="3" fill="rgba(245,158,11,0.2)"/>
-              <text x="543" y="130" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b" dominant-baseline="middle">11.14 pp</text>
-
-              <!-- Method 4: PMI RDD additional effect -->
-              <text x="10" y="178" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.5)" dominant-baseline="middle">PMI RDD EFFECT</text>
-              <rect x="200" y="162" width="60" height="16" rx="3" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.4)" stroke-width="0.8"/>
-              <rect x="200" y="162" width="60" height="16" rx="3" fill="rgba(245,158,11,0.2)"/>
-              <text x="272" y="170" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b" dominant-baseline="middle">+2.0 pp</text>
-
-              <!-- Method 5: Manski lower bound -->
-              <text x="10" y="218" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.5)" dominant-baseline="middle">MANSKI LOWER BD.</text>
-              <rect x="200" y="202" width="240" height="16" rx="3" fill="rgba(245,158,11,0.08)" stroke="rgba(245,158,11,0.35)" stroke-width="0.8" stroke-dasharray="4,2"/>
-              <text x="450" y="210" font-family="DM Mono, monospace" font-size="9" fill="rgba(245,158,11,0.7)" dominant-baseline="middle">≥6.37 pp</text>
-
-              <!-- Method 6: DiD widening -->
-              <text x="10" y="258" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.5)" dominant-baseline="middle">DiD WIDENING</text>
-              <rect x="200" y="242" width="45" height="16" rx="3" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.4)" stroke-width="0.8"/>
-              <rect x="200" y="242" width="45" height="16" rx="3" fill="rgba(245,158,11,0.2)"/>
-              <text x="255" y="250" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b" dominant-baseline="middle">+1.5 pp post-2022</text>
-
-              <!-- Divider line at zero -->
-              <line x1="200" y1="20" x2="200" y2="285" stroke="rgba(245,158,11,0.3)" stroke-width="1.5"/>
-            </svg>
-            <p class="fig-caption">Figure 2 — Estimates across all five identification strategies; all point in the same direction</p>
-          </div>
-        </section>
-
-        <!-- ── SECTION 5: Within-Lender Evolution ── -->
+        <!-- ── SECONDARY: Within-Lender Evolution ── -->
         <section class="th-section">
           <h2 class="th-section-title">Within-Lender Gap: Growing Over Time</h2>
           <p class="th-body">Within-lender fixed effects reveal that nearly <strong>three-quarters of the gap (74.6%)</strong> is associated with variation <em>within</em> lending institutions — a share that has grown monotonically from 66.8% in 2020 to 78.3% in 2024. This pattern implies the gap is not primarily a story of Black applicants sorting toward stricter lenders. It is concentrated inside the same institution, often in the same year.</p>
 
           <div class="fig-box">
             <svg viewBox="0 0 700 220" fill="none" style="width:100%;height:auto;">
-              <!-- Y-axis labels -->
               <text x="35" y="30" text-anchor="end" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">100%</text>
               <text x="35" y="80" text-anchor="end" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">80%</text>
               <text x="35" y="130" text-anchor="end" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">60%</text>
               <text x="35" y="180" text-anchor="end" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">40%</text>
-              <!-- Grid -->
               <line x1="40" y1="26" x2="680" y2="26" stroke="rgba(255,255,255,0.04)" stroke-width="0.8"/>
               <line x1="40" y1="76" x2="680" y2="76" stroke="rgba(255,255,255,0.04)" stroke-width="0.8"/>
               <line x1="40" y1="126" x2="680" y2="126" stroke="rgba(255,255,255,0.04)" stroke-width="0.8"/>
-              <line x1="40" y1="176" text-anchor="end" stroke="rgba(255,255,255,0.04)" stroke-width="0.8"/>
               <line x1="40" y1="176" x2="680" y2="176" stroke="rgba(255,255,255,0.04)" stroke-width="0.8"/>
-              <!-- Bars: within-lender share per year -->
-              <!-- 2020: 66.8% → y = 26 + (100-66.8)/100 * 150 = 26 + 49.8 = 75.8, height = 66.8/100 * 150 = 100.2 -->
               <rect x="85" y="75.8" width="70" height="100.2" rx="3" fill="rgba(245,158,11,0.2)" stroke="#f59e0b" stroke-width="0.8"/>
               <text x="120" y="68" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b">66.8%</text>
               <text x="120" y="195" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.4)">2020</text>
-              <!-- 2021: 68.5% → y = 26 + (100-68.5)/100 * 150 = 26+47.25=73.25, h=102.75 -->
               <rect x="205" y="73.25" width="70" height="102.75" rx="3" fill="rgba(245,158,11,0.22)" stroke="#f59e0b" stroke-width="0.8"/>
               <text x="240" y="65" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b">68.5%</text>
               <text x="240" y="195" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.4)">2021</text>
-              <!-- 2022: 71.2% → y=26+(100-71.2)/100*150=26+43.2=69.2, h=106.8 -->
               <rect x="325" y="69.2" width="70" height="106.8" rx="3" fill="rgba(245,158,11,0.27)" stroke="#f59e0b" stroke-width="0.8"/>
               <text x="360" y="61" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b">71.2%</text>
               <text x="360" y="195" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.4)">2022</text>
-              <!-- 2023: 75.1% → y=26+(100-75.1)/100*150=26+37.35=63.35, h=112.65 -->
               <rect x="445" y="63.35" width="70" height="112.65" rx="3" fill="rgba(245,158,11,0.32)" stroke="#f59e0b" stroke-width="0.8"/>
               <text x="480" y="55" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b">75.1%</text>
               <text x="480" y="195" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.4)">2023</text>
-              <!-- 2024: 78.3% → y=26+(100-78.3)/100*150=26+32.55=58.55, h=117.45 -->
               <rect x="565" y="58.55" width="70" height="117.45" rx="3" fill="rgba(245,158,11,0.4)" stroke="#f59e0b" stroke-width="1.2"/>
               <text x="600" y="50" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b" font-weight="600">78.3%</text>
               <text x="600" y="195" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.4)">2024</text>
-              <!-- Trend arrow -->
               <path d="M120,80 C180,78 300,72 360,68 C420,64 480,60 600,55" stroke="rgba(245,158,11,0.4)" stroke-width="1.5" stroke-dasharray="4,3" fill="none"/>
-              <!-- Y-axis label -->
               <text x="10" y="115" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)" writing-mode="vertical-lr" transform="rotate(-90,10,115)" text-anchor="middle">WITHIN-LENDER SHARE</text>
             </svg>
-            <p class="fig-caption">Figure 3 — Share of racial approval gap attributable to within-lender variation, 2020–2024. Growing monotonically from 66.8% to 78.3%.</p>
+            <p class="fig-caption">Figure 2 — Share of racial approval gap attributable to within-lender variation, 2020–2024. Growing monotonically from 66.8% to 78.3%.</p>
           </div>
         </section>
 
-        <!-- ── SECTION 6: PMI Threshold RDD ── -->
+        <!-- ── SECONDARY: PMI Threshold RDD ── -->
         <section class="th-section">
           <h2 class="th-section-title">Institutional Rule Boundary: The 80% LTV Threshold</h2>
           <p class="th-body">Above the 80% loan-to-value ratio, private mortgage insurance (PMI) becomes mandatory — a sharp institutional rule that creates a valid regression discontinuity design. Black applicants face an additional <strong>2.0 pp approval differential</strong> above this threshold. This effect is concentrated entirely in <strong>purchase loans</strong> and is entirely absent in refinancings, providing a compelling within-sample test of the PMI mechanism.</p>
 
           <div class="fig-box">
             <svg viewBox="0 0 700 200" fill="none" style="width:100%;height:auto;">
-              <!-- Axes -->
               <line x1="60" y1="160" x2="640" y2="160" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
               <line x1="60" y1="20" x2="60" y2="160" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
-              <!-- X-axis: LTV ratio 60% to 100% -->
               <text x="60" y="175" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">60%</text>
               <text x="200" y="175" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">70%</text>
               <text x="340" y="175" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">80%</text>
               <text x="480" y="175" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">90%</text>
               <text x="620" y="175" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">100%</text>
-              <!-- Y-axis: Racial approval gap -->
               <text x="45" y="30" text-anchor="end" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">20%</text>
               <text x="45" y="90" text-anchor="end" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">10%</text>
               <text x="45" y="160" text-anchor="end" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)">0%</text>
-              <!-- Below threshold: purchase loan trend (lower gap, ~12 pp area) -->
-              <!-- Gap values below 80%: ~12.2 pp, mapped: y = 160 - (12.2/20)*130 ≈ 81 -->
               <path d="M60,95 C100,93 170,89 270,88 C290,87.5 310,87 340,87" stroke="#10b981" stroke-width="2" fill="none"/>
-              <!-- Above threshold: purchase loan trend (higher gap, jumps to ~14.2 pp) -->
-              <!-- Gap after jump: 14.2 pp → y = 160 - (14.2/20)*130 ≈ 67.7 -->
               <path d="M340,70 C370,70 410,71 460,71 C500,71 540,72 620,73" stroke="#10b981" stroke-width="2" fill="none"/>
-              <!-- Discontinuity highlight -->
               <line x1="340" y1="87" x2="340" y2="70" stroke="#f59e0b" stroke-width="2"/>
-              <!-- 80% LTV threshold vertical line -->
               <line x1="340" y1="20" x2="340" y2="160" stroke="rgba(245,158,11,0.5)" stroke-width="1.2" stroke-dasharray="5,3"/>
-              <!-- PMI threshold label -->
               <rect x="344" y="22" width="90" height="20" rx="3" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.3)" stroke-width="0.7"/>
               <text x="389" y="35" text-anchor="middle" font-family="DM Mono, monospace" font-size="7.5" fill="rgba(245,158,11,0.8)">80% LTV · PMI THRESHOLD</text>
-              <!-- Gap annotation -->
               <text x="300" y="76" font-family="DM Mono, monospace" font-size="8.5" fill="#f59e0b" text-anchor="end">+2.0 pp</text>
-              <!-- Labels for the two lines -->
               <text x="180" y="80" font-family="DM Mono, monospace" font-size="8" fill="rgba(16,185,129,0.8)" text-anchor="middle">PURCHASE LOANS</text>
-              <!-- Refinance line: flat, no jump -->
               <path d="M60,105 C150,104 250,104 340,104 C400,104 500,105 620,105" stroke="rgba(255,255,255,0.25)" stroke-width="1.5" stroke-dasharray="3,3" fill="none"/>
               <text x="500" y="118" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.35)">REFINANCINGS (NO EFFECT)</text>
-              <!-- X-axis label -->
               <text x="350" y="192" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)" letter-spacing="0.05em">LOAN-TO-VALUE RATIO</text>
-              <!-- Y-axis label -->
               <text x="15" y="95" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.3)" transform="rotate(-90, 15, 95)" text-anchor="middle">RACIAL APPROVAL GAP</text>
             </svg>
-            <p class="fig-caption">Figure 4 — Regression discontinuity at the 80% LTV threshold. Purchase loans (green) show a 2.0 pp jump; refinancings (grey, dashed) show no discontinuity. P-values supported by density tests and exact permutation inference.</p>
+            <p class="fig-caption">Figure 3 — Regression discontinuity at the 80% LTV threshold. Purchase loans (green) show a 2.0 pp jump; refinancings (grey, dashed) show no discontinuity. P-values supported by density tests and exact permutation inference.</p>
           </div>
         </section>
 
-        <!-- ── SECTION 7: Geographic + Structure ── -->
+        <!-- ── SECONDARY: Geographic + Structure ── -->
         <section class="th-section">
           <h2 class="th-section-title">Geographic and Institutional Structure</h2>
           <p class="th-body">State-level approval gaps range from <strong>3.6 to 23.5 percentage points</strong>, with regional means spanning 9.3 pp (West) to 16.1 pp (Midwest). County gaps are spatially correlated with HOLC redlining coverage — counties with greater historical D-grade ("redlined") coverage show larger contemporary approval gaps, conditional on observed characteristics.</p>
 
           <div class="fig-box">
             <svg viewBox="0 0 700 180" fill="none" style="width:100%;height:auto;">
-              <!-- Regional bars -->
               <text x="80" y="18" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.5)">MIDWEST</text>
               <rect x="40" y="25" width="483" height="22" rx="3" fill="rgba(245,158,11,0.15)" stroke="rgba(245,158,11,0.4)" stroke-width="0.8"/>
               <rect x="40" y="25" width="483" height="22" rx="3" fill="rgba(245,158,11,0.22)"/>
               <text x="532" y="38" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b" dominant-baseline="middle">16.1 pp</text>
-
               <text x="80" y="63" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.5)">SOUTH</text>
               <rect x="40" y="70" width="435" height="22" rx="3" fill="rgba(245,158,11,0.12)" stroke="rgba(245,158,11,0.35)" stroke-width="0.8"/>
               <rect x="40" y="70" width="435" height="22" rx="3" fill="rgba(245,158,11,0.18)"/>
               <text x="484" y="83" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b" dominant-baseline="middle">14.5 pp</text>
-
               <text x="80" y="108" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.5)">NORTHEAST</text>
               <rect x="40" y="115" width="390" height="22" rx="3" fill="rgba(245,158,11,0.09)" stroke="rgba(245,158,11,0.3)" stroke-width="0.8"/>
               <rect x="40" y="115" width="390" height="22" rx="3" fill="rgba(245,158,11,0.14)"/>
               <text x="439" y="128" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b" dominant-baseline="middle">13.0 pp</text>
-
               <text x="80" y="153" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.5)">WEST</text>
               <rect x="40" y="160" width="279" height="22" rx="3" fill="rgba(245,158,11,0.07)" stroke="rgba(245,158,11,0.25)" stroke-width="0.8"/>
               <rect x="40" y="160" width="279" height="22" rx="3" fill="rgba(245,158,11,0.1)"/>
               <text x="328" y="173" font-family="DM Mono, monospace" font-size="9" fill="#f59e0b" dominant-baseline="middle">9.3 pp</text>
-
-              <!-- Range note -->
               <text x="560" y="170" font-family="DM Mono, monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">STATE RANGE:</text>
               <text x="560" y="182" font-family="DM Mono, monospace" font-size="7.5" fill="rgba(255,255,255,0.3)">3.6 pp – 23.5 pp</text>
             </svg>
-            <p class="fig-caption">Figure 5 — Regional mean racial approval gaps. State-level gaps range 3.6–23.5 pp. Larger gaps spatially correlated with historical HOLC redlining coverage.</p>
+            <p class="fig-caption">Figure 4 — Regional mean racial approval gaps. State-level gaps range 3.6–23.5 pp. Larger gaps spatially correlated with historical HOLC redlining coverage.</p>
           </div>
 
           <p class="th-body" style="margin-top:1rem;">Critically, the within-lender racial differential does <strong>not vary with lender size or market concentration</strong> — it is essentially flat across lender-size quartiles and non-monotonic across HHI quartiles. This pattern is more consistent with underwriting practices that are relatively uniform across market structures than with individual taste discrimination, which Becker's (1957) competitive-discipline model predicts competitive markets should eliminate.</p>
         </section>
 
-        <!-- ── SECTION 8: Partial ID Bounds ── -->
+        <!-- ── SECONDARY: Partial ID Bounds ── -->
         <section class="th-section">
           <h2 class="th-section-title">Partial Identification: What Remains Under Conservative Assumptions</h2>
           <p class="th-body">The most credible existing estimate — Bhutta, Hizmo, and Ringo (2025) in the Journal of Finance — conditions on actual FICO scores, DTI, liquid assets, and automated underwriting recommendations and finds residual gaps of 1–2 pp. Our estimates using public HMDA data are larger, and we address this directly through partial-identification bounds.</p>
@@ -381,34 +384,7 @@
           </div>
         </section>
 
-        <!-- ── SECTION 9: Key Findings Summary ── -->
-        <section class="th-section">
-          <h2 class="th-section-title">Summary of Key Findings</h2>
-          <div class="findings-grid">
-            <div class="finding-card">
-              <div class="fc-num">14.95 pp</div>
-              <div class="fc-label">Raw Black–White approval gap</div>
-              <div class="fc-body">Persistent across the entire 2020–2024 window, surviving both pandemic boom and tightening cycle.</div>
-            </div>
-            <div class="finding-card">
-              <div class="fc-num">74.6%</div>
-              <div class="fc-label">Within-lender share</div>
-              <div class="fc-body">Most of the gap is within the same institution — not explained by sorting of Black applicants toward stricter lenders.</div>
-            </div>
-            <div class="finding-card">
-              <div class="fc-num">+2.0 pp</div>
-              <div class="fc-label">PMI threshold discontinuity</div>
-              <div class="fc-body">The gap is 2.0 pp larger above the 80% LTV institutional boundary, concentrated in purchase loans. Absent in refinancings.</div>
-            </div>
-            <div class="finding-card">
-              <div class="fc-num">126K</div>
-              <div class="fc-label">Fewer approvals per year (est.)</div>
-              <div class="fc-body">The scale of the gap translates to an estimated 126,000 fewer annual approvals for Black applicants — a figure that motivates documenting conditions under which the gap is largest.</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ── SECTION 10: Authors + Venue ── -->
+        <!-- ── Authors + Venue ── -->
         <section class="th-section">
           <h2 class="th-section-title">Paper Details</h2>
           <p class="th-body"><strong>Full title:</strong> Persistent Racial Disparities in U.S. Mortgage Approval: Evidence from 42 Million Applications, 2020–2024</p>
@@ -439,7 +415,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/field.js"></script>
-  <script src="js/detail.js"></script>
+  <script src="js/field.js?v=1"></script>
+  <script src="js/detail.js?v=1"></script>
 </body>
 </html>

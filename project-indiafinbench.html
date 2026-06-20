@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=1">
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>
@@ -48,6 +48,12 @@
           <h1 class="th-title">IndiaFinBench</h1>
           <p class="th-subtitle">A reproducible benchmark for LLM performance on Indian financial regulatory text — SEBI circulars and RBI master directions.</p>
         </header>
+        <div class="essence-strip">
+          <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">No benchmark existed to test whether LLMs can be trusted on Indian financial regulation — dense, cross-referenced text where a confident wrong answer is costly.</span></div>
+          <div class="essence-item"><span class="essence-label">Approach</span><span class="essence-text">Build 406 expert-annotated questions from real SEBI and RBI documents, then score 12 leading LLMs against a human-expert baseline.</span></div>
+          <div class="essence-item"><span class="essence-label">Result</span><span class="essence-text">Every model beat the human baseline; the best, Gemini 2.5 Flash, reached 89.7% versus 69% for human experts.</span></div>
+          <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">The first evidence that today's LLMs can outperform expert humans on this specific, high-stakes regulatory domain.</span></div>
+        </div>
         <div class="th-divider"></div>
         <div class="metrics-grid">
           <div class="metric-block"><span class="metric-value" style="color:#22d3ee">406</span><span class="metric-label">Expert QA items</span></div>
@@ -89,6 +95,20 @@
     </svg>
   </div>
 </section>
+<section class="th-section">
+  <h2 class="th-section-title">Key Result</h2>
+  <div class="fig-box">
+    <div class="result-bar-row has-threshold">
+      <div class="result-bar-label"><span>Gemini 2.5 Flash (top model)</span><span class="result-bar-value">89.7%</span></div>
+      <div class="result-bar-track">
+        <div class="result-bar-fill" style="width:89.7%;background:#22d3ee;"></div>
+        <div class="result-bar-threshold" style="left:69%;"></div>
+      </div>
+      <div class="result-bar-threshold-label" style="left:69%;">Human-expert baseline · 69%</div>
+    </div>
+    <p class="fig-caption">All 12 models scored above the human-expert line — Gemini cleared it by 20.7 points</p>
+  </div>
+</section>
 <div style="margin-bottom:3rem;">
           <a href="https://huggingface.co/spaces/Rajveer-code/IndiaFinBench" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#22d3ee;border-color:rgba(34,211,238,0.4);">↗ View on HuggingFace</a>
         </div>
@@ -112,7 +132,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/field.js"></script>
-  <script src="js/detail.js"></script>
+  <script src="js/field.js?v=1"></script>
+  <script src="js/detail.js?v=1"></script>
 </body>
 </html>

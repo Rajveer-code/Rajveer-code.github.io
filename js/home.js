@@ -6,6 +6,22 @@
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var hasGSAP = typeof gsap !== "undefined";
 
+  /* ── Scroll-position memory (back/forward nav) ──
+     Lenis owns the scroll loop and otherwise fights native scroll restoration,
+     snapping back to 0 on every return trip. Save position ourselves and let
+     Lenis re-apply it once it's constructed below. */
+  var SCROLL_KEY = "__portfolio_scrollpos::" + (location.pathname.split("/").pop() || "index.html");
+  try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) {}
+  var scrollSaveQueued = false;
+  function saveScrollPos() {
+    if (scrollSaveQueued) return;
+    scrollSaveQueued = true;
+    requestAnimationFrame(function () {
+      scrollSaveQueued = false;
+      try { sessionStorage.setItem(SCROLL_KEY, String(window.scrollY)); } catch (e) {}
+    });
+  }
+
   /* ── Gold dot + ring cursor ── */
   if (fine) {
     var dot = document.getElementById("cursorDot");
@@ -41,6 +57,7 @@
       var max = document.documentElement.scrollHeight - window.innerHeight;
       prog.style.width = (max > 0 ? (y / max) * 100 : 0) + "%";
     }
+    saveScrollPos();
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
@@ -188,26 +205,58 @@
     var host = document.getElementById("stackGroups");
     if (!host) return;
     var L = "logos/";
-    function chip(name, logo) {
-      return '<span class="stack-chip">' + (logo ? '<img src="'+L+logo+'" alt="" loading="lazy">' : "") + name + "</span>";
+    var colors = ["#a855f7", "#eab308", "#14b8a6", "#ef4444", "#3b82f6", "#ec4899"];
+    
+    function fableItem(name, logo) {
+      var iconHtml = logo 
+        ? '<img src="' + L + logo + '" alt="' + name + '" style="width: 44px; height: 44px; min-width: 44px; min-height: 44px; object-fit: contain; display: block; flex: 0 0 44px;" loading="lazy">' 
+        : '<svg style="width: 44px; height: 44px; min-width: 44px; min-height: 44px; display: block; flex: 0 0 44px;" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>';
+      
+      return '<div class="stack-fable-item" style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.8rem; width: 90px; flex: 0 0 90px;">' +
+               '<div class="stack-fable-icon" style="width: 44px; height: 44px; min-width: 44px; min-height: 44px; flex: 0 0 44px; display: flex; align-items: center; justify-content: center; overflow: hidden;">' + iconHtml + '</div>' +
+               '<div class="stack-fable-text" style="font-family: var(--sans); font-size: 0.85rem; color: #d4d4d4; font-weight: 500; line-height: 1.2;">' + name + '</div>' +
+             '</div>';
     }
+
     var groups = [
-      ["Languages", [["Python","python.svg"],["C++","cplusplus.svg"],["C","c.svg"],["TypeScript","typescript.svg"],["Bash","gnubash.svg"]]],
-      ["ML &amp; Deep Learning", [["PyTorch","pytorch.svg"],["scikit-learn","scikitlearn.svg"],["XGBoost","xgboost.png"],["LightGBM","lightgbm.svg"],["CatBoost","catboost.png"],["SHAP","shap.png"],["Unsloth","unsloth.png"],["Weights & Biases","weightsandbiases.svg"]]],
-      ["Causal, Stats &amp; Data", [["pandas","pandas.svg"],["NumPy","numpy.svg"],["Polars",null],["statsmodels",null],["EconML",null]]],
-      ["LLM, NLP &amp; RAG", [["Transformers","huggingface.svg"],["LangChain","langchain.svg"],["LangGraph","langgraph.svg"],["FAISS","faiss.svg"],["ChromaDB","chroma.svg"],["Ollama","ollama.svg"]]],
-      ["Federated &amp; Privacy", [["Flower",null],["Opacus",null],["FedAvg / SCAFFOLD",null]]],
-      ["Deployment &amp; Infra", [["FastAPI","fastapi.svg"],["Flask",null],["Next.js","nextjs.svg"],["React","react.svg"],["Three.js","threejs.svg"],["GSAP","gsap.svg"],["Docker","docker.svg"],["GCP","gcp-compute-engine.svg"],["Vercel","vercel.svg"],["GitHub Actions","githubactions.svg"]]]
+      ["Languages", [["Python","python.svg"],["TypeScript","typescript.svg"],["Bash","gnubash.svg"]]],
+      ["ML & Deep Learning", [["PyTorch","pytorch.svg"],["scikit-learn","scikitlearn.svg"],["XGBoost","xgboost.png"],["LightGBM","lightgbm.svg"],["CatBoost","catboost.png"],["SHAP","shap.png"]]],
+      ["Causal, Stats & Data", [["pandas","pandas.svg"],["NumPy","numpy.svg"],["Polars",null],["statsmodels",null],["EconML",null]]],
+      ["LLM, NLP & RAG", [["Transformers","huggingface.svg"],["LangChain","langchain.svg"],["LangGraph","langgraph.svg"],["FAISS","faiss.svg"],["ChromaDB","chroma.svg"],["Ollama","ollama.svg"],["Groq",null]]],
+      ["Federated & Privacy", [["Flower",null],["Opacus",null]]],
+      ["Deployment & Infra", [["FastAPI","fastapi.svg"],["Flask",null],["Next.js","nextjs.svg"],["React","react.svg"],["Three.js","threejs.svg"],["Docker","docker.svg"],["GCP","gcp-compute-engine.svg"],["Vercel","vercel.svg"]]]
     ];
-    host.innerHTML = groups.map(function (g) {
-      return '<div class="stack-group"><h3>' + g[0] + '</h3><div class="stack-items">' +
-        g[1].map(function (it) { return chip(it[0], it[1]); }).join("") + "</div></div>";
+
+    host.innerHTML = groups.map(function (g, idx) {
+      var labelColor = colors[idx % colors.length];
+      return '<div class="stack-fable-group" style="display: flex; padding: 2.2rem 0; border-top: 1px solid rgba(255,255,255,0.06); gap: 2rem; flex-wrap: wrap;">' +
+               '<div class="stack-fable-label" style="flex: 0 0 140px; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; padding-top: 0.5rem; color: ' + labelColor + ';">' + g[0] + '</div>' +
+               '<div class="stack-fable-items" style="display: flex; flex-wrap: wrap; gap: 2rem 3rem; flex: 1;">' +
+                 g[1].map(function (it) { return fableItem(it[0], it[1]); }).join("") +
+               '</div>' +
+             '</div>';
     }).join("");
   })();
 
+  /* ── Whole-card click ──
+     The visible "card" reads as a single clickable unit, but only the small
+     text links at the bottom were wired up. Clicking anywhere else on a card
+     now opens its primary case-study link; clicks on an actual <a> still
+     behave exactly as that link defines (new tab, external href, etc). */
+  document.querySelectorAll(".card").forEach(function (card) {
+    var primary = card.querySelector(".card-links a[href$=\".html\"]");
+    if (!primary) return;
+    card.style.cursor = "pointer";
+    card.addEventListener("click", function (e) {
+      if (e.target.closest("a")) return;
+      window.location.href = primary.getAttribute("href");
+    });
+  });
+
   /* ── Lenis smooth scroll ── */
+  var lenis;
   if (typeof Lenis !== "undefined" && !reduced) {
-    var lenis = new Lenis({ duration: 1.05, smoothWheel: true });
+    lenis = new Lenis({ duration: 1.05, smoothWheel: true });
     if (hasGSAP) gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
     else requestAnimationFrame(function raf(t) { lenis.raf(t); requestAnimationFrame(raf); });
     document.querySelectorAll('a[href^="#"]').forEach(function (a) {
@@ -217,6 +266,24 @@
       });
     });
   }
+
+  /* ── Restore scroll position on back/forward nav ──
+     Read what onScroll saved before we left. Re-applied a few times over the
+     first beat because Spline/stack-render/ScrollTrigger can still be settling
+     layout — without the repeats the first restore wins the race and then loses it. */
+  (function restoreScrollPos() {
+    var saved = 0;
+    try { saved = parseInt(sessionStorage.getItem(SCROLL_KEY), 10) || 0; } catch (e) {}
+    if (saved <= 0) return;
+    function apply() {
+      if (lenis) lenis.scrollTo(saved, { immediate: true });
+      else window.scrollTo(0, saved);
+    }
+    apply();
+    requestAnimationFrame(apply);
+    setTimeout(apply, 300);
+    setTimeout(apply, 800);
+  })();
 
   /* ── GSAP reveals ── */
   if (hasGSAP && typeof ScrollTrigger !== "undefined" && !reduced) {
@@ -259,52 +326,50 @@
     }
 
     var HCX = 650, HCY = 320;
-
-    var CATS = [
-      { label: "MODEL PERFORMANCE", cx: 650, cy: 110, color: "#c9a25a", nodes: [
-        { cx: 598, cy: 175, val: "~97%",   sub: "AUROC · Federated Diabetes * FedAvg/SCAFFOLD",     desc: "FedAvg/SCAFFOLD across heterogeneous NHANES nodes — validated on 1.28M BRFSS records." },
-        { cx: 695, cy: 168, val: "0.98",   sub: "AUC · Mental Health NLP * CPFE / IEEE TNNLS",      desc: "Within-platform on Reddit & CLPsych — collapses 30–39% off-platform under domain shift." },
-        { cx: 730, cy: 128, val: "9.4 pp", sub: "Racial Approval Gap · HMDA * CATE-HMDA",           desc: "Black approval penalty net of 33 controls — largest under manual underwriting, 42.3M apps." },
-        { cx: 568, cy: 142, val: "89.7%",  sub: "Top LLM Score · IndiaFinBench * Gemini 2.5 Flash", desc: "Best of 12 LLMs on SEBI/RBI regulatory text — zero-shot closed-book evaluation." },
-        { cx: 640, cy: 212, val: "#1 LLM", sub: "Gemini Rank · IndiaFinBench * vs. GPT-4o",         desc: "Gemini 2.5 Flash ranks first of 12 models including GPT-4o on Indian regulatory zero-shot QA." }
-      ]},
-      { label: "DATA SCALE", cx: 1010, cy: 189, color: "#38bdf8", nodes: [
-        { cx: 895,  cy: 140, val: "42.3M",    sub: "Mortgage Records · CATE-HMDA * 2020–2024",          desc: "Every U.S. mortgage application — Causal Forest Double ML on the full HMDA dataset." },
-        { cx: 958,  cy: 248, val: "1.28M",    sub: "BRFSS Validation Set * Federated Diabetes",         desc: "Never trained on — pure external generalisation test for the federated diabetes model." },
-        { cx: 1062, cy: 262, val: "14,584",   sub: "S&P 500 Earnings Transcripts * FinSight",           desc: "Earnings calls from 601 S&P 500 firms, 2018–2024 — strict walk-forward backtest." },
-        { cx: 1108, cy: 208, val: "406 QA",   sub: "Expert-Annotated Items * IndiaFinBench",            desc: "Expert-annotated across 192 SEBI/RBI documents — four task types, three difficulty tiers." },
-        { cx: 1118, cy: 142, val: "601",      sub: "S&P 500 Firms · FinSight * 6-Year Corpus",          desc: "601 S&P 500 constituents — 6-year earnings corpus with sector-level walk-forward isolation." },
-        { cx: 872,  cy: 238, val: "192 docs", sub: "Regulatory Documents * IndiaFinBench / SEBI & RBI", desc: "192 SEBI & RBI source documents annotated into 406 expert QA pairs, four task types." }
-      ]},
-      { label: "SYSTEMS BUILT", cx: 1098, cy: 367, color: "#c084fc", nodes: [
-        { cx: 1158, cy: 312, val: "0",        sub: "Cloud LLM Calls · ARIA * Fully Local Pipeline",  desc: "Entire voice-to-voice pipeline on a single RTX 4060 — faster-whisper → Qwen3-8B → TTS." },
-        { cx: 1185, cy: 400, val: "16",       sub: "Local Tool Registry · ARIA * Offline Routing",   desc: "Web search, calendar, code exec, system control — all routed through local LLM, offline." },
-        { cx: 1175, cy: 448, val: "12 LLMs",  sub: "Models Benchmarked * IndiaFinBench / Zero-Shot", desc: "GPT-4o to Gemini 2.5 Flash — zero-shot closed-book on Indian financial regulatory text." },
-        { cx: 1072, cy: 452, val: "1× GPU",   sub: "Consumer Hardware · ARIA * RTX 4060",            desc: "≤7.1 GB VRAM — single consumer GPU runs the entire ARIA multi-tool voice assistant." },
-        { cx: 1028, cy: 418, val: "≤7.1 GB",  sub: "Peak VRAM · ARIA * RTX 4060 / 8 GB Card",       desc: "Entire faster-whisper → Qwen3-8B → TTS pipeline fits in 7.1 GB VRAM — consumer GPU only." }
-      ]},
-      { label: "RESEARCH OUTPUT", cx: 450, cy: 509, color: "#fcd34d", nodes: [
-        { cx: 452, cy: 442, val: "6",      sub: "Manuscripts in Pipeline * Q1 Venues",                desc: "JREFE, JBI, IEEE TNNLS, QFE, EMNLP 2026, arXiv — submitted or under review." },
-        { cx: 538, cy: 470, val: "3 Q1",   sub: "Top-Tier Journal Targets * JREFE, JBI, IEEE TNNLS",  desc: "J. Real Estate Finance & Economics · J. Biomedical Informatics · IEEE TNNLS." },
-        { cx: 542, cy: 560, val: "50/250", sub: "SIH 2025 · SereneSpace * Smart India Hackathon",     desc: "Top 50 of 250 teams — Smart India Hackathon, anonymous student mental-health platform." },
-        { cx: 428, cy: 582, val: "5+",     sub: "Live Deployments * HuggingFace · Vercel · Render",   desc: "HuggingFace Spaces · Vercel · Render · PyPI package — all publicly accessible." },
-        { cx: 355, cy: 558, val: "EMNLP",  sub: "NLP Conference Target · 2026 * IndiaFinBench Paper", desc: "Empirical Methods in NLP 2026 — top-tier venue submission for the IndiaFinBench paper." }
-      ]},
-      { label: "FAIRNESS & IMPACT", cx: 202, cy: 367, color: "#34d399", nodes: [
-        { cx: 132, cy: 318, val: "−40%",   sub: "Generalisation Gap Reduction * Federated Diabetes", desc: "Federated vs. matched centralised model — 40% smaller generalisation gap on 1.28M BRFSS." },
-        { cx: 265, cy: 352, val: "0.0%",   sub: "False Deploy Rate · ICGDF Gate * 12 Folds",         desc: "Gate stayed closed across 12 folds and 1,512 OOS days — was 11.8% with naive deployment." },
-        { cx: 118, cy: 420, val: "33–39%", sub: "Bias Caught by Equity Axis * ARIA Audit",           desc: "Failures caught by ARIA's equity axis that calibration, faithfulness, and consistency missed." },
-        { cx: 172, cy: 448, val: "~35%",   sub: "AUC Collapse Under Domain Shift * CPFE Audit",      desc: "Mental-health classifiers scoring 0.98 in-domain collapse off-platform — fairness doesn't transfer." },
-        { cx: 308, cy: 415, val: "4 axes", sub: "Audit Dimensions · ARIA * Cal, Faith, Consist, Equity", desc: "Calibration, faithfulness, consistency, equity — four independent axes expose LLM blind spots." }
-      ]},
-      { label: "BENCHMARKS", cx: 290, cy: 189, color: "#22d3ee", nodes: [
-        { cx: 278, cy: 125, val: "0.785",   sub: "Recall@5 · RAG Hybrid * BM25+FAISS+RRF",        desc: "BM25 + FAISS + RRF retrieval — +9.7 pp over dense-only on IndiaFinBench." },
-        { cx: 345, cy: 138, val: "IC+0.31", sub: "Alpha Signal · FinSight Energy * Walk-Forward",  desc: "Cross-sectional information coefficient in Energy sector under strict walk-forward discipline." },
-        { cx: 198, cy: 205, val: "1,512",   sub: "OOS Trading Days · ICGDF Gate * 2018–2024",      desc: "12 walk-forward folds — gate stayed closed across every market regime, zero false deploys." },
-        { cx: 358, cy: 242, val: "12×",     sub: "Walk-Forward Folds · ICGDF * HAC Conjunctive",   desc: "HAC + permutation conjunctive test held closed across every market regime tested." },
-        { cx: 395, cy: 215, val: "+9.7 pp", sub: "RAG Recall@5 Gain * Hybrid vs. Dense-Only",      desc: "Hybrid BM25+FAISS+RRF vs dense-only — Recall@5 from ~0.688 to 0.785 on regulatory QA." }
-      ]}
-    ];
+      var CATS = [
+        { label: "MODEL PERFORMANCE", cx: 880, cy: 138, color: "#c9a25a", nodes: [
+          { cx: 780, cy: 88, val: "~97%",   sub: "AUROC A Federated Diabetes * FedAvg/SCAFFOLD",     desc: "FedAvg/SCAFFOLD across heterogeneous NHANES nodes \u2014 validated on 1.28M BRFSS records." },
+          { cx: 960, cy: 78, val: "0.98",   sub: "AUC A Mental Health NLP * CPFE / IEEE TNNLS",      desc: "Within-platform on Reddit & CLPsych \u2014 collapses 30\u201339% off-platform under domain shift." },
+          { cx: 840, cy: 218, val: "9.4 pp", sub: "Racial Approval Gap A HMDA * CATE-HMDA",           desc: "Black approval penalty net of 33 controls \u2014 largest under manual underwriting, 42.3M apps." },
+          { cx: 1000, cy: 188, val: "89.7%",  sub: "Top LLM Score A IndiaFinBench * Gemini 2.5 Flash", desc: "Best of 12 LLMs on SEBI/RBI regulatory text \u2014 zero-shot closed-book evaluation." },
+          { cx: 900, cy: 248, val: "#1 LLM", sub: "Gemini Rank A IndiaFinBench * vs. GPT-4o",         desc: "Gemini 2.5 Flash ranks first of 12 models including GPT-4o on Indian regulatory zero-shot QA." }
+        ]},
+        { label: "DATA SCALE", cx: 1110, cy: 320, color: "#38bdf8", nodes: [
+          { cx: 1020, cy: 240, val: "42.3M",    sub: "Mortgage Records A CATE-HMDA * 2020\u20132024",          desc: "Every U.S. mortgage application \u2014 Causal Forest Double ML on the full HMDA dataset." },
+          { cx: 1210, cy: 260, val: "1.28M",    sub: "BRFSS Validation Set * Federated Diabetes",         desc: "Never trained on \u2014 pure external generalisation test for the federated diabetes model." },
+          { cx: 990, cy: 360, val: "14,584",   sub: "S&P 500 Earnings Transcripts * FinSight",           desc: "Earnings calls from 601 S&P 500 firms, 2018\u20132024 \u2014 strict walk-forward backtest." },
+          { cx: 1190, cy: 410, val: "601",      sub: "S&P 500 Firms A FinSight * 6-Year Corpus",          desc: "601 S&P 500 constituents \u2014 6-year earnings corpus with sector-level walk-forward isolation." },
+          { cx: 1080, cy: 440, val: "192 docs", sub: "Regulatory Documents * IndiaFinBench / SEBI & RBI", desc: "192 SEBI & RBI source documents annotated into 406 expert QA pairs, four task types." }
+        ]},
+        { label: "SYSTEMS BUILT", cx: 880, cy: 502, color: "#c084fc", nodes: [
+          { cx: 800, cy: 412, val: "0",        sub: "Cloud LLM Calls A ARIA * Fully Local Pipeline",  desc: "Entire voice-to-voice pipeline on a single RTX 4060 \u2014 faster-whisper + Qwen3-8B + TTS." },
+          { cx: 990, cy: 452, val: "16",       sub: "Local Tool Registry A ARIA * Offline Routing",   desc: "Web search, calendar, code exec, system control \u2014 all routed through local LLM, offline." },
+          { cx: 770, cy: 522, val: "12 LLMs",  sub: "Models Benchmarked * IndiaFinBench / Zero-Shot", desc: "GPT-4o to Gemini 2.5 Flash \u2014 zero-shot closed-book on Indian financial regulatory text." },
+          { cx: 950, cy: 582, val: "1 GPU",   sub: "Consumer Hardware A ARIA * RTX 4060",            desc: "~ 7.1 GB VRAM \u2014 single consumer GPU runs the entire ARIA multi-tool voice assistant." },
+          { cx: 860, cy: 602, val: "~ 7.1 GB",  sub: "Peak VRAM A ARIA * RTX 4060 / 8 GB Card",       desc: "Entire faster-whisper + Qwen3-8B + TTS pipeline fits in 7.1 GB VRAM \u2014 consumer GPU only." }
+        ]},
+        { label: "RESEARCH OUTPUT", cx: 420, cy: 502, color: "#fcd34d", nodes: [
+          { cx: 320, cy: 442, val: "6",      sub: "Manuscripts in Pipeline * Q1 Venues",                desc: "JREFE, JBI, IEEE TNNLS, QFE, EMNLP 2026, arXiv \u2014 submitted or under review." },
+          { cx: 510, cy: 422, val: "3 Q1",   sub: "Top-Tier Journal Targets * JREFE, JBI, IEEE TNNLS",  desc: "J. Real Estate Finance & Economics A J. Biomedical Informatics A IEEE TNNLS." },
+          { cx: 360, cy: 572, val: "50/250", sub: "SIH 2025 A SereneSpace * Smart India Hackathon",     desc: "Top 50 of 250 teams \u2014 Smart India Hackathon, anonymous student mental-health platform." },
+          { cx: 540, cy: 552, val: "5+",     sub: "Live Deployments * HuggingFace A Vercel A Render",   desc: "HuggingFace Spaces A Vercel A Render A PyPI package \u2014 all publicly accessible." },
+          { cx: 440, cy: 612, val: "EMNLP",  sub: "NLP Conference Target A 2026 * IndiaFinBench Paper", desc: "Empirical Methods in NLP 2026 \u2014 top-tier venue submission for the IndiaFinBench paper." }
+        ]},
+        { label: "FAIRNESS & IMPACT", cx: 190, cy: 320, color: "#34d399", nodes: [
+          { cx: 80, cy: 250, val: "-40%",   sub: "Generalisation Gap Reduction * Federated Diabetes", desc: "Federated vs. matched centralised model \u2014 40% smaller generalisation gap on 1.28M BRFSS." },
+          { cx: 280, cy: 280, val: "0.0%",   sub: "False Deploy Rate A ICGDF Gate * 12 Folds",         desc: "Gate stayed closed across 12 folds and 1,512 OOS days \u2014 was 11.8% with naive deployment." },
+          { cx: 120, cy: 400, val: "33-39%", sub: "Bias Caught by Equity Axis * ARIA Audit",           desc: "Failures caught by ARIA's equity axis that calibration, faithfulness, and consistency missed." },
+          { cx: 270, cy: 410, val: "~35%",   sub: "AUC Collapse Under Domain Shift * CPFE Audit",      desc: "Mental-health classifiers scoring 0.98 in-domain collapse off-platform \u2014 fairness doesn't transfer." },
+          { cx: 40, cy: 330, val: "4 axes", sub: "Audit Dimensions A ARIA * Cal, Faith, Consist, Equity", desc: "Calibration, faithfulness, consistency, equity \u2014 four independent axes expose LLM blind spots." }
+        ]},
+        { label: "BENCHMARKS", cx: 420, cy: 138, color: "#22d3ee", nodes: [
+          { cx: 340, cy: 78, val: "0.785",   sub: "Recall@5 A RAG Hybrid * BM25+FAISS+RRF",        desc: "BM25 + FAISS + RRF retrieval \u2014 +9.7 pp over dense-only on IndiaFinBench." },
+          { cx: 510, cy: 118, val: "IC+0.31", sub: "Alpha Signal A FinSight Energy * Walk-Forward",  desc: "Cross-sectional information coefficient in Energy sector under strict walk-forward discipline." },
+          { cx: 370, cy: 228, val: "1,512",   sub: "OOS Trading Days A ICGDF Gate * 2018\u20132024",      desc: "12 walk-forward folds \u2014 gate stayed closed across every market regime, zero false deploys." },
+          { cx: 530, cy: 208, val: "12X",     sub: "Walk-Forward Folds A ICGDF * HAC Conjunctive",   desc: "HAC + permutation conjunctive test held closed across every market regime tested." },
+          { cx: 290, cy: 148, val: "+9.7 pp", sub: "RAG Recall@5 Gain * Hybrid vs. Dense-Only",      desc: "Hybrid BM25+FAISS+RRF vs dense-only \u2014 Recall@5 from ~0.688 to 0.785 on regulatory QA." }
+        ]}
+      ];
 
     var hud      = document.getElementById("impactCentralHud");
     var hudValue = hud && hud.querySelector(".hud-value");
@@ -472,6 +537,54 @@
     requestAnimationFrame(tick);
 
     resetHUD(null);
+  
+  /* ------------------------------------------------------------------ */
+  /*  3D Mouse Parallax Effect for Hero Section                          */
+  /* ------------------------------------------------------------------ */
+  (function initHeroParallax() {
+    if (!fine || reduced || !hasGSAP) return;
+    
+    var hero = document.querySelector('.hero');
+    var leftCol = document.querySelector('.hero-left');
+    var photoCard = document.querySelector('.hero-photo-wrapper');
+    
+    if (!hero || !leftCol || !photoCard) return;
+
+    // Quick setters for blazing fast performance
+    var leftX = gsap.quickTo(leftCol, "x", { duration: 0.8, ease: "power3" });
+    var leftY = gsap.quickTo(leftCol, "y", { duration: 0.8, ease: "power3" });
+    
+    var cardRotX = gsap.quickTo(photoCard, "rotateX", { duration: 0.5, ease: "power3" });
+    var cardRotY = gsap.quickTo(photoCard, "rotateY", { duration: 0.5, ease: "power3" });
+    var cardX = gsap.quickTo(photoCard, "x", { duration: 0.8, ease: "power3" });
+    var cardY = gsap.quickTo(photoCard, "y", { duration: 0.8, ease: "power3" });
+
+    hero.addEventListener("mousemove", function(e) {
+      // Calculate normalized cursor position from center of screen (-1 to 1)
+      var normX = (e.clientX / window.innerWidth) * 2 - 1;
+      var normY = -(e.clientY / window.innerHeight) * 2 + 1; // Invert Y
+
+      // Text column glides opposite to cursor
+      leftX(normX * -20);
+      leftY(normY * 15);
+      
+      // Image gently floats
+      cardX(normX * 12);
+      cardY(normY * -10);
+      
+      // The crucial 3D Bend/Tilt
+      cardRotX(normY * 8); // Tilts up/down
+      cardRotY(normX * 12); // Tilts left/right
+    });
+
+    hero.addEventListener("mouseleave", function() {
+      // Smoothly snap back to origin
+      leftX(0); leftY(0);
+      cardX(0); cardY(0);
+      cardRotX(0); cardRotY(0);
+    });
   })();
+
+})();
 
 })();

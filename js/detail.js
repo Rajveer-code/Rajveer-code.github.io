@@ -15,14 +15,19 @@
     ring.className = "cursor-ring";
     document.body.insertBefore(ring, document.body.firstChild);
     document.body.insertBefore(dot, document.body.firstChild);
-    var hide = document.createElement("style");
-    hide.textContent = "*, *::before, *::after { cursor: none !important; }";
-    document.head.appendChild(hide);
     var mx = -100, my = -100, rx = -100, ry = -100, on = false;
     document.addEventListener("mousemove", function (e) {
       mx = e.clientX; my = e.clientY;
       dot.style.transform = "translate(" + mx + "px," + my + "px) translate(-50%,-50%)";
-      if (!on) { on = true; dot.style.opacity = "1"; ring.style.opacity = "1"; }
+      if (!on) {
+        on = true; dot.style.opacity = "1"; ring.style.opacity = "1";
+        /* Native cursor hides only once the custom one is actually live and positioned —
+           arriving via a click (e.g. from index.html) fires no mousemove, so hiding this
+           unconditionally at load left visitors with no cursor at all until they moved it. */
+        var hide = document.createElement("style");
+        hide.textContent = "*, *::before, *::after { cursor: none !important; }";
+        document.head.appendChild(hide);
+      }
     }, { passive: true });
     (function loop() {
       rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
@@ -208,12 +213,13 @@
     var start = parseInt(sessionStorage.getItem(SK), 10);
     if (!start || isNaN(start)) { start = Date.now(); sessionStorage.setItem(SK, start); }
 
-    /* exploration tracker (9 project pages) */
+    /* exploration tracker (12 project pages) */
     var EK = "__portfolio_explored_v2";
     var PAGES = [
-      "index.html", "project-aria.html", "project-cate-hmda.html", "project-cpfe.html",
-      "project-federated-diabetes.html", "project-finsight.html",
-      "project-icgdf.html", "project-indiafinbench.html"
+      "index.html", "project-aria.html", "project-aria-audit.html", "project-cate-hmda.html",
+      "project-cpfe.html", "project-diabetes-eval.html", "project-disparities.html",
+      "project-federated-diabetes.html", "project-finsight.html", "project-finsight-web.html",
+      "project-icgdf.html", "project-indiafinbench.html", "project-serenespace.html"
     ];
     var explored = {};
     try { explored = JSON.parse(localStorage.getItem(EK) || "{}"); } catch (e) {}

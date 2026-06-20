@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=1">
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>
@@ -48,6 +48,12 @@
           <h1 class="th-title">The CPFE Audit</h1>
           <p class="th-subtitle">Cross-platform generalisation failure in mental-health NLP — a five-axis Cross-Platform Fairness Evaluation protocol.</p>
         </header>
+        <div class="essence-strip">
+          <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">Mental-health text classifiers that test well on one social platform quietly fail when used on another — and one aggregate accuracy score hides it.</span></div>
+          <div class="essence-item"><span class="essence-label">Approach</span><span class="essence-text">A five-axis audit trains classifiers on one platform and tests them on another, watching accuracy, calibration, fairness, and reasoning all at once.</span></div>
+          <div class="essence-item"><span class="essence-label">Result</span><span class="essence-text">Moving platforms alone drops accuracy 30-39% and makes the models attend to almost completely different words.</span></div>
+          <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">A model that passes its own benchmark can still fail the moment real users behave differently than its training data.</span></div>
+        </div>
         <div class="th-divider"></div>
         <div class="metrics-grid">
           <div class="metric-block"><span class="metric-value" style="color:#2dd4bf">30–39%</span><span class="metric-label">AUC degradation</span></div>
@@ -89,6 +95,25 @@
     </svg>
   </div>
 </section>
+<section class="th-section">
+  <h2 class="th-section-title">Key Result</h2>
+  <div class="fig-box">
+    <div class="compare-pair">
+      <div class="compare-before">
+        <div class="compare-label">Same platform tested</div>
+        <div class="compare-stat">Stable</div>
+        <p class="compare-desc">Accuracy, calibration, and word-level reasoning all hold up.</p>
+      </div>
+      <div class="compare-arrow">→</div>
+      <div class="compare-after" style="border-color:rgba(45,212,191,0.25);background:rgba(45,212,191,0.05);">
+        <div class="compare-label">Cross-platform tested</div>
+        <div class="compare-stat" style="color:#2dd4bf;">Collapses</div>
+        <p class="compare-desc">AUC falls 30-39%, calibration error rises 9×, and attribution overlap drops to ≈0.10 — different words entirely.</p>
+      </div>
+    </div>
+    <p class="fig-caption">Same model, same task — only the platform changed</p>
+  </div>
+</section>
 <div style="margin-bottom:3rem;">
           <a href="https://github.com/Rajveer-code/mental-health-fairness-nlp" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#2dd4bf;border-color:rgba(45,212,191,0.4);">↗ View on GitHub</a>
         </div>
@@ -112,7 +137,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/field.js"></script>
-  <script src="js/detail.js"></script>
+  <script src="js/field.js?v=1"></script>
+  <script src="js/detail.js?v=1"></script>
 </body>
 </html>

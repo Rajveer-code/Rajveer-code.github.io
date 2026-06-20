@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=1">
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>
@@ -48,6 +48,12 @@
           <h1 class="th-title">When the Gate Stays Closed</h1>
           <p class="th-subtitle">A statistically gated ML deployment in NASDAQ equities — where the honest null result is the entire finding.</p>
         </header>
+        <div class="essence-strip">
+          <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">Most quant trading papers report a winning strategy found by searching thousands of combinations — without pricing in the cost of that search.</span></div>
+          <div class="essence-item"><span class="essence-label">Approach</span><span class="essence-text">Build a statistical gate that only allows a strategy to trade live once it clears a pre-registered significance bar, tested honestly out-of-sample.</span></div>
+          <div class="essence-item"><span class="essence-label">Result</span><span class="essence-text">Across 1,512 trading days and 12 independent folds, the gate never opened once.</span></div>
+          <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">A framework that reports its failures as clearly as its wins is the only kind worth trusting when it eventually says yes.</span></div>
+        </div>
         <div class="th-divider"></div>
         <div class="metrics-grid">
           <div class="metric-block"><span class="metric-value" style="color:#a78bfa">0 / 12</span><span class="metric-label">Folds gate opened</span></div>
@@ -89,8 +95,28 @@
     </svg>
   </div>
 </section>
+<section class="th-section">
+  <h2 class="th-section-title">Key Result</h2>
+  <div class="fig-box">
+    <div class="fold-grid">
+      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+    </div>
+    <p class="fig-caption">All 12 walk-forward folds — every gate stayed closed</p>
+  </div>
+</section>
 <div style="margin-bottom:3rem;">
-          <a href="https://github.com/Rajveer-code" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#a78bfa;border-color:rgba(167,139,250,0.4);">↗ View on GitHub</a>
+          <a href="https://github.com/Rajveer-code/when-the-gate-stays-closed" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#a78bfa;border-color:rgba(167,139,250,0.4);">↗ View on GitHub</a>
         </div>
         <div class="th-footer">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
       </div>
@@ -112,7 +138,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/field.js"></script>
-  <script src="js/detail.js"></script>
+  <script src="js/field.js?v=1"></script>
+  <script src="js/detail.js?v=1"></script>
 </body>
 </html>
