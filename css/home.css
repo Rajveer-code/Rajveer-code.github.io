@@ -446,6 +446,7 @@ html.no-js .reveal { opacity: 1; transform: none; }
   .pub-side { align-items: flex-start; text-align: left; flex-direction: row; flex-wrap: wrap; gap: 0.6rem 1rem; }
   /* touch/small screens: list only — WebGL drag+raycast hover doesn't translate well */
   .research-scroll-track { display: none; }
+  .traj-scroll { display: none; }
   .research-view-toggle { display: none; }
   .pub-list.is-hidden { display: flex; flex-direction: column; }
   /* impact graph — horizontal scroll on narrow screens */
@@ -622,157 +623,10 @@ html.no-js .reveal { opacity: 1; transform: none; }
   color: var(--gold-br);
 }
 
-/* ── Trajectory ── */
-.trajectory {
-  position: relative;
-  padding: 8rem 0;
-  overflow: hidden;
-}
-.traj-header {
-  text-align: center;
-  margin-bottom: 5rem;
-}
-.traj-container {
-  position: relative;
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-.traj-line {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 1px;
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateX(-50%);
-}
-.traj-node {
-  position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 4rem;
-}
-.traj-node:last-child {
-  margin-bottom: 0;
-}
-.traj-dot {
-  position: absolute;
-  top: 24px;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #fff;
-  transform: translateX(-50%);
-  box-shadow: 0 0 10px rgba(255,255,255,0.8);
-  z-index: 2;
-}
-.traj-date {
-  position: absolute;
-  top: 18px;
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  color: var(--text-2);
-  letter-spacing: 0.05em;
-}
-.traj-node.left .traj-date {
-  left: calc(50% + 40px);
-}
-.traj-node.right .traj-date {
-  right: calc(50% + 40px);
-}
-.traj-card {
-  width: 45%;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
-  padding: 1.8rem;
-  backdrop-filter: blur(10px);
-  position: relative;
-  z-index: 1;
-}
-.traj-node.left {
-  justify-content: flex-start;
-}
-.traj-node.right {
-  justify-content: flex-end;
-}
-.traj-card.system {
-  border-left: 2px solid #3b82f6;
-}
-.traj-card.research {
-  border-left: 2px solid #a855f7;
-}
-.traj-card-title {
-  font-family: var(--disp);
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 0.4rem;
-  line-height: 1.2;
-}
-.traj-card-meta {
-  display: block;
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  color: var(--text-3);
-  margin-bottom: 1.2rem;
-  letter-spacing: 0.02em;
-}
-.traj-card-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-.traj-card-list li {
-  position: relative;
-  padding-left: 1rem;
-  font-family: var(--sans);
-  font-size: 0.9rem;
-  color: var(--text-2);
-  line-height: 1.5;
-}
-.traj-card-list li::before {
-  content: '·';
-  position: absolute;
-  left: 0;
-  color: var(--text-3);
-  font-weight: bold;
-}
+/* Trajectory section uses bare .section styling (like .research); its spiral
+   reuses the .research-scroll-track / .gl-research / .pub-list classes above. */
 
-@media (max-width: 768px) {
-  .traj-line {
-    left: 20px;
-    transform: none;
-  }
-  .traj-dot {
-    left: 20px;
-    transform: translateX(-50%);
-  }
-  .traj-node.left, .traj-node.right {
-    justify-content: flex-end;
-  }
-  .traj-card {
-    width: calc(100% - 50px);
-  }
-  .traj-node.left .traj-date, .traj-node.right .traj-date {
-    position: relative;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin-bottom: 0.8rem;
-    padding-left: 50px;
-  }
-  .traj-node {
-    flex-direction: column;
-    align-items: flex-end;
-  }
-  .traj-dot {
-    top: 0;
-  }
-}
+/* ── Trajectory — vertical Gantt (js/trajectory.js builds it inline) ── */
+/* Full-bleed so the sticky-pinned chart spans the viewport like the reference. */
+.trajectory { padding: 0; max-width: none; }
+.traj-scroll { position: relative; }

@@ -62,9 +62,8 @@
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
-  /* ── Spline 3D scene: lazy, gated injection ──
-     Deferred until idle so it never blocks first paint; desktop + motion only;
-     ?nospline=1 skips it (useful for headless perf checks). */
+  /* ── Spline 3D scene: immediate, gated injection ──
+     Desktop + motion only; ?nospline=1 skips it (useful for headless perf checks). */
   (function () {
     var host = document.getElementById("heroSpline");
     var sk = document.getElementById("splineSkeleton");
@@ -73,24 +72,22 @@
     var ok = fine && !reduced && window.innerWidth > 768 && !skip;
     if (!ok) { if (sk) sk.classList.add("gone"); return; }   /* mobile/reduced: constellation is the fallback */
 
-    function inject() {
-      var s = document.createElement("script");
-      s.type = "module";
-      s.src = "https://unpkg.com/@splinetool/viewer/build/spline-viewer.js";
-      s.onload = function () {
-        var v = document.createElement("spline-viewer");
-        v.id = "splineViewer";
-        v.setAttribute("url", host.getAttribute("data-spline"));
-        v.addEventListener("load", function () { v.classList.add("loaded"); if (sk) sk.classList.add("gone"); });
-        host.appendChild(v);
-        setTimeout(function () { v.classList.add("loaded"); if (sk) sk.classList.add("gone"); }, 6000);
-      };
-      s.onerror = function () { if (sk) sk.classList.add("gone"); };
-      document.head.appendChild(s);
-    }
-    function go() { ("requestIdleCallback" in window) ? requestIdleCallback(inject, { timeout: 2000 }) : setTimeout(inject, 1200); }
-    if (document.readyState === "complete") go();
-    else window.addEventListener("load", go);
+    var s = document.createElement("script");
+    s.type = "module";
+    s.src = "https://unpkg.com/@splinetool/viewer/build/spline-viewer.js";
+    s.onload = function () {
+      var v = document.createElement("spline-viewer");
+      v.id = "splineViewer";
+      var hideLogo = document.createElement("style");
+      hideLogo.textContent = "#logo { display: none !important; }";
+      v.shadowRoot.appendChild(hideLogo);
+      v.setAttribute("url", host.getAttribute("data-spline"));
+      v.addEventListener("load", function () { v.classList.add("loaded"); if (sk) sk.classList.add("gone"); });
+      host.appendChild(v);
+      setTimeout(function () { v.classList.add("loaded"); if (sk) sk.classList.add("gone"); }, 6000);
+    };
+    s.onerror = function () { if (sk) sk.classList.add("gone"); };
+    document.head.appendChild(s);
   })();
 
   /* ── Geolocation clock (Haversine nearest airport) ── */

@@ -6,3 +6,19 @@ Thumbs.db
 .claude/
 .agents/
 skills-lock.json
+
+# scratch python helpers / dev server (local only)
+*.py
+INTEGRATION_NOTES.md
+
+# third-party reference material
+portfolio gemini/
+
+# backups
+*_backup*
+
+# local screenshots
+current-*.png
+
+# orphaned experiment, superseded by js/trajectory.js
+js/traj-spiral.js
