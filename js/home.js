@@ -79,17 +79,28 @@
         v.classList.add("loaded");
         if (sk) sk.classList.add("gone");
       }
+      /* kill the "Built with Spline" badge — it lives in the viewer's shadow DOM
+         (#logo) and mounts a beat after the element, so inject a style AND remove
+         the node, then sweep a few times to catch late mounts. */
+      function hideLogo() {
+        var sr = v.shadowRoot;
+        if (!sr) return;
+        try {
+          if (!sr.querySelector("style[data-hide-logo]")) {
+            var st = document.createElement("style");
+            st.setAttribute("data-hide-logo", "");
+            st.textContent = "#logo, a[href*='spline.design'] { display: none !important; }";
+            sr.appendChild(st);
+          }
+          var lg = sr.querySelector("#logo, a[href*='spline.design']");
+          if (lg) lg.remove();
+        } catch (e) {}
+      }
       /* reveal ONLY when the scene is actually painted — keeps the gold shimmer
          up while the heavy .splinecode streams, instead of flashing blank gold. */
-      v.addEventListener("load", function () {
-        try {
-          var hideLogo = document.createElement("style");
-          hideLogo.textContent = "#logo { display: none !important; }";
-          if (v.shadowRoot) v.shadowRoot.appendChild(hideLogo);
-        } catch (e) {}
-        reveal();
-      });
+      v.addEventListener("load", function () { hideLogo(); reveal(); });
       host.appendChild(v);
+      [300, 1200, 3000, 6000, 10000].forEach(function (d) { setTimeout(hideLogo, d); });
       setTimeout(reveal, 20000);   /* safety: never leave the shimmer forever */
     };
     s.onerror = function () { if (sk) sk.classList.add("gone"); };
