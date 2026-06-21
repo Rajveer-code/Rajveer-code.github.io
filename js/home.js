@@ -96,11 +96,20 @@
           if (lg) lg.remove();
         } catch (e) {}
       }
+      /* the badge re-mounts after load, so watch the shadow DOM and strip it
+         every time it reappears — not just on timed sweeps. */
+      var logoWatched = false;
+      function watchLogo() {
+        if (logoWatched || !v.shadowRoot) return;
+        logoWatched = true;
+        hideLogo();
+        try { new MutationObserver(hideLogo).observe(v.shadowRoot, { childList: true, subtree: true }); } catch (e) {}
+      }
       /* reveal ONLY when the scene is actually painted — keeps the gold shimmer
          up while the heavy .splinecode streams, instead of flashing blank gold. */
-      v.addEventListener("load", function () { hideLogo(); reveal(); });
+      v.addEventListener("load", function () { watchLogo(); reveal(); });
       host.appendChild(v);
-      [300, 1200, 3000, 6000, 10000].forEach(function (d) { setTimeout(hideLogo, d); });
+      [300, 1200, 3000].forEach(function (d) { setTimeout(watchLogo, d); });
       setTimeout(reveal, 20000);   /* safety: never leave the shimmer forever */
     };
     s.onerror = function () { if (sk) sk.classList.add("gone"); };
