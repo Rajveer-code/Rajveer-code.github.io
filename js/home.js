@@ -66,10 +66,7 @@
     var ok = fine && !reduced && window.innerWidth > 768 && !skip;
     if (!ok) { if (sk) sk.classList.add("gone"); return; }   /* mobile/reduced: constellation is the fallback */
 
-    var s = document.createElement("script");
-    s.type = "module";
-    s.src = "https://unpkg.com/@splinetool/viewer/build/spline-viewer.js";
-    s.onload = function () {
+    function mount() {
       var v = document.createElement("spline-viewer");
       v.id = "splineViewer";
       v.setAttribute("url", host.getAttribute("data-spline"));
@@ -111,9 +108,20 @@
       host.appendChild(v);
       [300, 1200, 3000].forEach(function (d) { setTimeout(watchLogo, d); });
       setTimeout(reveal, 20000);   /* safety: never leave the shimmer forever */
-    };
-    s.onerror = function () { if (sk) sk.classList.add("gone"); };
-    document.head.appendChild(s);
+    }
+
+    /* the viewer module is kicked off in <head> at parse time — mount the moment
+       the element is defined so the (preloaded) scene paints as early as possible. */
+    if (!window.customElements) { if (sk) sk.classList.add("gone"); return; }
+    if (customElements.get("spline-viewer")) { mount(); return; }
+    customElements.whenDefined("spline-viewer").then(mount);
+    if (!window.__splineViewerSrc) {   /* fallback if the head bootstrap was skipped */
+      var s = document.createElement("script");
+      s.type = "module";
+      s.src = "https://cdn.jsdelivr.net/npm/@splinetool/viewer/build/spline-viewer.js";
+      s.onerror = function () { if (sk) sk.classList.add("gone"); };
+      document.head.appendChild(s);
+    }
   })();
 
   /* ── Geolocation clock (Haversine nearest airport) ── */

@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://prod.spline.design" crossorigin>
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="dns-prefetch" href="https://prod.spline.design">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/home.css?v=14">
@@ -32,6 +32,26 @@
   </script>
   <script type="importmap">
     { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" } }
+  </script>
+  <!-- Spline: start the viewer module + scene download at parse time (desktop only),
+       so it isn't gated behind the body scripts. home.js mounts it once defined. -->
+  <script>
+  (function () {
+    try {
+      if (!matchMedia("(pointer:fine)").matches) return;
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (innerWidth <= 768 || /[?&]nospline=1/.test(location.search)) return;
+      var SCENE  = "https://prod.spline.design/8SbnMxhzrQXLNLIN/scene.splinecode";
+      var VIEWER = "https://cdn.jsdelivr.net/npm/@splinetool/viewer/build/spline-viewer.js";
+      var pl = document.createElement("link");
+      pl.rel = "preload"; pl.as = "fetch"; pl.href = SCENE; pl.crossOrigin = "anonymous";
+      document.head.appendChild(pl);
+      var s = document.createElement("script");
+      s.type = "module"; s.src = VIEWER;
+      document.head.appendChild(s);
+      window.__splineViewerSrc = VIEWER;
+    } catch (e) {}
+  })();
   </script>
 </head>
 <body>
@@ -584,7 +604,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="js/field.js?v=2"></script>
-  <script src="js/home.js?v=11"></script>
+  <script src="js/home.js?v=12"></script>
   <script type="module" src="js/spiral.js?v=6"></script>
   <script defer src="js/trajectory.js?v=9"></script>
 </body>
