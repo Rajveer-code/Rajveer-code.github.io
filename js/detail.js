@@ -7,44 +7,7 @@
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var hasGSAP = typeof gsap !== "undefined";
 
-  /* ── Gold dot + ring cursor (consistent with homepage) ── */
-  if (fine) {
-    var dot = document.createElement("div");
-    dot.className = "cursor-dot";
-    var ring = document.createElement("div");
-    ring.className = "cursor-ring";
-    document.body.insertBefore(ring, document.body.firstChild);
-    document.body.insertBefore(dot, document.body.firstChild);
-    var mx = -100, my = -100, rx = -100, ry = -100, on = false;
-    document.addEventListener("mousemove", function (e) {
-      mx = e.clientX; my = e.clientY;
-      dot.style.transform = "translate(" + mx + "px," + my + "px) translate(-50%,-50%)";
-      if (!on) {
-        on = true; dot.style.opacity = "1"; ring.style.opacity = "1";
-        /* Native cursor hides only once the custom one is actually live and positioned —
-           arriving via a click (e.g. from index.html) fires no mousemove, so hiding this
-           unconditionally at load left visitors with no cursor at all until they moved it. */
-        var hide = document.createElement("style");
-        hide.textContent = "*, *::before, *::after { cursor: none !important; }";
-        document.head.appendChild(hide);
-      }
-    }, { passive: true });
-    (function loop() {
-      rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
-      ring.style.transform = "translate(" + rx + "px," + ry + "px) translate(-50%,-50%)";
-      requestAnimationFrame(loop);
-    })();
-    var SEL = 'a, button, [data-cursor], [role="button"]';
-    document.addEventListener("mouseover", function (e) {
-      if (e.target.closest && e.target.closest(SEL)) ring.classList.add("is-hover");
-    }, { passive: true });
-    document.addEventListener("mouseout", function (e) {
-      if (e.target.closest && e.target.closest(SEL)) ring.classList.remove("is-hover");
-    }, { passive: true });
-    document.addEventListener("mousedown", function () { ring.classList.add("is-click"); }, { passive: true });
-    document.addEventListener("mouseup",   function () { ring.classList.remove("is-click"); }, { passive: true });
-    document.addEventListener("mouseleave", function () { dot.style.opacity = "0"; ring.style.opacity = "0"; }, { passive: true });
-  }
+  /* custom cursor removed — native cursor is used (no cursor:none injection) */
 
   /* ── Geolocation clock (Haversine nearest-airport) ── */
   (function () {

@@ -39,30 +39,7 @@
     });
   }
 
-  /* ── Gold dot + ring cursor ── */
-  if (fine) {
-    var dot = document.getElementById("cursorDot");
-    var ring = document.getElementById("cursorRing");
-    if (dot && ring) {
-      var mx = -100, my = -100, rx = -100, ry = -100, on = false;
-      document.addEventListener("mousemove", function (e) {
-        mx = e.clientX; my = e.clientY;
-        dot.style.transform = "translate(" + mx + "px," + my + "px) translate(-50%,-50%)";
-        if (!on) { on = true; dot.style.opacity = "1"; ring.style.opacity = "1"; }
-      }, { passive: true });
-      (function loop() {
-        rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
-        ring.style.transform = "translate(" + rx + "px," + ry + "px) translate(-50%,-50%)";
-        requestAnimationFrame(loop);
-      })();
-      var SEL = 'a, button, [data-cursor], [role="button"]';
-      document.addEventListener("mouseover", function (e) { if (e.target.closest && e.target.closest(SEL)) ring.classList.add("is-hover"); }, { passive: true });
-      document.addEventListener("mouseout",  function (e) { if (e.target.closest && e.target.closest(SEL)) ring.classList.remove("is-hover"); }, { passive: true });
-      document.addEventListener("mousedown", function () { ring.classList.add("is-click"); }, { passive: true });
-      document.addEventListener("mouseup",   function () { ring.classList.remove("is-click"); }, { passive: true });
-      document.addEventListener("mouseleave", function () { dot.style.opacity = "0"; ring.style.opacity = "0"; }, { passive: true });
-    }
-  }
+  /* custom cursor removed — native cursor is used */
 
   /* ── Nav scrolled state + scroll progress ── */
   var nav = document.getElementById("nav");
