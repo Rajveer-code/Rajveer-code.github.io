@@ -18,11 +18,11 @@
   var mobile = mq("(max-width: 767px)");
   var touch = mq("(hover: none) and (pointer: coarse)");
 
-  var STAR = mobile ? 40 : 110;
-  var SHIM = mobile ? 40 : 75;
+  var STAR = mobile ? 40 : 95;
+  var SHIM = mobile ? 40 : 58;
   var LINK = mobile ? 80 : 500;
   var LINK2 = LINK * LINK;
-  var PATHS = mobile ? 80 : 600;
+  var PATHS = mobile ? 80 : 460;
   var SPAWN = 20, PMIN = 0.001, PMAX = 0.004, SVEL = 0.4;
 
   /* waypoints for the long glint paths (mx/my = fraction of travel, kx = kink stage) */
@@ -131,8 +131,10 @@
       if (p.offY > 200) p.offY = 200; if (p.offY < -200) p.offY = -200;
       var X = d.x + p.offX, Y = d.y + p.offY;
       if (X < -50 || X > W + 50 || Y < -50 || Y > H + 50) continue;
-      ctx.save(); ctx.globalAlpha = a; ctx.shadowBlur = p.near ? 24 : 14;
-      ctx.shadowColor = p.near ? "rgba(235,242,255,0.56)" : "rgba(229,236,252,0.34)";
+      ctx.save(); ctx.globalAlpha = a;
+      /* shadowBlur is the single heaviest per-frame op; keep it only on the
+         large "near" glints — far glints are tiny and read fine without a halo. */
+      if (p.near) { ctx.shadowBlur = 22; ctx.shadowColor = "rgba(235,242,255,0.56)"; } else { ctx.shadowBlur = 0; }
       ctx.fillStyle = "rgba(248,250,255,0.97)";
       ctx.beginPath(); ctx.arc(X, Y, p.size * 0.5, 0, Math.PI * 2); ctx.fill(); ctx.restore();
     }

@@ -13,8 +13,11 @@
   <script>document.documentElement.classList.replace('no-js','js');</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://prod.spline.design" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="dns-prefetch" href="https://prod.spline.design">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/home.css?v=10">
+  <link rel="stylesheet" href="css/home.css?v=12">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -32,6 +35,13 @@
   </script>
 </head>
 <body>
+
+  <!-- ═══ Intro loader (masks first paint; gives Spline a head start) ═══ -->
+  <div class="loader" id="loader">
+    <div class="loader-mark">R</div>
+    <div class="loader-bar" aria-hidden="true"><span></span></div>
+    <div class="loader-cap">RAJVEER SINGH PALL</div>
+  </div>
 
   <!-- ═══ Constellation field (Canvas 2D) ═══ -->
   <canvas id="field" aria-hidden="true"></canvas>
@@ -182,6 +192,15 @@
         <h2 class="section-title">Accuracy is easy. Fairness under deployment isn't.</h2>
         <p class="section-lede">I study the systems that decide human outcomes — and whether they deserve the trust we place in them.</p>
       </div>
+
+      <!-- Gold & Glory — highlights marquee (right→left) -->
+      <div class="glory reveal" aria-label="Highlights">
+        <div class="glory-head">• The Gold and the Glory •</div>
+        <div class="glory-viewport">
+          <div class="glory-track" id="gloryTrack"><!-- built by js/home.js --></div>
+        </div>
+      </div>
+
       <div class="about-grid">
         <div class="about-col reveal">
           <h3 class="about-h">Decisions as systems</h3>
@@ -568,8 +587,8 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/field.js?v=1"></script>
-  <script src="js/home.js?v=6"></script>
+  <script src="js/field.js?v=2"></script>
+  <script src="js/home.js?v=8"></script>
   <script type="module" src="js/spiral.js?v=6"></script>
   <script defer src="js/trajectory.js?v=9"></script>
 </body>

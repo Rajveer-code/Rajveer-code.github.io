@@ -6,6 +6,23 @@
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var hasGSAP = typeof gsap !== "undefined";
 
+  /* ── Intro loader ──
+     Masks the rough first paint and gives Spline a head start. Dismissed on the
+     EARLIEST of window 'load' or a hard cap — never blocks on Spline's slow scene. */
+  (function () {
+    var loader = document.getElementById("loader");
+    if (!loader) return;
+    var done = false;
+    function hide() {
+      if (done) return; done = true;
+      loader.classList.add("gone");
+      setTimeout(function () { if (loader.parentNode) loader.parentNode.removeChild(loader); }, 700);
+    }
+    if (document.readyState === "complete") setTimeout(hide, 350);
+    else window.addEventListener("load", function () { setTimeout(hide, 350); });
+    setTimeout(hide, reduced ? 600 : 2400);   /* hard cap */
+  })();
+
   /* ── Scroll-position memory (back/forward nav) ──
      Lenis owns the scroll loop and otherwise fights native scroll restoration,
      snapping back to 0 on every return trip. Save position ourselves and let
@@ -78,13 +95,25 @@
     s.onload = function () {
       var v = document.createElement("spline-viewer");
       v.id = "splineViewer";
-      var hideLogo = document.createElement("style");
-      hideLogo.textContent = "#logo { display: none !important; }";
-      v.shadowRoot.appendChild(hideLogo);
       v.setAttribute("url", host.getAttribute("data-spline"));
-      v.addEventListener("load", function () { v.classList.add("loaded"); if (sk) sk.classList.add("gone"); });
+      var revealed = false;
+      function reveal() {
+        if (revealed) return; revealed = true;
+        v.classList.add("loaded");
+        if (sk) sk.classList.add("gone");
+      }
+      /* reveal ONLY when the scene is actually painted — keeps the gold shimmer
+         up while the heavy .splinecode streams, instead of flashing blank gold. */
+      v.addEventListener("load", function () {
+        try {
+          var hideLogo = document.createElement("style");
+          hideLogo.textContent = "#logo { display: none !important; }";
+          if (v.shadowRoot) v.shadowRoot.appendChild(hideLogo);
+        } catch (e) {}
+        reveal();
+      });
       host.appendChild(v);
-      setTimeout(function () { v.classList.add("loaded"); if (sk) sk.classList.add("gone"); }, 6000);
+      setTimeout(reveal, 20000);   /* safety: never leave the shimmer forever */
     };
     s.onerror = function () { if (sk) sk.classList.add("gone"); };
     document.head.appendChild(s);
@@ -235,6 +264,33 @@
     }).join("");
   })();
 
+  /* ── Gold & Glory highlights marquee ── */
+  (function () {
+    var track = document.getElementById("gloryTrack");
+    if (!track) return;
+    var HL = [
+      { title: "Smart India Hackathon 2025", time: "Top 50 of 250",        sub: "SereneSpace — anonymous student mental-health" },
+      { title: "Eight Research Papers",      time: "Q1 venues · 2025–26", sub: "Submitted / under review across four domains" },
+      { title: "IndiaFinBench",              time: "LLM Benchmark",          sub: "Gemini 2.5 Flash 89.7% · 406 expert QA items" },
+      { title: "FinSight",                   time: "Deployed System",        sub: "14,584 transcripts · IC +0.31 in Energy" },
+      { title: "ARIA Assistant",             time: "Local-First Voice AI",   sub: "Zero cloud LLM calls · one RTX 4060" },
+      { title: "CATE-HMDA",                  time: "JREFE · submitted",      sub: "42.3M applications · 9.4 pp approval gap" },
+      { title: "Federated Diabetes",         time: "JBI · under review",     sub: "1.28M BRFSS · −40% generalisation gap" },
+      { title: "ICGDF Deployment Gate",      time: "QFE · under review",     sub: "0.0% false deploy across 12 folds" }
+    ];
+    var ICON = '<svg class="glory-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>';
+    function esc(s) { var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+    function item(h) {
+      return '<div class="glory-item">' +
+               '<div class="glory-row">' + ICON + '<span class="glory-title">' + esc(h.title) + '</span></div>' +
+               '<div class="glory-time">' + esc(h.time) + '</div>' +
+               '<div class="glory-sub">' + esc(h.sub) + '</div>' +
+             '</div><span class="glory-sep" aria-hidden="true">•</span>';
+    }
+    var one = HL.map(item).join("");
+    track.innerHTML = one + one;   /* doubled → translateX(-50%) loops seamlessly */
+  })();
+
   /* ── Whole-card click ──
      The visible "card" reads as a single clickable unit, but only the small
      text links at the bottom were wired up. Clicking anywhere else on a card
@@ -253,9 +309,16 @@
   /* ── Lenis smooth scroll ── */
   var lenis;
   if (typeof Lenis !== "undefined" && !reduced) {
-    lenis = new Lenis({ duration: 1.05, smoothWheel: true });
-    if (hasGSAP) gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
-    else requestAnimationFrame(function raf(t) { lenis.raf(t); requestAnimationFrame(raf); });
+    lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1, touchMultiplier: 1.8, smoothWheel: true });
+    if (hasGSAP) {
+      gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+      gsap.ticker.lagSmoothing(0);
+      /* drive ScrollTrigger off Lenis so reveals stay in lockstep with the
+         smooth-scroll loop — without this they fire late and pop (the "rough"). */
+      if (typeof ScrollTrigger !== "undefined") lenis.on("scroll", ScrollTrigger.update);
+    } else {
+      requestAnimationFrame(function raf(t) { lenis.raf(t); requestAnimationFrame(raf); });
+    }
     document.querySelectorAll('a[href^="#"]').forEach(function (a) {
       a.addEventListener("click", function (e) {
         var id = a.getAttribute("href");
@@ -289,8 +352,8 @@
     gsap.to(".hero .reveal", { opacity: 1, y: 0, duration: 0.8, stagger: 0.08, ease: "power3.out", delay: 0.2 });
     /* sections on scroll */
     gsap.utils.toArray(".section .reveal").forEach(function (el) {
-      gsap.to(el, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out",
-        scrollTrigger: { trigger: el, start: "top 88%", toggleActions: "play none none none" } });
+      gsap.to(el, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", overwrite: "auto",
+        scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" } });
     });
     ScrollTrigger.refresh();
   } else {
@@ -298,10 +361,12 @@
   }
 
   /* Safety net: content must never stay invisible if rAF/GSAP is throttled or fails.
-     setTimeout fires independent of requestAnimationFrame. */
+     Only force-show what's already in/above the viewport — below-fold elements are
+     left for ScrollTrigger to animate on scroll, so the reveal choreography survives. */
   setTimeout(function () {
     document.querySelectorAll(".reveal").forEach(function (el) {
-      if (parseFloat(getComputedStyle(el).opacity) < 0.05) { el.style.opacity = "1"; el.style.transform = "none"; }
+      var inView = el.getBoundingClientRect().top < window.innerHeight * 0.95;
+      if (inView && parseFloat(getComputedStyle(el).opacity) < 0.05) { el.style.opacity = "1"; el.style.transform = "none"; }
     });
   }, 1600);
 

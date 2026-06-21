@@ -170,13 +170,19 @@
   /* ── Lenis smooth scroll ── */
   var lenis;
   if (typeof Lenis !== "undefined" && !reduced) {
-    lenis = new Lenis({ duration: 1.1, smoothWheel: true });
-    if (hasGSAP) gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
-    else requestAnimationFrame(function raf(t) { lenis.raf(t); requestAnimationFrame(raf); });
+    lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1, touchMultiplier: 1.8, smoothWheel: true });
+    if (hasGSAP) {
+      gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+      gsap.ticker.lagSmoothing(0);
+      /* keep ScrollTrigger in lockstep with Lenis so reveals don't fire late and pop */
+      if (typeof ScrollTrigger !== "undefined") lenis.on("scroll", ScrollTrigger.update);
+    } else {
+      requestAnimationFrame(function raf(t) { lenis.raf(t); requestAnimationFrame(raf); });
+    }
   }
 
   /* ── GSAP reveal animations ── */
-  if (hasGSAP && typeof ScrollTrigger !== "undefined") {
+  if (hasGSAP && typeof ScrollTrigger !== "undefined" && !reduced) {
     gsap.registerPlugin(ScrollTrigger);
 
     gsap.timeline({ delay: 0.15 })
@@ -202,6 +208,15 @@
 
     ScrollTrigger.refresh();
   }
+
+  /* Safety net: never leave content invisible if rAF/GSAP is throttled.
+     Only force what's already in/above the viewport; below-fold animates on scroll. */
+  setTimeout(function () {
+    document.querySelectorAll(".th-section, .method-diagram").forEach(function (el) {
+      var inView = el.getBoundingClientRect().top < window.innerHeight * 0.95;
+      if (inView && parseFloat(getComputedStyle(el).opacity) < 0.05) { el.style.opacity = "1"; el.style.transform = "none"; }
+    });
+  }, 1600);
 
   /* ── Bottom Right HUD ── */
   (function () {
