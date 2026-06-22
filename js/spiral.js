@@ -60,6 +60,15 @@ export const RESEARCH_PAPERS = [
     "status": "Under review · 2025"
   },
   {
+    "url": "project-conviction-ranking.html",
+    "color": "#f472b6",
+    "title": "Overcoming the Transaction Cost Trap: Cross-Sectional Conviction Ranking in ML Equity Prediction",
+    "sub": "Naive thresholds destroy ML equity alpha through turnover. Treating calibrated ensemble probabilities as ordinal conviction and holding only the Top-1 asset each day gives a significant IC of 0.0197 (p=0.034, 1,512 days) and 45.8% annualised return at Sharpe 1.18 — break-even at 24.2 bps, 4.8× institutional friction.",
+    "tags": ["Quant ML", "Conviction ranking", "Walk-forward", "CatBoost"],
+    "venue": "SSRN",
+    "status": "Working paper · 2025"
+  },
+  {
     "url": "project-indiafinbench.html",
     "color": "#22d3ee",
     "title": "IndiaFinBench: Evaluating LLM Performance on Indian Financial Regulatory Text",
