@@ -108,11 +108,18 @@
         "Not a fixed offline benchmark — a live runtime property.",
         "Catches 33–39% of failures other guardrails miss, ~1.2s, zero cloud calls.",
       ] },
+    { id: "conviction-ranking", track: "research", color: "#f472b6", url: "project-conviction-ranking.html",
+      role: "Overcoming the Transaction Cost Trap", company: "SSRN · working paper", start: [2027, 5], end: [2027, 7],
+      bullets: [
+        "Naive thresholds churn the book — transaction costs quietly eat the gross ML alpha.",
+        "Calibrated ensemble probabilities ranked as conviction; hold only the Top-1 asset each day.",
+        "IC 0.0197 (p=0.034) over 1,512 days; Top-1 returns 45.8% at Sharpe 1.18, break-even 24.2 bps.",
+      ] },
   ];
 
   var YEARS = [2025, 2026, 2027];
   var Y0 = [2025, 5];            /* origin: Jun 2025 = month 0 (top) */
-  var YEND = [2027, 7];          /* axis end */
+  var YEND = [2027, 9];          /* axis end (padded below the last entry) */
 
   /* ── time helpers ── */
   function ym(d) { return (d[0] - Y0[0]) * 12 + (d[1] - Y0[1]); }   /* months since origin */
