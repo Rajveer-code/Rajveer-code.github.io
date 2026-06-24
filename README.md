@@ -3,9 +3,11 @@
 Personal research portfolio for **Rajveer Singh Pall** — ML & decision-systems research.
 A dark "engineering command-center" aesthetic: an animated constellation field behind
 noir editorial typography, a live 3D hero scene, scroll-scrubbed data visualisations,
-and twelve in-depth case-study pages.
+and thirteen in-depth case-study pages. Fully responsive — an intentionally designed
+mobile layout, not a squeezed desktop.
 
-Live: deployed as a static site (GitHub Pages / Vercel — no build step).
+**Live:** [rajveer-code-github-io.vercel.app](https://rajveer-code-github-io.vercel.app/)
+· [rajveer-code.github.io](https://rajveer-code.github.io/) — static site, no build step.
 
 ## Homepage sections
 
@@ -13,16 +15,17 @@ In DOM order (`index.html`):
 
 | Section | What it is |
 |---|---|
-| **Hero** | Name + thesis over a Spline 3D scene and an animated gold line-art overlay, with portrait, social links, and an intro loader that masks first paint. |
-| **About** | The research stance, plus the **Gold & Glory** highlights marquee (a seamless right-to-left ticker of verified milestones). |
+| **Hero** | Name + thesis over a Spline 3D scene and an animated gold line-art overlay, with portrait, social links, and an intro loader that masks first paint. On mobile the portrait becomes a compact editorial composition. |
+| **Credentials** | An at-a-glance band directly below the hero — degree, research output, internships, IIT Guwahati certificate, and current SGPA. |
+| **About** | The research stance, the full per-semester **SGPA progression**, plus the **Gold & Glory** highlights marquee (a seamless right-to-left ticker of verified milestones). |
 | **Trajectory** | "The trajectory." — a scroll-scrubbed vertical **Gantt timeline**: a centred time-spine with systems to the right, research papers to the left, duration bars, and a growing playhead. |
-| **Impact** | An interactive node **constellation** (SVG) of 30+ metrics across six categories, with a central HUD that updates on hover. |
+| **Impact** | An interactive node **constellation** (SVG) of 30+ metrics across six categories, with a central HUD that updates on hover. On touch it becomes a native stacked card list of the same data. |
 | **Work** | Featured systems as cards (whole-card click → case study). |
 | **Research** | Papers, with a WebGL **research spiral** (`spiral.js`). |
 | **Stack** | Tooling grouped by domain, rendered from data with logo icons. |
 | **Contact** | Links + a live local clock. |
 
-Twelve case-study pages (`project-*.html`) cover each system and paper in depth, sharing
+Thirteen case-study pages (`project-*.html`) cover each system and paper in depth, sharing
 `css/style.css` + `js/detail.js`.
 
 ## Tech
@@ -83,5 +86,8 @@ No build command and no output directory are needed; pushing to `main` is the de
 - **Spline is non-blocking** — a gold shimmer holds until the scene actually paints, with
   a safety cap so it never waits forever; the page is fully usable meanwhile.
 - **Reveal safety net** — a timeout force-shows any in-view content if an animation stalls.
-- **Mobile / touch** — the Gantt timeline falls back to a plain list; the field thins out.
+- **Mobile / touch** — a full-screen **overlay nav** (hamburger, focus-trapped, Esc to
+  close, scroll-locked); an editorial mobile hero; the Impact constellation becomes native
+  stacked cards; the Gantt timeline and research spiral fall back to plain lists; the field
+  thins out; `viewport-fit=cover` + `env(safe-area-inset-*)` handle notched phones.
 - **Hidden tab** — the constellation field pauses to save power.

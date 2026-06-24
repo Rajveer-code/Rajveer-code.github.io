@@ -86,10 +86,14 @@
       });
     }
   }
+  var lastW = -1;
   function size() {
     var W = window.innerWidth, H = window.innerHeight;
     canvas.width = W; canvas.height = H;
-    genStars(W, H); genShim(W, H); genPaths(W, H); makeScan(W, H);
+    /* Mobile address-bar show/hide fires resize with the SAME width, only height —
+       don't rebuild the whole particle system for that (it janks scroll). Only a
+       real width change regenerates; height-only just resizes the canvas. */
+    if (W !== lastW) { genStars(W, H); genShim(W, H); genPaths(W, H); makeScan(W, H); lastW = W; }
   }
   function spawn() {
     var f = Math.floor(Math.random() * stars.length), k = stars[f], c = [];

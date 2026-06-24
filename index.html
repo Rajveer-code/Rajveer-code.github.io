@@ -2,7 +2,7 @@
 <html lang="en" class="no-js">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Rajveer Singh Pall — ML &amp; Decision-Systems Researcher</title>
   <meta name="description" content="Rajveer Singh Pall — machine-learning researcher studying whether the systems that decide human outcomes are fair, honest, and hold under deployment. Eight papers across lending, medicine, language, and markets, plus deployed systems.">
   <meta name="author" content="Rajveer Singh Pall">
@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="dns-prefetch" href="https://prod.spline.design">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/home.css?v=15">
+  <link rel="stylesheet" href="css/home.css?v=16">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -152,7 +152,7 @@
           </div>
           <div>
             <span class="hero-meta-label">Institution</span>
-            <span class="hero-meta-value">GGITS, Jabalpur<br>B.E. CS &amp; Business Systems</span>
+            <span class="hero-meta-value">GGITS, Jabalpur<br>B.Tech CS &amp; Business Systems</span>
           </div>
         </div>
         <div class="hero-actions reveal">
@@ -201,6 +201,32 @@
       <a class="hero-scroll reveal" href="#about" data-cursor aria-label="Scroll down"><span>Scroll</span></a>
     </section>
 
+    <!-- ════════════ CREDENTIALS BAND ════════════ -->
+    <section class="creds" aria-label="Credentials at a glance">
+      <ul class="creds-row">
+        <li class="cred-cell">
+          <span class="cred-value">B.Tech CSBS</span>
+          <span class="cred-label">CS &amp; Business Systems · GGITS Jabalpur</span>
+        </li>
+        <li class="cred-cell">
+          <span class="cred-value">9 Research Papers</span>
+          <span class="cred-label">6 sole-authored · IEEE, JREFE, JHE +</span>
+        </li>
+        <li class="cred-cell">
+          <span class="cred-value">DS Internships</span>
+          <span class="cred-label">Unified Mentor 2025 · InternPe 2024</span>
+        </li>
+        <li class="cred-cell">
+          <span class="cred-value">IIT Guwahati</span>
+          <span class="cred-label">Data Science Certificate · 2026</span>
+        </li>
+        <li class="cred-cell cred-cell--accent">
+          <span class="cred-value">SGPA 8.27<span class="cred-trend" aria-hidden="true">↑</span></span>
+          <span class="cred-label">Semester V · upward trajectory</span>
+        </li>
+      </ul>
+    </section>
+
     <!-- ════════════ ABOUT ════════════ -->
     <section class="section about" id="about" data-label="About">
       <div class="section-head reveal">
@@ -222,6 +248,21 @@
           <h3 class="about-h">What I don't do</h3>
           <p>No false alpha dressed up as a result. No one-time fairness number that breaks off-distribution. No privacy claims that quietly route data to a cloud API. If a system can't hold under deployment, I'd rather show why than ship it.</p>
         </div>
+      </div>
+
+      <!-- Education: full SGPA record (the band shows only Sem V; the climb lives here) -->
+      <div class="edu-progression reveal" aria-label="Academic record — SGPA by semester">
+        <div class="edu-head">
+          <span class="edu-kicker">Academic record</span>
+          <span class="edu-note">SGPA across five semesters · B.Tech CSBS, GGITS</span>
+        </div>
+        <ol class="sgpa-track">
+          <li class="sgpa-pt"><span class="sgpa-bar" style="--v:55%"></span><span class="sgpa-val">6.96</span><span class="sgpa-sem">Sem I</span></li>
+          <li class="sgpa-pt"><span class="sgpa-bar" style="--v:67%"></span><span class="sgpa-val">7.41</span><span class="sgpa-sem">Sem II</span></li>
+          <li class="sgpa-pt"><span class="sgpa-bar" style="--v:74%"></span><span class="sgpa-val">7.64</span><span class="sgpa-sem">Sem III</span></li>
+          <li class="sgpa-pt"><span class="sgpa-bar" style="--v:85%"></span><span class="sgpa-val">7.88</span><span class="sgpa-sem">Sem IV</span></li>
+          <li class="sgpa-pt is-current"><span class="sgpa-bar" style="--v:100%"></span><span class="sgpa-val">8.27</span><span class="sgpa-sem">Sem V</span></li>
+        </ol>
       </div>
 
       <!-- Gold & Glory — highlights marquee (right→left), just above the trajectory -->
@@ -371,6 +412,11 @@
           <div class="hud-sub">ML Research &amp; Deployed Systems * Rajveer Singh Pall</div>
           <div class="hud-desc">An end-to-end research portfolio spanning causal inference, federated learning, fairness audits, NLP benchmarking, and local AI systems. Hover any node to inspect the metric.</div>
         </div>
+      </div>
+      <!-- Mobile: the constellation can't be hovered on touch — same data as scannable cards -->
+      <div class="impact-mobile" id="impactMobile">
+        <p class="impact-mobile-lede">31 metrics across causal inference, federated learning, fairness audits, NLP benchmarking, and local AI systems — the proof behind the work.</p>
+        <div class="impact-mobile-list" id="impactMobileList"><!-- built by js/home.js --></div>
       </div>
     </section>
 
@@ -634,8 +680,8 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-  <script src="js/field.js?v=2"></script>
-  <script src="js/home.js?v=12"></script>
+  <script src="js/field.js?v=3"></script>
+  <script src="js/home.js?v=14"></script>
   <script type="module" src="js/spiral.js?v=7"></script>
   <script defer src="js/trajectory.js?v=10"></script>
 </body>

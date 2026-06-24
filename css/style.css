@@ -598,8 +598,8 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
 
 @media (max-width: 760px) {
   .case-figure { padding: 14px 14px 12px; max-width: none; }
-  .case-figure figcaption { font-size: 9px; }
-  .arch-themes li { font-size: 8px; padding: 2px 7px; }
+  .case-figure figcaption { font-size: 10px; }
+  .arch-themes li { font-size: 9px; padding: 2px 7px; }
   .arch-tip { max-width: 208px; }
 }
 
@@ -1083,7 +1083,7 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
   .th-title { font-size: clamp(1.8rem, 8vw, 2.8rem); }
   .th-subtitle { font-size: 0.95rem; }
   .metrics-grid { grid-template-columns: repeat(2, 1fr); }
-  .hud-clock { bottom: 1rem; left: 1rem; font-size: 0.62rem; }
+  .hud-clock { bottom: max(1rem, env(safe-area-inset-bottom)); left: max(1rem, env(safe-area-inset-left)); font-size: 0.62rem; }
   .brh { display: none; }
 }
 
@@ -1163,7 +1163,7 @@ blockquote.pull { border-left: 2px solid #f5ca40; padding: 0.6rem 1.2rem; margin
 .compare-arrow { font-size: 1.3rem; color: rgba(249,246,238,0.3); }
 
 @media (max-width: 768px) {
-  .essence-label { flex: 0 0 5.5rem; font-size: 0.58rem; }
+  .essence-label { flex: 0 0 5.5rem; font-size: 0.64rem; }
   .spec-row { gap: 1rem; }
   .spec-chip { padding-right: 1rem; }
   .fold-grid { grid-template-columns: repeat(4, 1fr); max-width: 280px; }

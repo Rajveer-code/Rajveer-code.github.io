@@ -252,10 +252,10 @@
     var groups = [
       ["Languages", [["Python","python.svg"],["TypeScript","typescript.svg"],["Bash","gnubash.svg"]]],
       ["ML & Deep Learning", [["PyTorch","pytorch.svg"],["scikit-learn","scikitlearn.svg"],["XGBoost","xgboost.png"],["LightGBM","lightgbm.svg"],["CatBoost","catboost.png"],["SHAP","shap.png"]]],
-      ["Causal, Stats & Data", [["pandas","pandas.svg"],["NumPy","numpy.svg"],["Polars",null],["statsmodels",null],["EconML",null]]],
-      ["LLM, NLP & RAG", [["Transformers","huggingface.svg"],["LangChain","langchain.svg"],["LangGraph","langgraph.svg"],["FAISS","faiss.svg"],["ChromaDB","chroma.svg"],["Ollama","ollama.svg"],["Groq",null]]],
-      ["Federated & Privacy", [["Flower",null],["Opacus",null]]],
-      ["Deployment & Infra", [["FastAPI","fastapi.svg"],["Flask",null],["Next.js","nextjs.svg"],["React","react.svg"],["Three.js","threejs.svg"],["Docker","docker.svg"],["GCP","gcp-compute-engine.svg"],["Vercel","vercel.svg"]]]
+      ["Causal, Stats & Data", [["pandas","pandas.svg"],["NumPy","numpy.svg"],["Polars","polars.svg"],["statsmodels","statsmodels.svg"],["EconML","econml.svg"]]],
+      ["LLM, NLP & RAG", [["Transformers","huggingface.svg"],["LangChain","langchain.svg"],["LangGraph","langgraph.svg"],["FAISS","faiss.svg"],["ChromaDB","chroma.svg"],["Ollama","ollama.svg"],["Groq","groq.svg"]]],
+      ["Federated & Privacy", [["Flower","flower.svg"],["Opacus","opacus.svg"]]],
+      ["Deployment & Infra", [["FastAPI","fastapi.svg"],["Flask","flask.svg"],["Next.js","nextjs.svg"],["React","react.svg"],["Three.js","threejs.svg"],["Docker","docker.svg"],["GCP","gcp-compute-engine.svg"],["Vercel","vercel.svg"]]]
     ];
 
     host.innerHTML = groups.map(function (g, idx) {
@@ -437,6 +437,29 @@
           { cx: 290, cy: 148, val: "+9.7 pp", sub: "RAG Recall@5 Gain * Hybrid vs. Dense-Only",      desc: "Hybrid BM25+FAISS+RRF vs dense-only \u2014 Recall@5 from ~0.688 to 0.785 on regulatory QA." }
         ]}
       ];
+
+    /* Mobile: the SVG constellation needs hover; touch can't. Render the same CATS
+       data as a scannable list of metric cards, grouped by category. */
+    (function buildImpactMobile() {
+      var host = document.getElementById("impactMobileList");
+      if (!host) return;
+      var html = "";
+      for (var c = 0; c < CATS.length; c++) {
+        var g = CATS[c];
+        html += '<h3 class="im-cat" style="--c:' + g.color + '">' + esc(g.label) + "</h3>";
+        for (var n = 0; n < g.nodes.length; n++) {
+          var nd = g.nodes[n];
+          var parts = (nd.sub || "").split("*");
+          var src = parts.length > 1 ? parts[1].trim() : g.label;
+          html += '<article class="im-card" style="--c:' + g.color + '">'
+                +   '<span class="im-val">' + esc(nd.val) + "</span>"
+                +   '<span class="im-body"><span class="im-desc">' + esc(nd.desc) + "</span>"
+                +     '<span class="im-src">' + esc(src) + "</span></span>"
+                + "</article>";
+        }
+      }
+      host.innerHTML = html;
+    })();
 
     var hud      = document.getElementById("impactCentralHud");
     var hudValue = hud && hud.querySelector(".hud-value");
@@ -653,5 +676,95 @@
   })();
 
 })();
+
+  /* ── Mobile nav — full-screen overlay (≤768) ──
+     Built from the existing .nav-links so the six links never drift and the detail
+     pages can reuse the identical pattern. Accessible: aria-expanded, focus-trap,
+     Esc to close, body scroll-locked via Lenis, closes on link tap then scrolls. */
+  (function initMobileNav() {
+    var nav = document.querySelector(".nav");
+    var srcLinks = document.querySelectorAll(".nav-links a");
+    if (!nav || !srcLinks.length) return;
+
+    var btn = document.createElement("button");
+    btn.className = "nav-toggle";
+    btn.type = "button";
+    btn.setAttribute("aria-label", "Open menu");
+    btn.setAttribute("aria-expanded", "false");
+    btn.setAttribute("aria-controls", "navOverlay");
+    btn.innerHTML = "<span></span><span></span><span></span>";
+    nav.appendChild(btn);
+
+    var overlay = document.createElement("div");
+    overlay.className = "nav-overlay";
+    overlay.id = "navOverlay";
+    overlay.setAttribute("aria-hidden", "true");
+    var list = document.createElement("nav");
+    list.className = "nav-overlay-links";
+    list.setAttribute("aria-label", "Sections");
+    var html = "";
+    for (var i = 0; i < srcLinks.length; i++) {
+      var href = srcLinks[i].getAttribute("href") || "#";
+      var label = (srcLinks[i].textContent || "").trim();
+      var num = ("0" + (i + 1)).slice(-2);
+      html += '<a href="' + href + '"><span class="nav-overlay-idx">' + num + "</span>" + label + "</a>";
+    }
+    list.innerHTML = html;
+    overlay.appendChild(list);
+    document.body.appendChild(overlay);
+    var links = overlay.querySelectorAll("a");
+
+    function open() {
+      overlay.classList.add("is-open");
+      btn.classList.add("is-active");
+      btn.setAttribute("aria-expanded", "true");
+      btn.setAttribute("aria-label", "Close menu");
+      overlay.setAttribute("aria-hidden", "false");
+      document.documentElement.classList.add("nav-locked");
+      if (lenis) lenis.stop();
+      if (links[0]) links[0].focus();
+      document.addEventListener("keydown", onKey);
+    }
+    function close() {
+      overlay.classList.remove("is-open");
+      btn.classList.remove("is-active");
+      btn.setAttribute("aria-expanded", "false");
+      btn.setAttribute("aria-label", "Open menu");
+      overlay.setAttribute("aria-hidden", "true");
+      document.documentElement.classList.remove("nav-locked");
+      if (lenis) lenis.start();
+      document.removeEventListener("keydown", onKey);
+    }
+    function onKey(e) {
+      if (e.key === "Escape") { close(); btn.focus(); return; }
+      if (e.key === "Tab" && links.length) {
+        var first = links[0], last = links[links.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    }
+    btn.addEventListener("click", function () {
+      if (overlay.classList.contains("is-open")) close(); else open();
+    });
+    overlay.addEventListener("click", function (e) { if (e.target === overlay) { close(); btn.focus(); } });
+    Array.prototype.forEach.call(links, function (a) {
+      a.addEventListener("click", function (e) {
+        var id = a.getAttribute("href");
+        close();
+        if (id && id.charAt(0) === "#" && id.length > 1) {
+          var target = document.querySelector(id);
+          if (target) {
+            e.preventDefault();
+            if (lenis) lenis.scrollTo(target, { offset: -20 });
+            else target.scrollIntoView({ behavior: reduced ? "auto" : "smooth" });
+          }
+        }
+      });
+    });
+    /* if the viewport grows back to desktop while open, dismiss so it can't linger */
+    window.matchMedia("(min-width: 769px)").addEventListener("change", function (e) {
+      if (e.matches && overlay.classList.contains("is-open")) close();
+    });
+  })();
 
 })();
