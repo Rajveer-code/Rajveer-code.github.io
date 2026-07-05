@@ -871,27 +871,6 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
   z-index: 5;
 }
 
-/* ── ISS lattice cursor ── */
-.cursor-wrap {
-  position: fixed; top: 0; left: 0;
-  width: 44px; height: 44px;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0;
-  color: rgba(249, 246, 238, 0.85);
-}
-.cursor-arc { opacity: 0; }
-.cursor-arc-1 { animation: dp-arc 2.4s ease-in-out infinite; }
-.cursor-arc-2 { animation: dp-arc 2.4s ease-in-out 0.4s infinite; }
-.cursor-arc-3 { animation: dp-arc 2.4s ease-in-out 0.8s infinite; }
-@keyframes dp-arc {
-  0%, 100% { opacity: 0; }
-  50%       { opacity: 1; }
-}
-.cursor-wrap.is-hovering .cursor-arc-1 { animation-duration: 1.2s; }
-.cursor-wrap.is-hovering .cursor-arc-2 { animation-duration: 1.2s; animation-delay: 0.2s; }
-.cursor-wrap.is-hovering .cursor-arc-3 { animation-duration: 1.2s; animation-delay: 0.4s; }
-
 /* ── Scroll rail ── */
 .scroll-rail {
   position: fixed; right: 0; top: 0; bottom: 0;
@@ -940,9 +919,9 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
   color: rgba(249, 246, 238, 0.38);
   text-decoration: none;
   margin-bottom: 3.5rem;
-  transition: color 0.2s ease;
+  transition: color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
 }
-.back-link:hover { color: rgba(249, 246, 238, 0.75); }
+.back-link:hover { color: var(--gold-bright); transform: translateX(-3px); }
 
 /* ── Header ── */
 .th-header { margin-bottom: 2rem; }
@@ -1101,17 +1080,15 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
 
 /* ── Detail page responsive ── */
 @media (max-width: 768px) {
-  .cursor-wrap { display: none; }
   .thinking-body { padding: 5rem 1.25rem 3.5rem; }
   .th-title { font-size: clamp(1.8rem, 8vw, 2.8rem); }
   .th-subtitle { font-size: 0.95rem; }
   .metrics-grid { grid-template-columns: repeat(2, 1fr); }
-  .hud-clock { bottom: max(1rem, env(safe-area-inset-bottom)); left: max(1rem, env(safe-area-inset-left)); font-size: 0.62rem; }
+  .hud-clock { display: none; }         /* fixed HUD collides with content on small screens (parity with homepage) */
   .brh { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cursor-arc { animation: none !important; }
   .th-section { opacity: 1 !important; transform: none !important; }
 }
 
