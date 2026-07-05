@@ -7,8 +7,8 @@
   var hasGSAP = typeof gsap !== "undefined";
 
   /* ── Intro loader ──
-     Masks the rough first paint and gives Spline a head start. Dismissed on the
-     EARLIEST of window 'load' or a hard cap — never blocks on Spline's slow scene. */
+     Masks the rough first paint. Dismissed on the EARLIEST of window 'load'
+     or a short hard cap — the hero visual is native now, nothing heavy to wait for. */
   (function () {
     var loader = document.getElementById("loader");
     if (!loader) return;
@@ -20,7 +20,7 @@
     }
     if (document.readyState === "complete") setTimeout(hide, 350);
     else window.addEventListener("load", function () { setTimeout(hide, 350); });
-    setTimeout(hide, reduced ? 600 : 2400);   /* hard cap */
+    setTimeout(hide, reduced ? 400 : 900);   /* hard cap — no heavy scene to mask anymore */
   })();
 
   /* ── Scroll-position memory (back/forward nav) ──
@@ -55,74 +55,6 @@
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
-
-  /* ── Spline 3D scene: immediate, gated injection ──
-     Desktop + motion only; ?nospline=1 skips it (useful for headless perf checks). */
-  (function () {
-    var host = document.getElementById("heroSpline");
-    var sk = document.getElementById("splineSkeleton");
-    if (!host) return;
-    var skip = /[?&]nospline=1/.test(window.location.search);
-    var ok = fine && !reduced && window.innerWidth > 768 && !skip;
-    if (!ok) { if (sk) sk.classList.add("gone"); return; }   /* mobile/reduced: constellation is the fallback */
-
-    function mount() {
-      var v = document.createElement("spline-viewer");
-      v.id = "splineViewer";
-      v.setAttribute("url", host.getAttribute("data-spline"));
-      var revealed = false;
-      function reveal() {
-        if (revealed) return; revealed = true;
-        v.classList.add("loaded");
-        if (sk) sk.classList.add("gone");
-      }
-      /* kill the "Built with Spline" badge — it lives in the viewer's shadow DOM
-         (#logo) and mounts a beat after the element, so inject a style AND remove
-         the node, then sweep a few times to catch late mounts. */
-      function hideLogo() {
-        var sr = v.shadowRoot;
-        if (!sr) return;
-        try {
-          if (!sr.querySelector("style[data-hide-logo]")) {
-            var st = document.createElement("style");
-            st.setAttribute("data-hide-logo", "");
-            st.textContent = "#logo, a[href*='spline.design'] { display: none !important; }";
-            sr.appendChild(st);
-          }
-          var lg = sr.querySelector("#logo, a[href*='spline.design']");
-          if (lg) lg.remove();
-        } catch (e) {}
-      }
-      /* the badge re-mounts after load, so watch the shadow DOM and strip it
-         every time it reappears — not just on timed sweeps. */
-      var logoWatched = false;
-      function watchLogo() {
-        if (logoWatched || !v.shadowRoot) return;
-        logoWatched = true;
-        hideLogo();
-        try { new MutationObserver(hideLogo).observe(v.shadowRoot, { childList: true, subtree: true }); } catch (e) {}
-      }
-      /* reveal ONLY when the scene is actually painted — keeps the gold shimmer
-         up while the heavy .splinecode streams, instead of flashing blank gold. */
-      v.addEventListener("load", function () { watchLogo(); reveal(); });
-      host.appendChild(v);
-      [300, 1200, 3000].forEach(function (d) { setTimeout(watchLogo, d); });
-      setTimeout(reveal, 20000);   /* safety: never leave the shimmer forever */
-    }
-
-    /* the viewer module is kicked off in <head> at parse time — mount the moment
-       the element is defined so the (preloaded) scene paints as early as possible. */
-    if (!window.customElements) { if (sk) sk.classList.add("gone"); return; }
-    if (customElements.get("spline-viewer")) { mount(); return; }
-    customElements.whenDefined("spline-viewer").then(mount);
-    if (!window.__splineViewerSrc) {   /* fallback if the head bootstrap was skipped */
-      var s = document.createElement("script");
-      s.type = "module";
-      s.src = "https://cdn.jsdelivr.net/npm/@splinetool/viewer/build/spline-viewer.js";
-      s.onerror = function () { if (sk) sk.classList.add("gone"); };
-      document.head.appendChild(s);
-    }
-  })();
 
   /* ── Geolocation clock (Haversine nearest airport) ── */
   (function () {

@@ -144,13 +144,10 @@ html.nav-locked, html.nav-locked body { overflow: hidden; }
 
 /* ════════════ HERO ════════════ */
 .hero { position: relative; min-height: 100vh; min-height: 100svh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: clamp(6rem, 10vh, 8rem) clamp(1.5rem, 6vw, 5rem) 4rem; gap: 2rem; max-width: 1400px; margin: 0 auto; }
-/* full-bleed: break out of the 1400px hero so the scene spans the whole viewport */
-.hero-spline { position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); z-index: 1; pointer-events: none; overflow: hidden; }
-.hero-spline spline-viewer { width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s ease; transform: scale(1.18); transform-origin: center center; }
-.hero-spline spline-viewer.loaded { opacity: 0.9; }
-.spline-skeleton { position: absolute; inset: 0; background: radial-gradient(circle at 62% 48%, rgba(201,162,90,0.10), transparent 55%); animation: skel 2.4s ease-in-out infinite; }
-@keyframes skel { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
-.spline-skeleton.gone { opacity: 0; transition: opacity .6s; pointer-events: none; }
+/* full-bleed: break out of the 1400px hero so the visual spans the whole viewport */
+.hero-visual { position: absolute; top: 0; bottom: 0; left: 50%; width: 100vw; transform: translateX(-50%); z-index: 1; pointer-events: none; overflow: hidden; }
+.hero-visual canvas { width: 100%; height: 100%; display: block; opacity: 0; animation: heroin 1.4s var(--ease) .1s forwards; }
+@keyframes heroin { to { opacity: 1; } }
 
 /* line art */
 .hero-lineart { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; color: rgba(201,162,90,0.42); pointer-events: none; filter: drop-shadow(0 0 6px rgba(201,162,90,0.16)); }
@@ -559,7 +556,7 @@ html.no-js .reveal { opacity: 1; transform: none; }
 }
 @media (max-width: 768px) {
   .nav-links { display: none; }
-  .hero-spline { display: none; }       /* mobile fallback: constellation only */
+  .hero-visual { opacity: 0.45; }       /* cheap native canvas — keep on mobile, just quieter */
   .hero-lineart { opacity: 0.5; }
   .hud-clock { top: auto; bottom: max(1rem, env(safe-area-inset-bottom)); left: max(1rem, env(safe-area-inset-left)); right: auto; }
   .brh { display: none; }
