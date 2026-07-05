@@ -157,14 +157,14 @@
 
     gsap.utils.toArray(".th-section").forEach(function (el) {
       gsap.from(el, {
-        opacity: 0, y: 30, duration: 0.8, ease: "power2.out",
-        scrollTrigger: { trigger: el, start: "top 88%", toggleActions: "play none none none" }
+        opacity: 0, y: 30, duration: 0.9, ease: "power3.out",
+        scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" }
       });
     });
 
     gsap.utils.toArray(".method-diagram").forEach(function (el) {
       gsap.from(el, {
-        opacity: 0, scale: 0.96, duration: 0.7, ease: "power2.out",
+        opacity: 0, scale: 0.96, duration: 0.9, ease: "power3.out",
         scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" }
       });
     });

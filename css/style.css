@@ -21,7 +21,12 @@
   --serif: 'Cormorant Garamond', Georgia, serif;
   --sans: 'DM Sans', system-ui, sans-serif;
   --mono: 'JetBrains Mono', monospace;
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  /* ── motion tokens (single source of truth, mirrored in home.css) ── */
+  --ease:      cubic-bezier(0.16, 1, 0.3, 1);   /* signature out-expo */
+  --ease-io:   cubic-bezier(0.76, 0, 0.24, 1);  /* symmetric in-out */
+  --dur-fast:  0.25s;
+  --dur-med:   0.45s;
+  --dur-slow:  0.9s;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
