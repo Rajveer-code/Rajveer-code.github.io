@@ -130,6 +130,22 @@
     })();
   }
 
+  /* ── page-transition fallback: browsers without cross-document view transitions ── */
+  (function () {
+    if ("startViewTransition" in document || reduced) return;
+    document.documentElement.classList.add("vt-fallback");
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest("a[href]");
+      if (!a || a.target === "_blank" || e.metaKey || e.ctrlKey) return;
+      var url = new URL(a.href, location.href);
+      if (url.origin !== location.origin || (url.pathname === location.pathname && url.hash)) return;
+      e.preventDefault();
+      document.documentElement.classList.add("vt-leaving");
+      setTimeout(function () { location.href = a.href; }, 190);
+    });
+    addEventListener("pageshow", function () { document.documentElement.classList.remove("vt-leaving"); });
+  })();
+
   /* ── Lenis smooth scroll ── */
   var lenis;
   if (typeof Lenis !== "undefined" && !reduced) {

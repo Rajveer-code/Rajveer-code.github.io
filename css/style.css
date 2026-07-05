@@ -35,6 +35,18 @@
   --step-4: clamp(2.4rem, 1.7rem + 3.5vw, 4.4rem);
 }
 
+/* ── cross-document view transitions (Chromium; others fall back to JS fade) ── */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: vt-out .28s var(--ease) both; }
+::view-transition-new(root) { animation: vt-in .34s var(--ease) both; }
+@keyframes vt-out { to { opacity: 0; transform: translateY(-6px); } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(8px); } }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .01s; }
+}
+.vt-fallback body { transition: opacity .19s ease; }
+.vt-fallback.vt-leaving body { opacity: 0; }
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { -webkit-font-smoothing: antialiased; }
 html.js { scroll-behavior: auto; }

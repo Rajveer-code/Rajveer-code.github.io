@@ -12,6 +12,9 @@
   (function () {
     var loader = document.getElementById("loader");
     if (!loader) return;
+    var seen = false;
+    try { seen = sessionStorage.getItem("__seen") === "1"; sessionStorage.setItem("__seen", "1"); } catch (e) {}
+    if (seen) { loader.parentNode.removeChild(loader); return; }   /* returning within session: no curtain */
     var done = false;
     function hide() {
       if (done) return; done = true;
@@ -21,6 +24,22 @@
     if (document.readyState === "complete") setTimeout(hide, 350);
     else window.addEventListener("load", function () { setTimeout(hide, 350); });
     setTimeout(hide, reduced ? 400 : 900);   /* hard cap — no heavy scene to mask anymore */
+  })();
+
+  /* ── page-transition fallback: browsers without cross-document view transitions ── */
+  (function () {
+    if ("startViewTransition" in document || reduced) return;
+    document.documentElement.classList.add("vt-fallback");
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest("a[href]");
+      if (!a || a.target === "_blank" || e.metaKey || e.ctrlKey) return;
+      var url = new URL(a.href, location.href);
+      if (url.origin !== location.origin || (url.pathname === location.pathname && url.hash)) return;
+      e.preventDefault();
+      document.documentElement.classList.add("vt-leaving");
+      setTimeout(function () { location.href = a.href; }, 190);
+    });
+    addEventListener("pageshow", function () { document.documentElement.classList.remove("vt-leaving"); });
   })();
 
   /* ── Scroll-position memory (back/forward nav) ──
