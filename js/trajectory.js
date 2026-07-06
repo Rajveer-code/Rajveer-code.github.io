@@ -134,7 +134,7 @@
   var RE = ym(YEND);
 
   /* ── geometry constants (from reference Bn — desktop, CENTERED split) ── */
-  var PE = 60, ZT = 80, OT = 2.8, STRIP_PAD = 140;
+  var PE = 60, ZT = 80, OT = 3.6, STRIP_PAD = 140;   /* OT raised: more time-space so cards fit their slots and bars line up */
   var BAR_GAP = 40, BAR_W = 2, LANE_GAP = 16, CARD_GAP = 22, EDGE = 40;
   var SYS_CARD_MAX = 320, RES_CARD_MAX = 380;
   var PAD_L = 14, PAD_T = 12, PAD_B = 16, HEAD_GAP = 14;   /* card paddings */
@@ -252,43 +252,39 @@
     viewport = el("div", "position:relative;width:100%;flex:1;overflow:hidden;");
     layer = el("div", "position:absolute;top:0;left:0;width:100%;height:" + chartH + "px;will-change:transform;");
 
-    /* year gridlines */
-    YEARS.forEach(function (yr) {
-      var y = toPy([yr, 0]);
-      if (y >= 0 && y <= chartH) layer.appendChild(el("div", "position:absolute;left:0;right:0;top:" + y + "px;height:1px;background:rgba(255,255,255,0.04);"));
+    /* month ticks — quarterly cadence (Jun 2025, Sep 2025, Dec 2025, …) */
+    var MABBR = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var TICK_MONTHS = 3;
+    var ticks = [];
+    for (var mo = 0; mo <= RE; mo += TICK_MONTHS) {
+      var absM = Y0[1] + mo;
+      ticks.push({ y: PE + mo * monthPx, label: MABBR[absM % 12] + " " + (Y0[0] + Math.floor(absM / 12)) });
+    }
+
+    /* gridlines at each tick */
+    ticks.forEach(function (t) {
+      if (t.y >= 0 && t.y <= chartH) layer.appendChild(el("div", "position:absolute;left:0;right:0;top:" + t.y + "px;height:1px;background:rgba(255,255,255,0.04);"));
     });
 
-    /* spine segments (broken at each year tick) */
-    var tickYs = YEARS.map(function (yr) { return toPy([yr, 0]); }).filter(function (y) { return y >= 0 && y <= chartH; }).sort(function (a, b) { return a - b; });
+    /* spine segments (broken at each tick so the label sits in the gap) */
+    var tickYs = ticks.map(function (t) { return t.y; }).filter(function (y) { return y >= 0 && y <= chartH; }).sort(function (a, b) { return a - b; });
     var cur = 0;
     tickYs.forEach(function (ty) {
-      var gap = ty - 11 - cur;
+      var gap = ty - 12 - cur;
       if (gap > 0) layer.appendChild(el("div", "position:absolute;left:" + SPINE_X + "px;top:" + cur + "px;height:" + gap + "px;width:1px;background:rgba(255,255,255,0.15);"));
-      cur = ty + 11;
+      cur = ty + 12;
     });
     if (chartH - cur > 0) layer.appendChild(el("div", "position:absolute;left:" + SPINE_X + "px;top:" + cur + "px;height:" + (chartH - cur) + "px;width:1px;background:rgba(255,255,255,0.15);"));
 
-    /* year tick marks + labels */
-    YEARS.forEach(function (yr) {
-      var y = toPy([yr, 0]);
-      if (y < 0 || y > chartH) return;
-      layer.appendChild(el("div", "position:absolute;top:" + y + "px;left:" + (SPINE_X - 5) + "px;width:11px;height:1px;background:rgba(255,255,255,0.22);"));
-      layer.appendChild(el("span", "position:absolute;top:" + (y - 9) + "px;left:" + SPINE_X + "px;transform:translateX(-50%);font-family:" + FF_MONO + ";font-size:0.58rem;letter-spacing:0.06em;color:rgba(255,255,255,0.5);white-space:nowrap;", String(yr)));
+    /* tick marks + month labels centred on the spine */
+    ticks.forEach(function (t) {
+      if (t.y < 0 || t.y > chartH) return;
+      layer.appendChild(el("div", "position:absolute;top:" + t.y + "px;left:" + (SPINE_X - 5) + "px;width:11px;height:1px;background:rgba(255,255,255,0.22);"));
+      layer.appendChild(el("span", "position:absolute;top:" + (t.y - 8) + "px;left:" + SPINE_X + "px;transform:translateX(-50%);font-family:" + FF_MONO + ";font-size:0.56rem;letter-spacing:0.05em;color:rgba(255,255,255,0.5);white-space:nowrap;background:rgba(7,8,11,0.9);padding:0 7px;", t.label));
     });
 
-    /* duration bars */
-    barEls = [];
-    ENTRIES.forEach(function (e) {
-      var top = toPy(e.start);
-      var h = Math.max(monthPx * 1.4, (ym(e.end) - ym(e.start)) * monthPx);
-      var x = barLeftOf(e);
-      var bar = el("div", "position:absolute;top:" + top + "px;left:" + x + "px;width:" + BAR_W + "px;height:" + h + "px;background:" + e.color + ";border-radius:2px;opacity:0.82;");
-      layer.appendChild(bar);
-      barEls.push({ e: e, top: top, x: x, el: bar });
-    });
-
-    /* cards — centered on their bar midpoint, greedy non-overlap PER SIDE
-       (systems and research occupy separate columns, so they don't collide). */
+    /* cards laid out first — greedy non-overlap PER SIDE (systems and research
+       occupy separate columns, so they don't collide). Bars connect to these. */
     function layoutSide(list) {
       var arr = list.map(function (e) {
         var w = cardWidthOf(e), hh = cardHeight(e, w);
@@ -297,7 +293,7 @@
       }).sort(function (a, b) { return a.top - b.top; });
       var prevBottom = -Infinity;
       arr.forEach(function (p) {
-        if (p.top < prevBottom + 12) p.top = prevBottom + 12;
+        if (p.top < prevBottom + 14) p.top = prevBottom + 14;
         if (p.top < 0) p.top = 0;
         prevBottom = p.top + p.h;
       });
@@ -305,6 +301,34 @@
     }
     placed = layoutSide(ENTRIES.filter(function (e) { return e.track === "system"; }))
       .concat(layoutSide(ENTRIES.filter(function (e) { return e.track === "research"; })));
+    var placedMap = {};
+    placed.forEach(function (p) { placedMap[p.e.id] = p; });
+
+    /* duration bars at true time + a colour-matched leader tying each to its card */
+    barEls = [];
+    ENTRIES.forEach(function (e) {
+      var top = toPy(e.start);
+      var h = Math.max(monthPx * 0.9, (ym(e.end) - ym(e.start)) * monthPx);
+      var x = barLeftOf(e);
+      var p = placedMap[e.id];
+
+      /* leader: from the bar edge (bar mid-Y) to the card near edge (card mid-Y) */
+      if (p) {
+        var barMidY = top + h / 2;
+        var cardMidY = p.top + p.h / 2;
+        var x1, x2;
+        if (e.track === "system") { x1 = x + BAR_W; x2 = cardLeftOf(e); }        /* card is to the right */
+        else { x1 = x; x2 = cardLeftOf(e) + cardWidthOf(e); }                      /* card is to the left */
+        var dx = x2 - x1, dy = cardMidY - barMidY;
+        var len = Math.sqrt(dx * dx + dy * dy), ang = Math.atan2(dy, dx) * 180 / Math.PI;
+        layer.appendChild(el("div", "position:absolute;left:" + x1 + "px;top:" + barMidY + "px;width:" + len + "px;height:1px;background:" + e.color + ";opacity:0.25;transform-origin:0 0;transform:rotate(" + ang + "deg);pointer-events:none;"));
+        layer.appendChild(el("div", "position:absolute;left:" + (x1 - 2.5) + "px;top:" + (barMidY - 2.5) + "px;width:5px;height:5px;border-radius:50%;background:" + e.color + ";opacity:0.9;pointer-events:none;"));
+      }
+
+      var bar = el("div", "position:absolute;top:" + top + "px;left:" + x + "px;width:" + BAR_W + "px;height:" + h + "px;background:" + e.color + ";border-radius:2px;opacity:0.85;");
+      layer.appendChild(bar);
+      barEls.push({ e: e, top: top, x: x, el: bar });
+    });
 
     cardEls = [];
     placed.forEach(function (p) {
