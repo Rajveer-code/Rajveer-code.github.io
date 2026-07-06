@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&family=Playfair+Display:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/home.css?v=20">
+  <link rel="stylesheet" href="css/home.css?v=22">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -85,43 +85,21 @@
 
   <main id="top">
 
-    <!-- ════════════ HERO ════════════ -->
+    <!-- ════════════ HERO (reference port) ════════════ -->
     <section class="hero" id="hero">
-      <div class="hero-visual" aria-hidden="true"><canvas id="heroVisual"></canvas></div>
-
-      <!-- Decorative line art (draw-on animations) -->
-      <svg class="hero-lineart" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <g class="la-grid" stroke="currentColor" stroke-width="0.75" fill="none">
-          <path class="la-draw" d="M120,120 L1080,120" />
-          <path class="la-draw" d="M120,680 L1080,680" />
-          <path class="la-draw" d="M120,120 L120,680" />
-          <path class="la-draw" d="M1080,120 L1080,680" />
-        </g>
-        <g class="la-rings" stroke="currentColor" stroke-width="1" fill="none">
-          <circle class="la-draw" cx="600" cy="400" r="70" />
-          <circle class="la-draw" cx="600" cy="400" r="150" />
-          <circle class="la-draw" cx="600" cy="400" r="250" />
-        </g>
-        <g class="la-spokes" stroke="currentColor" stroke-width="0.75" fill="none">
-          <path class="la-draw" d="M600,400 L210,150" />
-          <path class="la-draw" d="M600,400 L990,150" />
-          <path class="la-draw" d="M600,400 L210,650" />
-          <path class="la-draw" d="M600,400 L990,650" />
-        </g>
-        <g class="la-nodes" fill="currentColor" stroke="none">
-          <circle class="la-dot" cx="210" cy="150" r="3" />
-          <circle class="la-dot" cx="990" cy="150" r="3" />
-          <circle class="la-dot" cx="210" cy="650" r="3" />
-          <circle class="la-dot" cx="990" cy="650" r="3" />
-          <circle class="la-dot" cx="600" cy="400" r="4" />
-        </g>
-      </svg>
+      <div class="hero-hairline" aria-hidden="true"></div>
 
       <!-- LEFT COLUMN — content -->
-      <div class="hero-left">
-        <p class="hero-kicker reveal">Not whether a model is accurate — whether the decision it drives is fair, honest, and holds under load.</p>
-        <h1 class="hero-name reveal">Rajveer<br>Singh Pall</h1>
-        <div class="hero-meta-row reveal">
+      <div class="hero-left" id="heroLeft">
+        <div class="hero-kicker-mask">
+          <p class="hero-kicker"><span class="kicker-dash" aria-hidden="true"></span><span>Not whether a model is accurate — whether the decision it drives is fair, honest, and holds under load.</span></p>
+        </div>
+        <h1 class="hero-name">
+          <span class="hero-name-mask"><span class="hero-name-line">Rajveer</span></span>
+          <span class="hero-name-mask"><span class="hero-name-line hero-name-line-2">Singh</span></span>
+          <span class="hero-name-mask hero-name-mask-last"><span class="hero-name-line hero-name-line-3">Pall</span></span>
+        </h1>
+        <div class="hero-meta-row">
           <div>
             <span class="hero-meta-label">Focus</span>
             <span class="hero-meta-value">ML &amp; Decision-Systems Research</span>
@@ -131,7 +109,7 @@
             <span class="hero-meta-value">GGITS, Jabalpur<br>B.Tech CS &amp; Business Systems</span>
           </div>
         </div>
-        <div class="hero-actions reveal">
+        <div class="hero-actions">
           <div style="display: flex; gap: 0.8rem; margin-bottom: 0.8rem; flex-wrap: wrap;">
             <a class="hero-icon-btn" href="mailto:rajveerpall04@gmail.com" data-cursor aria-label="Email">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
@@ -157,7 +135,7 @@
             </a>
           </div>
         </div>
-        <div class="hero-status reveal">
+        <div class="hero-status">
           <span class="status-dot"></span>
           OPTIMISING: DECISIONS · NOT: LEADERBOARDS
         </div>
@@ -165,16 +143,19 @@
 
       <!-- RIGHT COLUMN - portrait -->
       <div class="hero-photo-col" aria-hidden="true">
-        <div class="hero-photo-wrapper">
-          <img class="hero-photo" src="assets/portrait.jpg?v=3" alt="Rajveer Singh Pall" loading="eager" fetchpriority="high">
-        </div>
-        <div class="hero-photo-bar">
-          <span>ML RESEARCH • JABALPUR, INDIA</span>
-          <span>PYTHON • PYTORCH • XGBOOST • SHAP</span>
+        <div class="hero-photo-card" id="heroPhotoCard">
+          <div class="hero-photo-frame">
+            <img class="hero-photo" src="assets/portrait.jpg?v=3" alt="Rajveer Singh Pall" loading="eager" fetchpriority="high">
+            <div class="hero-photo-grad" aria-hidden="true"></div>
+          </div>
+          <div class="hero-photo-bar">
+            <span>ML RESEARCH • JABALPUR, INDIA</span>
+            <span>PYTHON • PYTORCH • XGBOOST • SHAP</span>
+          </div>
         </div>
       </div>
 
-      <a class="hero-scroll reveal" href="#about" data-cursor aria-label="Scroll down"><span>Scroll</span></a>
+      <a class="hero-scroll" href="#about" data-cursor aria-label="Scroll down"><span>Scroll</span></a>
     </section>
 
     <!-- ════════════ CREDENTIALS BAND ════════════ -->
@@ -657,8 +638,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="js/field.js?v=3"></script>
-  <script src="js/hero.js?v=2"></script>
-  <script src="js/home.js?v=16"></script>
+  <script src="js/home.js?v=17"></script>
   <script type="module" src="js/spiral.js?v=7"></script>
   <script defer src="js/trajectory.js?v=10"></script>
 </body>

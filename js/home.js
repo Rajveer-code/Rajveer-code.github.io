@@ -11,14 +11,18 @@
      or a short hard cap — the hero visual is native now, nothing heavy to wait for. */
   (function () {
     var loader = document.getElementById("loader");
-    if (!loader) return;
+    /* hero entrance animations (CSS) are gated on this class so they start
+       the moment the curtain lifts, not while it still covers the page */
+    function go() { document.documentElement.classList.add("hero-go"); }
+    if (!loader) { go(); return; }
     var seen = false;
     try { seen = sessionStorage.getItem("__seen") === "1"; sessionStorage.setItem("__seen", "1"); } catch (e) {}
-    if (seen) { loader.parentNode.removeChild(loader); return; }   /* returning within session: no curtain */
+    if (seen) { loader.parentNode.removeChild(loader); go(); return; }   /* returning within session: no curtain */
     var done = false;
     function hide() {
       if (done) return; done = true;
       loader.classList.add("gone");
+      go();
       setTimeout(function () { if (loader.parentNode) loader.parentNode.removeChild(loader); }, 700);
     }
     if (document.readyState === "complete") setTimeout(hide, 350);
@@ -304,8 +308,7 @@
   /* ── GSAP reveals ── */
   if (hasGSAP && typeof ScrollTrigger !== "undefined" && !reduced) {
     gsap.registerPlugin(ScrollTrigger);
-    /* hero entrance */
-    gsap.to(".hero .reveal", { opacity: 1, y: 0, duration: 0.8, stagger: 0.08, ease: "power3.out", delay: 0.2 });
+    /* hero entrance is pure CSS, gated on html.hero-go (added when the loader lifts) */
     /* sections on scroll */
     gsap.utils.toArray(".section .reveal").forEach(function (el) {
       gsap.to(el, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", overwrite: "auto",
@@ -584,42 +587,33 @@
   /* ------------------------------------------------------------------ */
   (function initHeroParallax() {
     if (!fine || reduced || !hasGSAP) return;
-    
+
     var hero = document.querySelector('.hero');
-    var leftCol = document.querySelector('.hero-left');
-    var photoCard = document.querySelector('.hero-photo-wrapper');
-    
+    var leftCol = document.getElementById('heroLeft');
+    var photoCard = document.getElementById('heroPhotoCard');
+
     if (!hero || !leftCol || !photoCard) return;
 
-    // Quick setters for blazing fast performance
-    var leftX = gsap.quickTo(leftCol, "x", { duration: 0.8, ease: "power3" });
-    var leftY = gsap.quickTo(leftCol, "y", { duration: 0.8, ease: "power3" });
-    
-    var cardRotX = gsap.quickTo(photoCard, "rotateX", { duration: 0.5, ease: "power3" });
-    var cardRotY = gsap.quickTo(photoCard, "rotateY", { duration: 0.5, ease: "power3" });
-    var cardX = gsap.quickTo(photoCard, "x", { duration: 0.8, ease: "power3" });
-    var cardY = gsap.quickTo(photoCard, "y", { duration: 0.8, ease: "power3" });
+    gsap.set(photoCard, { transformPerspective: 1000 });
 
-    hero.addEventListener("mousemove", function(e) {
-      // Calculate normalized cursor position from center of screen (-1 to 1)
-      var normX = (e.clientX / window.innerWidth) * 2 - 1;
-      var normY = -(e.clientY / window.innerHeight) * 2 + 1; // Invert Y
+    var leftX = gsap.quickTo(leftCol, "x", { duration: 0.5, ease: "power2" });
+    var leftY = gsap.quickTo(leftCol, "y", { duration: 0.5, ease: "power2" });
+    var cardRotX = gsap.quickTo(photoCard, "rotateX", { duration: 0.5, ease: "power2" });
+    var cardRotY = gsap.quickTo(photoCard, "rotateY", { duration: 0.5, ease: "power2" });
+    var cardX = gsap.quickTo(photoCard, "x", { duration: 0.5, ease: "power2" });
+    var cardY = gsap.quickTo(photoCard, "y", { duration: 0.5, ease: "power2" });
 
-      // Text column glides opposite to cursor
-      leftX(normX * -20);
-      leftY(normY * 15);
-      
-      // Image gently floats
-      cardX(normX * 12);
-      cardY(normY * -10);
-      
-      // The crucial 3D Bend/Tilt
-      cardRotX(normY * 8); // Tilts up/down
-      cardRotY(normX * 12); // Tilts left/right
+    /* reference transforms: X,K in -1..1 from viewport centre;
+       left col translate(X*8, K*5); portrait rotateY(X*7) rotateX(-K*5) translate(X*18, K*12) */
+    hero.addEventListener("mousemove", function (e) {
+      var X = (e.clientX / window.innerWidth - 0.5) * 2;
+      var K = (e.clientY / window.innerHeight - 0.5) * 2;
+      leftX(X * 8);  leftY(K * 5);
+      cardX(X * 18); cardY(K * 12);
+      cardRotY(X * 7); cardRotX(-K * 5);
     });
 
-    hero.addEventListener("mouseleave", function() {
-      // Smoothly snap back to origin
+    hero.addEventListener("mouseleave", function () {
       leftX(0); leftY(0);
       cardX(0); cardY(0);
       cardRotX(0); cardRotY(0);
