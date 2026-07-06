@@ -22,18 +22,19 @@
   var FF_SANS = '"DM Sans", system-ui, sans-serif';
 
   /* 14 entries — earliest first → top. track groups the bar lanes.
-     start/end estimated (owner-approved): Jun 2025 → Jul 2026, ~1-month
-     stagger per track, 1–3 month durations by project weight; no future dates. */
+     start/end estimated (owner-approved): Jun 2025 → Oct 2026, scheduled so the
+     SYSTEM side is strictly sequential (1 lane) and the RESEARCH side never has
+     more than 2 concurrent bars — mirrors the reference's clean lane structure. */
   var ENTRIES = [
     { id: "serenespace", track: "system", color: "#f59e0b", url: "project-serenespace.html",
-      role: "SereneSpace", company: "System · SIH 2025", start: [2025, 5], end: [2025, 10],
+      role: "SereneSpace", company: "System · SIH 2025", start: [2025, 5], end: [2025, 9],
       bullets: [
         "A no-login entry point — the barrier to first contact in student mental health is identity.",
         "Mood-based routing to check-ins, an AI companion, activities and peer community, with crisis escalation.",
         "Selected among the top 50 of 250 teams at Smart India Hackathon 2025.",
       ] },
     { id: "diabetes-eval", track: "research", color: "#10b981", url: "project-diabetes-eval.html",
-      role: "Type 2 Diabetes ML Evaluation", company: "IEEE · Accepted", start: [2025, 6], end: [2025, 8],
+      role: "Type 2 Diabetes ML Evaluation", company: "IEEE · Accepted", start: [2025, 5], end: [2025, 7],
       bullets: [
         "XGBoost reaches 0.794 AUC internally, 0.717 on an external population 83× larger.",
         "A 9.7% deployment gap quantified, with a full subgroup fairness audit.",
@@ -47,28 +48,28 @@
         "A genuine cross-sectional signal in Energy — information coefficient +0.31.",
       ] },
     { id: "indiafinbench", track: "research", color: "#06b6d4", url: "project-indiafinbench.html",
-      role: "IndiaFinBench", company: "Benchmark · in prep", start: [2026, 2], end: [2026, 5],
+      role: "IndiaFinBench", company: "Benchmark · in prep", start: [2026, 2], end: [2026, 4],
       bullets: [
         "The first benchmark over Indian financial regulation — SEBI & RBI text.",
         "406 expert QA items, 192 documents, 12 LLMs scored zero-shot.",
         "Hybrid RAG (FAISS + BM25, RRF) lifts Recall@5 to 0.785.",
       ] },
     { id: "finsight-web", track: "system", color: "#22d3ee", url: "project-finsight-web.html",
-      role: "FinSight + Web", company: "System", start: [2026, 0], end: [2026, 2],
+      role: "FinSight + Web", company: "System", start: [2026, 1], end: [2026, 3],
       bullets: [
         "A scroll-driven WebGL monograph that makes the FinSight findings explorable.",
         "Next.js 16 + React Three Fiber, rendering the signal field and equity curves.",
         "Shipped on Vercel for a non-technical reader.",
       ] },
     { id: "cpfe", track: "research", color: "#2dd4bf", url: "project-cpfe.html",
-      role: "Cross-Platform Fairness Failure", company: "IEEE TNNLS · submitted", start: [2026, 1], end: [2026, 3],
+      role: "Cross-Platform Fairness Failure", company: "IEEE TNNLS · submitted", start: [2026, 0], end: [2026, 2],
       bullets: [
         "Classifiers scoring AUC 0.98 within-platform collapse 30–39% off-platform.",
         "A five-axis audit shows calibration and equity failing in lockstep.",
         "Fairness that does not transfer between mental-health datasets.",
       ] },
     { id: "aria", track: "system", color: "#4ade80", url: "project-aria.html",
-      role: "ARIA Assistant", company: "System", start: [2026, 3], end: [2026, 5],
+      role: "ARIA Assistant", company: "System", start: [2026, 4], end: [2026, 6],
       bullets: [
         "A fully local voice AI — faster-whisper → Qwen3-8B → five-axis audit → Piper TTS.",
         "16 real tools, ≤7.1 GB VRAM on one RTX 4060, zero cloud LLM calls.",
@@ -89,35 +90,35 @@
         "A 40% smaller generalisation gap than a matched centralised model.",
       ] },
     { id: "disparities", track: "research", color: "#f97316", url: "project-disparities.html",
-      role: "Persistent Racial Disparities", company: "JHE · submitted", start: [2025, 8], end: [2025, 10],
+      role: "Persistent Racial Disparities", company: "JHE · submitted", start: [2025, 7], end: [2025, 9],
       bullets: [
         "Five identification strategies on 42M HMDA applications, 2020–2024.",
         "All confirm a 14.95 pp Black–White approval gap.",
         "≥44% survives maximally adversarial selection assumptions.",
       ] },
     { id: "cate-hmda", track: "research", color: "#60a5fa", url: "project-cate-hmda.html",
-      role: "Who Bears the Burden?", company: "JREFE · submitted", start: [2025, 9], end: [2025, 11],
+      role: "Who Bears the Burden?", company: "JREFE · submitted", start: [2025, 9], end: [2025, 11],   /* Oct–Dec '25 */
       bullets: [
         "Causal Forest Double ML on 42.3M HMDA applications.",
         "A 9.4 pp conditional Black approval penalty, net of 33 controls.",
         "Largest under manual underwriting.",
       ] },
     { id: "aria-audit", track: "research", color: "#f5ca40", url: "project-aria-audit.html",
-      role: "ARIA: Runtime Fairness Audit", company: "arXiv preprint", start: [2026, 4], end: [2026, 5],
+      role: "ARIA: Runtime Fairness Audit", company: "arXiv preprint", start: [2026, 5], end: [2026, 7],
       bullets: [
         "Inline counterfactual disparate-impact + equalized-odds on a model's actual output.",
         "Not a fixed offline benchmark — a live runtime property.",
         "Catches 33–39% of failures other guardrails miss, ~1.2s, zero cloud calls.",
       ] },
     { id: "conviction-ranking", track: "research", color: "#f472b6", url: "project-conviction-ranking.html",
-      role: "Overcoming the Transaction Cost Trap", company: "SSRN · working paper", start: [2026, 4], end: [2026, 6],
+      role: "Overcoming the Transaction Cost Trap", company: "SSRN · working paper", start: [2026, 6], end: [2026, 8],
       bullets: [
         "Naive thresholds churn the book — transaction costs quietly eat the gross ML alpha.",
         "Calibrated ensemble probabilities ranked as conviction; hold only the Top-1 asset each day.",
         "IC 0.0197 (p=0.034) over 1,512 days; Top-1 returns 45.8% at Sharpe 1.18, break-even 24.2 bps.",
       ] },
     { id: "fairscope", track: "system", color: "#e3c07e", url: "https://github.com/Rajveer-code/fairscope",
-      role: "fairscope", company: "System · PyPI library", start: [2026, 5], end: [2026, 6],
+      role: "fairscope", company: "System · PyPI library", start: [2026, 7], end: [2026, 9],
       bullets: [
         "Subgroup-stratified, calibration-aware fairness auditing as a pip-installable library.",
         "DeLong CIs for per-subgroup AUC, per-subgroup ECE/MCE, gap tests with Bonferroni/BH correction.",
@@ -125,9 +126,8 @@
       ] },
   ];
 
-  var YEARS = [2025, 2026];
   var Y0 = [2025, 5];            /* origin: Jun 2025 = month 0 (top) */
-  var YEND = [2026, 8];          /* axis end (padded below the last entry) */
+  var YEND = [2026, 10];         /* axis end (padded below the last entry, Oct '26) */
 
   /* ── time helpers ── */
   function ym(d) { return (d[0] - Y0[0]) * 12 + (d[1] - Y0[1]); }   /* months since origin */
@@ -391,7 +391,10 @@
 
   function period(e) {
     var m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    return m[e.start[1]] + " '" + String(e.start[0]).slice(2);
+    var sy = String(e.start[0]).slice(2), ey = String(e.end[0]).slice(2);
+    return sy === ey
+      ? m[e.start[1]] + "–" + m[e.end[1]] + " '" + sy
+      : m[e.start[1]] + " '" + sy + " – " + m[e.end[1]] + " '" + ey;
   }
 
   function el(tag, css, text) {
