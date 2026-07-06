@@ -398,10 +398,11 @@ html.hero-go .hero-status { animation: h-rise 0.7s ease 1.2s forwards; }
 .im-src { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); }
 
 /* ── Work cards ── */
-.work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; align-items: start; }
-.work-grid > .card { margin-bottom: 0; }
-.work-grid > .card-feature { grid-column: 1 / -1; order: 2; }
-@media (max-width: 1023px) { .work-grid { grid-template-columns: repeat(2, 1fr); } }
+.work-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.6rem; align-items: start; }
+.work-grid > .card { margin-bottom: 0; grid-column: span 2; }
+/* second row: two half-width cards (reference "rows fill" pattern) */
+.work-grid > .card-half { grid-column: span 3; order: 2; }
+@media (max-width: 1023px) { .work-grid { grid-template-columns: 1fr 1fr; } .work-grid > .card, .work-grid > .card-half { grid-column: span 1; } .work-grid > .card-half { order: 0; } }
 @media (max-width: 767px)  { .work-grid { grid-template-columns: 1fr; } }
 .card { position: relative; border: 1px solid var(--line); border-radius: 8px; padding: clamp(1.6rem, 3vw, 2.4rem); margin-bottom: 1.6rem; background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent); overflow: hidden; transition: border-color var(--dur-med) var(--ease-io), transform var(--dur-med) var(--ease-io), box-shadow var(--dur-med) var(--ease-io); will-change: transform; }
 .card:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); transform: translateY(-6px) scale(1.025); box-shadow: 0 22px 50px -22px rgba(0,0,0,0.72), 0 0 0 1px color-mix(in srgb, var(--accent) 14%, transparent); }
