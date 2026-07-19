@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=7">
+  <link rel="stylesheet" href="css/style.css?v=10">
   <style>
     /* Accent overrides only — shared structure now lives in css/style.css */
     .finding-card { border-color: rgba(245,158,11,0.2); }
@@ -53,11 +53,19 @@
     <div class="thinking-scroll">
       <div class="thinking-body">
         <a href="index.html#research" class="back-link">← Back to research</a>
-
+        <nav class="paper-nav" style="--pn-accent:#f59e0b" aria-label="On this page">
+          <a href="#discovery">Discovery</a>
+          <a href="#fivemin">5 minutes</a>
+          <a href="#question">Question</a>
+          <a href="#method">Method</a>
+          <a href="#results">Results</a>
+          <a href="#takeaways">Takeaways</a>
+        </nav>
         <header class="th-header">
           <div class="th-badge" style="color:#f59e0b">Submitted · Journal of Housing Economics · March 2026</div>
           <h1 class="th-title">Persistent Racial Disparities in U.S. Mortgage Approval</h1>
           <p class="th-subtitle">Evidence from 42.3 million HMDA applications, 2020–2024. Five independent identification strategies — DFL decomposition, within-lender fixed effects, regression discontinuity, difference-in-differences, and partial identification bounds — all reach the same conclusion.</p>
+          <p class="th-authors">Rajveer Singh Pall · 2026</p>
         </header>
 
         <div class="essence-strip">
@@ -78,16 +86,47 @@
 
         <div class="th-divider"></div>
 
+        <section class="th-section">
+          <h2 class="th-section-title">The Discovery in One Figure</h2>
+          <div class="fig-box">
+            <svg viewBox="0 0 720 380" fill="none" style="width:100%;height:auto;">
+              <text x="24" y="30" font-family="DM Mono, monospace" font-size="10" fill="rgba(255,255,255,0.45)" letter-spacing="0.08em">42M APPLICATIONS · RAW GAP 14.95 pp — BUT WHERE DOES IT LIVE?</text>
+              <text x="70" y="150" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="13" fill="rgba(255,255,255,0.8)">Applicant</text>
+              <line x1="112" y1="176" x2="168" y2="176" stroke="rgba(255,255,255,0.25)" stroke-width="1.2"/><polygon points="168,172 176,176 168,180" fill="rgba(255,255,255,0.25)"/>
+              <rect x="180" y="66" width="360" height="244" rx="12" stroke="rgba(255,255,255,0.22)" stroke-width="1" fill="rgba(255,255,255,0.02)"/>
+              <text x="360" y="96" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" fill="rgba(255,255,255,0.45)" letter-spacing="0.08em">INSIDE ONE LENDER</text>
+              <rect x="214" y="116" width="292" height="120" rx="8" stroke="#f59e0b" stroke-width="1" fill="rgba(245,158,11,0.14)"/>
+              <text x="360" y="168" text-anchor="middle" font-family="Playfair Display, serif" font-size="38" font-weight="700" fill="#f59e0b">74.6%</text>
+              <text x="360" y="196" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="13" fill="rgba(255,255,255,0.85)">of the gap is within-lender</text>
+              <text x="360" y="220" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(245,158,11,0.8)">rising 66.8% → 78.3% (2020→2024)</text>
+              <text x="360" y="284" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="11" fill="rgba(255,255,255,0.4)">only a minority sits between institutions</text>
+              <text x="630" y="176" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.4)">68% unexplained</text>
+              <text x="630" y="192" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.4)">by observables</text>
+              <text x="24" y="344" font-family="DM Mono, monospace" font-size="10" fill="#f59e0b" letter-spacing="0.08em">BOUNDARIES WIDEN IT</text>
+              <rect x="220" y="326" width="150" height="30" rx="6" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="rgba(255,255,255,0.03)"/>
+              <text x="295" y="345" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.65)">+2.0 pp @ 80% LTV</text>
+              <rect x="384" y="326" width="176" height="30" rx="6" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="rgba(255,255,255,0.03)"/>
+              <text x="472" y="345" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.65)">+1.5 pp · 2022 tightening</text>
+            </svg>
+            <p class="fig-caption">Three-quarters of the gap lives inside individual lenders — not between them.</p>
+          </div>
+        </section>
+
+        <section class="th-section">
+          <h2 class="th-section-title">The Paper in Five Minutes</h2>
+          <p class="th-body">Every U.S. mortgage application leaves a public record. Reading all 42 million of them from 2020–2024, Black applicants are approved about 15 percentage points less often than White applicants. This paper measures that gap carefully: most of it (68%) cannot be explained by anything visible in the public data, and three-quarters of it lives inside individual lenders rather than between them. Two natural experiments — an insurance-driven threshold at 80% loan-to-value, and the Federal Reserve's 2022 tightening — each widen the gap further. The paper never claims to prove intent; it maps the scale and the structure.</p>
+        </section>
+
         <!-- ── FRONT: Why this matters ── -->
         <section class="th-section">
-          <h2 class="th-section-title">Why This Question Matters</h2>
+          <h2 class="th-section-title">The Research Question</h2>
           <p class="th-body"><strong>This paper measures how much of the racial gap in mortgage approvals survives once creditworthiness is accounted for, and tests the answer five independent ways.</strong> A mortgage is the primary vehicle for wealth accumulation in most American households — who receives credit shapes financial trajectories, neighbourhood composition, and the persistent racial wealth gap. A substantial literature has documented for three decades that Black households face systematically higher denial rates than observably similar White households. But a single regression can always be dismissed as an omitted-variable artifact.</p>
           <p class="th-body" style="margin-top:0.9rem;">This paper asks three questions: How large is the <em>within-lender</em> racial approval differential — and has it changed over a macroeconomically turbulent five-year period? Does it concentrate at specific institutional rule boundaries? How does it behave under conservative, partial-identification assumptions about unobserved creditworthiness?</p>
         </section>
 
         <!-- ── FRONT: Five strategies at a glance (plain English) ── -->
         <section class="th-section">
-          <h2 class="th-section-title">Five Strategies at a Glance</h2>
+          <h2 class="th-section-title">How It Works: Five Strategies at a Glance</h2>
           <div class="fig-box">
             <div class="glance-row"><span class="glance-num">01</span><span class="glance-text">Compare what similar applicants got — controlling for income, loan amount, property value, and loan-to-value ratio.</span></div>
             <div class="glance-row"><span class="glance-num">02</span><span class="glance-text">Compare Black and White applicants evaluated by the <em>same</em> lender, in the same year — to rule out applicants simply choosing stricter lenders.</span></div>
@@ -99,7 +138,7 @@
 
         <!-- ── FRONT: Key results — method convergence ── -->
         <section class="th-section">
-          <h2 class="th-section-title">Key Result: Five Methods, One Answer</h2>
+          <h2 class="th-section-title">The Results: Five Methods, One Answer</h2>
           <blockquote class="pull">The raw Black–White approval gap is <strong>14.95 percentage points</strong>. Even after reweighting on every characteristic HMDA observes, 98.6% of this gap remains. The estimated scale: 126,000 fewer annual approvals for Black applicants.</blockquote>
           <div class="fig-box">
             <svg viewBox="0 0 700 320" fill="none" style="width:100%;height:auto;">
@@ -144,7 +183,7 @@
 
         <!-- ── FRONT: Takeaways ── -->
         <section class="th-section">
-          <h2 class="th-section-title">Key Takeaways</h2>
+          <h2 class="th-section-title">What This Changes</h2>
           <div class="findings-grid">
             <div class="finding-card">
               <div class="fc-num">14.95 pp</div>
@@ -382,7 +421,21 @@
 
         <div style="margin-bottom:3rem;">
           <a href="https://github.com/Rajveer-code" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#f59e0b;border-color:rgba(245,158,11,0.4);">↗ GitHub (Rajveer-code)</a>
+          <a href="https://ssrn.com/abstract=6334459" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#f59e0b;border-color:rgba(245,158,11,0.4);">↗ SSRN preprint</a>
+          <a href="https://rajveer-research.vercel.app/research/mortgage-disparities/" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#f59e0b;border-color:rgba(245,158,11,0.4);">↗ Full research page</a>
         </div>
+        <section class="th-section">
+          <h2 class="th-section-title">Citation</h2>
+          <div class="cite-block">Rajveer Singh Pall. "Persistent Racial Disparities in U.S. Mortgage Approval: Evidence from 42 Million Applications, 2020–2024." Submitted to Journal of Housing Economics, March 2026. SSRN preprint 6334459.</div>
+          <p class="caveat-note">HMDA lacks credit scores/assets; estimates framed as upper bounds on conditional differentials.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Related Research</h2>
+          <div class="related-row" style="--pn-accent:#f59e0b">
+            <a href="project-cate-hmda.html"><span>Who Bears the Burden? — the causal companion at the same scale</span><span class="rel-status">Under journal review</span></a>
+            <a href="project-trustshift.html"><span>TrustShift — the thesis that binds the program</span><span class="rel-status">Applied Intelligence</span></a>
+          </div>
+        </section>
         <div class="th-footer">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
       </div>
     </div>
@@ -403,6 +456,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="js/field.js?v=3"></script>
-  <script src="js/detail.js?v=5"></script>
+  <script src="js/detail.js?v=6"></script>
 </body>
 </html>

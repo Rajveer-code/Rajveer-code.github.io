@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=7">
+  <link rel="stylesheet" href="css/style.css?v=10">
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>
@@ -30,10 +30,19 @@
     <div class="thinking-scroll">
       <div class="thinking-body">
         <a href="index.html#research" class="back-link">← Back to research</a>
+        <nav class="paper-nav" style="--pn-accent:#eab308" aria-label="On this page">
+          <a href="#discovery">Discovery</a>
+          <a href="#fivemin">5 minutes</a>
+          <a href="#question">Question</a>
+          <a href="#method">Method</a>
+          <a href="#results">Results</a>
+          <a href="#takeaways">Takeaways</a>
+        </nav>
         <header class="th-header">
-          <div class="th-badge" style="color:#eab308">Submitted · J. Real Estate Finance &amp; Economics · 2026</div>
+          <div class="th-badge" style="color:#eab308">Under Journal Review · 2026</div>
           <h1 class="th-title">Who Bears the Burden?</h1>
           <p class="th-subtitle">Heterogeneous Racial Approval Differentials in U.S. Mortgage Lending — causal forest double ML on 42.3 million applications.</p>
+          <p class="th-authors">Rajveer Singh Pall · 2026</p>
         </header>
         <div class="essence-strip">
           <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">Black mortgage applicants are approved far less often than White applicants — the open question is how much of that survives once creditworthiness is accounted for.</span></div>
@@ -42,67 +51,94 @@
           <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">Points the cause at human discretion in underwriting, not the algorithms — the opposite of where bias concerns usually focus.</span></div>
         </div>
         <div class="th-divider"></div>
-        <div class="metrics-grid">
-          <div class="metric-block"><span class="metric-value" style="color:#eab308">42.3M</span><span class="metric-label">HMDA applications</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#eab308">−9.39 pp</span><span class="metric-label">Conditional penalty</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#eab308">90.7%</span><span class="metric-label">Applicants penalised</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#eab308">17.9×</span><span class="metric-label">Placebo signal-to-noise</span></div>
-        </div>
-        <div class="th-divider"></div>
         <section class="th-section">
-          <h2 class="th-section-title">The Question</h2>
+          <h2 class="th-section-title">The Discovery in One Figure</h2>
+          <div class="fig-box">
+            <div class="result-bar-row">
+              <div class="result-bar-label"><span>Manual underwriting</span><span class="result-bar-value">−14.8 pp</span></div>
+              <div class="result-bar-track"><div class="result-bar-fill" style="width:100%;"></div></div>
+            </div>
+            <div class="result-bar-row">
+              <div class="result-bar-label"><span>Automated underwriting</span><span class="result-bar-value">−6.2 pp</span></div>
+              <div class="result-bar-track"><div class="result-bar-fill" style="width:42%;"></div></div>
+            </div>
+            <p class="fig-caption">The gap is driven by human discretion, not automated scoring</p>
+          </div>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">The Paper in Five Minutes</h2>
+          <p class="th-body">Knowing the average approval gap is not enough — averages hide who actually pays. Using methods from modern causal inference (the same family behind clinical-trial analysis), this paper estimates the approval penalty for each applicant profile across 42 million mortgage applications. The distribution is wide: nine in ten Black applicants face some estimated penalty, and the decisive factor is not the applicant but the process — applications handled by human underwriters carry more than double the penalty of those decided by automated systems. That points the fairness question at something a regulator can act on: how applications are routed.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">The Research Question</h2>
           <p class="th-body">Across <strong>42.3 million</strong> HMDA mortgage applications (2020–2024), the raw Black–White approval gap is <strong>14.95 percentage points</strong>. The interesting question is causal, not descriptive: how much of that gap survives once genuine creditworthiness is accounted for — and who, specifically, bears it?</p>
         </section>
         <section class="th-section">
-          <h2 class="th-section-title">Approach</h2>
+          <h2 class="th-section-title">How It Works</h2>
           <p class="th-body">I estimate individual-level conditional average treatment effects with <strong>double machine learning</strong> (LightGBM nuisance models, cross-fitting) and <strong>causal forests</strong>, adjusting for <strong>33 creditworthiness controls</strong> — income, LTV, DTI, loan purpose and type, automated-vs-manual underwriting, and geography. Cross-fitting removes regularization bias so the effect estimate is not contaminated by the prediction models.</p>
-        </section>
-        <section class="th-section">
-          <h2 class="th-section-title">Triangulation</h2>
           <p class="th-body">The headline estimate is triangulated across five independent identification strategies — <strong>DFL decomposition</strong>, <strong>within-lender fixed effects</strong>, <strong>RDD</strong> at the 80% LTV PMI threshold, <strong>difference-in-differences</strong> across the 2022–24 tightening, and <strong>Manski partial-identification bounds</strong>. A race-shuffle placebo yields a <strong>17.9× signal-to-noise ratio</strong>; the DR-Learner replicates the estimate within 0.15 pp.</p>
+          <div class="mf-flow" style="--pn-accent:#eab308">
+            <div class="mf-step"><span class="mf-num">01</span><div><span class="mf-label">Engineer at scale</span><span class="mf-note">42M HMDA applications → 2M/1.5M estimation samples</span></div></div>
+            <div class="mf-step"><span class="mf-num">02</span><div><span class="mf-label">Isolate the differential</span><span class="mf-note">double machine learning, LightGBM nuisances, 5-fold cross-fitting</span></div></div>
+            <div class="mf-step"><span class="mf-num">03</span><div><span class="mf-label">Map who bears it</span><span class="mf-note">causal forest estimates the penalty per applicant profile</span></div></div>
+            <div class="mf-step"><span class="mf-num">04</span><div><span class="mf-label">Find the mechanism</span><span class="mf-note">manual vs automated underwriting · same lender, same year</span></div></div>
+            <div class="mf-step"><span class="mf-num">05</span><div><span class="mf-label">Attack the result</span><span class="mf-note">placebo shuffles · Oster bounds · Cinelli–Hazlett sensitivity</span></div></div>
+          </div>
         </section>
-        <section class="th-section">
-          <h2 class="th-section-title">Outcome</h2>
-          <p class="th-body">A <strong>−9.39 pp</strong> mean conditional penalty remains after controls — <strong>62.8%</strong> of the raw gap is left unexplained by observable creditworthiness. <strong>90.7%</strong> of Black applicants face a negative conditional effect, and the penalty is largest under <strong>manual underwriting (−14.8 pp)</strong> versus automated systems (−6.2 pp), implicating human discretion over algorithmic scoring as the dominant channel.</p>
-        </section>
-        <section class="th-section">
-  <h2 class="th-section-title">Methodology Pipeline</h2>
-  <div class="method-diagram" style="padding: 2rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: linear-gradient(180deg, rgba(255,255,255,0.015) 0%, transparent 100%); margin-bottom: 2rem;">
-    <svg viewBox="0 0 700 120" fill="none" style="width:100%;height:auto;">
-      <rect x="44.0" y="35" width="120" height="50" rx="6" stroke="#eab308" stroke-width="1" fill="rgba(234, 179, 8,0.08)" />
-      <text x="104.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">42.3M RECORDS</text>
-      <line x1="169.0" y1="60.0" x2="195.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
-      <polygon points="195.0,56.0 203.0,60.0 195.0,64.0" fill="rgba(255,255,255,0.2)" />
-      <rect x="208.0" y="35" width="120" height="50" rx="6" stroke="#eab308" stroke-width="1" fill="rgba(234, 179, 8,0.08)" />
-      <text x="268.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">CAUSAL FOREST</text>
-      <line x1="333.0" y1="60.0" x2="359.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
-      <polygon points="359.0,56.0 367.0,60.0 359.0,64.0" fill="rgba(255,255,255,0.2)" />
-      <rect x="372.0" y="35" width="120" height="50" rx="6" stroke="#eab308" stroke-width="1" fill="rgba(234, 179, 8,0.08)" />
-      <text x="432.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">DR-LEARNER</text>
-      <line x1="497.0" y1="60.0" x2="523.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
-      <polygon points="523.0,56.0 531.0,60.0 523.0,64.0" fill="rgba(255,255,255,0.2)" />
-      <rect x="536.0" y="35" width="120" height="50" rx="6" stroke="#eab308" stroke-width="1" fill="rgba(234, 179, 8,0.08)" />
-      <text x="596.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">AUDIT CHANNEL</text>
-    </svg>
+<section class="th-section">
+  <h2 class="th-section-title">The Results</h2>
+  <div class="metrics-grid">
+    <div class="metric-block"><span class="metric-value" style="color:#eab308">42.3M</span><span class="metric-label">HMDA applications</span></div>
+    <div class="metric-block"><span class="metric-value" style="color:#eab308">−9.39 pp</span><span class="metric-label">Conditional penalty</span></div>
+    <div class="metric-block"><span class="metric-value" style="color:#eab308">90.7%</span><span class="metric-label">Applicants penalised</span></div>
+    <div class="metric-block"><span class="metric-value" style="color:#eab308">17.9×</span><span class="metric-label">Placebo signal-to-noise</span></div>
   </div>
+  <p class="th-body">A <strong>−9.39 pp</strong> mean conditional penalty remains after controls — <strong>62.8%</strong> of the raw gap is left unexplained by observable creditworthiness. <strong>90.7%</strong> of Black applicants face a negative conditional effect, and the penalty is largest under <strong>manual underwriting (−14.8 pp)</strong> versus automated systems (−6.2 pp), implicating human discretion over algorithmic scoring as the dominant channel.</p>
+  <div class="fig-box">
+    <p class="fb-title">Conditional approval penalty by underwriting channel</p>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Manual underwriting</span><span class="result-bar-value">−14.79 pp</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:98.6%;background:#eab308;"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Pooled (all channels)</span><span class="result-bar-value">−9.39 pp</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:62.6%;background:rgba(255,255,255,0.35);"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Same lender, same year</span><span class="result-bar-value">−7.13 pp</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:47.5%;background:rgba(255,255,255,0.35);"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Automated systems</span><span class="result-bar-value">−6.17 pp</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:41.1%;background:rgba(255,255,255,0.35);"></div></div>
+    </div>
+    <p class="fig-caption">Bar length = size of the estimated Black–White differential (all negative). The channel, not the applicant, is decisive.</p>
+  </div>
+  <figure class="paper-fig"><img src="assets/figures/cate-hmda/fig2_dml_results.png" alt="Double-machine-learning estimates across specifications" loading="lazy"><figcaption>Double-machine-learning estimates of the conditional approval differential across specifications.</figcaption></figure>
+  <figure class="paper-fig"><img src="assets/figures/cate-hmda/fig3_cate_distribution.png" alt="Distribution of individual-level estimated effects" loading="lazy"><figcaption>The distribution of individual-level estimated effects: wide heterogeneity, overwhelmingly negative.</figcaption></figure>
+  <figure class="paper-fig"><img src="assets/figures/cate-hmda/fig5_shap_attribution.png" alt="SHAP attribution over the causal-forest estimates" loading="lazy"><figcaption>SHAP attribution over the causal-forest estimates: what drives who bears the penalty.</figcaption></figure>
+  <p class="caveat-note">Level treated as an upper bound (no credit scores in HMDA); the channel contrast is the robust object.</p>
 </section>
 <section class="th-section">
-  <h2 class="th-section-title">Key Result</h2>
-  <div class="fig-box">
-    <div class="result-bar-row">
-      <div class="result-bar-label"><span>Manual underwriting</span><span class="result-bar-value">−14.8 pp</span></div>
-      <div class="result-bar-track"><div class="result-bar-fill" style="width:100%;"></div></div>
-    </div>
-    <div class="result-bar-row">
-      <div class="result-bar-label"><span>Automated underwriting</span><span class="result-bar-value">−6.2 pp</span></div>
-      <div class="result-bar-track"><div class="result-bar-fill" style="width:42%;"></div></div>
-    </div>
-    <p class="fig-caption">The gap is driven by human discretion, not automated scoring</p>
-  </div>
+  <h2 class="th-section-title">What This Changes</h2>
+  <p class="th-body">It points the fairness question at an actionable mechanism — lender-controlled routing and handling of applications — rather than at applicant characteristics. A regulator can act on how applications are routed; an applicant cannot.</p>
 </section>
-<div style="margin-bottom:3rem;">
+<div style="margin-bottom:3rem; display:flex; flex-wrap:wrap; gap:1rem;">
           <a href="https://github.com/Rajveer-code/CATE-HMDA-Heterogeneous-Effects" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#eab308;border-color:rgba(234,179,8,0.4);">↗ View on GitHub</a>
+          <a href="https://ssrn.com/abstract=6984959" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#eab308;border-color:rgba(234,179,8,0.4);">↗ SSRN preprint</a>
+          <a href="https://rajveer-research.vercel.app/research/cate-hmda/" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#eab308;border-color:rgba(234,179,8,0.4);">↗ Full research page</a>
         </div>
+        <section class="th-section">
+          <h2 class="th-section-title">Citation</h2>
+          <div class="cite-block">Rajveer Singh Pall. "Who Bears the Burden? Heterogeneous Racial Approval Differentials in U.S. Mortgage Lending: Causal Forest DML on 42 Million HMDA Applications." Under journal review, 2026. SSRN preprint 6984959.</div>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Related Research</h2>
+          <div class="related-row" style="--pn-accent:#eab308">
+            <a href="project-disparities.html"><span>Persistent Racial Disparities — the descriptive companion at 42M scale</span><span class="rel-status">Submitted · JHE</span></a>
+            <a href="project-trustshift.html"><span>TrustShift — the thesis that binds the program</span><span class="rel-status">Applied Intelligence</span></a>
+          </div>
+        </section>
         <div class="th-footer">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
       </div>
     </div>
@@ -124,6 +160,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="js/field.js?v=3"></script>
-  <script src="js/detail.js?v=5"></script>
+  <script src="js/detail.js?v=6"></script>
 </body>
 </html>

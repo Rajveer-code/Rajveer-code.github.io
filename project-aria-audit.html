@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=7">
+  <link rel="stylesheet" href="css/style.css?v=10">
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>
@@ -30,10 +30,19 @@
     <div class="thinking-scroll">
       <div class="thinking-body">
         <a href="index.html#research" class="back-link">← Back to research</a>
+        <nav class="paper-nav" style="--pn-accent:#f5ca40" aria-label="On this page">
+          <a href="#discovery">Discovery</a>
+          <a href="#fivemin">5 minutes</a>
+          <a href="#question">Question</a>
+          <a href="#method">Method</a>
+          <a href="#results">Results</a>
+          <a href="#takeaways">Takeaways</a>
+        </nav>
         <header class="th-header">
           <div class="th-badge" style="color:#f5ca40">arXiv preprint · Sep 2026 · Sole author</div>
           <h1 class="th-title">ARIA: Runtime 5-Axis Fairness Audit</h1>
           <p class="th-subtitle">Most fairness evaluation happens once, offline, before a model ships. ARIA audits every single response, inline, the moment it's generated.</p>
+          <p class="th-authors">Rajveer Singh Pall · 2026</p>
         </header>
         <div class="essence-strip">
           <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">A model can pass its fairness benchmark on day one and still drift into biased behavior in production — offline evaluation never catches that.</span></div>
@@ -42,19 +51,31 @@
           <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">Turns fairness from a one-time certificate into a property the system checks on itself, continuously.</span></div>
         </div>
         <div class="th-divider"></div>
-        <div class="metrics-grid">
-          <div class="metric-block"><span class="metric-value" style="color:#f5ca40">33–39%</span><span class="metric-label">Extra failures caught</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#f5ca40">~1.2s</span><span class="metric-label">Audit latency</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#f5ca40">6.5 GB</span><span class="metric-label">VRAM (audit only)</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#f5ca40">0</span><span class="metric-label">Cloud calls</span></div>
-        </div>
-        <div class="th-divider"></div>
         <section class="th-section">
-          <h2 class="th-section-title">What Is This</h2>
+          <h2 class="th-section-title">The Discovery in One Figure</h2>
+          <div class="fig-box">
+            <div class="compare-pair">
+              <div class="compare-before">
+                <div class="compare-label">Standard guardrails</div>
+                <div class="compare-stat">Benchmark-only</div>
+                <p class="compare-desc">Evaluated once, offline, against a fixed test set — blind to anything that drifts after deployment.</p>
+              </div>
+              <div class="compare-arrow">→</div>
+              <div class="compare-after" style="border-color:rgba(245,202,64,0.25);background:rgba(245,202,64,0.05);">
+                <div class="compare-label">ARIA</div>
+                <div class="compare-stat" style="color:#f5ca40;">+33-39% caught</div>
+                <p class="compare-desc">Audits the actual response, every time, in ~1.2s — catching failures a one-time benchmark structurally cannot see.</p>
+              </div>
+            </div>
+            <p class="fig-caption">Same model, same deployment — the difference is checking once versus checking continuously</p>
+          </div>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">The Paper in Five Minutes</h2>
           <p class="th-body">Almost every fairness benchmark works the same way: run the model against a fixed test set once, report a score, ship. ARIA treats fairness as something to check continuously instead — on the actual, free-form text a model produces in the wild, not just on a curated benchmark it may have been tuned against.</p>
         </section>
         <section class="th-section">
-          <h2 class="th-section-title">Why It Was Built</h2>
+          <h2 class="th-section-title">The Research Question</h2>
           <p class="th-body">A one-time benchmark score tells you nothing about the response a model gives a real user tomorrow. ARIA closes that gap by generating counterfactual variants of the input — swapping demographic references while holding everything else constant — and comparing how the model's output changes. If the response shifts in ways unrelated to the actual question, that's flagged before the user ever sees it.</p>
         </section>
         <section class="th-section">
@@ -80,26 +101,17 @@
           <p class="th-body">Disparate impact and equalized-odds-style metrics are computed inline, per response, across the counterfactual set — entirely on-device, with no call to an external API and no stored benchmark to game.</p>
         </section>
         <section class="th-section">
-          <h2 class="th-section-title">Key Result</h2>
-          <div class="fig-box">
-            <div class="compare-pair">
-              <div class="compare-before">
-                <div class="compare-label">Standard guardrails</div>
-                <div class="compare-stat">Benchmark-only</div>
-                <p class="compare-desc">Evaluated once, offline, against a fixed test set — blind to anything that drifts after deployment.</p>
-              </div>
-              <div class="compare-arrow">→</div>
-              <div class="compare-after" style="border-color:rgba(245,202,64,0.25);background:rgba(245,202,64,0.05);">
-                <div class="compare-label">ARIA</div>
-                <div class="compare-stat" style="color:#f5ca40;">+33-39% caught</div>
-                <p class="compare-desc">Audits the actual response, every time, in ~1.2s — catching failures a one-time benchmark structurally cannot see.</p>
-              </div>
-            </div>
-            <p class="fig-caption">Same model, same deployment — the difference is checking once versus checking continuously</p>
+          <h2 class="th-section-title">The Results</h2>
+          <div class="metrics-grid">
+            <div class="metric-block"><span class="metric-value" style="color:#f5ca40">33–39%</span><span class="metric-label">Extra failures caught</span></div>
+            <div class="metric-block"><span class="metric-value" style="color:#f5ca40">~1.2s</span><span class="metric-label">Audit latency</span></div>
+            <div class="metric-block"><span class="metric-value" style="color:#f5ca40">6.5 GB</span><span class="metric-label">VRAM (audit only)</span></div>
+            <div class="metric-block"><span class="metric-value" style="color:#f5ca40">0</span><span class="metric-label">Cloud calls</span></div>
           </div>
+          <p class="th-body">The equity axis catches <strong>33–39%</strong> of failures that calibration, faithfulness, and consistency checks miss entirely — in about <strong>1.2 seconds</strong> per response, within <strong>6.5&nbsp;GB</strong> of VRAM, with no data ever leaving the machine.</p>
         </section>
         <section class="th-section">
-          <h2 class="th-section-title">Why It Matters</h2>
+          <h2 class="th-section-title">What This Changes</h2>
           <p class="th-body">ARIA is also the audit engine running live inside the ARIA Assistant voice agent — the same methodology studied here on paper runs inline, in real time, on consumer hardware. Fairness becomes a property the system checks on itself continuously, not a certificate issued once and forgotten.</p>
         </section>
         <div style="margin-bottom:3rem;display:flex;gap:1.2rem;flex-wrap:wrap;">
@@ -107,6 +119,17 @@
           <a href="https://pypi.org/project/aria-audit/" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#f5ca40;border-color:rgba(245,202,64,0.4);">↗ PyPI: aria-audit</a>
           <a href="https://huggingface.co/datasets/rajveerpall/aria-audit-bench" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#f5ca40;border-color:rgba(245,202,64,0.4);">↗ HF dataset</a>
         </div>
+        <section class="th-section">
+          <h2 class="th-section-title">Citation</h2>
+          <div class="cite-block">Rajveer Singh Pall. "ARIA: Runtime 5-Axis Fairness Audit for Free-Form LLM Output." arXiv preprint, 2026.</div>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Related Research</h2>
+          <div class="related-row" style="--pn-accent:#f5ca40">
+            <a href="project-trustshift.html"><span>TrustShift — pre-deployment diagnosis; ARIA is the runtime counterpart</span><span class="rel-status">Applied Intelligence</span></a>
+            <a href="project-cpfe.html"><span>The CPFE Audit — the five-axis protocol ARIA runs live</span><span class="rel-status">Under journal review</span></a>
+          </div>
+        </section>
         <div class="th-footer">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
       </div>
     </div>
@@ -127,6 +150,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="js/field.js?v=3"></script>
-  <script src="js/detail.js?v=5"></script>
+  <script src="js/detail.js?v=6"></script>
 </body>
 </html>

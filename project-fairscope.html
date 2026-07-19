@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>fairscope — Rajveer Singh Pall</title>
+  <meta name="description" content="Subgroup-stratified, calibration-aware fairness auditing as a pip-installable library — DeLong CIs, per-subgroup ECE, corrected gap tests, recalibration, and the five-axis CPFE protocol. v0.3.0, MIT.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2306080c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' fill='%23f5ca40' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=10">
+  <style>
+    /* Accent overrides + capability table (page-scoped) */
+    .essence-label { color: rgba(227,192,126,0.8); }
+    .result-bar-fill { background: #e3c07e; }
+    .cap-table { width: 100%; border-collapse: collapse; font-family: 'DM Mono', monospace; margin: 1.6rem 0 0; }
+    .cap-table th, .cap-table td { padding: 0.7rem 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.06); text-align: center; }
+    .cap-table th { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.45); font-weight: 500; }
+    .cap-table th.cap-fs { color: #e3c07e; }
+    .cap-table td.cap-cap { text-align: left; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; color: rgba(255,255,255,0.78); }
+    .cap-table td.yes { color: #e3c07e; font-weight: 600; }
+    .cap-table td.no { color: rgba(255,255,255,0.28); }
+    .cap-table td.partial { color: rgba(255,255,255,0.55); font-size: 0.72rem; }
+    .cap-table tr:last-child td { border-bottom: none; }
+    .mod-list { display: grid; gap: 0.65rem; margin: 1.4rem 0 0; }
+    .mod-item { display: grid; grid-template-columns: 8.5rem 1fr; gap: 1rem; align-items: baseline; padding: 0.85rem 1rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: linear-gradient(180deg, rgba(255,255,255,0.015), transparent); }
+    .mod-name { font-family: 'DM Mono', monospace; font-size: 0.82rem; color: #e3c07e; }
+    .mod-desc { font-family: 'DM Sans', sans-serif; font-size: 0.96rem; line-height: 1.55; color: rgba(255,255,255,0.72); }
+    @media (max-width: 640px) { .mod-item { grid-template-columns: 1fr; gap: 0.2rem; } .cap-table th, .cap-table td { padding: 0.55rem 0.4rem; font-size: 0.62rem; } .cap-table td.cap-cap { font-size: 0.82rem; } }
+  </style>
+</head>
+<body>
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="bottom-fade" aria-hidden="true"></div>
+  <div class="scroll-rail" aria-hidden="true"><div class="scroll-rail-fill" id="scrollRailFill"></div></div>
+  <div class="hud-clock" aria-hidden="true">
+    <div class="hud-row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="hud-label">BLR</span><span class="hud-time" id="clockIST">--:--:--</span>
+    </div>
+    <div class="hud-row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="hud-label" id="hudVisitorLabel">NAG</span><span class="hud-time" id="clockUTC">--:--:--</span>
+    </div>
+  </div>
+
+  <div class="spatial-scene">
+    <div class="thinking-scroll">
+      <div class="thinking-body">
+        <a href="index.html#work" class="back-link">← Back to work</a>
+        <nav class="paper-nav" style="--pn-accent:#e3c07e" aria-label="On this page">
+          <a href="#discovery">Compare</a>
+          <a href="#overview">Overview</a>
+          <a href="#why">The gap</a>
+          <a href="#method">How</a>
+          <a href="#modules">Modules</a>
+          <a href="#takeaways">Takeaways</a>
+        </nav>
+        <header class="th-header">
+          <div class="th-badge" style="color:#e3c07e">Python Library · v0.3.0 · CI green</div>
+          <h1 class="th-title">fairscope</h1>
+          <p class="th-subtitle">Subgroup-stratified, calibration-aware fairness auditing as a pip-installable library — the uncertainty-aware statistical machinery that mainstream toolkits do not expose as first-class functions.</p>
+          <p class="th-authors">Rajveer Singh Pall · 2026 · MIT license</p>
+        </header>
+
+        <div class="essence-strip">
+          <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">Mainstream fairness toolkits don't expose subgroup-stratified statistical machinery — DeLong intervals, per-subgroup calibration, corrected gap tests — as first-class functions.</span></div>
+          <div class="essence-item"><span class="essence-label">Approach</span><span class="essence-text">Package peer-reviewed methods behind one-call domain audits (healthcare, lending, federated), each citing its source — plus one novel protocol on top, the five-axis CPFE.</span></div>
+          <div class="essence-item"><span class="essence-label">System</span><span class="essence-text">Five modules on NumPy / SciPy / scikit-learn, with reports that ship forest plots, reliability diagrams, and pre/post-recalibration ECE.</span></div>
+          <div class="essence-item"><span class="essence-label">Outcome</span><span class="essence-text">Shipped at v0.3.0 on PyPI — 100% line coverage on the statistical core, CI green across Python 3.9–3.12, live documentation site.</span></div>
+        </div>
+
+        <div class="th-divider"></div>
+
+        <div class="metrics-grid">
+          <div class="metric-block"><span class="metric-value" style="color:#e3c07e">5</span><span class="metric-label">Shipped modules</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#e3c07e">100%</span><span class="metric-label">Core line coverage</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#e3c07e">3.9–3.12</span><span class="metric-label">Python, CI green</span></div>
+          <div class="metric-block"><span class="metric-value" style="color:#e3c07e">MIT</span><span class="metric-label">Open source · PyPI</span></div>
+        </div>
+
+        <div class="th-divider"></div>
+
+        <section class="th-section" id="discovery">
+          <h2 class="th-section-title">The Discovery in One Figure</h2>
+          <table class="cap-table">
+            <thead>
+              <tr><th class="cap-cap" style="text-align:left;">Capability</th><th>AIF360</th><th>Fairlearn</th><th class="cap-fs">fairscope</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="cap-cap">Per-subgroup AUC confidence interval (DeLong)</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+              <tr><td class="cap-cap">Per-subgroup Expected Calibration Error</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+              <tr><td class="cap-cap">Subgroup significance test + correction</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+              <tr><td class="cap-cap">Subgroup-stratified recalibration</td><td class="partial">partial</td><td class="no">—</td><td class="yes">✓</td></tr>
+              <tr><td class="cap-cap">Five-axis cross-platform protocol (CPFE)</td><td class="no">—</td><td class="no">—</td><td class="yes">✓ novel</td></tr>
+              <tr><td class="cap-cap">Per-node / federated audit</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+            </tbody>
+          </table>
+          <p class="fig-caption">Verified against AIF360 0.6.1 and Fairlearn 0.14.0 (checked 2026-06). Those toolkits do bias mitigation; fairscope does uncertainty-aware measurement — they are complementary.</p>
+        </section>
+
+        <section class="th-section" id="overview">
+          <h2 class="th-section-title">The Library in Two Minutes</h2>
+          <p class="th-body">A fairness number without an uncertainty band is a coin flip you can't see. fairscope treats fairness auditing as a <strong>statistical measurement</strong> problem: for every protected subgroup it reports not just an accuracy or AUC, but a DeLong confidence interval, a calibration error, and whether the gap between subgroups is statistically significant after multiple-comparison correction. It then hands you a subgroup-stratified recalibration interface to actually fix the calibration it just measured — with the error reported before and after. One <code>from_scores(...)</code> call produces a report with tables, forest plots, and reliability diagrams.</p>
+        </section>
+
+        <section class="th-section" id="why">
+          <h2 class="th-section-title">The Gap It Fills</h2>
+          <p class="th-body">AIF360 and Fairlearn are excellent at bias <em>mitigation</em> — they change the model. Neither exposes the uncertainty-aware <em>measurement</em> a reviewer actually asks for: a per-subgroup AUC with an analytic confidence interval, per-subgroup calibration error, or a corrected significance test on the gap between groups. fairscope fills exactly that gap, and adds one genuinely new protocol — the five-axis Cross-Platform Fairness Evaluation — on top. Everything except CPFE ports a documented method and cites its source; it invents no new mathematics.</p>
+        </section>
+
+        <section class="th-section" id="method">
+          <h2 class="th-section-title">How It Works</h2>
+          <p class="th-body">Point it at scores and a protected attribute; it returns an audit. Under the hood, each domain dispatches the same statistical core, then layers on domain-specific reporting.</p>
+          <div class="mf-flow" style="--pn-accent:#e3c07e">
+            <div class="mf-step"><span class="mf-num">01</span><div><span class="mf-label">Pass scores + subgroup</span><span class="mf-note">y_true, y_score, and a protected attribute aligned row-for-row</span></div></div>
+            <div class="mf-step"><span class="mf-num">02</span><div><span class="mf-label">Measure per subgroup</span><span class="mf-note">DeLong AUC CI (fast midrank) · ECE / MCE · Brier · F1</span></div></div>
+            <div class="mf-step"><span class="mf-num">03</span><div><span class="mf-label">Test the gaps</span><span class="mf-note">paired / unpaired DeLong · stratified bootstrap · Bonferroni / BH correction</span></div></div>
+            <div class="mf-step"><span class="mf-num">04</span><div><span class="mf-label">Recalibrate</span><span class="mf-note">temperature scaling or isotonic, per subgroup, with pre/post-ECE</span></div></div>
+            <div class="mf-step"><span class="mf-num">05</span><div><span class="mf-label">Report</span><span class="mf-note">tidy tables, forest plots, reliability diagrams, optional PDF / SHAP</span></div></div>
+          </div>
+        </section>
+
+        <section class="th-section" id="modules">
+          <h2 class="th-section-title">What's Inside — Five Modules</h2>
+          <div class="mod-list">
+            <div class="mod-item"><span class="mod-name">core</span><span class="mod-desc">DeLong CI, bootstrap-AUC test, ECE/MCE + reliability, multiple-testing correction, subgroup metrics — 100% line coverage.</span></div>
+            <div class="mod-item"><span class="mod-name">healthcare</span><span class="mod-desc">One-call clinical fairness audit and report: tables, forest & reliability plots, PDF, optional SHAP.</span></div>
+            <div class="mod-item"><span class="mod-name">nlp — CPFE</span><span class="mod-desc">The novel five-axis cross-platform protocol (the centerpiece) plus Captum attribution-stability analysis.</span></div>
+            <div class="mod-item"><span class="mod-name">federated</span><span class="mod-desc">Per-node DeLong, cross-node disparity, and per-node recalibration — audits predictions only, no training, no privacy claim.</span></div>
+            <div class="mod-item"><span class="mod-name">lending</span><span class="mod-desc">Annual approval-gap analysis and subgroup CATE via Causal Forest Double ML (needs the econml extra).</span></div>
+          </div>
+        </section>
+
+        <section class="th-section" id="takeaways">
+          <h2 class="th-section-title">What This Changes</h2>
+          <p class="th-body">It turns the research program's methods into something anyone can <code>pip install</code>: the exact per-subgroup, uncertainty-aware statistics used across the diabetes, mortgage, and mental-health-NLP papers, packaged once, tested to a reference value, and cited to source. Fairness measurement stops being bespoke notebook code and becomes a reusable, reviewable library.</p>
+          <p class="caveat-note">Complementary to AIF360 / Fairlearn, not a replacement — measurement, not mitigation. The federated module provides no privacy guarantee; committed fixtures are small, synthetic, and labelled as such.</p>
+        </section>
+
+        <div style="margin-bottom:3rem; display:flex; flex-wrap:wrap; gap:1rem;">
+          <a href="https://github.com/Rajveer-code/fairscope" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#e3c07e;border-color:rgba(227,192,126,0.4);">↗ View on GitHub</a>
+          <a href="https://rajveer-code.github.io/fairscope/" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#e3c07e;border-color:rgba(227,192,126,0.4);">↗ Documentation</a>
+          <a href="https://pypi.org/project/fairscope/" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#e3c07e;border-color:rgba(227,192,126,0.4);">↗ PyPI</a>
+        </div>
+
+        <section class="th-section">
+          <h2 class="th-section-title">Grounded in Published Research</h2>
+          <p class="th-body">fairscope ports methods from the author's own papers — it invents no new mathematics, and each function cites its source: the diabetes external-validation study (IEEE CIPHER-2026), the five-axis CPFE mental-health NLP audit, the federated-learning diabetes work, and both mortgage-lending papers.</p>
+        </section>
+
+        <section class="th-section">
+          <h2 class="th-section-title">Citation</h2>
+          <div class="cite-block">Rajveer Singh Pall. "fairscope: Subgroup-Stratified, Calibration-Aware Fairness Auditing." v0.3.0, 2026. MIT license. ORCID 0009-0001-6762-6134. Cite via CITATION.cff in the repository.</div>
+        </section>
+
+        <section class="th-section">
+          <h2 class="th-section-title">Related Research</h2>
+          <div class="related-row" style="--pn-accent:#e3c07e">
+            <a href="project-cpfe.html"><span>The CPFE Audit — the five-axis protocol fairscope implements</span><span class="rel-status">Under journal review</span></a>
+            <a href="project-diabetes-eval.html"><span>Diabetes External Validation — the healthcare audit, ported</span><span class="rel-status">Presented · CIPHER-2026</span></a>
+            <a href="project-cate-hmda.html"><span>Who Bears the Burden? — the lending CATE module, ported</span><span class="rel-status">Under journal review</span></a>
+          </div>
+        </section>
+
+        <div class="th-footer">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="brh" id="brh" aria-hidden="true">
+    <div class="brh-session"><span class="brh-label">SESSION</span>&nbsp;<span class="brh-value" id="brhSession">00:00</span></div>
+    <div class="brh-explore"><span class="brh-label">EXPLORED</span>&nbsp;<span class="brh-value" id="brhExplore">0%</span></div>
+    <div class="brh-xy"><span class="brh-label">XY</span>&nbsp;<span class="brh-value" id="brhXY">0.00, 0.00</span></div>
+    <button class="brh-scroll-btn" id="brhScrollBtn" aria-label="Scroll to top">
+      <svg class="brh-ring" viewBox="0 0 36 36">
+        <circle class="brh-ring-track" cx="18" cy="18" r="15"/>
+        <circle class="brh-ring-fill" id="brhRingFill" cx="18" cy="18" r="15"/>
+      </svg>
+    </button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="js/field.js?v=3"></script>
+  <script src="js/detail.js?v=6"></script>
+</body>
+</html>

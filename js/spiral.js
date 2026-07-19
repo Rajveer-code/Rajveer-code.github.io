@@ -6,13 +6,22 @@ import * as THREE from 'three';
 
 export const RESEARCH_PAPERS = [
   {
-    "url": "project-diabetes-eval.html",
-    "color": "#10b981",
-    "title": "Comprehensive Evaluation of Machine Learning for Type 2 Diabetes Risk Prediction",
-    "sub": "XGBoost leads at 0.794 AUC internally but falls to 0.717 on an external population 83× larger — a 9.7% deployment gap. Age and BMI dominate SHAP; race/ethnicity ranks 4th, requiring explicit fairness audit.",
-    "tags": ["XGBoost", "SHAP", "Fairness", "External validation"],
-    "venue": "IEEE",
-    "status": "Accepted · 2025"
+    "url": "project-trustshift.html",
+    "color": "#f472b6",
+    "title": "TrustShift: Shift Type, Not Shift Magnitude, Determines Machine-Learning Failure Modes",
+    "sub": "One pre-registered audit across four domains — clinical risk, mental-health NLP, mortgage lending, network security. The type of distribution shift, not its magnitude, decides which trustworthiness axis fails — and three label-free probes diagnose it before labels arrive.",
+    "tags": ["Trustworthy ML", "Deployment shift", "Fairness", "Calibration"],
+    "venue": "Applied Intelligence",
+    "status": "Under review · 2026"
+  },
+  {
+    "url": "project-cate-hmda.html",
+    "color": "#60a5fa",
+    "title": "Who Bears the Burden? Heterogeneous Racial Approval Differentials in U.S. Mortgage Lending",
+    "sub": "Causal Forest Double Machine Learning on 42.3M HMDA applications, 2020–2024 — a 9.4 pp Black approval penalty net of 33 controls, largest under manual underwriting.",
+    "tags": ["Causal inference", "EconML", "DML", "HMDA"],
+    "venue": "Journal submission",
+    "status": "Under journal review · 2026"
   },
   {
     "url": "project-disparities.html",
@@ -24,22 +33,13 @@ export const RESEARCH_PAPERS = [
     "status": "Submitted · March 2026"
   },
   {
-    "url": "project-cpfe.html",
-    "color": "#2dd4bf",
-    "title": "Cross-Platform Generalisation Failure in Mental-Health NLP: A Five-Axis Fairness Audit",
-    "sub": "Transformer classifiers that score AUC 0.98 within-platform collapse 30–39% off-platform, with calibration and equity failing in lockstep — fairness that doesn't transfer.",
-    "tags": ["NLP", "Fairness", "Transformers", "Calibration"],
-    "venue": "IEEE TNNLS",
-    "status": "Submitted · 2026"
-  },
-  {
-    "url": "project-cate-hmda.html",
-    "color": "#60a5fa",
-    "title": "Who Bears the Burden? Heterogeneous Racial Approval Differentials in U.S. Mortgage Lending",
-    "sub": "Causal Forest Double Machine Learning on 42.3M HMDA applications, 2020–2024 — a 9.4 pp Black approval penalty net of 33 controls, largest under manual underwriting.",
-    "tags": ["Causal inference", "EconML", "DML", "HMDA"],
-    "venue": "J. Real Estate Finance & Economics",
-    "status": "Submitted · 2026"
+    "url": "project-indiafinbench.html",
+    "color": "#22d3ee",
+    "title": "IndiaFinBench: Evaluating LLM Performance on Indian Financial Regulatory Text",
+    "sub": "The first benchmark over SEBI and RBI regulation — 406 expert QA items, 192 documents, 12 LLMs scored zero-shot, plus a hybrid-RAG demo lifting Recall@5 to 0.785.",
+    "tags": ["LLM evaluation", "RAG", "FAISS", "Benchmark"],
+    "venue": "Anonymous NLP venue",
+    "status": "Under review · 2026"
   },
   {
     "url": "project-federated-diabetes.html",
@@ -47,8 +47,26 @@ export const RESEARCH_PAPERS = [
     "title": "Privacy-Preserving Federated Learning for Diabetes Risk Across Demographically Heterogeneous Nodes",
     "sub": "FedAvg / FedProx / FedNova / SCAFFOLD on partitioned NHANES, externally validated on 1.28M BRFSS records — a 40% smaller generalisation gap than a matched centralised model.",
     "tags": ["Federated learning", "PyTorch", "Flower", "Differential privacy"],
-    "venue": "J. Biomedical Informatics",
-    "status": "Under review · 2026"
+    "venue": "Journal submission",
+    "status": "Under journal review · 2026"
+  },
+  {
+    "url": "project-diabetes-eval.html",
+    "color": "#10b981",
+    "title": "Comprehensive Evaluation of Machine Learning for Type 2 Diabetes Risk Prediction",
+    "sub": "XGBoost leads at 0.794 AUC internally but falls to 0.717 on an external population 83× larger — a 9.7% deployment gap. Age and BMI dominate SHAP; race/ethnicity ranks 4th, requiring explicit fairness audit.",
+    "tags": ["XGBoost", "SHAP", "Fairness", "External validation"],
+    "venue": "IEEE CIPHER-2026",
+    "status": "Presented · 2026"
+  },
+  {
+    "url": "project-cpfe.html",
+    "color": "#2dd4bf",
+    "title": "Cross-Platform Generalisation Failure in Mental-Health NLP: A Five-Axis Fairness Audit",
+    "sub": "Transformer classifiers that score AUC 0.98 within-platform collapse 30–39% off-platform, with calibration and equity failing in lockstep — fairness that doesn't transfer.",
+    "tags": ["NLP", "Fairness", "Transformers", "Calibration"],
+    "venue": "Journal submission",
+    "status": "Under journal review · 2026"
   },
   {
     "url": "project-icgdf.html",
@@ -56,26 +74,8 @@ export const RESEARCH_PAPERS = [
     "title": "When the Gate Stays Closed: Near-Zero Cross-Sectional Predictability in Large-Cap NASDAQ Equities",
     "sub": "An IC-gated deployment framework with a conjunctive HAC + permutation test — the gate never opened across 12 folds and 1,512 OOS days, cutting false deployment from 11.8% to 0.0%.",
     "tags": ["Quant ML", "Walk-forward", "CatBoost", "Permutation tests"],
-    "venue": "Quantitative Finance & Economics",
-    "status": "Under review · 2025"
-  },
-  {
-    "url": "project-conviction-ranking.html",
-    "color": "#f472b6",
-    "title": "Overcoming the Transaction Cost Trap: Cross-Sectional Conviction Ranking in ML Equity Prediction",
-    "sub": "Naive thresholds destroy ML equity alpha through turnover. Treating calibrated ensemble probabilities as ordinal conviction and holding only the Top-1 asset each day gives a significant IC of 0.0197 (p=0.034, 1,512 days) and 45.8% annualised return at Sharpe 1.18 — break-even at 24.2 bps, 4.8× institutional friction.",
-    "tags": ["Quant ML", "Conviction ranking", "Walk-forward", "CatBoost"],
-    "venue": "SSRN",
-    "status": "Working paper · 2025"
-  },
-  {
-    "url": "project-indiafinbench.html",
-    "color": "#22d3ee",
-    "title": "IndiaFinBench: Evaluating LLM Performance on Indian Financial Regulatory Text",
-    "sub": "The first benchmark over SEBI and RBI regulation — 406 expert QA items, 192 documents, 12 LLMs scored zero-shot, plus a hybrid-RAG demo lifting Recall@5 to 0.785.",
-    "tags": ["LLM evaluation", "RAG", "FAISS", "Benchmark"],
-    "venue": "Target: EMNLP 2026",
-    "status": "In preparation"
+    "venue": "Journal submission",
+    "status": "Under journal review · 2026"
   },
   {
     "url": "project-aria-audit.html",

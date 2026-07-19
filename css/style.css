@@ -904,9 +904,9 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
 .spatial-scene { position: relative; z-index: 10; }
 .thinking-scroll { /* plain flow container; window scrolls */ }
 .thinking-body {
-  max-width: 720px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 7rem 2rem 5rem;
+  padding: 7rem 2.5rem 5rem;
 }
 
 /* ── Back link ── */
@@ -945,11 +945,11 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
 }
 .th-subtitle {
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 1.05rem;
-  line-height: 1.7;
+  font-size: 1.22rem;
+  line-height: 1.66;
   color: rgba(249, 246, 238, 0.58);
   margin: 0;
-  max-width: 580px;
+  max-width: 720px;
 }
 
 /* ── Divider ── */
@@ -969,14 +969,14 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
 .metric-block { display: flex; flex-direction: column; gap: 5px; }
 .metric-value {
   font-family: 'DM Mono', 'JetBrains Mono', monospace;
-  font-size: 1.6rem;
+  font-size: 1.95rem;
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.02em;
 }
 .metric-label {
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: rgba(249, 246, 238, 0.38);
@@ -986,17 +986,17 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
 .th-section { margin-bottom: 2.5rem; }
 .th-section-title {
   font-family: 'DM Mono', 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
+  font-size: 0.76rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgba(249, 246, 238, 0.42);
-  margin: 0 0 0.8rem;
+  margin: 0 0 1rem;
 }
 .th-body {
   font-family: 'DM Sans', system-ui, sans-serif;
-  font-size: 1rem;
-  line-height: 1.78;
-  color: rgba(249, 246, 238, 0.72);
+  font-size: 1.16rem;
+  line-height: 1.8;
+  color: rgba(249, 246, 238, 0.74);
   margin: 0;
 }
 .th-body strong { color: rgba(249, 246, 238, 0.95); font-weight: 600; }
@@ -1098,7 +1098,7 @@ html.js .anim-ready .rise { will-change: transform, opacity; }
    ══════════════════════════════════════════════════════ */
 
 .fig-box { margin: 2rem 0; padding: 1.5rem; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; background: linear-gradient(180deg, rgba(255,255,255,0.012) 0%, transparent 100%); }
-.fig-caption { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: rgba(255,255,255,0.38); letter-spacing: 0.07em; text-transform: uppercase; margin-top: 0.9rem; text-align: center; }
+.fig-caption { font-family: 'DM Mono', monospace; font-size: 0.74rem; color: rgba(255,255,255,0.4); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 0.9rem; text-align: center; line-height: 1.6; }
 
 .finding-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(245,202,64,0.2); border-radius: 8px; padding: 1.2rem 1.4rem; margin: 1rem 0; }
 .finding-card .fc-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: #f5ca40; line-height: 1; }
@@ -1119,8 +1119,8 @@ blockquote.pull { border-left: 2px solid #f5ca40; padding: 0.6rem 1.2rem; margin
 .essence-strip { margin: 1.5rem 0 2rem; padding: 1.1rem 1.4rem; border: 1px solid rgba(249,246,238,0.08); border-radius: 10px; background: rgba(249,246,238,0.015); }
 .essence-item { display: flex; align-items: baseline; gap: 0.9rem; padding: 0.5rem 0; border-bottom: 1px solid rgba(249,246,238,0.05); }
 .essence-item:last-child { border-bottom: none; }
-.essence-label { flex: 0 0 6.5rem; font-family: 'DM Mono', 'JetBrains Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,202,64,0.75); }
-.essence-text { font-family: 'DM Sans', system-ui, sans-serif; font-size: 0.88rem; line-height: 1.5; color: rgba(249,246,238,0.78); }
+.essence-label { flex: 0 0 7rem; font-family: 'DM Mono', 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,202,64,0.75); }
+.essence-text { font-family: 'DM Sans', system-ui, sans-serif; font-size: 1.02rem; line-height: 1.58; color: rgba(249,246,238,0.8); }
 @media (max-width: 480px) {
   .essence-item { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
   .essence-label { flex: none; }
@@ -1174,3 +1174,29 @@ blockquote.pull { border-left: 2px solid #f5ca40; padding: 0.6rem 1.2rem; margin
 @media (prefers-reduced-motion: reduce) {
   .result-bar-fill { transition: none !important; }
 }
+
+/* ── Research-paper parity kit: jump-nav · authors · method flow · data bars ·
+      publication figures · caveat · citation · related (mirrors the research
+      profile's standardized paper spine, in this site's dark theme) ── */
+.paper-nav { position: sticky; top: 0; z-index: 40; display: flex; flex-wrap: wrap; gap: 0.25rem 1.4rem; padding: 0.9rem 0 0.8rem; margin-bottom: 2rem; background: linear-gradient(180deg, rgba(6,8,12,0.96) 72%, transparent); backdrop-filter: blur(6px); border-bottom: 1px solid rgba(255,255,255,0.07); }
+.paper-nav a { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; color: rgba(255,255,255,0.42); transition: color 0.2s; }
+.paper-nav a:hover { color: rgba(255,255,255,0.85); }
+.paper-nav a.is-active { color: var(--pn-accent, #f5ca40); }
+#discovery, #fivemin, #question, #method, #results, #takeaways { scroll-margin-top: 4.5rem; }
+.th-authors { font-family: 'DM Mono', monospace; font-size: 0.76rem; letter-spacing: 0.06em; color: rgba(255,255,255,0.45); margin-top: 1.1rem; }
+.mf-flow { display: grid; gap: 0.65rem; margin: 1.6rem 0 0.5rem; }
+.mf-step { display: flex; gap: 1rem; align-items: baseline; padding: 0.85rem 1rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: linear-gradient(180deg, rgba(255,255,255,0.015), transparent); }
+.mf-num { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--pn-accent, #f5ca40); min-width: 1.6rem; }
+.mf-label { display: block; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 1.04rem; color: rgba(255,255,255,0.9); margin-bottom: 0.2rem; }
+.mf-note { display: block; font-family: 'DM Mono', monospace; font-size: 0.76rem; letter-spacing: 0.02em; color: rgba(255,255,255,0.45); line-height: 1.5; }
+.fb-title { font-family: 'DM Mono', monospace; font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 1rem; }
+.paper-fig { margin: 1.6rem 0 0; }
+.paper-fig img { width: 100%; height: auto; display: block; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: #fff; }
+.paper-fig figcaption { margin-top: 0.7rem; font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 0.03em; line-height: 1.6; color: rgba(255,255,255,0.42); }
+.caveat-note { margin-top: 1.4rem; padding: 0.85rem 1.1rem; border-left: 2px solid rgba(255,255,255,0.18); font-family: 'DM Sans', sans-serif; font-style: italic; font-size: 0.95rem; line-height: 1.6; color: rgba(255,255,255,0.52); }
+.cite-block { font-family: 'DM Mono', monospace; font-size: 0.8rem; line-height: 1.75; color: rgba(255,255,255,0.58); padding: 1.2rem 1.3rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: rgba(255,255,255,0.015); }
+.related-row { display: grid; gap: 0.6rem; margin-top: 0.4rem; }
+.related-row a { display: flex; justify-content: space-between; gap: 1rem; padding: 0.95rem 1.1rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; text-decoration: none; color: rgba(255,255,255,0.78); font-family: 'DM Sans', sans-serif; font-size: 0.98rem; transition: border-color 0.2s, color 0.2s; }
+.related-row a:hover { border-color: var(--pn-accent, #f5ca40); color: #fff; }
+.related-row .rel-status { font-family: 'DM Mono', monospace; font-size: 0.62rem; letter-spacing: 0.08em; color: rgba(255,255,255,0.35); white-space: nowrap; align-self: center; }
+@media (max-width: 640px) { .paper-nav { gap: 0.2rem 0.9rem; } }

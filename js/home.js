@@ -229,14 +229,15 @@
     var track = document.getElementById("gloryTrack");
     if (!track) return;
     var HL = [
+      { title: "TrustShift",                 time: "Applied Intelligence · under review", sub: "4 domains, one audit — shift type decides what fails" },
       { title: "Smart India Hackathon 2025", time: "Top 50 of 250",        sub: "SereneSpace — anonymous student mental-health" },
-      { title: "Eight Research Papers",      time: "Q1 venues · 2025–26", sub: "Submitted / under review across four domains" },
+      { title: "Eight Research Manuscripts", time: "2025–26",              sub: "1 presented · 7 under review across four domains" },
       { title: "IndiaFinBench",              time: "LLM Benchmark",          sub: "Gemini 2.5 Flash 89.7% · 406 expert QA items" },
       { title: "FinSight",                   time: "Deployed System",        sub: "14,584 transcripts · IC +0.31 in Energy" },
       { title: "ARIA Assistant",             time: "Local-First Voice AI",   sub: "Zero cloud LLM calls · one RTX 4060" },
-      { title: "CATE-HMDA",                  time: "JREFE · submitted",      sub: "42.3M applications · 9.4 pp approval gap" },
-      { title: "Federated Diabetes",         time: "JBI · under review",     sub: "1.28M BRFSS · −40% generalisation gap" },
-      { title: "ICGDF Deployment Gate",      time: "QFE · under review",     sub: "0.0% false deploy across 12 folds" }
+      { title: "CATE-HMDA",                  time: "Under journal review",   sub: "42.3M applications · 9.4 pp approval gap" },
+      { title: "Federated Diabetes",         time: "Under journal review",   sub: "1.28M BRFSS · −40% generalisation gap" },
+      { title: "ICGDF Deployment Gate",      time: "Under journal review",   sub: "0.0% false deploy across 12 folds" }
     ];
     var ICON = '<svg class="glory-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>';
     function esc(s) { var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
@@ -350,7 +351,7 @@
       var CATS = [
         { label: "MODEL PERFORMANCE", cx: 880, cy: 138, color: "#c9a25a", nodes: [
           { cx: 780, cy: 88, val: "~97%",   sub: "AUROC A Federated Diabetes * FedAvg/SCAFFOLD",     desc: "FedAvg/SCAFFOLD across heterogeneous NHANES nodes \u2014 validated on 1.28M BRFSS records." },
-          { cx: 960, cy: 78, val: "0.98",   sub: "AUC A Mental Health NLP * CPFE / IEEE TNNLS",      desc: "Within-platform on Reddit & CLPsych \u2014 collapses 30\u201339% off-platform under domain shift." },
+          { cx: 960, cy: 78, val: "0.98",   sub: "AUC A Mental Health NLP * CPFE audit",      desc: "Within-platform on Reddit & CLPsych \u2014 collapses 30\u201339% off-platform under domain shift." },
           { cx: 840, cy: 218, val: "9.4 pp", sub: "Racial Approval Gap A HMDA * CATE-HMDA",           desc: "Black approval penalty net of 33 controls \u2014 largest under manual underwriting, 42.3M apps." },
           { cx: 1000, cy: 188, val: "89.7%",  sub: "Top LLM Score A IndiaFinBench * Gemini 2.5 Flash", desc: "Best of 12 LLMs on SEBI/RBI regulatory text \u2014 zero-shot closed-book evaluation." },
           { cx: 900, cy: 248, val: "#1 LLM", sub: "Gemini Rank A IndiaFinBench * vs. GPT-4o",         desc: "Gemini 2.5 Flash ranks first of 12 models including GPT-4o on Indian regulatory zero-shot QA." }
@@ -370,11 +371,11 @@
           { cx: 860, cy: 602, val: "~ 7.1 GB",  sub: "Peak VRAM A ARIA * RTX 4060 / 8 GB Card",       desc: "Entire faster-whisper + Qwen3-8B + TTS pipeline fits in 7.1 GB VRAM \u2014 consumer GPU only." }
         ]},
         { label: "RESEARCH OUTPUT", cx: 420, cy: 502, color: "#fcd34d", nodes: [
-          { cx: 320, cy: 442, val: "6",      sub: "Manuscripts in Pipeline * Q1 Venues",                desc: "JREFE, JBI, IEEE TNNLS, QFE, EMNLP 2026, arXiv \u2014 submitted or under review." },
-          { cx: 510, cy: 422, val: "3 Q1",   sub: "Top-Tier Journal Targets * JREFE, JBI, IEEE TNNLS",  desc: "J. Real Estate Finance & Economics A J. Biomedical Informatics A IEEE TNNLS." },
+          { cx: 320, cy: 442, val: "8",      sub: "Research Manuscripts * 1 Presented \u00b7 7 Under Review",  desc: "Applied Intelligence, J. Housing Economics, IEEE CIPHER-2026, an anonymous NLP venue, and four more journal submissions." },
+          { cx: 510, cy: 422, val: "4 domains", sub: "One Audit Protocol * TrustShift / Applied Intelligence", desc: "Clinical risk, mental-health NLP, mortgage lending, network security \u2014 shift type, not magnitude, decides which trustworthiness axis fails." },
           { cx: 360, cy: 572, val: "50/250", sub: "SIH 2025 A SereneSpace * Smart India Hackathon",     desc: "Top 50 of 250 teams \u2014 Smart India Hackathon, anonymous student mental-health platform." },
           { cx: 540, cy: 552, val: "5+",     sub: "Live Deployments * HuggingFace A Vercel A Render",   desc: "HuggingFace Spaces A Vercel A Render A PyPI package \u2014 all publicly accessible." },
-          { cx: 440, cy: 612, val: "EMNLP",  sub: "NLP Conference Target A 2026 * IndiaFinBench Paper", desc: "Empirical Methods in NLP 2026 \u2014 top-tier venue submission for the IndiaFinBench paper." }
+          { cx: 440, cy: 612, val: "3 probes", sub: "Label-Free Shift Diagnosis * TrustShift", desc: "Prevalence shift, domain-classifier AUC, importance-reweighting residual \u2014 diagnose the failure axis before labels arrive." }
         ]},
         { label: "FAIRNESS & IMPACT", cx: 190, cy: 320, color: "#34d399", nodes: [
           { cx: 80, cy: 250, val: "-40%",   sub: "Generalisation Gap Reduction * Federated Diabetes", desc: "Federated vs. matched centralised model \u2014 40% smaller generalisation gap on 1.28M BRFSS." },

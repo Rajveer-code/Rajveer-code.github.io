@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=7">
+  <link rel="stylesheet" href="css/style.css?v=10">
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>
@@ -30,10 +30,19 @@
     <div class="thinking-scroll">
       <div class="thinking-body">
         <a href="index.html#research" class="back-link">← Back to research</a>
+        <nav class="paper-nav" style="--pn-accent:#10b981" aria-label="On this page">
+          <a href="#discovery">Discovery</a>
+          <a href="#fivemin">5 minutes</a>
+          <a href="#question">Question</a>
+          <a href="#method">Method</a>
+          <a href="#results">Results</a>
+          <a href="#takeaways">Takeaways</a>
+        </nav>
         <header class="th-header">
-          <div class="th-badge" style="color:#10b981">Under review · J. Biomedical Informatics</div>
+          <div class="th-badge" style="color:#10b981">Under Journal Review · 2026</div>
           <h1 class="th-title">Federated Diabetes</h1>
           <p class="th-subtitle">Privacy-preserving federated learning for diabetes risk prediction, externally validated on 1.28 million BRFSS patients.</p>
+          <p class="th-authors">Rajveer Singh Pall · 2026</p>
         </header>
         <div class="essence-strip">
           <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">Diabetes risk models trained on one hospital's data often fail elsewhere — and privacy rules block pooling patient records to fix that.</span></div>
@@ -42,68 +51,92 @@
           <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">Hospitals can collaborate on better risk models without ever sharing a patient record.</span></div>
         </div>
         <div class="th-divider"></div>
-        <div class="metrics-grid">
-          <div class="metric-block"><span class="metric-value" style="color:#10b981">0.757</span><span class="metric-label">External AUC (BRFSS)</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#10b981">1.28M</span><span class="metric-label">External patients</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#10b981">0.001</span><span class="metric-label">Calibration error (ECE)</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#10b981">40%</span><span class="metric-label">Narrower generalization gap</span></div>
-        </div>
-        <div class="th-divider"></div>
         <section class="th-section">
-          <h2 class="th-section-title">The Problem</h2>
-          <p class="th-body">Clinical risk models trained centrally tend to fail on out-of-domain patients, and privacy constraints often prevent pooling raw records across institutions in the first place. The goal: a diabetes risk model trained without sharing data that still holds up on a population it never saw.</p>
+          <h2 class="th-section-title">The Discovery in One Figure</h2>
+          <div class="fig-box">
+            <div class="compare-pair">
+              <div class="compare-before">
+                <div class="compare-label">Centralized training</div>
+                <div class="result-bar-track"><div class="result-bar-fill" style="width:100%;background:rgba(249,246,238,0.35);"></div></div>
+                <p class="compare-desc">Wider generalization gap between training and real-world performance.</p>
+              </div>
+              <div class="compare-arrow">→</div>
+              <div class="compare-after">
+                <div class="compare-label">Federated training</div>
+                <div class="result-bar-track"><div class="result-bar-fill" style="width:60%;"></div></div>
+                <p class="compare-desc">40% narrower gap — without any site ever sharing a patient record.</p>
+              </div>
+            </div>
+            <p class="fig-caption">Generalization gap, centralized vs. federated</p>
+          </div>
         </section>
         <section class="th-section">
-          <h2 class="th-section-title">Approach</h2>
+          <h2 class="th-section-title">The Paper in Five Minutes</h2>
+          <p class="th-body">Hospitals cannot share patient records, so how do they train one model together? Federated learning sends the model to the data instead of the data to a server. This paper checks what federated papers usually don't: whether the jointly trained model still works on a different population of 1.28 million people, whether it treats the elderly fairly, whether its probabilities are honest, and whether formal privacy protection actually holds. Three of the four go surprisingly well — the federated model beats the centralized one externally. The fourth is an honest negative: differential privacy destroys the model at realistic settings, and the paper says so plainly.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">The Research Question</h2>
+          <p class="th-body">Clinical risk models trained centrally tend to fail on out-of-domain patients, and privacy constraints often prevent pooling raw records across institutions in the first place. The goal: a diabetes risk model trained without sharing data that still holds up on a population it never saw — audited on generalisation, fairness, calibration, and privacy simultaneously.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">How It Works</h2>
           <p class="th-body">Demographically partitioned <strong>NHANES</strong> client nodes train locally; four aggregation strategies — <strong>FedAvg, FedProx, FedNova, SCAFFOLD</strong> — are compared over 50 rounds under non-IID participation, with a <strong>DP-SGD privacy sweep</strong> (Opacus) tracing the utility–privacy frontier and <strong>isotonic calibration</strong> repairing probability estimates.</p>
+          <div class="mf-flow" style="--pn-accent:#10b981">
+            <div class="mf-step"><span class="mf-num">01</span><div><span class="mf-label">Split realistically</span><span class="mf-note">three demographically unequal simulated hospital nodes</span></div></div>
+            <div class="mf-step"><span class="mf-num">02</span><div><span class="mf-label">Train federated</span><span class="mf-note">FedAvg · FedProx · FedNova · SCAFFOLD vs centralized controls</span></div></div>
+            <div class="mf-step"><span class="mf-num">03</span><div><span class="mf-label">Validate externally</span><span class="mf-note">1.28M BRFSS records — a population no node ever saw</span></div></div>
+            <div class="mf-step"><span class="mf-num">04</span><div><span class="mf-label">Audit fairness + calibration</span><span class="mf-note">elderly–young gap · ECE with recalibration ladder</span></div></div>
+            <div class="mf-step"><span class="mf-num">05</span><div><span class="mf-label">Stress privacy</span><span class="mf-note">DP-SGD ε-sweep — where utility survives, and where it collapses</span></div></div>
+          </div>
         </section>
-        <section class="th-section">
-          <h2 class="th-section-title">Outcome</h2>
-          <p class="th-body">External validation on <strong>1.28M BRFSS</strong> respondents reaches <strong>AUC 0.757</strong> with <strong>ECE 0.001</strong> after calibration — a generalization gap <strong>40% narrower</strong> than centralized training, with utility recovered above ε≈10. Subgroup fairness is reported across demographic strata, and the full pipeline is reproducible end-to-end.</p>
-        </section>
-        <section class="th-section">
-  <h2 class="th-section-title">Methodology Pipeline</h2>
-  <div class="method-diagram" style="padding: 2rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: linear-gradient(180deg, rgba(255,255,255,0.015) 0%, transparent 100%); margin-bottom: 2rem;">
-    <svg viewBox="0 0 700 120" fill="none" style="width:100%;height:auto;">
-      <rect x="44.0" y="35" width="120" height="50" rx="6" stroke="#10b981" stroke-width="1" fill="rgba(16, 185, 129,0.08)" />
-      <text x="104.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">NHANES CLIENTS</text>
-      <line x1="169.0" y1="60.0" x2="195.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
-      <polygon points="195.0,56.0 203.0,60.0 195.0,64.0" fill="rgba(255,255,255,0.2)" />
-      <rect x="208.0" y="35" width="120" height="50" rx="6" stroke="#10b981" stroke-width="1" fill="rgba(16, 185, 129,0.08)" />
-      <text x="268.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">LOCAL DP-SGD</text>
-      <line x1="333.0" y1="60.0" x2="359.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
-      <polygon points="359.0,56.0 367.0,60.0 359.0,64.0" fill="rgba(255,255,255,0.2)" />
-      <rect x="372.0" y="35" width="120" height="50" rx="6" stroke="#10b981" stroke-width="1" fill="rgba(16, 185, 129,0.08)" />
-      <text x="432.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">FEDAGG REGIME</text>
-      <line x1="497.0" y1="60.0" x2="523.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
-      <polygon points="523.0,56.0 531.0,60.0 523.0,64.0" fill="rgba(255,255,255,0.2)" />
-      <rect x="536.0" y="35" width="120" height="50" rx="6" stroke="#10b981" stroke-width="1" fill="rgba(16, 185, 129,0.08)" />
-      <text x="596.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">BRFSS VALIDATION</text>
-    </svg>
+<section class="th-section">
+  <h2 class="th-section-title">The Results</h2>
+  <div class="metrics-grid">
+    <div class="metric-block"><span class="metric-value" style="color:#10b981">0.757</span><span class="metric-label">External AUC (BRFSS)</span></div>
+    <div class="metric-block"><span class="metric-value" style="color:#10b981">1.28M</span><span class="metric-label">External patients</span></div>
+    <div class="metric-block"><span class="metric-value" style="color:#10b981">0.001</span><span class="metric-label">Calibration error (ECE)</span></div>
+    <div class="metric-block"><span class="metric-value" style="color:#10b981">40%</span><span class="metric-label">Narrower generalization gap</span></div>
   </div>
+  <p class="th-body">External validation on <strong>1.28M BRFSS</strong> respondents reaches <strong>AUC 0.757</strong> with <strong>ECE 0.001</strong> after calibration — a generalization gap <strong>40% narrower</strong> than centralized training, with utility recovered above ε≈10. Subgroup fairness is reported across demographic strata, and the full pipeline is reproducible end-to-end.</p>
+  <div class="fig-box">
+    <p class="fb-title">External AUC on 1.28M unseen records</p>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>FedAvg (federated)</span><span class="result-bar-value">0.757</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:75.7%;background:#10b981;"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Centralized, same architecture</span><span class="result-bar-value">0.749</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:74.9%;background:rgba(255,255,255,0.35);"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Centralized XGBoost</span><span class="result-bar-value">0.700</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:70%;background:rgba(255,255,255,0.35);"></div></div>
+    </div>
+    <p class="fig-caption">The federated model generalises better than both centralized controls.</p>
+  </div>
+  <figure class="paper-fig"><img src="assets/figures/federated-diabetes/10_external_validation_roc.png" alt="External validation ROC on 1.28M BRFSS records" loading="lazy"><figcaption>External validation on 1.28M BRFSS records: federated and centralized models compared where it counts.</figcaption></figure>
+  <figure class="paper-fig"><img src="assets/figures/federated-diabetes/06_fairness_age_comparison.png" alt="Elderly–young fairness across training strategies" loading="lazy"><figcaption>Elderly–young fairness across training strategies — the axis most clinical papers never report.</figcaption></figure>
+  <figure class="paper-fig"><img src="assets/figures/federated-diabetes/05_dp_tradeoff.png" alt="Privacy–utility trade-off across the epsilon sweep" loading="lazy"><figcaption>The privacy–utility trade-off: DP-SGD across the ε sweep, including the collapse the paper reports plainly.</figcaption></figure>
 </section>
 <section class="th-section">
-  <h2 class="th-section-title">Key Result</h2>
-  <div class="fig-box">
-    <div class="compare-pair">
-      <div class="compare-before">
-        <div class="compare-label">Centralized training</div>
-        <div class="result-bar-track"><div class="result-bar-fill" style="width:100%;background:rgba(249,246,238,0.35);"></div></div>
-        <p class="compare-desc">Wider generalization gap between training and real-world performance.</p>
-      </div>
-      <div class="compare-arrow">→</div>
-      <div class="compare-after">
-        <div class="compare-label">Federated training</div>
-        <div class="result-bar-track"><div class="result-bar-fill" style="width:60%;"></div></div>
-        <p class="compare-desc">40% narrower gap — without any site ever sharing a patient record.</p>
-      </div>
-    </div>
-    <p class="fig-caption">Generalization gap, centralized vs. federated</p>
-  </div>
+  <h2 class="th-section-title">What This Changes</h2>
+  <p class="th-body">It moves federated-learning evaluation beyond "privacy by architecture" toward audit-first deployment evidence — including the honest negative on differential privacy at strict budgets, stated plainly rather than buried.</p>
 </section>
-<div style="margin-bottom:3rem;">
+<div style="margin-bottom:3rem; display:flex; flex-wrap:wrap; gap:1rem;">
           <a href="https://github.com/Rajveer-code/Federated-Diabetes" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#10b981;border-color:rgba(16,185,129,0.4);">↗ View on GitHub</a>
+          <a href="https://rajveer-research.vercel.app/research/federated-diabetes/" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#10b981;border-color:rgba(16,185,129,0.4);">↗ Full research page</a>
         </div>
+        <section class="th-section">
+          <h2 class="th-section-title">Citation</h2>
+          <div class="cite-block">Rajveer Singh Pall. "Privacy-Preserving Federated Learning for Diabetes Risk Prediction Across Demographically Heterogeneous Hospital Nodes." Under journal review, 2026.</div>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Related Research</h2>
+          <div class="related-row" style="--pn-accent:#10b981">
+            <a href="project-diabetes-eval.html"><span>Diabetes External Validation — the centralized baseline this builds on</span><span class="rel-status">Presented · CIPHER-2026</span></a>
+            <a href="project-trustshift.html"><span>TrustShift — the thesis that binds the program</span><span class="rel-status">Applied Intelligence</span></a>
+          </div>
+        </section>
         <div class="th-footer">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
       </div>
     </div>
@@ -125,6 +158,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="js/field.js?v=3"></script>
-  <script src="js/detail.js?v=5"></script>
+  <script src="js/detail.js?v=6"></script>
 </body>
 </html>

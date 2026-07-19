@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=7">
+  <link rel="stylesheet" href="css/style.css?v=10">
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>
@@ -30,10 +30,19 @@
     <div class="thinking-scroll">
       <div class="thinking-body">
         <a href="index.html#research" class="back-link">← Back to research</a>
+        <nav class="paper-nav" style="--pn-accent:#a78bfa" aria-label="On this page">
+          <a href="#discovery">Discovery</a>
+          <a href="#fivemin">5 minutes</a>
+          <a href="#question">Question</a>
+          <a href="#method">Method</a>
+          <a href="#results">Results</a>
+          <a href="#takeaways">Takeaways</a>
+        </nav>
         <header class="th-header">
-          <div class="th-badge" style="color:#a78bfa">Under Review · Quantitative Finance &amp; Economics</div>
+          <div class="th-badge" style="color:#a78bfa">Under Journal Review · 2026</div>
           <h1 class="th-title">When the Gate Stays Closed</h1>
           <p class="th-subtitle">A statistically gated ML deployment in NASDAQ equities — where the honest null result is the entire finding.</p>
+          <p class="th-authors">Rajveer Singh Pall · 2026</p>
         </header>
         <div class="essence-strip">
           <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">Most quant trading papers report a winning strategy found by searching thousands of combinations — without pricing in the cost of that search.</span></div>
@@ -42,69 +51,90 @@
           <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">A framework that reports its failures as clearly as its wins is the only kind worth trusting when it eventually says yes.</span></div>
         </div>
         <div class="th-divider"></div>
-        <div class="metrics-grid">
-          <div class="metric-block"><span class="metric-value" style="color:#a78bfa">0 / 12</span><span class="metric-label">Folds gate opened</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#a78bfa">1,512</span><span class="metric-label">Out-of-sample days</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#a78bfa">Walk-fwd</span><span class="metric-label">Validation protocol</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#a78bfa">NASDAQ</span><span class="metric-label">Equity universe</span></div>
-        </div>
-        <div class="th-divider"></div>
         <section class="th-section">
-          <h2 class="th-section-title">The Problem</h2>
-          <p class="th-body">Most quant ML papers report in-sample alpha that vanishes out-of-sample. The selection bias is structural: thousands of model–feature combinations are searched, the winner is reported, and the search itself is never priced into the significance test.</p>
+          <h2 class="th-section-title">The Discovery in One Figure</h2>
+          <div class="fig-box">
+            <div class="fold-grid">
+              <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+              <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+              <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+              <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+              <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+              <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+              <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+              <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+              <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+              <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+              <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+              <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+            </div>
+            <p class="fig-caption">All 12 walk-forward folds — every gate stayed closed</p>
+          </div>
         </section>
         <section class="th-section">
-          <h2 class="th-section-title">The Gate</h2>
-          <p class="th-body">Deployment is governed by a <strong>statistical gate</strong>: a strategy only goes live in a fold if its out-of-sample edge clears a pre-registered significance threshold after multiple-testing correction. The gate is evaluated on a strict <strong>walk-forward</strong> schedule across <strong>1,512</strong> out-of-sample trading days, so no future information ever leaks backward.</p>
+          <h2 class="th-section-title">The Paper in Five Minutes</h2>
+          <p class="th-body">Most trading-model papers report wins. This one builds the exam a model must pass before it is allowed to trade real money — and then reports that its own model failed that exam twelve times out of twelve. That is the contribution: a statistical gate that separates "looks profitable in a backtest" from "provable skill". A naive statistical test would have green-lit a skill-less model 11.8% of the time; the full gate never did. One more twist: the model's probability estimates were nearly perfect even though it had zero predictive skill — proof that a well-calibrated model is not the same as a deployable one.</p>
         </section>
         <section class="th-section">
-          <h2 class="th-section-title">Outcome</h2>
-          <p class="th-body">The gate opened <strong>0 of 12</strong> walk-forward folds. No statistically defensible alpha survived honest out-of-sample testing — and that is the contribution. A discipline that publishes its nulls as loudly as its wins is the only one that can be trusted when the gate <em>does</em> open.</p>
+          <h2 class="th-section-title">The Research Question</h2>
+          <p class="th-body">Most quant ML papers report in-sample alpha that vanishes out-of-sample. The selection bias is structural: thousands of model–feature combinations are searched, the winner is reported, and the search itself is never priced into the significance test. Can a financial ML model <strong>prove</strong> cross-sectional predictive skill before deployment — and what should happen when it cannot?</p>
         </section>
         <section class="th-section">
-  <h2 class="th-section-title">Methodology Pipeline</h2>
-  <div class="method-diagram" style="padding: 2rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: linear-gradient(180deg, rgba(255,255,255,0.015) 0%, transparent 100%); margin-bottom: 2rem;">
-    <svg viewBox="0 0 700 120" fill="none" style="width:100%;height:auto;">
-      <rect x="44.0" y="35" width="120" height="50" rx="6" stroke="#a78bfa" stroke-width="1" fill="rgba(167, 139, 250,0.08)" />
-      <text x="104.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">1,512 TRADING DAYS</text>
-      <line x1="169.0" y1="60.0" x2="195.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
-      <polygon points="195.0,56.0 203.0,60.0 195.0,64.0" fill="rgba(255,255,255,0.2)" />
-      <rect x="208.0" y="35" width="120" height="50" rx="6" stroke="#a78bfa" stroke-width="1" fill="rgba(167, 139, 250,0.08)" />
-      <text x="268.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">STATISTICAL GATE</text>
-      <line x1="333.0" y1="60.0" x2="359.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
-      <polygon points="359.0,56.0 367.0,60.0 359.0,64.0" fill="rgba(255,255,255,0.2)" />
-      <rect x="372.0" y="35" width="120" height="50" rx="6" stroke="#a78bfa" stroke-width="1" fill="rgba(167, 139, 250,0.08)" />
-      <text x="432.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">CORRECTION GATING</text>
-      <line x1="497.0" y1="60.0" x2="523.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
-      <polygon points="523.0,56.0 531.0,60.0 523.0,64.0" fill="rgba(255,255,255,0.2)" />
-      <rect x="536.0" y="35" width="120" height="50" rx="6" stroke="#a78bfa" stroke-width="1" fill="rgba(167, 139, 250,0.08)" />
-      <text x="596.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">NULL REPORTING</text>
-    </svg>
+          <h2 class="th-section-title">How It Works</h2>
+          <p class="th-body">Deployment is governed by a <strong>statistical gate</strong>: a strategy only goes live in a fold if its out-of-sample edge clears a pre-registered significance threshold after multiple-testing correction — a Newey–West HAC t-test on daily information coefficients plus permutation confirmation. The gate is evaluated on a strict <strong>walk-forward</strong> schedule across <strong>1,512</strong> out-of-sample trading days, so no future information ever leaks backward.</p>
+          <div class="mf-flow" style="--pn-accent:#a78bfa">
+            <div class="mf-step"><span class="mf-num">01</span><div><span class="mf-label">Build honestly</span><span class="mf-note">49 strictly causal features, 30 NASDAQ stocks, no lookahead</span></div></div>
+            <div class="mf-step"><span class="mf-num">02</span><div><span class="mf-label">Walk forward</span><span class="mf-note">12 expanding-window folds, 1,512 out-of-sample days, 2-day embargo</span></div></div>
+            <div class="mf-step"><span class="mf-num">03</span><div><span class="mf-label">Measure skill</span><span class="mf-note">daily information coefficient → Newey–West HAC t-test</span></div></div>
+            <div class="mf-step"><span class="mf-num">04</span><div><span class="mf-label">Confirm by permutation</span><span class="mf-note">both stages must pass — either fails, no deployment</span></div></div>
+            <div class="mf-step"><span class="mf-num">05</span><div><span class="mf-label">Report the null</span><span class="mf-note">gate closed 0/12; calibration excellent anyway (ECE &lt; 0.025)</span></div></div>
+          </div>
+        </section>
+<section class="th-section">
+  <h2 class="th-section-title">The Results</h2>
+  <div class="metrics-grid">
+    <div class="metric-block"><span class="metric-value" style="color:#a78bfa">0 / 12</span><span class="metric-label">Folds gate opened</span></div>
+    <div class="metric-block"><span class="metric-value" style="color:#a78bfa">1,512</span><span class="metric-label">Out-of-sample days</span></div>
+    <div class="metric-block"><span class="metric-value" style="color:#a78bfa">11.8% → 0%</span><span class="metric-label">False-deploy rate vs naive test</span></div>
+    <div class="metric-block"><span class="metric-value" style="color:#a78bfa">&lt; 0.025</span><span class="metric-label">ECE while IC ≈ 0</span></div>
   </div>
+  <p class="th-body">The gate opened <strong>0 of 12</strong> walk-forward folds. No statistically defensible alpha survived honest out-of-sample testing — and that is the contribution. Calibration stayed excellent (<strong>ECE &lt; 0.025</strong>) despite zero discrimination: calibration quality is not deployment readiness. The naive t-test alternative false-positives <strong>11.8%</strong> of the time; the full gate, <strong>0.0%</strong>.</p>
+  <div class="fig-box">
+    <p class="fb-title">False-positive rate on skill-less models (%)</p>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Naive t-test</span><span class="result-bar-value">11.8%</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:98.3%;background:#a78bfa;"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Full ICGDF gate</span><span class="result-bar-value">0.0%</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:0.5%;background:rgba(255,255,255,0.35);"></div></div>
+    </div>
+    <p class="fig-caption">Simulated null (no real signal): the naive test deploys anyway; the gate never does.</p>
+  </div>
+  <figure class="paper-fig"><img src="assets/figures/icgdf/fig03_fold_level_ic.png" alt="Fold-level information coefficients across all 12 walk-forward folds" loading="lazy"><figcaption>Fold-level information coefficients across all 12 walk-forward folds: the gate never opens.</figcaption></figure>
+  <figure class="paper-fig"><img src="assets/figures/icgdf/fig06_permutation_ic.png" alt="Permutation test: observed IC inside the no-skill distribution" loading="lazy"><figcaption>The permutation test: the observed IC sits squarely inside the no-skill distribution.</figcaption></figure>
+  <figure class="paper-fig"><img src="assets/figures/icgdf/fig02_power_analysis.png" alt="Power analysis of detectable signal size" loading="lazy"><figcaption>Power analysis: the study could have detected a much smaller real signal than practitioners claim.</figcaption></figure>
 </section>
 <section class="th-section">
-  <h2 class="th-section-title">Key Result</h2>
-  <div class="fig-box">
-    <div class="fold-grid">
-      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-      <div class="fold-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="1.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-    </div>
-    <p class="fig-caption">All 12 walk-forward folds — every gate stayed closed</p>
-  </div>
+  <h2 class="th-section-title">What This Changes</h2>
+  <p class="th-body">An honest null result engineered as methodology: the same audit-first stance the program applies to healthcare and lending, applied to the temptation-rich domain of trading. A discipline that publishes its nulls as loudly as its wins is the only one that can be trusted when the gate <em>does</em> open.</p>
 </section>
-<div style="margin-bottom:3rem;">
+<div style="margin-bottom:3rem; display:flex; flex-wrap:wrap; gap:1rem;">
           <a href="https://github.com/Rajveer-code/when-the-gate-stays-closed" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#a78bfa;border-color:rgba(167,139,250,0.4);">↗ View on GitHub</a>
+          <a href="https://ssrn.com/abstract=6742700" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#a78bfa;border-color:rgba(167,139,250,0.4);">↗ SSRN preprint</a>
+          <a href="https://rajveer-research.vercel.app/research/icgdf/" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#a78bfa;border-color:rgba(167,139,250,0.4);">↗ Full research page</a>
         </div>
+        <section class="th-section">
+          <h2 class="th-section-title">Citation</h2>
+          <div class="cite-block">Rajveer Singh Pall. "When the Gate Stays Closed: Empirical Evidence of Near-Zero Cross-Sectional Predictability in Large-Cap NASDAQ Equities Using an IC-Gated Machine Learning Framework." Under journal review, 2026. SSRN preprint 6742700.</div>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Related Research</h2>
+          <div class="related-row" style="--pn-accent:#a78bfa">
+            <a href="project-indiafinbench.html"><span>IndiaFinBench — deployment-aware evaluation for LLMs</span><span class="rel-status">Under review</span></a>
+            <a href="project-trustshift.html"><span>TrustShift — the thesis that binds the program</span><span class="rel-status">Applied Intelligence</span></a>
+          </div>
+        </section>
         <div class="th-footer">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
       </div>
     </div>
@@ -126,6 +156,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="js/field.js?v=3"></script>
-  <script src="js/detail.js?v=5"></script>
+  <script src="js/detail.js?v=6"></script>
 </body>
 </html>

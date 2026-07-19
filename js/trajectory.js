@@ -62,7 +62,7 @@
         "Shipped on Vercel for a non-technical reader.",
       ] },
     { id: "cpfe", track: "research", color: "#2dd4bf", url: "project-cpfe.html",
-      role: "Cross-Platform Fairness Failure", company: "IEEE TNNLS · submitted", start: [2026, 0], end: [2026, 2],
+      role: "Cross-Platform Fairness Failure", company: "Journal submission · under review", start: [2026, 0], end: [2026, 2],
       bullets: [
         "Classifiers scoring AUC 0.98 within-platform collapse 30–39% off-platform.",
         "A five-axis audit shows calibration and equity failing in lockstep.",
@@ -76,7 +76,7 @@
         "The equity axis catches 33–39% of failures other guardrails miss.",
       ] },
     { id: "icgdf", track: "research", color: "#a78bfa", url: "project-icgdf.html",
-      role: "When the Gate Stays Closed", company: "QFE · under review", start: [2026, 3], end: [2026, 5],
+      role: "When the Gate Stays Closed", company: "Journal submission · under review", start: [2026, 3], end: [2026, 5],
       bullets: [
         "An IC-gated deployment framework with a conjunctive HAC + permutation test.",
         "The gate never opened across 12 folds and 1,512 out-of-sample days.",
@@ -97,7 +97,7 @@
         "≥44% survives maximally adversarial selection assumptions.",
       ] },
     { id: "cate-hmda", track: "research", color: "#60a5fa", url: "project-cate-hmda.html",
-      role: "Who Bears the Burden?", company: "JREFE · submitted", start: [2025, 9], end: [2025, 11],   /* Oct–Dec '25 */
+      role: "Who Bears the Burden?", company: "Journal submission · under review", start: [2025, 9], end: [2025, 11],   /* Oct–Dec '25 */
       bullets: [
         "Causal Forest Double ML on 42.3M HMDA applications.",
         "A 9.4 pp conditional Black approval penalty, net of 33 controls.",
@@ -110,14 +110,14 @@
         "Not a fixed offline benchmark — a live runtime property.",
         "Catches 33–39% of failures other guardrails miss, ~1.2s, zero cloud calls.",
       ] },
-    { id: "conviction-ranking", track: "research", color: "#f472b6", url: "project-conviction-ranking.html",
-      role: "Overcoming the Transaction Cost Trap", company: "SSRN · working paper", start: [2026, 6], end: [2026, 8],
+    { id: "trustshift", track: "research", color: "#f472b6", url: "project-trustshift.html",
+      role: "TrustShift: Shift Type Determines Failure Modes", company: "Applied Intelligence · under review", start: [2026, 6], end: [2026, 8],
       bullets: [
-        "Naive thresholds churn the book — transaction costs quietly eat the gross ML alpha.",
-        "Calibrated ensemble probabilities ranked as conviction; hold only the Top-1 asset each day.",
-        "IC 0.0197 (p=0.034) over 1,512 days; Top-1 returns 45.8% at Sharpe 1.18, break-even 24.2 bps.",
+        "One pre-registered audit across clinical risk, mental-health NLP, mortgage lending, and network security.",
+        "Shift type, not shift magnitude, decides which trustworthiness axis fails at deployment.",
+        "Three label-free probes diagnose the failure axis in advance — before labels arrive.",
       ] },
-    { id: "fairscope", track: "system", color: "#e3c07e", url: "https://github.com/Rajveer-code/fairscope",
+    { id: "fairscope", track: "system", color: "#e3c07e", url: "project-fairscope.html",
       role: "fairscope", company: "System · PyPI library", start: [2026, 7], end: [2026, 9],
       bullets: [
         "Subgroup-stratified, calibration-aware fairness auditing as a pip-installable library.",

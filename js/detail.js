@@ -278,3 +278,43 @@
   })();
 
 })();
+
+/* ── Paper spine: auto-id the standard sections by title, then track the
+      active one for the sticky jump-nav (pages without .paper-nav skip) ── */
+(function () {
+  var nav = document.querySelector(".paper-nav");
+  if (!nav) return;
+  var TITLE_IDS = [
+    ["the discovery in one figure", "discovery"],
+    ["the paper in five minutes", "fivemin"],
+    ["the research question", "question"],
+    ["how it works", "method"],
+    ["the results", "results"],
+    ["what this changes", "takeaways"]
+  ];
+  document.querySelectorAll(".th-section-title").forEach(function (h) {
+    var t = h.textContent.trim().toLowerCase();
+    for (var i = 0; i < TITLE_IDS.length; i++) {
+      if (t.indexOf(TITLE_IDS[i][0]) === 0 && h.parentElement && !h.parentElement.id) {
+        h.parentElement.id = TITLE_IDS[i][1];
+        break;
+      }
+    }
+  });
+  if (!("IntersectionObserver" in window)) return;
+  var links = Array.prototype.slice.call(nav.querySelectorAll("a[href^='#']"));
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute("href").slice(1)] = a; });
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      links.forEach(function (a) { a.classList.remove("is-active"); });
+      var a = map[en.target.id];
+      if (a) a.classList.add("is-active");
+    });
+  }, { rootMargin: "-15% 0px -70% 0px" });
+  Object.keys(map).forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) obs.observe(el);
+  });
+})();

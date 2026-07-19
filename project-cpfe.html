@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=7">
+  <link rel="stylesheet" href="css/style.css?v=10">
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>
@@ -30,10 +30,19 @@
     <div class="thinking-scroll">
       <div class="thinking-body">
         <a href="index.html#research" class="back-link">← Back to research</a>
+        <nav class="paper-nav" style="--pn-accent:#2dd4bf" aria-label="On this page">
+          <a href="#discovery">Discovery</a>
+          <a href="#fivemin">5 minutes</a>
+          <a href="#question">Question</a>
+          <a href="#method">Method</a>
+          <a href="#results">Results</a>
+          <a href="#takeaways">Takeaways</a>
+        </nav>
         <header class="th-header">
-          <div class="th-badge" style="color:#2dd4bf">Submitted · IEEE TNNLS</div>
+          <div class="th-badge" style="color:#2dd4bf">Under Journal Review · 2026</div>
           <h1 class="th-title">The CPFE Audit</h1>
           <p class="th-subtitle">Cross-platform generalisation failure in mental-health NLP — a five-axis Cross-Platform Fairness Evaluation protocol.</p>
+          <p class="th-authors">Rajveer Singh Pall, Sameer Yadav · 2026</p>
         </header>
         <div class="essence-strip">
           <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">Mental-health text classifiers that test well on one social platform quietly fail when used on another — and one aggregate accuracy score hides it.</span></div>
@@ -42,68 +51,92 @@
           <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">A model that passes its own benchmark can still fail the moment real users behave differently than its training data.</span></div>
         </div>
         <div class="th-divider"></div>
-        <div class="metrics-grid">
-          <div class="metric-block"><span class="metric-value" style="color:#2dd4bf">30–39%</span><span class="metric-label">AUC degradation</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#2dd4bf">9×</span><span class="metric-label">ECE increase</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#2dd4bf">&lt;0.17</span><span class="metric-label">Minority disparate impact</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#2dd4bf">≈0.10</span><span class="metric-label">Attribution overlap (Jaccard)</span></div>
-        </div>
-        <div class="th-divider"></div>
         <section class="th-section">
-          <h2 class="th-section-title">The Problem</h2>
-          <p class="th-body">Mental-health text classifiers that look strong on one social platform fail systematically when deployed on another — and the failure is hidden: accuracy, calibration, and equity all degrade together, but a single aggregate metric reports none of it.</p>
+          <h2 class="th-section-title">The Discovery in One Figure</h2>
+          <div class="fig-box">
+            <div class="compare-pair">
+              <div class="compare-before">
+                <div class="compare-label">Same platform tested</div>
+                <div class="compare-stat">Stable</div>
+                <p class="compare-desc">Accuracy, calibration, and word-level reasoning all hold up.</p>
+              </div>
+              <div class="compare-arrow">→</div>
+              <div class="compare-after" style="border-color:rgba(45,212,191,0.25);background:rgba(45,212,191,0.05);">
+                <div class="compare-label">Cross-platform tested</div>
+                <div class="compare-stat" style="color:#2dd4bf;">Collapses</div>
+                <p class="compare-desc">AUC falls 30-39%, calibration error rises 9×, and attribution overlap drops to ≈0.10 — different words entirely.</p>
+              </div>
+            </div>
+            <p class="fig-caption">Same model, same task — only the platform changed</p>
+          </div>
         </section>
         <section class="th-section">
-          <h2 class="th-section-title">The CPFE Protocol</h2>
+          <h2 class="th-section-title">The Paper in Five Minutes</h2>
+          <p class="th-body">Software that scans social-media posts for signs of depression or anxiety is usually trained and tested on a single platform, where it looks near-perfect. We took such models — AUC above 0.98 — and simply moved them to Reddit and Twitter. Accuracy collapsed by a third. Their confidence scores became badly dishonest. Fairness metrics failed for exactly the classes that matter clinically. And the words the models relied on changed almost completely from platform to platform — the model was never reading what its developers thought it was reading.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">The Research Question</h2>
+          <p class="th-body">Mental-health text classifiers that look strong on one social platform fail systematically when deployed on another — and the failure is hidden: accuracy, calibration, and equity all degrade together, but a single aggregate metric reports none of it. What survives when the same model meets a new platform's language?</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">How It Works</h2>
           <p class="th-body">Five axes audit a family of four transformers (<strong>BERT, RoBERTa, Emotion-DistilRoBERTa, GoEmotions</strong>) trained on one platform and tested across Reddit and Twitter: <strong>discrimination</strong> (macro-OvR AUC with DeLong CIs), <strong>calibration</strong> (ECE), <strong>significance</strong> (Bonferroni-corrected bootstrap), <strong>equity</strong> (symmetric disparate impact — the novel axis), and <strong>attribution stability</strong> (gradient-saliency Jaccard@K).</p>
+          <div class="mf-flow" style="--pn-accent:#2dd4bf">
+            <div class="mf-step"><span class="mf-num">01</span><div><span class="mf-label">Train in-platform</span><span class="mf-note">transformer classifiers, 35,556 posts, five seeds</span></div></div>
+            <div class="mf-step"><span class="mf-num">02</span><div><span class="mf-label">Audit on five axes</span><span class="mf-note">discrimination · calibration · significance · equity · attribution</span></div></div>
+            <div class="mf-step"><span class="mf-num">03</span><div><span class="mf-label">Cross platforms</span><span class="mf-note">same models, Reddit and Twitter language</span></div></div>
+            <div class="mf-step"><span class="mf-num">04</span><div><span class="mf-label">Attempt repair</span><span class="mf-note">temperature scaling fixes calibration only; fine-tuning recovers more</span></div></div>
+          </div>
         </section>
-        <section class="th-section">
-          <h2 class="th-section-title">Outcome</h2>
-          <p class="th-body">Under platform shift, AUC falls <strong>30–39%</strong>, calibration error rises <strong>9×</strong>, minority-class disparate impact drops below <strong>0.17</strong>, and token attribution overlap collapses to <strong>≈0.10</strong> — the models attend to entirely different words. The audit makes a failure that aggregate accuracy hides both visible and measurable.</p>
-        </section>
-        <section class="th-section">
-  <h2 class="th-section-title">Methodology Pipeline</h2>
-  <div class="method-diagram" style="padding: 2rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: linear-gradient(180deg, rgba(255,255,255,0.015) 0%, transparent 100%); margin-bottom: 2rem;">
-    <svg viewBox="0 0 700 120" fill="none" style="width:100%;height:auto;">
-      <rect x="44.0" y="35" width="120" height="50" rx="6" stroke="#2dd4bf" stroke-width="1" fill="rgba(45, 212, 191,0.08)" />
-      <text x="104.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">REDDIT SOURCE</text>
-      <line x1="169.0" y1="60.0" x2="195.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
-      <polygon points="195.0,56.0 203.0,60.0 195.0,64.0" fill="rgba(255,255,255,0.2)" />
-      <rect x="208.0" y="35" width="120" height="50" rx="6" stroke="#2dd4bf" stroke-width="1" fill="rgba(45, 212, 191,0.08)" />
-      <text x="268.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">TRANSFORMERS</text>
-      <line x1="333.0" y1="60.0" x2="359.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
-      <polygon points="359.0,56.0 367.0,60.0 359.0,64.0" fill="rgba(255,255,255,0.2)" />
-      <rect x="372.0" y="35" width="120" height="50" rx="6" stroke="#2dd4bf" stroke-width="1" fill="rgba(45, 212, 191,0.08)" />
-      <text x="432.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">PLATFORM SHIFT</text>
-      <line x1="497.0" y1="60.0" x2="523.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
-      <polygon points="523.0,56.0 531.0,60.0 523.0,64.0" fill="rgba(255,255,255,0.2)" />
-      <rect x="536.0" y="35" width="120" height="50" rx="6" stroke="#2dd4bf" stroke-width="1" fill="rgba(45, 212, 191,0.08)" />
-      <text x="596.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">CPFE AUDIT</text>
-    </svg>
+<section class="th-section">
+  <h2 class="th-section-title">The Results</h2>
+  <div class="metrics-grid">
+    <div class="metric-block"><span class="metric-value" style="color:#2dd4bf">30–39%</span><span class="metric-label">AUC degradation</span></div>
+    <div class="metric-block"><span class="metric-value" style="color:#2dd4bf">9×</span><span class="metric-label">ECE increase</span></div>
+    <div class="metric-block"><span class="metric-value" style="color:#2dd4bf">&lt;0.17</span><span class="metric-label">Minority disparate impact</span></div>
+    <div class="metric-block"><span class="metric-value" style="color:#2dd4bf">≈0.10</span><span class="metric-label">Attribution overlap (Jaccard)</span></div>
   </div>
+  <p class="th-body">Under platform shift, AUC falls <strong>30–39%</strong>, calibration error rises <strong>9×</strong>, minority-class disparate impact drops below <strong>0.17</strong>, and token attribution overlap collapses to <strong>≈0.10</strong> — the models attend to entirely different words. Temperature scaling repairs calibration but not discrimination; target-domain fine-tuning recovers far more.</p>
+  <div class="fig-box">
+    <p class="fb-title">Calibration error (ECE) as the platform changes</p>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Home platform</span><span class="result-bar-value">0.056–0.060</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:10.2%;background:rgba(255,255,255,0.35);"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Reddit</span><span class="result-bar-value">0.196–0.229</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:35.6%;background:rgba(255,255,255,0.35);"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Twitter</span><span class="result-bar-value">0.499–0.542</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:90.7%;background:#2dd4bf;"></div></div>
+    </div>
+    <p class="fig-caption">Bars drawn at the lower bound of each reported range — the conservative reading.</p>
+  </div>
+  <figure class="paper-fig"><img src="assets/figures/cpfe/figure1_forest_plot.png" alt="Forest plot of cross-platform AUC with DeLong confidence intervals" loading="lazy"><figcaption>Forest plot of cross-platform AUC with DeLong confidence intervals across models and platforms.</figcaption></figure>
+  <figure class="paper-fig"><img src="assets/figures/cpfe/figure2_platform_degradation.png" alt="Degradation by platform" loading="lazy"><figcaption>Degradation by platform: what a near-perfect in-platform model loses on Reddit and Twitter.</figcaption></figure>
+  <figure class="paper-fig"><img src="assets/figures/cpfe/figure3_calibration_curves.png" alt="Calibration curves in-domain versus cross-platform" loading="lazy"><figcaption>Calibration curves in-domain versus cross-platform — confidence becomes dishonest under shift.</figcaption></figure>
+  <p class="caveat-note">Labels are clinical proxies from emotion mappings, not diagnoses.</p>
 </section>
 <section class="th-section">
-  <h2 class="th-section-title">Key Result</h2>
-  <div class="fig-box">
-    <div class="compare-pair">
-      <div class="compare-before">
-        <div class="compare-label">Same platform tested</div>
-        <div class="compare-stat">Stable</div>
-        <p class="compare-desc">Accuracy, calibration, and word-level reasoning all hold up.</p>
-      </div>
-      <div class="compare-arrow">→</div>
-      <div class="compare-after" style="border-color:rgba(45,212,191,0.25);background:rgba(45,212,191,0.05);">
-        <div class="compare-label">Cross-platform tested</div>
-        <div class="compare-stat" style="color:#2dd4bf;">Collapses</div>
-        <p class="compare-desc">AUC falls 30-39%, calibration error rises 9×, and attribution overlap drops to ≈0.10 — different words entirely.</p>
-      </div>
-    </div>
-    <p class="fig-caption">Same model, same task — only the platform changed</p>
-  </div>
+  <h2 class="th-section-title">What This Changes</h2>
+  <p class="th-body">Fairness itself is shown to be a deployment-shift casualty: every trustworthiness axis can fail while the benchmark number stays excellent. The audit makes a failure that aggregate accuracy hides both visible and measurable.</p>
 </section>
-<div style="margin-bottom:3rem;">
+<div style="margin-bottom:3rem; display:flex; flex-wrap:wrap; gap:1rem;">
           <a href="https://github.com/Rajveer-code/mental-health-fairness-nlp" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#2dd4bf;border-color:rgba(45,212,191,0.4);">↗ View on GitHub</a>
+          <a href="https://rajveer-research.vercel.app/research/cpfe/" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#2dd4bf;border-color:rgba(45,212,191,0.4);">↗ Full research page</a>
         </div>
+        <section class="th-section">
+          <h2 class="th-section-title">Citation</h2>
+          <div class="cite-block">Rajveer Singh Pall, Sameer Yadav. "Cross-Platform Generalisation Failure in Mental Health NLP: A Five-Axis Fairness Audit of Transformer Models on Social Media." Under journal review, 2026.</div>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Related Research</h2>
+          <div class="related-row" style="--pn-accent:#2dd4bf">
+            <a href="project-trustshift.html"><span>TrustShift — shift type as the general law</span><span class="rel-status">Applied Intelligence</span></a>
+            <a href="project-indiafinbench.html"><span>IndiaFinBench — evaluating LLMs under deployment conditions</span><span class="rel-status">Under review</span></a>
+          </div>
+        </section>
         <div class="th-footer">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
       </div>
     </div>
@@ -125,6 +158,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="js/field.js?v=3"></script>
-  <script src="js/detail.js?v=5"></script>
+  <script src="js/detail.js?v=6"></script>
 </body>
 </html>

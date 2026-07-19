@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>TrustShift — Rajveer Singh Pall</title>
+  <meta name="description" content="One pre-registered audit across four domains: the type of distribution shift — not its magnitude — determines which axis of trustworthiness fails at deployment.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2306080c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' fill='%23f5ca40' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=10">
+</head>
+<body>
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="bottom-fade" aria-hidden="true"></div>
+  <div class="scroll-rail" aria-hidden="true"><div class="scroll-rail-fill" id="scrollRailFill"></div></div>
+  <div class="hud-clock" aria-hidden="true">
+    <div class="hud-row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="hud-label">BLR</span><span class="hud-time" id="clockIST">--:--:--</span>
+    </div>
+    <div class="hud-row">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+      <span class="hud-label" id="hudVisitorLabel">NAG</span><span class="hud-time" id="clockUTC">--:--:--</span>
+    </div>
+  </div>
+
+  <div class="spatial-scene">
+    <div class="thinking-scroll">
+      <div class="thinking-body">
+        <a href="index.html#research" class="back-link">← Back to research</a>
+        <nav class="paper-nav" style="--pn-accent:#f472b6" aria-label="On this page">
+          <a href="#discovery">Discovery</a>
+          <a href="#fivemin">5 minutes</a>
+          <a href="#question">Question</a>
+          <a href="#method">Method</a>
+          <a href="#results">Results</a>
+          <a href="#takeaways">Takeaways</a>
+        </nav>
+        <header class="th-header">
+          <div class="th-badge" style="color:#f472b6">Under Review · Applied Intelligence</div>
+          <h1 class="th-title">TrustShift</h1>
+          <p class="th-subtitle">One pre-registered audit across four dissimilar domains: the type of distribution shift — not its magnitude — determines which axis of trustworthiness fails at deployment.</p>
+          <p class="th-authors">Rajveer Singh Pall · 2026</p>
+        </header>
+        <div class="essence-strip">
+          <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">ML systems are audited domain by domain, and deployment failures are usually blamed on how large the distribution shift is. Whether the kind of shift predicts the kind of failure had never been tested across domains under one protocol.</span></div>
+          <div class="essence-item"><span class="essence-label">Approach</span><span class="essence-text">One pre-registered audit applied to clinical risk, mental-health NLP, mortgage lending, and network security — discrimination, calibration, and subgroup reliability measured under each deployment shift, then explained by three cheap label-free probes.</span></div>
+          <div class="essence-item"><span class="essence-label">Result</span><span class="essence-text">Shift type, not shift magnitude, predicts which trustworthiness axis degrades — and the responsible shift type is diagnosable in advance from unlabeled data.</span></div>
+          <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">Post-hoc deployment surprises become a pre-deployment diagnostic: the auditor can anticipate the failure axis before labels arrive, and match the repair to the diagnosis.</span></div>
+        </div>
+        <div class="th-divider"></div>
+
+        <section class="th-section">
+          <h2 class="th-section-title">The Discovery in One Figure</h2>
+          <div class="fig-box">
+            <svg viewBox="0 0 700 300" fill="none" style="width:100%;height:auto;">
+              <text x="350" y="24" text-anchor="middle" font-family="DM Mono, monospace" font-size="10" fill="rgba(255,255,255,0.55)" letter-spacing="0.08em">SHIFT TYPE → FAILURE AXIS (NOT SHIFT MAGNITUDE)</text>
+              <!-- shift types -->
+              <rect x="40" y="60" width="150" height="44" rx="6" stroke="#f472b6" stroke-width="1" fill="rgba(244,114,182,0.08)"/>
+              <text x="115" y="86" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.75)" letter-spacing="0.05em">LABEL SHIFT</text>
+              <rect x="40" y="126" width="150" height="44" rx="6" stroke="#f472b6" stroke-width="1" fill="rgba(244,114,182,0.08)"/>
+              <text x="115" y="152" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.75)" letter-spacing="0.05em">COVARIATE SHIFT</text>
+              <rect x="40" y="192" width="150" height="44" rx="6" stroke="#f472b6" stroke-width="1" fill="rgba(244,114,182,0.08)"/>
+              <text x="115" y="218" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.75)" letter-spacing="0.05em">CONCEPT SHIFT</text>
+              <!-- arrows -->
+              <line x1="195" y1="82" x2="500" y2="82" stroke="rgba(244,114,182,0.55)" stroke-width="1.2"/><polygon points="500,78 508,82 500,86" fill="rgba(244,114,182,0.55)"/>
+              <line x1="195" y1="148" x2="500" y2="148" stroke="rgba(244,114,182,0.55)" stroke-width="1.2"/><polygon points="500,144 508,148 500,152" fill="rgba(244,114,182,0.55)"/>
+              <line x1="195" y1="214" x2="500" y2="214" stroke="rgba(244,114,182,0.55)" stroke-width="1.2"/><polygon points="500,210 508,214 500,218" fill="rgba(244,114,182,0.55)"/>
+              <!-- probes label on arrows -->
+              <text x="350" y="70" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="rgba(255,255,255,0.4)" letter-spacing="0.06em">3 LABEL-FREE PROBES DIAGNOSE THE TYPE IN ADVANCE</text>
+              <!-- failure axes -->
+              <rect x="512" y="60" width="150" height="44" rx="6" stroke="rgba(255,255,255,0.28)" stroke-width="1" fill="rgba(255,255,255,0.03)"/>
+              <text x="587" y="86" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.75)" letter-spacing="0.05em">CALIBRATION FAILS</text>
+              <rect x="512" y="126" width="150" height="44" rx="6" stroke="rgba(255,255,255,0.28)" stroke-width="1" fill="rgba(255,255,255,0.03)"/>
+              <text x="587" y="152" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.75)" letter-spacing="0.05em">SUBGROUPS FAIL</text>
+              <rect x="512" y="192" width="150" height="44" rx="6" stroke="rgba(255,255,255,0.28)" stroke-width="1" fill="rgba(255,255,255,0.03)"/>
+              <text x="587" y="218" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.75)" letter-spacing="0.05em">DISCRIMINATION FAILS</text>
+              <!-- domains -->
+              <text x="350" y="278" text-anchor="middle" font-family="DM Mono, monospace" font-size="8.5" fill="rgba(255,255,255,0.45)" letter-spacing="0.06em">CLINICAL RISK · MENTAL-HEALTH NLP · MORTGAGE LENDING · NETWORK SECURITY — ONE PRE-REGISTERED PROTOCOL</text>
+            </svg>
+            <p class="fig-caption">The kind of change in the world — not the amount of change — decides what breaks.</p>
+          </div>
+        </section>
+
+        <section class="th-section">
+          <h2 class="th-section-title">The Paper in Five Minutes</h2>
+          <p class="th-body">A machine-learning model is trained on yesterday's data and then released into a world that keeps changing. Everyone knows performance can drop — but not all drops are alike. Sometimes the model still ranks people correctly but its probability estimates become dishonest; sometimes it fails one demographic group; sometimes it collapses entirely. This paper studies four completely different fields at once — medicine, social-media language, mortgage lending, and network attacks — under one identical audit, and finds that the <strong>kind</strong> of change in the world, not the <strong>amount</strong> of change, decides what breaks. Better still, the kind is detectable in advance, from unlabeled data, so the right repair can be chosen before anyone is harmed.</p>
+        </section>
+
+        <section class="th-section">
+          <h2 class="th-section-title">The Research Question</h2>
+          <p class="th-body">ML systems are audited domain by domain, and deployment failures are usually attributed to how large the distribution shift is. Whether the <strong>kind</strong> of shift predicts the <strong>kind</strong> of failure had not been tested across domains under one protocol.</p>
+        </section>
+
+        <section class="th-section">
+          <h2 class="th-section-title">How It Works</h2>
+          <p class="th-body">A single pre-registered audit protocol applied to four real-world domains — clinical risk (NHANES→BRFSS), mental-health NLP (Kaggle→Reddit/Twitter), mortgage lending (42M HMDA applications), and network security (CIC-DDoS2019→CICIDS2017). Discrimination, calibration, and subgroup reliability are measured with DeLong and bootstrap confidence intervals (N&nbsp;=&nbsp;2000) and Benjamini–Hochberg FDR control, then explained by three cheap, label-free shift probes: prevalence shift, domain-classifier AUC, and importance-reweighting residual.</p>
+          <div class="mf-flow" style="--pn-accent:#f472b6">
+            <div class="mf-step"><span class="mf-num">01</span><div><span class="mf-label">Deployment shift</span><span class="mf-note">one trained model per domain meets a changed population</span></div></div>
+            <div class="mf-step"><span class="mf-num">02</span><div><span class="mf-label">Three label-free probes</span><span class="mf-note">prevalence shift · domain-classifier AUC · reweighting residual</span></div></div>
+            <div class="mf-step"><span class="mf-num">03</span><div><span class="mf-label">Shift-type diagnosis</span><span class="mf-note">label, covariate, or concept shift — before outcomes arrive</span></div></div>
+            <div class="mf-step"><span class="mf-num">04</span><div><span class="mf-label">Failure taxonomy</span><span class="mf-note">which axis breaks: discrimination, calibration, or subgroups</span></div></div>
+            <div class="mf-step"><span class="mf-num">05</span><div><span class="mf-label">Matched remediation</span><span class="mf-note">recalibrate · reweight · retrain — chosen by diagnosis</span></div></div>
+          </div>
+        </section>
+
+        <section class="th-section">
+          <h2 class="th-section-title">The Results</h2>
+          <div class="metrics-grid">
+            <div class="metric-block"><span class="metric-value" style="color:#f472b6">4</span><span class="metric-label">Domains, one protocol</span></div>
+            <div class="metric-block"><span class="metric-value" style="color:#f472b6">3</span><span class="metric-label">Label-free shift probes</span></div>
+            <div class="metric-block"><span class="metric-value" style="color:#f472b6">N=2000</span><span class="metric-label">Bootstrap CIs · BH-FDR</span></div>
+            <div class="metric-block"><span class="metric-value" style="color:#f472b6">exit 0</span><span class="metric-label">Byte-identical re-run</span></div>
+          </div>
+          <p class="th-body">Shift type, not shift magnitude, predicts which trustworthiness axis degrades — and the responsible shift type is diagnosable in advance from unlabeled data, mapping each diagnosis to the appropriate remediation: recalibration, reweighting, or retraining. The full pipeline re-runs from a fresh clone to byte-identical result tables.</p>
+          <figure class="paper-fig"><img src="assets/figures/trustshift/fig2_shift_bars.png" alt="The audit, domain by domain: discrimination, calibration, and subgroup reliability under each deployment shift" loading="lazy"><figcaption>The audit, domain by domain: discrimination, calibration, and subgroup reliability measured under each deployment shift.</figcaption></figure>
+          <figure class="paper-fig"><img src="assets/figures/trustshift/fig3_headline_scatter.png" alt="Deployment damage organised by shift type rather than shift magnitude" loading="lazy"><figcaption>The headline result: deployment damage organised by shift type rather than shift magnitude across the shift points.</figcaption></figure>
+          <figure class="paper-fig"><img src="assets/figures/trustshift/fig5_remediation.png" alt="The remediation ladder across domains" loading="lazy"><figcaption>The remediation ladder: label-cheap recalibration repairs calibration everywhere; discrimination requires more.</figcaption></figure>
+        </section>
+
+        <section class="th-section">
+          <h2 class="th-section-title">What This Changes</h2>
+          <p class="th-body">It converts post-hoc deployment surprises into a pre-deployment diagnostic: an auditor can anticipate the failure axis before labels arrive. And it binds the program's clinical, NLP, lending, and security evidence into one reproducible benchmark — the thesis that holds the rest of this research together.</p>
+        </section>
+
+        <div style="margin-bottom:3rem; display:flex; flex-wrap:wrap; gap:1rem;">
+          <a href="https://github.com/Rajveer-code/trustshift" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#f472b6;border-color:rgba(244,114,182,0.4);">↗ View on GitHub</a>
+          <a href="https://huggingface.co/datasets/Rajveer-code/trustshift" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#f472b6;border-color:rgba(244,114,182,0.4);">↗ Dataset on Hugging Face</a>
+          <a href="https://rajveer-research.vercel.app/research/trustshift/" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#f472b6;border-color:rgba(244,114,182,0.4);">↗ Full research page</a>
+        </div>
+        <section class="th-section">
+          <h2 class="th-section-title">Citation</h2>
+          <div class="cite-block">Rajveer Singh Pall. "TrustShift: Shift Type, Not Shift Magnitude, Determines Machine-Learning Failure Modes." Under review, Applied Intelligence, 2026.</div>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Related Research</h2>
+          <div class="related-row" style="--pn-accent:#f472b6">
+            <a href="project-cpfe.html"><span>The CPFE Audit — fairness under platform shift</span><span class="rel-status">Under journal review</span></a>
+            <a href="project-diabetes-eval.html"><span>Diabetes External Validation — the foundation result</span><span class="rel-status">Presented · CIPHER-2026</span></a>
+            <a href="project-cate-hmda.html"><span>Who Bears the Burden? — the lending evidence</span><span class="rel-status">Under journal review</span></a>
+          </div>
+        </section>
+        <div class="th-footer">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="brh" id="brh" aria-hidden="true">
+    <div class="brh-session"><span class="brh-label">SESSION</span>&nbsp;<span class="brh-value" id="brhSession">00:00</span></div>
+    <div class="brh-explore"><span class="brh-label">EXPLORED</span>&nbsp;<span class="brh-value" id="brhExplore">0%</span></div>
+    <div class="brh-xy"><span class="brh-label">XY</span>&nbsp;<span class="brh-value" id="brhXY">0.00, 0.00</span></div>
+    <button class="brh-scroll-btn" id="brhScrollBtn" aria-label="Scroll to top">
+      <svg class="brh-ring" viewBox="0 0 36 36">
+        <circle class="brh-ring-track" cx="18" cy="18" r="15"/>
+        <circle class="brh-ring-fill" id="brhRingFill" cx="18" cy="18" r="15"/>
+      </svg>
+    </button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="js/field.js?v=3"></script>
+  <script src="js/detail.js?v=6"></script>
+</body>
+</html>

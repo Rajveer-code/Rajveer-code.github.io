@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=7">
+  <link rel="stylesheet" href="css/style.css?v=10">
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>
@@ -29,11 +29,20 @@
   <div class="spatial-scene">
     <div class="thinking-scroll">
       <div class="thinking-body">
-        <a href="index.html#work" class="back-link">← Back to work</a>
+        <a href="index.html#research" class="back-link">← Back to research</a>
+        <nav class="paper-nav" style="--pn-accent:#22d3ee" aria-label="On this page">
+          <a href="#discovery">Discovery</a>
+          <a href="#fivemin">5 minutes</a>
+          <a href="#question">Question</a>
+          <a href="#method">Method</a>
+          <a href="#results">Results</a>
+          <a href="#takeaways">Takeaways</a>
+        </nav>
         <header class="th-header">
-          <div class="th-badge" style="color:#22d3ee">Live Benchmark · Target EMNLP 2026</div>
+          <div class="th-badge" style="color:#22d3ee">Live Benchmark · Under Review, Anonymous NLP Venue</div>
           <h1 class="th-title">IndiaFinBench</h1>
           <p class="th-subtitle">A reproducible benchmark for LLM performance on Indian financial regulatory text — SEBI circulars and RBI master directions.</p>
+          <p class="th-authors">Rajveer Singh Pall · 2026</p>
         </header>
         <div class="essence-strip">
           <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">No benchmark existed to test whether LLMs can be trusted on Indian financial regulation — dense, cross-referenced text where a confident wrong answer is costly.</span></div>
@@ -42,63 +51,115 @@
           <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">The first evidence that today's LLMs can outperform expert humans on this specific, high-stakes regulatory domain.</span></div>
         </div>
         <div class="th-divider"></div>
-        <div class="metrics-grid">
-          <div class="metric-block"><span class="metric-value" style="color:#22d3ee">406</span><span class="metric-label">Expert QA items</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#22d3ee">12</span><span class="metric-label">LLMs evaluated</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#22d3ee">89.7%</span><span class="metric-label">Top model (Gemini 2.5)</span></div>
-          <div class="metric-block"><span class="metric-value" style="color:#22d3ee">69%</span><span class="metric-label">Human-expert baseline</span></div>
-        </div>
-        <div class="th-divider"></div>
         <section class="th-section">
-          <h2 class="th-section-title">The Gap</h2>
+          <h2 class="th-section-title">The Discovery in One Figure</h2>
+          <div class="fig-box">
+            <div class="result-bar-row has-threshold">
+              <div class="result-bar-label"><span>Gemini 2.5 Flash (top model)</span><span class="result-bar-value">89.7%</span></div>
+              <div class="result-bar-track">
+                <div class="result-bar-fill" style="width:89.7%;background:#22d3ee;"></div>
+                <div class="result-bar-threshold" style="left:69%;"></div>
+              </div>
+              <div class="result-bar-threshold-label" style="left:69%;">Human-expert baseline · 69%</div>
+            </div>
+            <p class="fig-caption">All 12 models scored above the human-expert line — Gemini cleared it by 20.7 points</p>
+          </div>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">The Paper in Five Minutes</h2>
+          <p class="th-body">Large language models are increasingly asked legal and financial questions, but nearly all of their testing uses American and European text. This benchmark tests twelve leading models on India's actual financial rulebook — SEBI and RBI regulations spanning 1992 to 2026 — with 406 questions written and verified by hand. The questions require exactly what real compliance work requires: interpreting rules, calculating with legal thresholds, spotting contradictions, and tracking rules that changed over time. The clearest finding: numbers are the hardest. On numerical reasoning alone, model scores spread by 36 points.</p>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">The Research Question</h2>
           <p class="th-body">No public benchmark existed for how LLMs handle Indian financial regulatory text — a domain dense with numerical thresholds, cross-references, and temporal amendments where a confident wrong answer is costly.</p>
         </section>
         <section class="th-section">
-          <h2 class="th-section-title">Construction</h2>
+          <h2 class="th-section-title">How It Works</h2>
           <p class="th-body">From <strong>192 SEBI/RBI documents</strong> I built <strong>406 expert-annotated QA items</strong> across four task types — regulatory interpretation, numerical reasoning, contradiction detection, and temporal reasoning — with three-round inter-annotator agreement. Twelve LLMs are scored closed-book with bootstrap significance and Wilson confidence intervals, plus a hybrid BM25+dense RAG demo.</p>
+          <div class="mf-flow" style="--pn-accent:#22d3ee">
+            <div class="mf-step"><span class="mf-num">01</span><div><span class="mf-label">Curate the corpus</span><span class="mf-note">192 SEBI/RBI regulatory documents, 1992–2026</span></div></div>
+            <div class="mf-step"><span class="mf-num">02</span><div><span class="mf-label">Write expert QA</span><span class="mf-note">406 items: interpretation · numerical · contradiction · temporal</span></div></div>
+            <div class="mf-step"><span class="mf-num">03</span><div><span class="mf-label">Validate annotations</span><span class="mf-note">model-based and human cross-checks, agreement reported</span></div></div>
+            <div class="mf-step"><span class="mf-num">04</span><div><span class="mf-label">Evaluate 12 LLMs</span><span class="mf-note">strict scoring plus judge-corrected audit (format vs reasoning)</span></div></div>
+            <div class="mf-step"><span class="mf-num">05</span><div><span class="mf-label">Ship it open</span><span class="mf-note">public dataset, leaderboard, and live retrieval-augmented demo</span></div></div>
+          </div>
         </section>
-        <section class="th-section">
-          <h2 class="th-section-title">Outcome</h2>
-          <p class="th-body">Every model clears the <strong>69%</strong> human-expert baseline; <strong>Gemini 2.5 Flash</strong> leads at <strong>89.7%</strong>, with statistically distinct performance tiers. The benchmark and leaderboard are live on HuggingFace for reproducible evaluation.</p>
-        </section>
-        <section class="th-section">
-  <h2 class="th-section-title">Methodology Pipeline</h2>
-  <div class="method-diagram" style="padding: 2rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; background: linear-gradient(180deg, rgba(255,255,255,0.015) 0%, transparent 100%); margin-bottom: 2rem;">
-    <svg viewBox="0 0 700 120" fill="none" style="width:100%;height:auto;">
-      <rect x="44.0" y="35" width="120" height="50" rx="6" stroke="#22d3ee" stroke-width="1" fill="rgba(34, 211, 238,0.08)" />
-      <text x="104.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">192 PDF DOCUMENTS</text>
-      <line x1="169.0" y1="60.0" x2="195.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
-      <polygon points="195.0,56.0 203.0,60.0 195.0,64.0" fill="rgba(255,255,255,0.2)" />
-      <rect x="208.0" y="35" width="120" height="50" rx="6" stroke="#22d3ee" stroke-width="1" fill="rgba(34, 211, 238,0.08)" />
-      <text x="268.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">406 EXPERT QA</text>
-      <line x1="333.0" y1="60.0" x2="359.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
-      <polygon points="359.0,56.0 367.0,60.0 359.0,64.0" fill="rgba(255,255,255,0.2)" />
-      <rect x="372.0" y="35" width="120" height="50" rx="6" stroke="#22d3ee" stroke-width="1" fill="rgba(34, 211, 238,0.08)" />
-      <text x="432.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">WILSON SCORING</text>
-      <line x1="497.0" y1="60.0" x2="523.0" y2="60.0" stroke="rgba(255,255,255,0.2)" stroke-width="1" />
-      <polygon points="523.0,56.0 531.0,60.0 523.0,64.0" fill="rgba(255,255,255,0.2)" />
-      <rect x="536.0" y="35" width="120" height="50" rx="6" stroke="#22d3ee" stroke-width="1" fill="rgba(34, 211, 238,0.08)" />
-      <text x="596.0" y="63.0" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="rgba(255,255,255,0.7)" letter-spacing="0.05em">HUGGINGFACE SPACE</text>
-    </svg>
+<section class="th-section">
+  <h2 class="th-section-title">The Results</h2>
+  <div class="metrics-grid">
+    <div class="metric-block"><span class="metric-value" style="color:#22d3ee">406</span><span class="metric-label">Expert QA items</span></div>
+    <div class="metric-block"><span class="metric-value" style="color:#22d3ee">12</span><span class="metric-label">LLMs evaluated</span></div>
+    <div class="metric-block"><span class="metric-value" style="color:#22d3ee">89.7%</span><span class="metric-label">Top model (Gemini 2.5)</span></div>
+    <div class="metric-block"><span class="metric-value" style="color:#22d3ee">69%</span><span class="metric-label">Human-expert baseline</span></div>
   </div>
+  <p class="th-body">Every model clears the <strong>69%</strong> human-expert baseline; <strong>Gemini 2.5 Flash</strong> leads at <strong>89.7%</strong>, with statistically distinct performance tiers. Numerical reasoning is the most discriminative axis — it alone spreads the twelve models by <strong>35.9 points</strong>. Hybrid RRF retrieval lifts Recall@5 to <strong>0.785</strong> (+9.7 pp over dense-only). The benchmark and leaderboard are live on HuggingFace for reproducible evaluation.</p>
+  <div class="fig-box">
+    <p class="fb-title">What the benchmark asks (items per task type)</p>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Regulatory interpretation</span><span class="result-bar-value">174</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:100%;background:rgba(255,255,255,0.35);"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Numerical reasoning</span><span class="result-bar-value">92</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:52.9%;background:#22d3ee;"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Temporal reasoning</span><span class="result-bar-value">78</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:44.8%;background:rgba(255,255,255,0.35);"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Contradiction detection</span><span class="result-bar-value">62</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:35.6%;background:rgba(255,255,255,0.35);"></div></div>
+    </div>
+  </div>
+  <div class="fig-box">
+    <p class="fb-title">Strict accuracy, selected models (%)</p>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Gemini 2.5 Flash</span><span class="result-bar-value">89.7</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:89.7%;background:#22d3ee;"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Qwen3-32B</span><span class="result-bar-value">85.5</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:85.5%;background:rgba(255,255,255,0.35);"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>LLaMA-3.3-70B</span><span class="result-bar-value">83.7</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:83.7%;background:rgba(255,255,255,0.35);"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Llama 4 Scout 17B</span><span class="result-bar-value">83.3</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:83.3%;background:rgba(255,255,255,0.35);"></div></div>
+    </div>
+    <div class="result-bar-row">
+      <div class="result-bar-label"><span>Gemma 4 E4B</span><span class="result-bar-value">70.4</span></div>
+      <div class="result-bar-track"><div class="result-bar-fill" style="width:70.4%;background:rgba(255,255,255,0.35);"></div></div>
+    </div>
+    <p class="fig-caption">Numerical reasoning alone spreads models by 35.9 points.</p>
+  </div>
+  <figure class="paper-fig"><img src="assets/figures/indiafinbench/difficulty_lineplot.png" alt="Accuracy by item difficulty" loading="lazy"><figcaption>Accuracy by item difficulty: where models separate as questions get harder.</figcaption></figure>
+  <figure class="paper-fig"><img src="assets/figures/indiafinbench/heatmap.png" alt="Model by task-type error landscape" loading="lazy"><figcaption>The model × task-type error landscape across regulatory interpretation, numerical, contradiction, and temporal reasoning.</figcaption></figure>
+  <figure class="paper-fig"><img src="assets/figures/indiafinbench/inter_task_correlation.png" alt="Inter-task correlations" loading="lazy"><figcaption>Inter-task correlations: strength on one regulatory skill does not guarantee another.</figcaption></figure>
 </section>
 <section class="th-section">
-  <h2 class="th-section-title">Key Result</h2>
-  <div class="fig-box">
-    <div class="result-bar-row has-threshold">
-      <div class="result-bar-label"><span>Gemini 2.5 Flash (top model)</span><span class="result-bar-value">89.7%</span></div>
-      <div class="result-bar-track">
-        <div class="result-bar-fill" style="width:89.7%;background:#22d3ee;"></div>
-        <div class="result-bar-threshold" style="left:69%;"></div>
-      </div>
-      <div class="result-bar-threshold-label" style="left:69%;">Human-expert baseline · 69%</div>
-    </div>
-    <p class="fig-caption">All 12 models scored above the human-expert line — Gemini cleared it by 20.7 points</p>
-  </div>
+  <h2 class="th-section-title">What This Changes</h2>
+  <p class="th-body">It extends deployment-aware evaluation to LLMs and an underrepresented jurisdiction — with the dataset, leaderboard, and live retrieval demo all public, so every claim can be re-run.</p>
 </section>
-<div style="margin-bottom:3rem;">
-          <a href="https://huggingface.co/spaces/Rajveer-code/IndiaFinBench" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#22d3ee;border-color:rgba(34,211,238,0.4);">↗ View on HuggingFace</a>
+<div style="margin-bottom:3rem; display:flex; flex-wrap:wrap; gap:1rem;">
+          <a href="https://huggingface.co/spaces/Rajveer-code/IndiaFinBench" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#22d3ee;border-color:rgba(34,211,238,0.4);">↗ Live demo on HuggingFace</a>
+          <a href="https://huggingface.co/datasets/Rajveer-code/IndiaFinBench" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#22d3ee;border-color:rgba(34,211,238,0.4);">↗ Dataset</a>
+          <a href="https://rajveer-research.vercel.app/research/indiafinbench/" target="_blank" rel="noopener noreferrer" class="cta-link" style="color:#22d3ee;border-color:rgba(34,211,238,0.4);">↗ Full research page</a>
         </div>
+        <section class="th-section">
+          <h2 class="th-section-title">Citation</h2>
+          <div class="cite-block">Rajveer Singh Pall. "IndiaFinBench: An Evaluation Benchmark for Large Language Model Performance on Indian Financial Regulatory Text." Under review (anonymous NLP venue), 2026.</div>
+        </section>
+        <section class="th-section">
+          <h2 class="th-section-title">Related Research</h2>
+          <div class="related-row" style="--pn-accent:#22d3ee">
+            <a href="project-cpfe.html"><span>The CPFE Audit — NLP reliability under deployment shift</span><span class="rel-status">Under journal review</span></a>
+            <a href="project-icgdf.html"><span>When the Gate Stays Closed — deployment gates for financial ML</span><span class="rel-status">Under journal review</span></a>
+          </div>
+        </section>
         <div class="th-footer">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
       </div>
     </div>
@@ -120,6 +181,6 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="js/field.js?v=3"></script>
-  <script src="js/detail.js?v=5"></script>
+  <script src="js/detail.js?v=6"></script>
 </body>
 </html>
