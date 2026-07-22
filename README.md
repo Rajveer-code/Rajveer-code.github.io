@@ -3,7 +3,7 @@
 Personal research portfolio for **Rajveer Singh Pall** — ML & decision-systems research.
 A dark "engineering command-center" aesthetic: an animated constellation field behind
 noir editorial typography, a live 3D hero scene, scroll-scrubbed data visualisations,
-and fourteen in-depth case-study pages. Fully responsive — an intentionally designed
+and thirteen in-depth case-study pages. Fully responsive — an intentionally designed
 mobile layout, not a squeezed desktop.
 
 **Live:** [rajveer-code-github-io.vercel.app](https://rajveer-code-github-io.vercel.app/)
@@ -25,7 +25,7 @@ In DOM order (`index.html`):
 | **Stack** | Tooling grouped by domain, rendered from data with logo icons. |
 | **Contact** | Links + a live local clock. |
 
-Fourteen case-study pages (`project-*.html`) cover each system and paper in depth, sharing
+Thirteen case-study pages (`project-*.html`) cover each system and paper in depth, sharing
 `css/style.css` + `js/detail.js`. The research-paper pages follow one consistent reading
 spine — a sticky jump-nav, a discovery figure, plain summary, method flow, results with the
 real publication figures, and a citation — and cross-link to the matching page on the
@@ -45,7 +45,7 @@ real publication figures, and a citation — and cross-link to the matching page
 
 ```
 index.html            — homepage, fully baked into HTML (SEO + no-JS safe)
-project-*.html         — 14 case-study detail pages
+project-*.html         — 13 case-study detail pages
 
 css/
   home.css            — homepage design system

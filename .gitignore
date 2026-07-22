@@ -22,3 +22,4 @@ current-*.png
 
 # orphaned experiment, superseded by js/trajectory.js
 js/traj-spiral.js
+.ruff_cache/
