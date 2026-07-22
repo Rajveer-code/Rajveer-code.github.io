@@ -20,14 +20,14 @@ export const RESEARCH_PAPERS = [
     "title": "Who Bears the Burden? Heterogeneous Racial Approval Differentials in U.S. Mortgage Lending",
     "sub": "Causal Forest Double Machine Learning on 42.3M HMDA applications, 2020–2024 — a 9.4 pp Black approval penalty net of 33 controls, largest under manual underwriting.",
     "tags": ["Causal inference", "EconML", "DML", "HMDA"],
-    "venue": "Journal submission",
-    "status": "Under journal review · 2026"
+    "venue": "J. Financial Services Research",
+    "status": "Under review · 2026"
   },
   {
     "url": "project-disparities.html",
     "color": "#f59e0b",
     "title": "Persistent Racial Disparities in U.S. Mortgage Approval: Evidence from 42 Million Applications, 2020–2024",
-    "sub": "Five identification strategies — DFL, within-lender FE, RDD, DiD, Manski bounds — all confirm a 14.95 pp Black–White approval gap, ≥44% of which survives maximally adversarial selection assumptions.",
+    "sub": "Five identification strategies — DFL, within-lender FE, RDD, DiD, Manski bounds — all confirm a 14.95 pp Black–White approval gap of which ≥44% survives maximally adversarial selection assumptions.",
     "tags": ["Causal inference", "HMDA", "Partial identification", "RDD"],
     "venue": "J. Housing Economics",
     "status": "Submitted · March 2026"
@@ -47,8 +47,8 @@ export const RESEARCH_PAPERS = [
     "title": "Privacy-Preserving Federated Learning for Diabetes Risk Across Demographically Heterogeneous Nodes",
     "sub": "FedAvg / FedProx / FedNova / SCAFFOLD on partitioned NHANES, externally validated on 1.28M BRFSS records — a 40% smaller generalisation gap than a matched centralised model.",
     "tags": ["Federated learning", "PyTorch", "Flower", "Differential privacy"],
-    "venue": "Journal submission",
-    "status": "Under journal review · 2026"
+    "venue": "CMPB",
+    "status": "Under review · 2026"
   },
   {
     "url": "project-diabetes-eval.html",
@@ -65,8 +65,8 @@ export const RESEARCH_PAPERS = [
     "title": "Cross-Platform Generalisation Failure in Mental-Health NLP: A Five-Axis Fairness Audit",
     "sub": "Transformer classifiers that score AUC 0.98 within-platform collapse 30–39% off-platform, with calibration and equity failing in lockstep — fairness that doesn't transfer.",
     "tags": ["NLP", "Fairness", "Transformers", "Calibration"],
-    "venue": "Journal submission",
-    "status": "Under journal review · 2026"
+    "venue": "Anonymous NLP venue",
+    "status": "In preparation · 2026"
   },
   {
     "url": "project-icgdf.html",
@@ -74,17 +74,8 @@ export const RESEARCH_PAPERS = [
     "title": "When the Gate Stays Closed: Near-Zero Cross-Sectional Predictability in Large-Cap NASDAQ Equities",
     "sub": "An IC-gated deployment framework with a conjunctive HAC + permutation test — the gate never opened across 12 folds and 1,512 OOS days, cutting false deployment from 11.8% to 0.0%.",
     "tags": ["Quant ML", "Walk-forward", "CatBoost", "Permutation tests"],
-    "venue": "Journal submission",
-    "status": "Under journal review · 2026"
-  },
-  {
-    "url": "project-aria-audit.html",
-    "color": "#f5ca40",
-    "title": "ARIA: Runtime 5-Axis Fairness Audit for Free-Form LLM Output",
-    "sub": "Inline counterfactual disparate-impact and equalized-odds scoring on a model's actual generated text, not a fixed offline benchmark. Catches 33–39% of failures other guardrails miss, in ~1.2s, with zero cloud calls.",
-    "tags": ["LLM fairness", "Runtime audit", "Counterfactual testing"],
-    "venue": "arXiv preprint",
-    "status": "Sep 2026"
+    "venue": "Computational Economics",
+    "status": "Under review · 2026"
   }
 ];
 

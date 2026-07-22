@@ -34,7 +34,7 @@
         "Selected among the top 50 of 250 teams at Smart India Hackathon 2025.",
       ] },
     { id: "diabetes-eval", track: "research", color: "#10b981", url: "project-diabetes-eval.html",
-      role: "Type 2 Diabetes ML Evaluation", company: "IEEE · Accepted", start: [2025, 5], end: [2025, 7],
+      role: "Type 2 Diabetes ML Evaluation", company: "IEEE · Presented", start: [2025, 5], end: [2025, 7],
       bullets: [
         "XGBoost reaches 0.794 AUC internally, 0.717 on an external population 83× larger.",
         "A 9.7% deployment gap quantified, with a full subgroup fairness audit.",
@@ -62,7 +62,7 @@
         "Shipped on Vercel for a non-technical reader.",
       ] },
     { id: "cpfe", track: "research", color: "#2dd4bf", url: "project-cpfe.html",
-      role: "Cross-Platform Fairness Failure", company: "Journal submission · under review", start: [2026, 0], end: [2026, 2],
+      role: "Cross-Platform Fairness Failure", company: "Anonymous NLP venue · in preparation", start: [2026, 0], end: [2026, 2],
       bullets: [
         "Classifiers scoring AUC 0.98 within-platform collapse 30–39% off-platform.",
         "A five-axis audit shows calibration and equity failing in lockstep.",
@@ -76,14 +76,14 @@
         "The equity axis catches 33–39% of failures other guardrails miss.",
       ] },
     { id: "icgdf", track: "research", color: "#a78bfa", url: "project-icgdf.html",
-      role: "When the Gate Stays Closed", company: "Journal submission · under review", start: [2026, 3], end: [2026, 5],
+      role: "When the Gate Stays Closed", company: "Computational Economics · under review", start: [2026, 3], end: [2026, 5],
       bullets: [
         "An IC-gated deployment framework with a conjunctive HAC + permutation test.",
         "The gate never opened across 12 folds and 1,512 out-of-sample days.",
         "False deployment cut from 11.8% to 0.0% on large-cap NASDAQ equities.",
       ] },
     { id: "federated-diabetes", track: "research", color: "#34d399", url: "project-federated-diabetes.html",
-      role: "Privacy-Preserving Federated Learning", company: "JBI · under review", start: [2025, 11], end: [2026, 1],
+      role: "Privacy-Preserving Federated Learning", company: "CMPB · under review", start: [2025, 11], end: [2026, 1],
       bullets: [
         "FedAvg / FedProx / FedNova / SCAFFOLD on partitioned NHANES.",
         "Externally validated on 1.28M BRFSS records.",
@@ -97,18 +97,11 @@
         "≥44% survives maximally adversarial selection assumptions.",
       ] },
     { id: "cate-hmda", track: "research", color: "#60a5fa", url: "project-cate-hmda.html",
-      role: "Who Bears the Burden?", company: "Journal submission · under review", start: [2025, 9], end: [2025, 11],   /* Oct–Dec '25 */
+      role: "Who Bears the Burden?", company: "J. Financial Services Research · under review", start: [2025, 9], end: [2025, 11],   /* Oct–Dec '25 */
       bullets: [
         "Causal Forest Double ML on 42.3M HMDA applications.",
         "A 9.4 pp conditional Black approval penalty, net of 33 controls.",
         "Largest under manual underwriting.",
-      ] },
-    { id: "aria-audit", track: "research", color: "#f5ca40", url: "project-aria-audit.html",
-      role: "ARIA: Runtime Fairness Audit", company: "arXiv preprint", start: [2026, 5], end: [2026, 7],
-      bullets: [
-        "Inline counterfactual disparate-impact + equalized-odds on a model's actual output.",
-        "Not a fixed offline benchmark — a live runtime property.",
-        "Catches 33–39% of failures other guardrails miss, ~1.2s, zero cloud calls.",
       ] },
     { id: "trustshift", track: "research", color: "#f472b6", url: "project-trustshift.html",
       role: "TrustShift: Shift Type Determines Failure Modes", company: "Applied Intelligence · under review", start: [2026, 6], end: [2026, 8],
