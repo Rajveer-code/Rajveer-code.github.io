@@ -26,3 +26,6 @@ js/traj-spiral.js
 
 # working plans
 PLAN_*.md
+
+# local design tooling
+.impeccable/
