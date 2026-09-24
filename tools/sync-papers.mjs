@@ -49,6 +49,7 @@ const records = [...publications]
       slug: p.slug,
       title: p.title,
       short: p.shortTitle,
+      authors: p.authors,
       status,
       venue,
       kind: p.statusKind,
