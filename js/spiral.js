@@ -33,7 +33,11 @@ const cursorRing   = document.getElementById('cursorRing');
 
 if (track && glRoot && pubList) {
 
-  const isTouch = matchMedia('(pointer: coarse)').matches || innerWidth <= 768;
+  /* The scroll-driven spiral is the motion-heavy view: a coarse pointer, a narrow
+     viewport or a reduced-motion preference all get the static list instead. */
+  const listOnly = matchMedia('(pointer: coarse)').matches
+    || innerWidth <= 768
+    || matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function showListOnly() {
     track.classList.add('is-hidden');
@@ -44,14 +48,14 @@ if (track && glRoot && pubList) {
   /* must exist before initSpiral() runs — tick() reads it on its very first call */
   let trackVisible = true;
 
-  if (isTouch) {
+  if (listOnly) {
     showListOnly();
   } else {
     try { initSpiral(); } catch (err) { console.error('[spiral] init failed, falling back to list:', err); showListOnly(); }
   }
 
   /* ── view toggle (spiral / list) ── */
-  if (viewToggle && !isTouch) {
+  if (viewToggle && !listOnly) {
     viewToggle.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-view]');
       if (!btn) return;
