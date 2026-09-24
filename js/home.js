@@ -88,13 +88,6 @@
       ["DXB","Asia/Dubai"],["SIN","Asia/Singapore"],["HKG","Asia/Hong_Kong"],["NRT","Asia/Tokyo"],
       ["ICN","Asia/Seoul"],["SYD","Australia/Sydney"],["GRU","America/Sao_Paulo"],["JNB","Africa/Johannesburg"]
     ];
-    var coords = {
-      "Asia/Kolkata":[21.0,79.0],"Europe/London":[51.5,-0.1],"Europe/Paris":[48.9,2.4],"Europe/Berlin":[50.0,8.6],
-      "Europe/Amsterdam":[52.3,4.8],"America/New_York":[40.6,-73.8],"America/Los_Angeles":[37.6,-122.4],
-      "America/Chicago":[41.9,-87.9],"America/Toronto":[43.7,-79.6],"Asia/Dubai":[25.3,55.4],"Asia/Singapore":[1.4,104.0],
-      "Asia/Hong_Kong":[22.3,113.9],"Asia/Tokyo":[35.8,140.4],"Asia/Seoul":[37.5,126.4],"Australia/Sydney":[-33.9,151.2],
-      "America/Sao_Paulo":[-23.4,-46.5],"Africa/Johannesburg":[-26.1,28.2]
-    };
     var elHome = document.getElementById("clockHome");
     var elVis  = document.getElementById("clockVisitor");
     var lblVis = document.getElementById("hudVisitorLabel");
@@ -123,23 +116,8 @@
       tick(); setInterval(tick, 1000);
     }
     paint();
-    function hav(a, b) {
-      var r = Math.PI/180, R = 6371;
-      var dLat=(b[0]-a[0])*r, dLon=(b[1]-a[1])*r;
-      var x = Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin(dLon/2)*Math.sin(dLon/2);
-      return R*2*Math.atan2(Math.sqrt(x), Math.sqrt(1-x));
-    }
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (pos) {
-        var me = [pos.coords.latitude, pos.coords.longitude], best = null, bd = Infinity;
-        for (var tz in coords) { var d = hav(me, coords[tz]); if (d < bd) { bd = d; best = tz; } }
-        if (best) {
-          visTz = best; visCode = "YOU";
-          for (var i = 0; i < AP.length; i++) if (AP[i][1] === best) { visCode = AP[i][0]; break; }
-          if (lblVis) lblVis.textContent = visCode;
-        }
-      }, null, { timeout: 5000, maximumAge: 3600000 });
-    }
+    /* No geolocation request: the clock already reads the visitor's own timezone from
+       Intl, so asking for coordinates only bought a permission prompt on page load. */
   })();
 
   /* ── Bottom-right HUD ── */
@@ -216,7 +194,7 @@
     host.innerHTML = groups.map(function (g, idx) {
       var labelColor = colors[idx % colors.length];
       return '<div class="stack-fable-group" style="display: flex; padding: 2.2rem 0; border-top: 1px solid rgba(255,255,255,0.06); gap: 2rem; flex-wrap: wrap;">' +
-               '<div class="stack-fable-label" style="flex: 0 0 140px; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; padding-top: 0.5rem; color: ' + labelColor + ';">' + g[0] + '</div>' +
+               '<div class="stack-fable-label" style="flex: 0 0 140px; font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; padding-top: 0.5rem; color: ' + labelColor + ';">' + g[0] + '</div>' +
                '<div class="stack-fable-items" style="display: flex; flex-wrap: wrap; gap: 2rem 3rem; flex: 1;">' +
                  g[1].map(function (it) { return fableItem(it[0], it[1]); }).join("") +
                '</div>' +

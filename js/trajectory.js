@@ -273,7 +273,7 @@
     /* header (pinned with the chart) */
     var header = el("div", "padding:0.85rem 6vw 1.4rem;flex-shrink:0;");
     var krow = el("div", "display:flex;align-items:center;gap:1rem;margin-bottom:0.9rem;");
-    krow.appendChild(el("span", "font-family:" + FF_MONO + ";font-size:0.62rem;letter-spacing:0.2em;color:rgba(255,255,255,0.4);text-transform:uppercase;", "02 — Experience & Education"));
+    krow.appendChild(el("span", "font-family:" + FF_MONO + ";font-size:0.6875rem;letter-spacing:0.2em;color:rgba(255,255,255,0.46);text-transform:uppercase;", "02 — Experience & Education"));
     krow.appendChild(el("div", "flex:1;height:1px;background:rgba(255,255,255,0.07);"));
     header.appendChild(krow);
     header.appendChild(el("h2", "font-family:" + FF_DISP + ";font-weight:800;font-size:clamp(2.4rem,4.5vw,4rem);line-height:1.1;letter-spacing:0.02em;color:#fafaf8;margin:0;", "The trajectory."));
@@ -311,7 +311,7 @@
     ticks.forEach(function (t) {
       if (t.y < 0 || t.y > chartH) return;
       layer.appendChild(el("div", "position:absolute;top:" + t.y + "px;left:" + (SPINE_X - 5) + "px;width:11px;height:1px;background:rgba(255,255,255,0.22);"));
-      layer.appendChild(el("span", "position:absolute;top:" + (t.y - 8) + "px;left:" + SPINE_X + "px;transform:translateX(-50%);font-family:" + FF_MONO + ";font-size:0.56rem;letter-spacing:0.05em;color:rgba(255,255,255,0.5);white-space:nowrap;background:rgba(7,8,11,0.9);padding:0 7px;", t.label));
+      layer.appendChild(el("span", "position:absolute;top:" + (t.y - 8) + "px;left:" + SPINE_X + "px;transform:translateX(-50%);font-family:" + FF_MONO + ";font-size:0.6875rem;letter-spacing:0.05em;color:rgba(255,255,255,0.5);white-space:nowrap;background:rgba(7,8,11,0.9);padding:0 7px;", t.label));
     });
 
     /* cards laid out first — greedy non-overlap PER SIDE (systems and research
@@ -400,16 +400,16 @@
     var headWrap = el("div", "padding:" + PAD_T + "px " + PAD_L + "px 0;flex-shrink:0;");
     var hrow = el("div", "display:flex;align-items:baseline;justify-content:space-between;gap:6px;margin-bottom:2px;");
     hrow.appendChild(el("span", "font-family:" + FF_DISP + ";font-weight:700;font-size:0.95rem;color:#fafaf8;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;", e.role));
-    hrow.appendChild(el("span", "font-family:" + FF_MONO + ";font-size:0.5rem;color:rgba(255,255,255,0.3);letter-spacing:0.06em;flex-shrink:0;white-space:nowrap;", period(e)));
+    hrow.appendChild(el("span", "font-family:" + FF_MONO + ";font-size:0.6875rem;color:rgba(255,255,255,0.46);letter-spacing:0.06em;flex-shrink:0;white-space:nowrap;", period(e)));
     headWrap.appendChild(hrow);
-    headWrap.appendChild(el("span", "font-family:" + FF_MONO + ";font-size:0.56rem;color:" + c + "cc;letter-spacing:0.04em;display:block;line-height:1.4;", e.company));
+    headWrap.appendChild(el("span", "font-family:" + FF_MONO + ";font-size:0.6875rem;color:" + c + "cc;letter-spacing:0.04em;display:block;line-height:1.4;", e.company));
     headWrap.appendChild(el("div", "height:1px;background:" + c + "20;margin-top:6px;margin-bottom:9px;"));
     a.appendChild(headWrap);
 
     var bl = el("div", "padding:0 " + PAD_L + "px " + PAD_B + "px;display:flex;flex-direction:column;gap:" + BULLET_GAP + "px;");
     e.bullets.forEach(function (txt) {
       var row = el("div", "display:flex;gap:5px;align-items:flex-start;");
-      row.appendChild(el("span", "color:" + c + ";font-size:0.5rem;flex-shrink:0;margin-top:0.22rem;opacity:0.7;", "▪"));
+      row.appendChild(el("span", "color:" + c + ";font-size:0.6875rem;flex-shrink:0;margin-top:0.22rem;opacity:0.7;", "▪"));
       row.appendChild(el("span", "font-family:" + FF_SANS + ";font-size:" + BFONT + "px;line-height:" + LH + ";color:rgba(255,255,255,0.62);text-align:justify;", txt));
       bl.appendChild(row);
     });

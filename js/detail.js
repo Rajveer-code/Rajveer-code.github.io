@@ -107,14 +107,8 @@
     setInterval(tick, 1000);
 
     /* refine with GPS if permitted */
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (pos) {
-        var ap = nearest(pos.coords.latitude, pos.coords.longitude);
-        visTz   = ap[3];
-        visCode = ap[0];
-        if (lbl2) lbl2.textContent = visCode;
-      }, null, { timeout: 5000, maximumAge: 3600000 });
-    }
+    /* No geolocation request: the clock already reads the visitor's own timezone from
+       Intl, so asking for coordinates only bought a permission prompt on page load. */
   })();
 
   /* ── Scroll rail ── */

@@ -48,10 +48,25 @@ if (track && glRoot && pubList) {
   /* must exist before initSpiral() runs — tick() reads it on its very first call */
   let trackVisible = true;
 
+  /* The spiral costs a WebGL context, Three.js and twelve canvas textures. None of that
+     belongs on the critical path: it is four sections below the fold, so it is built when
+     the reader is about to reach it (or the moment they ask for it via the toggle). */
+  let spiralStarted = false;
+  function startSpiral() {
+    if (spiralStarted) return;
+    spiralStarted = true;
+    try { initSpiral(); } catch (err) { console.error('[spiral] init failed, falling back to list:', err); showListOnly(); }
+  }
+
   if (listOnly) {
     showListOnly();
+  } else if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) { io.disconnect(); startSpiral(); }
+    }, { rootMargin: '600px 0px' });
+    io.observe(track);
   } else {
-    try { initSpiral(); } catch (err) { console.error('[spiral] init failed, falling back to list:', err); showListOnly(); }
+    startSpiral();
   }
 
   /* ── view toggle (spiral / list) ── */
@@ -69,6 +84,7 @@ if (track && glRoot && pubList) {
         trackVisible = true;
         track.classList.remove('is-hidden');
         pubList.classList.add('is-hidden');
+        startSpiral();
       }
     });
   }
