@@ -33,12 +33,12 @@
         "Mood-based routing to check-ins, an AI companion, activities and peer community, with crisis escalation.",
         "Selected among the top 50 of 250 teams at Smart India Hackathon 2025.",
       ] },
-    { id: "diabetes-eval", track: "research", color: "#10b981", url: "project-diabetes-eval.html",
-      role: "Type 2 Diabetes ML Evaluation", company: "IEEE · Presented", start: [2025, 5], end: [2025, 7],
+    { id: "diabetes-eval", track: "research", slug: "diabetes-external-validation", color: "#10b981",
+      role: "Type 2 Diabetes ML Evaluation", start: [2025,5], end: [2025,7],
       bullets: [
         "XGBoost reaches 0.794 AUC internally, 0.717 on an external population 83× larger.",
         "A 9.7% deployment gap quantified, with a full subgroup fairness audit.",
-        "SHAP: age & BMI dominate; race/ethnicity ranks 4th — explicit audit required.",
+        "SHAP: age and BMI dominate; race/ethnicity ranks 4th, so an explicit audit is required.",
       ] },
     { id: "finsight", track: "system", color: "#38bdf8", url: "project-finsight.html",
       role: "FinSight", company: "System", start: [2025, 10], end: [2026, 0],
@@ -47,12 +47,26 @@
         "FinBERT sentiment fused with RAG-retrieved features under strict walk-forward discipline.",
         "A genuine cross-sectional signal in Energy — information coefficient +0.31.",
       ] },
-    { id: "indiafinbench", track: "research", color: "#06b6d4", url: "project-indiafinbench.html",
-      role: "IndiaFinBench", company: "Benchmark · in prep", start: [2026, 2], end: [2026, 4],
+    { id: "disparities", track: "research", slug: "mortgage-disparities", color: "#f97316",
+      role: "Persistent Racial Disparities", start: [2025,7], end: [2025,9],
       bullets: [
-        "The first benchmark over Indian financial regulation — SEBI & RBI text.",
-        "406 expert QA items, 192 documents, 12 LLMs scored zero-shot.",
-        "Hybrid RAG (FAISS + BM25, RRF) lifts Recall@5 to 0.785.",
+        "Five identification strategies on 42 million HMDA applications, 2020-2024.",
+        "All confirm a 14.95 pp Black-White approval gap.",
+        "At least 44% survives maximally adversarial selection assumptions.",
+      ] },
+    { id: "cate-hmda", track: "research", slug: "who-bears-the-burden", color: "#60a5fa",
+      role: "Who Bears the Burden?", start: [2025,9], end: [2025,11],
+      bullets: [
+        "Causal forest double machine learning on 42 million HMDA applications.",
+        "A pooled conditional differential of −9.39 pp; 90.7% of Black applicants face a negative effect.",
+        "Manual underwriting −14.79 pp against automated systems −6.17 pp.",
+      ] },
+    { id: "cpfe", track: "research", slug: "text-genre-transfer-failure", color: "#2dd4bf",
+      role: "Text Genre, Not Platform Identity", start: [2026,0], end: [2026,2],
+      bullets: [
+        "A five-axis pre-deployment audit of mental-health text classifiers.",
+        "Discrimination, statistical significance, prediction equity, calibration and attribution stability.",
+        "Asks what predicts transfer failure when those models meet new platforms and corpora.",
       ] },
     { id: "finsight-web", track: "system", color: "#22d3ee", url: "project-finsight-web.html",
       role: "FinSight + Web", company: "System", start: [2026, 1], end: [2026, 3],
@@ -61,12 +75,19 @@
         "Next.js 16 + React Three Fiber, rendering the signal field and equity curves.",
         "Shipped on Vercel for a non-technical reader.",
       ] },
-    { id: "cpfe", track: "research", color: "#2dd4bf", url: "project-cpfe.html",
-      role: "Cross-Platform Fairness Failure", company: "Anonymous NLP venue · in preparation", start: [2026, 0], end: [2026, 2],
+    { id: "indiafinbench", track: "research", slug: "indiafinbench", color: "#06b6d4",
+      role: "IndiaFinBench", start: [2026,2], end: [2026,4],
       bullets: [
-        "Classifiers scoring AUC 0.98 within-platform collapse 30–39% off-platform.",
-        "A five-axis audit shows calibration and equity failing in lockstep.",
-        "Fairness that does not transfer between mental-health datasets.",
+        "The first benchmark over Indian financial regulation: SEBI and RBI text.",
+        "406 expert-annotated items, 192 documents, 12 LLMs scored zero-shot.",
+        "Hybrid retrieval (FAISS + BM25, RRF) lifts Recall@5 to 0.785.",
+      ] },
+    { id: "icgdf", track: "research", slug: "when-the-gate-stays-closed", color: "#a78bfa",
+      role: "When the Gate Stays Closed", start: [2026,3], end: [2026,5],
+      bullets: [
+        "An IC-gated deployment framework with a conjunctive HAC and permutation test.",
+        "The gate never opened across 12 folds and 1,512 out-of-sample days.",
+        "False deployment cut from 11.8% to 0.0% on large-cap NASDAQ equities.",
       ] },
     { id: "aria", track: "system", color: "#4ade80", url: "project-aria.html",
       role: "ARIA Assistant", company: "System", start: [2026, 4], end: [2026, 6],
@@ -75,40 +96,40 @@
         "16 real tools, ≤7.1 GB VRAM on one RTX 4060, zero cloud LLM calls.",
         "The equity axis catches 33–39% of failures other guardrails miss.",
       ] },
-    { id: "icgdf", track: "research", color: "#a78bfa", url: "project-icgdf.html",
-      role: "When the Gate Stays Closed", company: "Computational Economics · under review", start: [2026, 3], end: [2026, 5],
+    { id: "could-it-read", track: "research", slug: "could-it-read-the-answer", color: "#14b8a6",
+      role: "Could It Read the Answer?", start: [2026,4], end: [2026,6],
       bullets: [
-        "An IC-gated deployment framework with a conjunctive HAC + permutation test.",
-        "The gate never opened across 12 folds and 1,512 out-of-sample days.",
-        "False deployment cut from 11.8% to 0.0% on large-cap NASDAQ equities.",
+        "Two extractors shipped in the same evaluation harness disagree by 88.5 points on 400 MMLU responses.",
+        "2,936 of 4,524 generative tasks record a format mismatch as a wrong answer.",
+        "Hidden parse-failure rates across 28 published model generations span 4% to 99.9%.",
       ] },
-    { id: "federated-diabetes", track: "research", color: "#34d399", url: "project-federated-diabetes.html",
-      role: "Privacy-Preserving Federated Learning", company: "CMPB · under review", start: [2025, 11], end: [2026, 1],
+    { id: "confidently-wrong", track: "research", slug: "confidently-wrong", color: "#ef4444",
+      role: "Confidently Wrong", start: [2026,5], end: [2026,7],
       bullets: [
-        "FedAvg / FedProx / FedNova / SCAFFOLD on partitioned NHANES.",
-        "Externally validated on 1.28M BRFSS records.",
-        "A 40% smaller generalisation gap than a matched centralised model.",
+        "Four model families across four independently captured testbeds, five seeds each.",
+        "108 of 240 cross-network evaluations score below ROC-AUC 0.5; the worst reaches 0.0697.",
+        "Eleven of twelve testbed pairs fail at the ranking, where recalibration cannot help.",
       ] },
-    { id: "disparities", track: "research", color: "#f97316", url: "project-disparities.html",
-      role: "Persistent Racial Disparities", company: "JHE · submitted", start: [2025, 7], end: [2025, 9],
+    { id: "trustshift", track: "research", slug: "trustshift", color: "#f472b6",
+      role: "TrustShift", start: [2026,6], end: [2026,8],
       bullets: [
-        "Five identification strategies on 42M HMDA applications, 2020–2024.",
-        "All confirm a 14.95 pp Black–White approval gap.",
-        "≥44% survives maximally adversarial selection assumptions.",
+        "One audit protocol across clinical risk, mental-health text, lending and network security.",
+        "Shift magnitude alone does not consistently explain which trustworthiness axis fails.",
+        "Label-free probes diagnose some shifts and report inconclusive for the rest.",
       ] },
-    { id: "cate-hmda", track: "research", color: "#60a5fa", url: "project-cate-hmda.html",
-      role: "Who Bears the Burden?", company: "J. Financial Services Research · under review", start: [2025, 9], end: [2025, 11],   /* Oct–Dec '25 */
+    { id: "subgroup-fairness", track: "research", slug: "subgroup-fairness-reversal", color: "#34d399",
+      role: "Higher AUC, Fewer Cases Flagged", start: [2026,7], end: [2026,8],
       bullets: [
-        "Causal Forest Double ML on 42.3M HMDA applications.",
-        "A 9.4 pp conditional Black approval penalty, net of 33 controls.",
-        "Largest under manual underwriting.",
+        "Five federated strategies against a composition-matched centralised control, over ten seeds.",
+        "FedAvg narrows the White-Black AUC gap from 0.0075 to 0.0005.",
+        "At fixed screening capacity the sensitivity gap widens from 0.009 to 0.034: 542 fewer flagged per 100,000.",
       ] },
-    { id: "trustshift", track: "research", color: "#f472b6", url: "project-trustshift.html",
-      role: "TrustShift: Shift Type Determines Failure Modes", company: "Applied Intelligence · under review", start: [2026, 6], end: [2026, 8],
+    { id: "benchmark-identification", track: "research", slug: "benchmark-accuracy-not-identified", color: "#3b82f6",
+      role: "Benchmark Accuracy Is Not Identified", start: [2026,7], end: [2026,9],
       bullets: [
-        "One pre-registered audit across clinical risk, mental-health NLP, mortgage lending, and network security.",
-        "Shift type, not shift magnitude, decides which trustworthiness axis fails at deployment.",
-        "Three label-free probes diagnose the failure axis in advance — before labels arrive.",
+        "357 of 378 orderings on a published 28-model MATH-Hard leaderboard are not identified.",
+        "87.8% remain unidentified even when the scorer is granted zero error.",
+        "A five-field Scorer Card reports the number the scorer already computes and throws away.",
       ] },
     { id: "fairscope", track: "system", color: "#e3c07e", url: "project-fairscope.html",
       role: "fairscope", company: "System · PyPI library", start: [2026, 7], end: [2026, 9],
@@ -117,7 +138,24 @@
         "DeLong CIs for per-subgroup AUC, per-subgroup ECE/MCE, gap tests with Bonferroni/BH correction.",
         "Five modules shipped at v0.3.0 — 100% line coverage on the statistical core, CI green on Python 3.9–3.12.",
       ] },
+    { id: "scorer-audit", track: "research", slug: "scorer-partial-identification", color: "#ec4899",
+      role: "Auditing the Scorer", start: [2026,8], end: [2026,9],
+      bullets: [
+        "A human audit of the boxed-answer comparator on MATH-Hard, 350 usable items across 27 models.",
+        "Identification width is 6.10× sampling width for the median pair, dominant in all 120 pairs.",
+        "The textbook Neyman allocation of audit effort is dominated by uniform allocation here.",
+      ] },
   ];
+
+  /* Research bars take their venue, status and link from js/papers.js, so the
+     timeline can never disagree with the research record. */
+  ENTRIES.forEach(function (e) {
+    if (!e.slug) return;
+    var p = (window.PAPERS || []).filter(function (x) { return x.slug === e.slug; })[0];
+    if (!p) { e.company = e.company || ""; return; }
+    e.company = p.venue ? p.venue + " · " + p.status : p.status;
+    e.url = p.page || p.href;
+  });
 
   var Y0 = [2025, 5];            /* origin: Jun 2025 = month 0 (top) */
   var YEND = [2026, 10];         /* axis end (padded below the last entry, Oct '26) */
