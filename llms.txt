@@ -1,0 +1,35 @@
+# Rajveer Singh Pall
+
+> Machine-learning researcher and engineer. This site covers the systems: local-first agents, retrieval, fairness tooling and research pipelines. The papers live on the research site, which is the canonical source for their status and numbers.
+
+Statuses are stated exactly and never upgraded. Papers under double-blind review do not name their venue.
+
+## Systems
+
+- [ARIA Assistant](https://rajveer-code.github.io/project-aria.html): Local-first voice agent: 16 tools, 7.1 GB VRAM, no cloud LLM calls.
+- [IndiaFinBench](https://rajveer-code.github.io/project-indiafinbench.html): 406 expert-annotated questions over SEBI and RBI regulation, with a hybrid BM25 and FAISS retrieval stack.
+- [fairscope](https://rajveer-code.github.io/project-fairscope.html): Subgroup-stratified, calibration-aware fairness auditing on PyPI.
+- [FinSight](https://rajveer-code.github.io/project-finsight.html): Earnings-intelligence pipeline over 14,584 transcripts from 601 S&P 500 firms.
+- [FinSight + Web](https://rajveer-code.github.io/project-finsight-web.html): A scroll-driven WebGL monograph of the FinSight findings.
+- [SereneSpace](https://rajveer-code.github.io/project-serenespace.html): Anonymous student mental-health platform, top 50 of 250 at Smart India Hackathon 2025.
+
+## Papers and manuscripts
+
+- [Benchmark Accuracy Is Not an Identified Quantity](https://rajveer-research.vercel.app/research/benchmark-accuracy-not-identified/): Under review. Most orderings on a published MATH-Hard leaderboard cannot be separated once the responses a scorer could not read are counted.
+- [Higher AUC, Fewer Cases Flagged: Subgroup Fairness Metrics Can Reverse at the Decision Threshold in Federated Diabetes Screening](https://rajveer-research.vercel.app/research/subgroup-fairness-reversal/): Under review. Federated training narrows the White-Black AUC gap while a race-blind screening policy flags fewer Black respondents.
+- [Benchmarks Do Not Report Whether They Could Read the Answer](https://rajveer-research.vercel.app/research/could-it-read-the-answer/): Under review. Two answer extractors shipped in the same evaluation harness disagree by 88.5 points on the same 400 MMLU responses.
+- [Scoring-Rule Sensitivity in LLM Evaluation: Evidence from Indian Financial Regulatory Text](https://rajveer-research.vercel.app/research/indiafinbench/): Under review. Changing only the scoring rule reorders twelve LLMs on a new Indian financial-regulation benchmark, and no model keeps its rank.
+- [Comprehensive Evaluation of Machine Learning for Type 2 Diabetes Risk Prediction: Large-Scale External Validation and Fairness Analysis](https://rajveer-research.vercel.app/research/diabetes-external-validation/): IEEE Xplore (CIPHER-2026) · Published. Internally validated diabetes models lose discrimination on 1.28M external records, and adults over 60 lose the most.
+- [TrustShift: A Mechanism-Aware Audit of Machine-Learning Deployment Shift](https://rajveer-research.vercel.app/research/trustshift/): Manuscript. Across four real deployment shifts, shift magnitude alone does not consistently explain which trustworthiness axis fails.
+- [Confidently Wrong: Ranking Inversion in Cross-Network Denial-of-Service Detection](https://rajveer-research.vercel.app/research/confidently-wrong/): Manuscript. On a new network, DoS detectors do not decay toward chance: many pass through it and score attacks below benign traffic.
+- [Scorer-Induced Partial Identification of Benchmark Comparisons: An Audit-Design Approach](https://rajveer-research.vercel.app/research/scorer-partial-identification/): In preparation. Once a scorer’s error rate is audited rather than assumed, audit uncertainty outweighs sampling uncertainty in all 120 well-defined comparisons.
+- [Persistent Racial Disparities in U.S. Mortgage Approval: Evidence from 42 Million Applications, 2020-2024](https://rajveer-research.vercel.app/research/mortgage-disparities/): Journal of Housing Economics · Under review. The public-data Black-White mortgage approval gap at national scale: how large, where it lives, and how it responds to institutional boundaries.
+- [Who Bears the Burden? Heterogeneous Racial Approval Differentials in U.S. Mortgage Lending: Causal Forest DML on 42 Million HMDA Applications](https://rajveer-research.vercel.app/research/who-bears-the-burden/): SSRN · Working paper. Not whether an average penalty exists, but who bears it, and through which underwriting channel.
+- [When the Gate Stays Closed: Empirical Evidence of Near-Zero Cross-Sectional Predictability in Large-Cap NASDAQ Equities Using an IC-Gated Machine Learning Framework](https://rajveer-research.vercel.app/research/when-the-gate-stays-closed/): SSRN · Working paper. A deployment gate for financial ML, and the discipline to report that it stayed closed.
+- [Text Genre, Not Platform Identity, Predicts Transfer Failure in Mental Health Natural Language Processing: A Five-Axis Deployment Audit Across Five Corpora](https://rajveer-research.vercel.app/research/text-genre-transfer-failure/): Manuscript. A five-axis pre-deployment audit of mental-health text classifiers moved across platforms and corpora.
+
+## Elsewhere
+
+- [Research site](https://rajveer-research.vercel.app): the papers, in full
+- [GitHub](https://github.com/Rajveer-code)
+- [Google Scholar](https://scholar.google.com/citations?hl=en&user=47CvVCcAAAAJ)

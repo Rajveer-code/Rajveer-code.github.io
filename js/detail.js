@@ -210,10 +210,9 @@
     /* exploration tracker (12 project pages) */
     var EK = "__portfolio_explored_v2";
     var PAGES = [
-      "index.html", "project-aria.html", "project-cate-hmda.html",
-      "project-cpfe.html", "project-diabetes-eval.html", "project-disparities.html",
-      "project-federated-diabetes.html", "project-finsight.html", "project-finsight-web.html",
-      "project-icgdf.html", "project-indiafinbench.html", "project-serenespace.html"
+      "index.html", "project-aria.html", "project-finsight.html",
+      "project-finsight-web.html", "project-fairscope.html",
+      "project-indiafinbench.html", "project-serenespace.html"
     ];
     var explored = {};
     try { explored = JSON.parse(localStorage.getItem(EK) || "{}"); } catch (e) {}

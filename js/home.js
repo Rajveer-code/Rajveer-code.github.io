@@ -151,8 +151,8 @@
     if (!start || isNaN(start)) { start = Date.now(); sessionStorage.setItem(SK, start); }
 
     var EK = "__portfolio_explored_v2";
-    var PAGES = ["index.html","project-aria.html","project-cate-hmda.html","project-cpfe.html",
-      "project-federated-diabetes.html","project-finsight.html","project-icgdf.html","project-indiafinbench.html"];
+    var PAGES = ["index.html","project-aria.html","project-finsight.html","project-finsight-web.html",
+      "project-fairscope.html","project-indiafinbench.html","project-serenespace.html"];
     var explored = {};
     try { explored = JSON.parse(localStorage.getItem(EK) || "{}"); } catch (e) {}
     var cur = window.location.pathname.split("/").pop() || "index.html";
@@ -228,16 +228,23 @@
   (function () {
     var track = document.getElementById("gloryTrack");
     if (!track) return;
+    /* Paper venue and status come from js/papers.js so the marquee cannot drift. */
+    function paperTag(slug) {
+      var p = (window.PAPERS || []).filter(function (x) { return x.slug === slug; })[0];
+      if (!p) return "";
+      return p.venue ? p.venue + " · " + p.status : p.status;
+    }
     var HL = [
-      { title: "TrustShift",                 time: "Applied Intelligence · under review", sub: "4 domains, one audit — shift type decides what fails" },
+      { title: "Benchmark Accuracy Is Not Identified", time: paperTag("benchmark-accuracy-not-identified"), sub: "357 of 378 leaderboard orderings are not identified" },
       { title: "Smart India Hackathon 2025", time: "Top 50 of 250",        sub: "SereneSpace — anonymous student mental-health" },
-      { title: "Eight Research Manuscripts", time: "2025–26",              sub: "1 presented · 7 in submission across four domains" },
-      { title: "IndiaFinBench",              time: "LLM Benchmark",          sub: "Gemini 2.5 Flash 89.7% · 406 expert QA items" },
+      { title: "Twelve Papers and Manuscripts", time: "2025–26",              sub: "1 published · 5 under review · 2 working papers" },
+      { title: "IndiaFinBench",              time: paperTag("indiafinbench"),          sub: "406 expert QA items · the scoring rule reorders the board" },
       { title: "FinSight",                   time: "Deployed System",        sub: "14,584 transcripts · IC +0.31 in Energy" },
       { title: "ARIA Assistant",             time: "Local-First Voice AI",   sub: "Zero cloud LLM calls · one RTX 4060" },
-      { title: "CATE-HMDA",                  time: "J. Financial Services Research · under review", sub: "42.3M applications · 9.4 pp approval gap" },
-      { title: "Federated Diabetes",         time: "CMPB · with editor",     sub: "1.28M BRFSS · −40% generalisation gap" },
-      { title: "ICGDF Deployment Gate",      time: "Computational Economics · under review", sub: "0.0% false deploy across 12 folds" }
+      { title: "Who Bears the Burden?",      time: paperTag("who-bears-the-burden"), sub: "42 million applications · −9.39 pp conditional gap" },
+      { title: "Higher AUC, Fewer Cases Flagged", time: paperTag("subgroup-fairness-reversal"), sub: "542 fewer flagged per 100,000 at fixed capacity" },
+      { title: "Diabetes External Validation", time: paperTag("diabetes-external-validation"), sub: "0.794 internal, 0.717 external on 1.28M records" },
+      { title: "ICGDF Deployment Gate",      time: paperTag("when-the-gate-stays-closed"), sub: "0.0% false deploy across 12 folds" }
     ];
     var ICON = '<svg class="glory-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>';
     function esc(s) { var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
@@ -350,46 +357,46 @@
     var HCX = 650, HCY = 320;
       var CATS = [
         { label: "MODEL PERFORMANCE", cx: 880, cy: 138, color: "#c9a25a", nodes: [
-          { cx: 780, cy: 88, val: "0.757",  sub: "External AUROC A Federated Diabetes * FedAvg/SCAFFOLD", desc: "FedAvg beats a matched centralised model (0.700) on 1.28M held-out BRFSS records \u2014 heterogeneous NHANES nodes, never trained on BRFSS." },
-          { cx: 960, cy: 78, val: "0.98",   sub: "AUC A Mental Health NLP * CPFE audit",      desc: "Within-platform on Reddit & CLPsych \u2014 collapses 30\u201339% off-platform under domain shift." },
-          { cx: 840, cy: 218, val: "9.4 pp", sub: "Racial Approval Gap A HMDA * CATE-HMDA",           desc: "Black approval penalty net of 33 controls \u2014 largest under manual underwriting, 42.3M apps." },
-          { cx: 1000, cy: 188, val: "89.7%",  sub: "Top LLM Score A IndiaFinBench * Gemini 2.5 Flash", desc: "Best of 12 LLMs on SEBI/RBI regulatory text \u2014 zero-shot closed-book evaluation." },
-          { cx: 900, cy: 248, val: "#1 LLM", sub: "Gemini Rank A IndiaFinBench * vs. GPT-4o",         desc: "Gemini 2.5 Flash ranks first of 12 models including GPT-4o on Indian regulatory zero-shot QA." }
+          { cx: 780, cy: 88, val: "0.717",  sub: "External AUROC · Diabetes Risk * NHANES to BRFSS", desc: "Internal 0.794 falls to 0.717 on 1.28M BRFSS records, a 9.7% relative drop; adults 60 and over reach only 0.607." },
+          { cx: 960, cy: 78, val: "0.034",   sub: "Sensitivity Gap at Capacity · Federated Screening * FedAvg",      desc: "The White-Black AUC gap narrows to 0.0005 while the gap in who is actually flagged widens from 0.009 to 0.034." },
+          { cx: 840, cy: 218, val: "−9.39 pp", sub: "Conditional Approval Gap · HMDA * Causal forest DML",           desc: "Pooled conditional differential across 42 million applications; manual underwriting −14.79 pp against automated −6.17 pp." },
+          { cx: 1000, cy: 188, val: "ρ = −0.273",  sub: "Strict vs Judge Ranking · IndiaFinBench * 12 LLMs", desc: "No positive rank correspondence between the strict and judge-only leaderboards (p = 0.39); no model holds its rank across all three regimes." },
+          { cx: 900, cy: 248, val: "357 / 378", sub: "Orderings Not Identified · MATH-Hard * 28 models",         desc: "Once unreadable responses and measured scorer error are counted, most published orderings cannot be separated." }
         ]},
         { label: "DATA SCALE", cx: 1110, cy: 320, color: "#38bdf8", nodes: [
-          { cx: 1020, cy: 240, val: "42.3M",    sub: "Mortgage Records A CATE-HMDA * 2020\u20132024",          desc: "Every U.S. mortgage application \u2014 Causal Forest Double ML on the full HMDA dataset." },
-          { cx: 1210, cy: 260, val: "1.28M",    sub: "BRFSS Validation Set * Federated Diabetes",         desc: "Never trained on \u2014 pure external generalisation test for the federated diabetes model." },
-          { cx: 990, cy: 360, val: "14,584",   sub: "S&P 500 Earnings Transcripts * FinSight",           desc: "Earnings calls from 601 S&P 500 firms, 2018\u20132024 \u2014 strict walk-forward backtest." },
-          { cx: 1190, cy: 410, val: "601",      sub: "S&P 500 Firms A FinSight * 6-Year Corpus",          desc: "601 S&P 500 constituents \u2014 6-year earnings corpus with sector-level walk-forward isolation." },
-          { cx: 1080, cy: 440, val: "192 docs", sub: "Regulatory Documents * IndiaFinBench / SEBI & RBI", desc: "192 SEBI & RBI source documents annotated into 406 expert QA pairs, four task types." }
+          { cx: 1020, cy: 240, val: "42.3M",    sub: "Mortgage Records · HMDA * 2020-2024",          desc: "Every U.S. mortgage application in the window: causal forest double machine learning on the full HMDA dataset." },
+          { cx: 1210, cy: 260, val: "1.28M",    sub: "BRFSS Validation Set * Diabetes External Validation",         desc: "Never trained on: the external generalisation test for the diabetes risk model." },
+          { cx: 990, cy: 360, val: "14,584",   sub: "S&P 500 Earnings Transcripts * FinSight",           desc: "Earnings calls from 601 S&P 500 firms, 2018-2024, under a strict walk-forward backtest." },
+          { cx: 1190, cy: 410, val: "601",      sub: "S&P 500 Firms · FinSight * 6-Year Corpus",          desc: "601 S&P 500 constituents: a six-year earnings corpus with sector-level walk-forward isolation." },
+          { cx: 1080, cy: 440, val: "192 docs", sub: "Regulatory Documents * IndiaFinBench / SEBI & RBI", desc: "192 SEBI and RBI source documents annotated into 406 expert QA pairs across four task types." }
         ]},
         { label: "SYSTEMS BUILT", cx: 880, cy: 502, color: "#c084fc", nodes: [
-          { cx: 800, cy: 412, val: "0",        sub: "Cloud LLM Calls A ARIA * Fully Local Pipeline",  desc: "Entire voice-to-voice pipeline on a single RTX 4060 \u2014 faster-whisper + Qwen3-8B + TTS." },
-          { cx: 990, cy: 452, val: "16",       sub: "Local Tool Registry A ARIA * Offline Routing",   desc: "Web search, calendar, code exec, system control \u2014 all routed through local LLM, offline." },
-          { cx: 770, cy: 522, val: "12 LLMs",  sub: "Models Benchmarked * IndiaFinBench / Zero-Shot", desc: "GPT-4o to Gemini 2.5 Flash \u2014 zero-shot closed-book on Indian financial regulatory text." },
-          { cx: 950, cy: 582, val: "1 GPU",   sub: "Consumer Hardware A ARIA * RTX 4060",            desc: "~ 7.1 GB VRAM \u2014 single consumer GPU runs the entire ARIA multi-tool voice assistant." },
-          { cx: 860, cy: 602, val: "~ 7.1 GB",  sub: "Peak VRAM A ARIA * RTX 4060 / 8 GB Card",       desc: "Entire faster-whisper + Qwen3-8B + TTS pipeline fits in 7.1 GB VRAM \u2014 consumer GPU only." }
+          { cx: 800, cy: 412, val: "0",        sub: "Cloud LLM Calls · ARIA * Fully Local Pipeline",  desc: "The entire voice-to-voice pipeline runs on a single RTX 4060: faster-whisper, Qwen3-8B and TTS." },
+          { cx: 990, cy: 452, val: "16",       sub: "Local Tool Registry · ARIA * Offline Routing",   desc: "Web search, calendar, code execution and system control, all routed through a local model, offline." },
+          { cx: 770, cy: 522, val: "12 LLMs",  sub: "Models Benchmarked * IndiaFinBench / Zero-Shot", desc: "Twelve contemporary models scored zero-shot on Indian financial regulatory text." },
+          { cx: 950, cy: 582, val: "1 GPU",   sub: "Consumer Hardware · ARIA * RTX 4060",            desc: "About 7.1 GB VRAM: a single consumer GPU runs the whole ARIA multi-tool voice assistant." },
+          { cx: 860, cy: 602, val: "7.1 GB",  sub: "Peak VRAM · ARIA * RTX 4060 / 8 GB Card",       desc: "The faster-whisper, Qwen3-8B and TTS pipeline fits in 7.1 GB VRAM on a consumer GPU." }
         ]},
         { label: "RESEARCH OUTPUT", cx: 420, cy: 502, color: "#fcd34d", nodes: [
-          { cx: 320, cy: 442, val: "8",      sub: "Research Manuscripts * 1 Presented \u00b7 7 In Submission",  desc: "Applied Intelligence, J. Financial Services Research, Computational Economics, CMPB, J. Housing Economics, an IEEE conference, and two anonymous EMNLP-workshop submissions." },
-          { cx: 510, cy: 422, val: "4 domains", sub: "One Audit Protocol * TrustShift / Applied Intelligence", desc: "Clinical risk, mental-health NLP, mortgage lending, network security \u2014 shift type, not magnitude, decides which trustworthiness axis fails." },
-          { cx: 360, cy: 572, val: "50/250", sub: "SIH 2025 A SereneSpace * Smart India Hackathon",     desc: "Top 50 of 250 teams \u2014 Smart India Hackathon, anonymous student mental-health platform." },
-          { cx: 540, cy: 552, val: "5+",     sub: "Live Deployments * HuggingFace A Vercel A Render",   desc: "HuggingFace Spaces A Vercel A Render A PyPI package \u2014 all publicly accessible." },
-          { cx: 440, cy: 612, val: "3 probes", sub: "Label-Free Shift Diagnosis * TrustShift", desc: "Prevalence shift, domain-classifier AUC, importance-reweighting residual \u2014 diagnose the failure axis before labels arrive." }
+          { cx: 320, cy: 442, val: "12",      sub: "Papers and Manuscripts * 1 published · 5 under review",  desc: "One published in IEEE Xplore, five under review, two working papers on SSRN, three manuscripts and one in preparation." },
+          { cx: 510, cy: 422, val: "4 domains", sub: "One Audit Protocol * TrustShift", desc: "Clinical risk, mental-health text, mortgage lending and network security: shift magnitude alone does not explain which axis fails." },
+          { cx: 360, cy: 572, val: "50/250", sub: "SIH 2025 · SereneSpace * Smart India Hackathon",     desc: "Top 50 of 250 teams at the Smart India Hackathon with an anonymous student mental-health platform." },
+          { cx: 540, cy: 552, val: "5+",     sub: "Live Deployments * Hugging Face · Vercel · Render",   desc: "Hugging Face Spaces, Vercel, Render and a PyPI package, all publicly accessible." },
+          { cx: 440, cy: 612, val: "3 probes", sub: "Label-Free Shift Diagnosis * TrustShift", desc: "Prevalence change, a domain classifier and an importance-reweighting check, before labels arrive." }
         ]},
         { label: "FAIRNESS & IMPACT", cx: 190, cy: 320, color: "#34d399", nodes: [
-          { cx: 80, cy: 250, val: "-40%",   sub: "Generalisation Gap Reduction * Federated Diabetes", desc: "Federated vs. matched centralised model \u2014 40% smaller generalisation gap on 1.28M BRFSS." },
-          { cx: 280, cy: 280, val: "0.0%",   sub: "False Deploy Rate A ICGDF Gate * 12 Folds",         desc: "Gate stayed closed across 12 folds and 1,512 OOS days \u2014 was 11.8% with naive deployment." },
-          { cx: 120, cy: 400, val: "33-39%", sub: "Bias Caught by Equity Axis * ARIA Audit",           desc: "Failures caught by ARIA's equity axis that calibration, faithfulness, and consistency missed." },
-          { cx: 270, cy: 410, val: "~35%",   sub: "AUC Collapse Under Domain Shift * CPFE Audit",      desc: "Mental-health classifiers scoring 0.98 in-domain collapse off-platform \u2014 fairness doesn't transfer." },
-          { cx: 40, cy: 330, val: "4 axes", sub: "Audit Dimensions A ARIA * Cal, Faith, Consist, Equity", desc: "Calibration, faithfulness, consistency, equity \u2014 four independent axes expose LLM blind spots." }
+          { cx: 80, cy: 250, val: "542",   sub: "Fewer Flagged per 100,000 * Federated Screening", desc: "Under a race-blind screening policy FedAvg flags 542 fewer reference-positive Black respondents per 100,000 than the centralised control." },
+          { cx: 280, cy: 280, val: "0.0%",   sub: "False Deploy Rate · ICGDF Gate * 12 Folds",         desc: "The gate stayed closed across 12 folds and 1,512 out-of-sample days; a naive test would have deployed 11.8% of the time." },
+          { cx: 120, cy: 400, val: "33-39%", sub: "Bias Caught by Equity Axis * ARIA Audit",           desc: "Failures caught by ARIA's equity axis that calibration, faithfulness and consistency missed." },
+          { cx: 270, cy: 410, val: "108 / 240",   sub: "Evaluations Below Chance * Cross-Network Detection",      desc: "Cross-network transfer passes through chance rather than decaying to it; the worst run scores ROC-AUC 0.0697." },
+          { cx: 40, cy: 330, val: "4 axes", sub: "Audit Dimensions · ARIA * Cal, Faith, Consist, Equity", desc: "Calibration, faithfulness, consistency and equity: four independent axes that expose different blind spots." }
         ]},
         { label: "BENCHMARKS", cx: 420, cy: 138, color: "#22d3ee", nodes: [
-          { cx: 340, cy: 78, val: "0.785",   sub: "Recall@5 A RAG Hybrid * BM25+FAISS+RRF",        desc: "BM25 + FAISS + RRF retrieval \u2014 +9.7 pp over dense-only on IndiaFinBench." },
-          { cx: 510, cy: 118, val: "IC+0.31", sub: "Alpha Signal A FinSight Energy * Walk-Forward",  desc: "Cross-sectional information coefficient in Energy sector under strict walk-forward discipline." },
-          { cx: 370, cy: 228, val: "1,512",   sub: "OOS Trading Days A ICGDF Gate * 2018\u20132024",      desc: "12 walk-forward folds \u2014 gate stayed closed across every market regime, zero false deploys." },
-          { cx: 530, cy: 208, val: "12X",     sub: "Walk-Forward Folds A ICGDF * HAC Conjunctive",   desc: "HAC + permutation conjunctive test held closed across every market regime tested." },
-          { cx: 290, cy: 148, val: "+9.7 pp", sub: "RAG Recall@5 Gain * Hybrid vs. Dense-Only",      desc: "Hybrid BM25+FAISS+RRF vs dense-only \u2014 Recall@5 from ~0.688 to 0.785 on regulatory QA." }
+          { cx: 340, cy: 78, val: "0.785",   sub: "Recall@5 · RAG Hybrid * BM25 + FAISS + RRF",        desc: "Hybrid retrieval on the IndiaFinBench corpus, 9.7 points above dense-only." },
+          { cx: 510, cy: 118, val: "IC+0.31", sub: "Alpha Signal · FinSight Energy * Walk-Forward",  desc: "Cross-sectional information coefficient in the Energy sector under strict walk-forward discipline." },
+          { cx: 370, cy: 228, val: "1,512",   sub: "OOS Trading Days · ICGDF Gate * 2018-2024",      desc: "Twelve walk-forward folds: the gate stayed closed across every market regime tested." },
+          { cx: 530, cy: 208, val: "12×",     sub: "Walk-Forward Folds · ICGDF * HAC Conjunctive",   desc: "A HAC and permutation conjunctive test held closed across every market regime tested." },
+          { cx: 290, cy: 148, val: "+9.7 pp", sub: "RAG Recall@5 Gain * Hybrid vs Dense-Only",      desc: "Hybrid BM25, FAISS and RRF retrieval lifts Recall@5 from about 0.688 to 0.785 on regulatory QA." }
         ]}
       ];
 

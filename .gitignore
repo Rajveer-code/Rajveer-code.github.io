@@ -23,3 +23,9 @@ current-*.png
 # orphaned experiment, superseded by js/trajectory.js
 js/traj-spiral.js
 .ruff_cache/
+
+# working plans
+PLAN_*.md
+
+# local design tooling
+.impeccable/

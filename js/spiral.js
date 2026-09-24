@@ -1,83 +1,23 @@
 import * as THREE from 'three';
 
 /* ------------------------------------------------------------------ */
-/*  data — ordered by impressiveness, most impressive first            */
+/*  data — the research record, in the research site's reading order          */
 /* ------------------------------------------------------------------ */
 
-export const RESEARCH_PAPERS = [
-  {
-    "url": "project-trustshift.html",
-    "color": "#f472b6",
-    "title": "TrustShift: Shift Type, Not Shift Magnitude, Determines Machine-Learning Failure Modes",
-    "sub": "One pre-registered audit across four domains — clinical risk, mental-health NLP, mortgage lending, network security. The type of distribution shift, not its magnitude, decides which trustworthiness axis fails — and three label-free probes diagnose it before labels arrive.",
-    "tags": ["Trustworthy ML", "Deployment shift", "Fairness", "Calibration"],
-    "venue": "Applied Intelligence",
-    "status": "Under review · 2026"
-  },
-  {
-    "url": "project-cate-hmda.html",
-    "color": "#60a5fa",
-    "title": "Who Bears the Burden? Heterogeneous Racial Approval Differentials in U.S. Mortgage Lending",
-    "sub": "Causal Forest Double Machine Learning on 42.3M HMDA applications, 2020–2024 — a 9.4 pp Black approval penalty net of 33 controls, largest under manual underwriting.",
-    "tags": ["Causal inference", "EconML", "DML", "HMDA"],
-    "venue": "J. Financial Services Research",
-    "status": "Under review · 2026"
-  },
-  {
-    "url": "project-disparities.html",
-    "color": "#f59e0b",
-    "title": "Persistent Racial Disparities in U.S. Mortgage Approval: Evidence from 42 Million Applications, 2020–2024",
-    "sub": "Five identification strategies — DFL, within-lender FE, RDD, DiD, Manski bounds — all confirm a 14.95 pp Black–White approval gap of which ≥44% survives maximally adversarial selection assumptions.",
-    "tags": ["Causal inference", "HMDA", "Partial identification", "RDD"],
-    "venue": "J. Housing Economics",
-    "status": "Submitted · March 2026"
-  },
-  {
-    "url": "project-indiafinbench.html",
-    "color": "#22d3ee",
-    "title": "IndiaFinBench: Evaluating LLM Performance on Indian Financial Regulatory Text",
-    "sub": "The first benchmark over SEBI and RBI regulation — 406 expert QA items, 192 documents, 12 LLMs scored zero-shot, plus a hybrid-RAG demo lifting Recall@5 to 0.785.",
-    "tags": ["LLM evaluation", "RAG", "FAISS", "Benchmark"],
-    "venue": "Anonymous NLP venue",
-    "status": "Under review · 2026"
-  },
-  {
-    "url": "project-federated-diabetes.html",
-    "color": "#10b981",
-    "title": "Privacy-Preserving Federated Learning for Diabetes Risk Across Demographically Heterogeneous Nodes",
-    "sub": "FedAvg / FedProx / FedNova / SCAFFOLD on partitioned NHANES, externally validated on 1.28M BRFSS records — a 40% smaller generalisation gap than a matched centralised model.",
-    "tags": ["Federated learning", "PyTorch", "Flower", "Differential privacy"],
-    "venue": "CMPB",
-    "status": "Under review · 2026"
-  },
-  {
-    "url": "project-diabetes-eval.html",
-    "color": "#10b981",
-    "title": "Comprehensive Evaluation of Machine Learning for Type 2 Diabetes Risk Prediction",
-    "sub": "XGBoost leads at 0.794 AUC internally but falls to 0.717 on an external population 83× larger — a 9.7% deployment gap. Age and BMI dominate SHAP; race/ethnicity ranks 4th, requiring explicit fairness audit.",
-    "tags": ["XGBoost", "SHAP", "Fairness", "External validation"],
-    "venue": "IEEE CIPHER-2026",
-    "status": "Presented · 2026"
-  },
-  {
-    "url": "project-cpfe.html",
-    "color": "#2dd4bf",
-    "title": "Cross-Platform Generalisation Failure in Mental-Health NLP: A Five-Axis Fairness Audit",
-    "sub": "Transformer classifiers that score AUC 0.98 within-platform collapse 30–39% off-platform, with calibration and equity failing in lockstep — fairness that doesn't transfer.",
-    "tags": ["NLP", "Fairness", "Transformers", "Calibration"],
-    "venue": "Anonymous NLP venue",
-    "status": "In preparation · 2026"
-  },
-  {
-    "url": "project-icgdf.html",
-    "color": "#a78bfa",
-    "title": "When the Gate Stays Closed: Near-Zero Cross-Sectional Predictability in Large-Cap NASDAQ Equities",
-    "sub": "An IC-gated deployment framework with a conjunctive HAC + permutation test — the gate never opened across 12 folds and 1,512 OOS days, cutting false deployment from 11.8% to 0.0%.",
-    "tags": ["Quant ML", "Walk-forward", "CatBoost", "Permutation tests"],
-    "venue": "Computational Economics",
-    "status": "Under review · 2026"
-  }
-];
+/* Papers come from js/papers.js (generated from the research site's record),
+   so status and title cannot drift between the spiral, the timeline and the lists.
+   The spiral itself renders title, summary, tags and colour only. */
+export const RESEARCH_PAPERS = (window.PAPERS || []).map(function (p) {
+  return {
+    url: p.page || p.href,
+    color: p.color,
+    title: p.title,
+    sub: p.sub,
+    tags: p.tags,
+    venue: p.venue,
+    status: p.status
+  };
+});
 
 /* ------------------------------------------------------------------ */
 /*  dom                                                                 */
@@ -93,7 +33,11 @@ const cursorRing   = document.getElementById('cursorRing');
 
 if (track && glRoot && pubList) {
 
-  const isTouch = matchMedia('(pointer: coarse)').matches || innerWidth <= 768;
+  /* The scroll-driven spiral is the motion-heavy view: a coarse pointer, a narrow
+     viewport or a reduced-motion preference all get the static list instead. */
+  const listOnly = matchMedia('(pointer: coarse)').matches
+    || innerWidth <= 768
+    || matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function showListOnly() {
     track.classList.add('is-hidden');
@@ -104,14 +48,14 @@ if (track && glRoot && pubList) {
   /* must exist before initSpiral() runs — tick() reads it on its very first call */
   let trackVisible = true;
 
-  if (isTouch) {
+  if (listOnly) {
     showListOnly();
   } else {
     try { initSpiral(); } catch (err) { console.error('[spiral] init failed, falling back to list:', err); showListOnly(); }
   }
 
   /* ── view toggle (spiral / list) ── */
-  if (viewToggle && !isTouch) {
+  if (viewToggle && !listOnly) {
     viewToggle.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-view]');
       if (!btn) return;
