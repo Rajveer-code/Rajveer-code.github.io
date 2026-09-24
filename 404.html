@@ -15,8 +15,6 @@
     /* The 404 is one screen: no scroll rail, no sticky nav, nothing to get lost in. */
     .nf { position: relative; z-index: 3; min-height: 100svh; display: grid; align-content: center;
           gap: 2rem; max-width: 720px; margin: 0 auto; padding: 4rem 1.5rem; }
-    .nf-code { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.2em;
-               text-transform: uppercase; color: var(--gold); }
     .nf h1 { font-family: var(--serif, Georgia, serif); font-size: clamp(2.4rem, 1.6rem + 3.5vw, 4rem);
              line-height: 1.05; color: var(--ivory); margin: 0; }
     .nf p { color: var(--ivory-2); line-height: 1.65; margin: 0; max-width: 60ch; }
@@ -35,8 +33,7 @@
   <div class="bottom-fade" aria-hidden="true"></div>
 
   <main class="nf">
-    <div class="nf-code">Error 404</div>
-    <h1>That page is not here.</h1>
+    <h1>404. That page is not here.</h1>
     <p>Either the address has a typo, or you followed a link to a paper page that moved. The
       papers now live on the research site, which holds the current status and numbers for each
       one. Everything this site still holds is one click away.</p>
