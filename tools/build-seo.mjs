@@ -127,6 +127,8 @@ for (const page of PAGES) {
     `  <meta name="twitter:title" content="${attr(title)}">`,
     `  <meta name="twitter:description" content="${attr(description)}">`,
     `  <meta name="twitter:image" content="${SITE}/${page.og}">`,
+    `  <link rel="icon" href="/favicon.ico" sizes="48x48">`,
+    `  <link rel="apple-touch-icon" href="/apple-touch-icon.png">`,
     `  <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, "\\u003c")}</script>`,
     END,
   ].join("\n");

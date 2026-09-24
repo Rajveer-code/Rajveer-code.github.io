@@ -48,7 +48,9 @@ page on the [research site](https://rajveer-research.vercel.app), and send the r
 
 ```
 index.html            — homepage, fully baked into HTML (SEO + no-JS safe)
+404.html               — themed not-found page (GitHub Pages serves it with a 404 status)
 project-*.html         — 6 system case studies + 7 canonical stubs for retired paper URLs
+favicon.ico, apple-touch-icon.png
 sitemap.xml            — the 7 self-canonical pages (stubs are deliberately absent)
 robots.txt, llms.txt   — crawl and model-readable summary
 
@@ -84,6 +86,7 @@ node tools/build-lists.mjs      # the two static lists in index.html
 node tools/build-stubs.mjs      # the seven retired paper pages
 node tools/build-seo.mjs        # sitemap.xml, llms.txt, social and JSON-LD head blocks
 node tools/build-og.mjs         # assets/og/*.png (needs Edge and a network connection)
+python tools/optimize-images.py # logos to 128px, share cards quantised (idempotent)
 node tools/verify-content.mjs   # eight gates; non-zero exit on any failure
 ```
 
@@ -114,6 +117,25 @@ No build command and no output directory are needed; pushing to `main` is the de
 - **`prefers-reduced-motion`** is respected site-wide (marquee, reveals, and animations
   are disabled; content is shown immediately, and the research spiral gives way to the
   static list rather than animating).
+- **Contrast and type** — every text colour clears WCAG AA (4.5:1) against its background,
+  and no functional text is below 11px. Labels inside the fixed-coordinate SVG diagrams are
+  the stated exception: enlarging them overflows the boxes they sit in.
+- **No permission prompts** — the clock reads the visitor's timezone from `Intl`; the site
+  never asks for location.
+
+## Measured
+
+Lighthouse, desktop preset, served locally:
+
+| Page | Perf | A11y | SEO | Best practices |
+|---|---|---|---|---|
+| Home | 96 | 100 | 100 | 100 |
+| project-aria.html | 100 | 100 | 100 | 100 |
+| 404.html | 100 | 100 | 100 | 100 |
+
+Home LCP 0.74s, CLS 0. On the throttled mobile preset (4x CPU slowdown) the home page scores
+in the high 50s: the animation stack (GSAP, ScrollTrigger, the canvas field) is the cost, and
+the research spiral is already deferred until the reader approaches it.
 - **No JS / blocked CDN** — all content is in the HTML and renders without scripts.
 - **Spline is non-blocking** — a gold shimmer holds until the scene actually paints, with
   a safety cap so it never waits forever; the page is fully usable meanwhile.

@@ -53,11 +53,13 @@ function stub(file, p) {
   <title>${esc(p.short)} — Rajveer Singh Pall</title>
   <meta name="description" content="${esc(description(p))}">
   <link rel="icon" href="${FAVICON}">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="canonical" href="${p.href}">
   <link href="${FONTS}" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=10">
+  <link rel="stylesheet" href="css/style.css?v=13">
 </head>
 <body>
   <canvas id="field" aria-hidden="true"></canvas>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Page not found — Rajveer Singh Pall</title>
+  <meta name="description" content="That page is not here. Some paper pages moved to the research site when the record was consolidated; the links below reach everything this site holds.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2306080c'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='34' fill='%23f5ca40' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css?v=13">
+  <style>
+    /* The 404 is one screen: no scroll rail, no sticky nav, nothing to get lost in. */
+    .nf { position: relative; z-index: 3; min-height: 100svh; display: grid; align-content: center;
+          gap: 2rem; max-width: 720px; margin: 0 auto; padding: 4rem 1.5rem; }
+    .nf-code { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.2em;
+               text-transform: uppercase; color: var(--gold); }
+    .nf h1 { font-family: var(--serif, Georgia, serif); font-size: clamp(2.4rem, 1.6rem + 3.5vw, 4rem);
+             line-height: 1.05; color: var(--ivory); margin: 0; }
+    .nf p { color: var(--ivory-2); line-height: 1.65; margin: 0; max-width: 60ch; }
+    .nf-links { display: grid; gap: 0.75rem; margin-top: 0.5rem; }
+    .nf-links a { display: flex; align-items: baseline; justify-content: space-between; gap: 1.5rem;
+                  padding: 1rem 1.25rem; border: 1px solid var(--hairline); border-radius: 4px;
+                  color: var(--ivory); text-decoration: none; transition: border-color .25s, background .25s; }
+    .nf-links a:hover, .nf-links a:focus-visible { border-color: var(--gold); background: var(--gold-dim); }
+    .nf-links span:last-child { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.1em;
+                                text-transform: uppercase; color: var(--dim); white-space: nowrap; }
+    .nf-foot { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.08em; color: var(--dim); }
+  </style>
+</head>
+<body>
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="bottom-fade" aria-hidden="true"></div>
+
+  <main class="nf">
+    <div class="nf-code">Error 404</div>
+    <h1>That page is not here.</h1>
+    <p>Either the address has a typo, or you followed a link to a paper page that moved. The
+      papers now live on the research site, which holds the current status and numbers for each
+      one. Everything this site still holds is one click away.</p>
+
+    <nav class="nf-links" aria-label="Where to go instead">
+      <a href="/"><span>The home page</span><span>Start here</span></a>
+      <a href="/#research"><span>Twelve papers and manuscripts</span><span>Research</span></a>
+      <a href="https://rajveer-research.vercel.app" target="_blank" rel="noopener"><span>The research site</span><span>Papers in full</span></a>
+      <a href="/#work"><span>The systems, in depth</span><span>Work</span></a>
+      <a href="/#contact"><span>Contact</span><span>Email and profiles</span></a>
+    </nav>
+
+    <div class="nf-foot">© 2026 Rajveer Singh Pall · Decision Systems Research · Jabalpur, India</div>
+  </main>
+
+  <script src="/js/field.js?v=3"></script>
+</body>
+</html>
