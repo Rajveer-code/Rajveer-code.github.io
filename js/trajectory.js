@@ -139,11 +139,11 @@
         "Five modules shipped at v0.3.0 — 100% line coverage on the statistical core, CI green on Python 3.9–3.12.",
       ] },
     { id: "scorer-audit", track: "research", slug: "scorer-partial-identification", color: "#ec4899",
-      role: "Auditing the Scorer", start: [2026,8], end: [2026,9],
+      role: "Which Orderings Survive?", start: [2026,8], end: [2026,9],
       bullets: [
-        "A human audit of the boxed-answer comparator on MATH-Hard, 350 usable items across 27 models.",
-        "Identification width is 6.10× sampling width for the median pair, dominant in all 120 pairs.",
-        "The textbook Neyman allocation of audit effort is dominated by uniform allocation here.",
+        "A 400-item human audit of MATH-Hard responses; three verifiers read all 35,748 responses of 27 models.",
+        "174 of 351 pairwise orderings certified at a reference tolerance of 0.01, and none without the pooling assumption.",
+        "15.9% of strictly ordered model pairs reversed when the leaderboard changed its verifier.",
       ] },
   ];
 
