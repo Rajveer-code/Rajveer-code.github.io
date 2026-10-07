@@ -215,7 +215,7 @@
     var HL = [
       { title: "Benchmark Accuracy Is Not Identified", time: paperTag("benchmark-accuracy-not-identified"), sub: "357 of 378 leaderboard orderings are not identified" },
       { title: "Smart India Hackathon 2025", time: "Top 50 of 250",        sub: "SereneSpace — anonymous student mental-health" },
-      { title: "Twelve Papers and Manuscripts", time: "2025–26",              sub: "1 published · 2 under review · 2 working papers" },
+      { title: "Twelve Papers and Manuscripts", time: "2025–26",              sub: "1 published · 3 under review · 2 working papers" },
       { title: "IndiaFinBench",              time: paperTag("indiafinbench"),          sub: "406 expert QA items · the scoring rule reorders the board" },
       { title: "FinSight",                   time: "Deployed System",        sub: "14,584 transcripts · IC +0.31 in Energy" },
       { title: "ARIA Assistant",             time: "Local-First Voice AI",   sub: "Zero cloud LLM calls · one RTX 4060" },
@@ -356,7 +356,7 @@
           { cx: 860, cy: 602, val: "7.1 GB",  sub: "Peak VRAM · ARIA * RTX 4060 / 8 GB Card",       desc: "The faster-whisper, Qwen3-8B and TTS pipeline fits in 7.1 GB VRAM on a consumer GPU." }
         ]},
         { label: "RESEARCH OUTPUT", cx: 420, cy: 502, color: "#fcd34d", nodes: [
-          { cx: 320, cy: 442, val: "12",      sub: "Papers and Manuscripts * 1 published · 2 under review",  desc: "One published in IEEE Xplore, two under review, two working papers on SSRN, six manuscripts and one in preparation." },
+          { cx: 320, cy: 442, val: "12",      sub: "Papers and Manuscripts * 1 published · 3 under review",  desc: "One published in IEEE Xplore, three under review, two working papers on SSRN and six manuscripts." },
           { cx: 510, cy: 422, val: "4 domains", sub: "One Audit Protocol * TrustShift", desc: "Clinical risk, mental-health text, mortgage lending and network security: shift magnitude alone does not explain which axis fails." },
           { cx: 360, cy: 572, val: "50/250", sub: "SIH 2025 · SereneSpace * Smart India Hackathon",     desc: "Top 50 of 250 teams at the Smart India Hackathon with an anonymous student mental-health platform." },
           { cx: 540, cy: 552, val: "5+",     sub: "Live Deployments * Hugging Face · Vercel · Render",   desc: "Hugging Face Spaces, Vercel, Render and a PyPI package, all publicly accessible." },
