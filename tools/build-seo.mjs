@@ -135,7 +135,7 @@ for (const page of PAGES) {
 
   // Drop any previous generated block, and the hand-written og tags it replaces.
   const rx = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  html = html.replace(new RegExp(`${rx(START)}[\\s\\S]*?${rx(END)}\\n`, "g"), "");
+  html = html.replace(new RegExp(`${rx(START)}[\\s\\S]*?${rx(END)}\\r?\\n`, "g"), "");
   html = html
     .split("\n")
     .filter((l) => !/^\s*<meta property="og:(title|description|type|url|image|site_name)"/.test(l))

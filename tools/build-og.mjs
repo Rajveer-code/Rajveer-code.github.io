@@ -23,7 +23,7 @@ const CARDS = [
     eyebrow: "Decision Systems Research",
     title: "Rajveer Singh Pall",
     line: "Testing whether deployed systems are fair and honest, and shipping the systems that check.",
-    facts: ["12 papers and manuscripts", "6 systems"],
+    facts: ["6 papers", "6 systems"],
   },
   {
     out: "aria.png",

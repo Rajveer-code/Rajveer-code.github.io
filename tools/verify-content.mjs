@@ -27,12 +27,8 @@ const INDEXABLE = [
   "project-serenespace.html",
 ];
 const STUBS = [
-  "project-trustshift.html",
-  "project-cate-hmda.html",
   "project-disparities.html",
   "project-diabetes-eval.html",
-  "project-icgdf.html",
-  "project-cpfe.html",
   "project-federated-diabetes.html",
 ];
 const HTML = [...INDEXABLE, ...STUBS];
@@ -88,15 +84,15 @@ const BANNED = [
 }
 
 // ---- 2. Status vocabulary ----------------------------------------------------
-const VOCAB = ["Published", "Under review", "Working paper", "Manuscript", "In preparation"];
-// A venue may be named only where the submission is not double-blind, or where the
-// venue is the preprint host itself. Anything else under review stays unnamed.
-const NAMEABLE = ["IEEE Xplore (CIPHER-2026)", "Journal of Housing Economics", "SSRN"];
+const VOCAB = ["Published", "Submitted", "Under review", "In preparation"];
+const PREPRINT = /^arXiv preprint \d{4}\.\d{4,5}$/;
+// Venues named exactly as on the CV (TRUTH.md, 2026-10-19 block). Anything else stays unnamed.
+const NAMEABLE = ["IEEE Xplore (CIPHER-2026)", "ML4H 2026 Findings", "DMLR", "Journal of Housing Economics"];
 {
   const gate = "vocabulary";
   let bad = 0;
   for (const p of PAPERS) {
-    if (!VOCAB.includes(p.status)) {
+    if (!VOCAB.includes(p.status) && !PREPRINT.test(p.status)) {
       bad += 1;
       fail(gate, `${p.slug}: status ${JSON.stringify(p.status)} is outside the vocabulary`);
     }

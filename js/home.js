@@ -213,16 +213,16 @@
       return p.venue ? p.venue + " · " + p.status : p.status;
     }
     var HL = [
-      { title: "Benchmark Accuracy Is Not Identified", time: paperTag("benchmark-accuracy-not-identified"), sub: "357 of 378 leaderboard orderings are not identified" },
+      { title: "Which Orderings Survive?", time: paperTag("scorer-partial-identification"), sub: "174 of 351 leaderboard orderings certified by a human audit" },
       { title: "Smart India Hackathon 2025", time: "Top 50 of 250",        sub: "SereneSpace — anonymous student mental-health" },
-      { title: "Twelve Papers and Manuscripts", time: "2025–26",              sub: "1 published · 3 under review · 2 working papers" },
-      { title: "IndiaFinBench",              time: paperTag("indiafinbench"),          sub: "406 expert QA items · the scoring rule reorders the board" },
+      { title: "Six Papers",                 time: "2025–26",              sub: "1 published · 3 submitted or under review · 1 preprint" },
+      { title: "IndiaFinBench",              time: paperTag("indiafinbench"),          sub: "406 expert QA items · twelve LLMs zero-shot" },
       { title: "FinSight",                   time: "Deployed System",        sub: "14,584 transcripts · IC +0.31 in Energy" },
       { title: "ARIA Assistant",             time: "Local-First Voice AI",   sub: "Zero cloud LLM calls · one RTX 4060" },
-      { title: "Who Bears the Burden?",      time: paperTag("who-bears-the-burden"), sub: "42 million applications · −9.39 pp conditional gap" },
+      { title: "Persistent Racial Disparities", time: paperTag("mortgage-disparities"), sub: "42 million applications · 14.95 pp approval gap" },
       { title: "Higher AUC, Fewer Cases Flagged", time: paperTag("subgroup-fairness-reversal"), sub: "542 fewer flagged per 100,000 at fixed capacity" },
       { title: "Diabetes External Validation", time: paperTag("diabetes-external-validation"), sub: "0.794 internal, 0.717 external on 1.28M records" },
-      { title: "ICGDF Deployment Gate",      time: paperTag("when-the-gate-stays-closed"), sub: "0.0% false deploy across 12 folds" }
+      { title: "Confidently Wrong",          time: paperTag("confidently-wrong"), sub: "108 of 240 cross-network evaluations below chance" }
     ];
     var ICON = '<svg class="glory-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>';
     function esc(s) { var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
@@ -337,12 +337,12 @@
         { label: "MODEL PERFORMANCE", cx: 880, cy: 138, color: "#c9a25a", nodes: [
           { cx: 780, cy: 88, val: "0.717",  sub: "External AUROC · Diabetes Risk * NHANES to BRFSS", desc: "Internal 0.794 falls to 0.717 on 1.28M BRFSS records, a 9.7% relative drop; adults 60 and over reach only 0.607." },
           { cx: 960, cy: 78, val: "0.034",   sub: "Sensitivity Gap at Capacity · Federated Screening * FedAvg",      desc: "The White-Black AUC gap narrows to 0.0005 while the gap in who is actually flagged widens from 0.009 to 0.034." },
-          { cx: 840, cy: 218, val: "−9.39 pp", sub: "Conditional Approval Gap · HMDA * Causal forest DML",           desc: "Pooled conditional differential across 42 million applications; manual underwriting −14.79 pp against automated −6.17 pp." },
-          { cx: 1000, cy: 188, val: "ρ = −0.273",  sub: "Strict vs Judge Ranking · IndiaFinBench * 12 LLMs", desc: "No positive rank correspondence between the strict and judge-only leaderboards (p = 0.39); no model holds its rank across all three regimes." },
-          { cx: 900, cy: 248, val: "357 / 378", sub: "Orderings Not Identified · MATH-Hard * 28 models",         desc: "Once unreadable responses and measured scorer error are counted, most published orderings cannot be separated." }
+          { cx: 840, cy: 218, val: "174 / 351", sub: "Orderings Certified · MATH-Hard * 27 models",           desc: "A 400-item human audit certifies 174 of 351 pairwise orderings at a reference tolerance of 0.01, and none without the pooling assumption." },
+          { cx: 1000, cy: 188, val: "35.9 pts",  sub: "Numerical-Reasoning Spread · IndiaFinBench * 12 LLMs", desc: "Numerical reasoning separates the twelve models most, with a 35.9-point spread in zero-shot accuracy." },
+          { cx: 900, cy: 248, val: "15.9%", sub: "Pairs Reversed by a Verifier Change * Open LLM Leaderboard",         desc: "When the leaderboard changed verifier in February 2025, 15.9% of the model pairs that both scores order strictly reversed." }
         ]},
         { label: "DATA SCALE", cx: 1110, cy: 320, color: "#38bdf8", nodes: [
-          { cx: 1020, cy: 240, val: "42.3M",    sub: "Mortgage Records · HMDA * 2020-2024",          desc: "Every U.S. mortgage application in the window: causal forest double machine learning on the full HMDA dataset." },
+          { cx: 1020, cy: 240, val: "42.3M",    sub: "Mortgage Records · HMDA * 2020-2024",          desc: "Every U.S. mortgage application in the window: the base for the racial-disparity study." },
           { cx: 1210, cy: 260, val: "1.28M",    sub: "BRFSS Validation Set * Diabetes External Validation",         desc: "Never trained on: the external generalisation test for the diabetes risk model." },
           { cx: 990, cy: 360, val: "14,584",   sub: "S&P 500 Earnings Transcripts * FinSight",           desc: "Earnings calls from 601 S&P 500 firms, 2018-2024, under a strict walk-forward backtest." },
           { cx: 1190, cy: 410, val: "601",      sub: "S&P 500 Firms · FinSight * 6-Year Corpus",          desc: "601 S&P 500 constituents: a six-year earnings corpus with sector-level walk-forward isolation." },
@@ -356,15 +356,15 @@
           { cx: 860, cy: 602, val: "7.1 GB",  sub: "Peak VRAM · ARIA * RTX 4060 / 8 GB Card",       desc: "The faster-whisper, Qwen3-8B and TTS pipeline fits in 7.1 GB VRAM on a consumer GPU." }
         ]},
         { label: "RESEARCH OUTPUT", cx: 420, cy: 502, color: "#fcd34d", nodes: [
-          { cx: 320, cy: 442, val: "12",      sub: "Papers and Manuscripts * 1 published · 3 under review",  desc: "One published in IEEE Xplore, three under review, two working papers on SSRN and six manuscripts." },
-          { cx: 510, cy: 422, val: "4 domains", sub: "One Audit Protocol * TrustShift", desc: "Clinical risk, mental-health text, mortgage lending and network security: shift magnitude alone does not explain which axis fails." },
+          { cx: 320, cy: 442, val: "6",       sub: "Papers * 1 published · 3 submitted or under review",  desc: "One published in IEEE Xplore, two submitted (ML4H 2026 Findings, DMLR), one under review at the Journal of Housing Economics, one arXiv preprint and one in preparation." },
+          { cx: 510, cy: 422, val: "35,748", sub: "Responses Read Three Ways * Which Orderings Survive?", desc: "Three verifiers read all 35,748 published MATH-Hard responses of 27 models, and disagree on 1,159 of them." },
           { cx: 360, cy: 572, val: "50/250", sub: "SIH 2025 · SereneSpace * Smart India Hackathon",     desc: "Top 50 of 250 teams at the Smart India Hackathon with an anonymous student mental-health platform." },
           { cx: 540, cy: 552, val: "5+",     sub: "Live Deployments * Hugging Face · Vercel · Render",   desc: "Hugging Face Spaces, Vercel, Render and a PyPI package, all publicly accessible." },
-          { cx: 440, cy: 612, val: "3 probes", sub: "Label-Free Shift Diagnosis * TrustShift", desc: "Prevalence change, a domain classifier and an importance-reweighting check, before labels arrive." }
+          { cx: 440, cy: 612, val: "406", sub: "Expert-Annotated Questions * IndiaFinBench", desc: "406 question-answer pairs over SEBI and RBI regulation across four task types, released with code and model outputs." }
         ]},
         { label: "FAIRNESS & IMPACT", cx: 190, cy: 320, color: "#34d399", nodes: [
           { cx: 80, cy: 250, val: "542",   sub: "Fewer Flagged per 100,000 * Federated Screening", desc: "Under a race-blind screening policy FedAvg flags 542 fewer reference-positive Black respondents per 100,000 than the centralised control." },
-          { cx: 280, cy: 280, val: "0.0%",   sub: "False Deploy Rate · ICGDF Gate * 12 Folds",         desc: "The gate stayed closed across 12 folds and 1,512 out-of-sample days; a naive test would have deployed 11.8% of the time." },
+          { cx: 280, cy: 280, val: "74.6%",  sub: "Gap Within Lenders * Mortgage Disparities",         desc: "74.6% of the 14.95-point Black-White approval gap sits inside individual lenders rather than between them." },
           { cx: 120, cy: 400, val: "33-39%", sub: "Bias Caught by Equity Axis * ARIA Audit",           desc: "Failures caught by ARIA's equity axis that calibration, faithfulness and consistency missed." },
           { cx: 270, cy: 410, val: "108 / 240",   sub: "Evaluations Below Chance * Cross-Network Detection",      desc: "Cross-network transfer passes through chance rather than decaying to it; the worst run scores ROC-AUC 0.0697." },
           { cx: 40, cy: 330, val: "4 axes", sub: "Audit Dimensions · ARIA * Cal, Faith, Consist, Equity", desc: "Calibration, faithfulness, consistency and equity: four independent axes that expose different blind spots." }
@@ -372,8 +372,8 @@
         { label: "BENCHMARKS", cx: 420, cy: 138, color: "#22d3ee", nodes: [
           { cx: 340, cy: 78, val: "0.785",   sub: "Recall@5 · RAG Hybrid * BM25 + FAISS + RRF",        desc: "Hybrid retrieval on the IndiaFinBench corpus, 9.7 points above dense-only." },
           { cx: 510, cy: 118, val: "IC+0.31", sub: "Alpha Signal · FinSight Energy * Walk-Forward",  desc: "Cross-sectional information coefficient in the Energy sector under strict walk-forward discipline." },
-          { cx: 370, cy: 228, val: "1,512",   sub: "OOS Trading Days · ICGDF Gate * 2018-2024",      desc: "Twelve walk-forward folds: the gate stayed closed across every market regime tested." },
-          { cx: 530, cy: 208, val: "12×",     sub: "Walk-Forward Folds · ICGDF * HAC Conjunctive",   desc: "A HAC and permutation conjunctive test held closed across every market regime tested." },
+          { cx: 370, cy: 228, val: "0.607",   sub: "External AUC, Age 60+ * Diabetes Validation",      desc: "Adults over 60 reach an external AUC of 0.607 against 0.742 for ages 18 to 39." },
+          { cx: 530, cy: 208, val: "11 / 12", sub: "Pairs Failing at the Ranking * Cross-Network Detection",   desc: "Eleven of twelve testbed pairs fail at the ranking rather than the threshold, where recalibration cannot help." },
           { cx: 290, cy: 148, val: "+9.7 pp", sub: "RAG Recall@5 Gain * Hybrid vs Dense-Only",      desc: "Hybrid BM25, FAISS and RRF retrieval lifts Recall@5 from about 0.688 to 0.785 on regulatory QA." }
         ]}
       ];

@@ -20,12 +20,8 @@ const bySlug = Object.fromEntries(PAPERS.map((p) => [p.slug, p]));
 // important one: the study it described was retracted, and the page that replaced it
 // is a different paper about the same screening setting.
 const STUBS = {
-  "project-trustshift.html": "trustshift",
-  "project-cate-hmda.html": "who-bears-the-burden",
   "project-disparities.html": "mortgage-disparities",
   "project-diabetes-eval.html": "diabetes-external-validation",
-  "project-icgdf.html": "when-the-gate-stays-closed",
-  "project-cpfe.html": "text-genre-transfer-failure",
   "project-federated-diabetes.html": "subgroup-fairness-reversal",
 };
 

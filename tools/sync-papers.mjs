@@ -21,16 +21,10 @@ const { publications, THEME_LABELS } = await import(`file:///${RESEARCH_SRC.repl
 
 // Colours: keep each paper's existing hue where the portfolio already had one.
 const COLOR = {
-  trustshift: "#f472b6",
-  "who-bears-the-burden": "#60a5fa",
   "mortgage-disparities": "#f59e0b",
   indiafinbench: "#22d3ee",
   "diabetes-external-validation": "#10b981",
   "subgroup-fairness-reversal": "#34d399",
-  "when-the-gate-stays-closed": "#eab308",
-  "text-genre-transfer-failure": "#a855f7",
-  "benchmark-accuracy-not-identified": "#3b82f6",
-  "could-it-read-the-answer": "#14b8a6",
   "confidently-wrong": "#ef4444",
   "scorer-partial-identification": "#ec4899",
 };
@@ -42,7 +36,7 @@ const LOCAL_PAGE = { indiafinbench: "project-indiafinbench.html" };
 const records = [...publications]
   .sort((a, b) => a.order - b.order)
   .map((p) => {
-    // research.ts statuses read "Published · IEEE Xplore (CIPHER-2026)" or "Under review".
+    // research.ts statuses read "Published · IEEE Xplore (CIPHER-2026)" or "In preparation".
     const [status, ...rest] = p.status.split(" · ");
     const venue = rest.join(" · ");
     return {
@@ -63,10 +57,11 @@ const records = [...publications]
   });
 
 // Guard rails, checked at generation time so a bad record can never reach the site.
-const VOCAB = ["Published", "Under review", "Working paper", "Manuscript", "In preparation"];
-const NAMEABLE = new Set(["IEEE Xplore (CIPHER-2026)", "Journal of Housing Economics", "SSRN", ""]);
+const VOCAB = ["Published", "Submitted", "Under review", "In preparation"];
+const PREPRINT = /^arXiv preprint \d{4}\.\d{4,5}$/;
+const NAMEABLE = new Set(["IEEE Xplore (CIPHER-2026)", "ML4H 2026 Findings", "DMLR", "Journal of Housing Economics", ""]);
 for (const r of records) {
-  if (!VOCAB.includes(r.status)) throw new Error(`${r.slug}: status "${r.status}" outside the vocabulary`);
+  if (!VOCAB.includes(r.status) && !PREPRINT.test(r.status)) throw new Error(`${r.slug}: status "${r.status}" outside the vocabulary`);
   if (!NAMEABLE.has(r.venue)) throw new Error(`${r.slug}: venue "${r.venue}" is not a public venue`);
   if (!r.title || !r.sub) throw new Error(`${r.slug}: missing title or summary`);
 }
