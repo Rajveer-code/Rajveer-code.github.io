@@ -63,7 +63,7 @@
         </header>
         <div class="essence-strip">
           <div class="essence-item"><span class="essence-label">Problem</span><span class="essence-text">Financial-NLP resources are built on Western filings. Indian regulatory text had no evaluation set, and it is dense with identifiers that semantic search alone retrieves badly.</span></div>
-          <div class="essence-item"><span class="essence-label">Approach</span><span class="essence-text">Annotate 406 questions over 192 SEBI and RBI documents across four reasoning types, then build a retrieval stack that fuses dense and lexical search with reciprocal rank fusion.</span></div>
+          <div class="essence-item"><span class="essence-label">Approach</span><span class="essence-text">Annotate 406 questions from 34 of 192 collected SEBI and RBI documents across four reasoning types, then build a retrieval stack that fuses dense and lexical search with reciprocal rank fusion.</span></div>
           <div class="essence-item"><span class="essence-label">Result</span><span class="essence-text">Hybrid retrieval reaches Recall@5 0.785, 9.7 points above dense-only on this corpus, and the dataset, demo and code are public.</span></div>
           <div class="essence-item"><span class="essence-label">Significance</span><span class="essence-text">Regulatory text rewards exact identifier matches, so the lexical signal has to stay in the loop. The evaluation questions the benchmark raises are handled in the paper.</span></div>
         </div>
@@ -71,7 +71,7 @@
 
         <section class="th-section" id="dataset">
           <h2 class="th-section-title">The dataset</h2>
-          <p class="th-body">406 expert-annotated items drawn from 192 source documents: SEBI circulars and RBI master directions, the instruments that actually govern Indian markets. Each item is written against a passage, with the answer and the qualifying context recorded alongside it, and the set is split across four kinds of reasoning a compliance reader has to do.</p>
+          <p class="th-body">406 expert-annotated items drawn from 34 of 192 collected source documents: SEBI circulars and RBI master directions, the instruments that actually govern Indian markets. Each item is written against a passage, with the answer and the qualifying context recorded alongside it, and the set is split across four kinds of reasoning a compliance reader has to do.</p>
             <div class="result-bar-row">
               <div class="result-bar-label"><span>Regulatory interpretation</span><span class="result-bar-value">174 items</span></div>
               <div class="result-bar-track"><div class="result-bar-fill" style="width:42.9%;background:#22d3ee;"></div></div>
@@ -121,9 +121,9 @@
 
         <section class="th-section" id="paper">
           <h2 class="th-section-title">The paper</h2>
-          <p class="th-body">The preprint evaluates twelve models zero-shot. Every model beats a non-specialist human baseline of 69.0%, numerical reasoning separates the models most with a 35.9-point spread, and bootstrap testing finds three statistically distinct tiers. The full write-up, with its limits, lives on the research site.</p>
+          <p class="th-body">The preprint scores twelve models zero-shot under three rules over the same predictions. Strict string matching and a cross-model judge show no positive rank correspondence (Spearman ρ = −0.273, p = 0.39, not significant), no model holds its rank across all three, and 148 of the 406 items separate no pair of systems. The full write-up, with its limits, lives on the research site.</p>
           <div class="related-row" style="--pn-accent:#22d3ee">
-            <a href="https://rajveer-research.vercel.app/research/indiafinbench/" target="_blank" rel="noopener"><span>IndiaFinBench: An Evaluation Benchmark for Large Language Model Performance on Indian Financial Regulatory Text</span><span class="rel-status">arXiv preprint</span></a>
+            <a href="https://rajveer-research.vercel.app/research/indiafinbench/" target="_blank" rel="noopener"><span>Scoring-Rule Sensitivity in LLM Evaluation: Evidence from Indian Financial Regulatory Text</span><span class="rel-status">arXiv preprint 2604.19298</span></a>
             <a href="project-fairscope.html"><span>fairscope — the auditing library</span><span class="rel-status">v0.3.0 on PyPI</span></a>
             <a href="project-aria.html"><span>ARIA Assistant — local-first voice agent</span><span class="rel-status">Shipped</span></a>
           </div>

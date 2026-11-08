@@ -59,7 +59,7 @@ const records = [...publications]
 // Guard rails, checked at generation time so a bad record can never reach the site.
 const VOCAB = ["Published", "Submitted", "Under review", "In preparation"];
 const PREPRINT = /^arXiv preprint \d{4}\.\d{4,5}$/;
-const NAMEABLE = new Set(["IEEE Xplore (CIPHER-2026)", "ML4H 2026 Findings", "DMLR", "Journal of Housing Economics", ""]);
+const NAMEABLE = new Set(["IEEE Xplore (CIPHER-2026)", "DMLR", "Journal of Housing Economics", ""]);
 for (const r of records) {
   if (!VOCAB.includes(r.status) && !PREPRINT.test(r.status)) throw new Error(`${r.slug}: status "${r.status}" outside the vocabulary`);
   if (!NAMEABLE.has(r.venue)) throw new Error(`${r.slug}: venue "${r.venue}" is not a public venue`);

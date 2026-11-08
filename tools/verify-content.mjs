@@ -87,7 +87,7 @@ const BANNED = [
 const VOCAB = ["Published", "Submitted", "Under review", "In preparation"];
 const PREPRINT = /^arXiv preprint \d{4}\.\d{4,5}$/;
 // Venues named exactly as on the CV (TRUTH.md, 2026-10-19 block). Anything else stays unnamed.
-const NAMEABLE = ["IEEE Xplore (CIPHER-2026)", "ML4H 2026 Findings", "DMLR", "Journal of Housing Economics"];
+const NAMEABLE = ["IEEE Xplore (CIPHER-2026)", "DMLR", "Journal of Housing Economics"];
 {
   const gate = "vocabulary";
   let bad = 0;

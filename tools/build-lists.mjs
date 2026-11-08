@@ -31,6 +31,7 @@ const TIMELINE = [
   "subgroup-fairness-reversal",
   "project-fairscope.html",
   "scorer-partial-identification",
+  "shift-alarm-safety-certificate",
 ];
 
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");

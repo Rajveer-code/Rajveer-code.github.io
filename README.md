@@ -25,7 +25,7 @@ In DOM order (`index.html`):
 | **Trajectory** | "The trajectory." — a scroll-scrubbed vertical **Gantt timeline**: a centred time-spine with systems to the right, research papers to the left, duration bars, and a growing playhead. |
 | **Impact** | An interactive node **constellation** (SVG) of 30+ metrics across six categories, with a central HUD that updates on hover. On touch it becomes a native stacked card list of the same data. |
 | **Work** | Featured systems as cards (whole-card click → case study). |
-| **Research** | Six papers, with a WebGL **research spiral** (`spiral.js`). Every card is generated from one record, so a status cannot drift between views. |
+| **Research** | Seven papers, with a WebGL **research spiral** (`spiral.js`). Every card is generated from one record, so a status cannot drift between views. |
 | **Stack** | Tooling grouped by domain, rendered from data with logo icons. |
 | **Contact** | Links + a live local clock. |
 
@@ -78,7 +78,7 @@ devserver.py           — local dev server (no-store headers)
 
 ## Content and checks
 
-Statuses, venues and links for the six papers are generated, never typed twice:
+Statuses, venues and links for the seven papers are generated, never typed twice:
 
 ```bash
 node tools/sync-papers.mjs      # js/papers.js from the research site's own record

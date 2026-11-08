@@ -23,7 +23,7 @@ const CARDS = [
     eyebrow: "Decision Systems Research",
     title: "Rajveer Singh Pall",
     line: "Testing whether deployed systems are fair and honest, and shipping the systems that check.",
-    facts: ["6 papers", "6 systems"],
+    facts: ["7 papers", "6 systems"],
   },
   {
     out: "aria.png",
@@ -37,7 +37,7 @@ const CARDS = [
     eyebrow: "Benchmark and retrieval system",
     title: "IndiaFinBench",
     line: "Indian financial regulation, annotated question by question, with a hybrid retrieval stack over it.",
-    facts: ["406 items", "192 documents", "hybrid BM25 + FAISS"],
+    facts: ["406 items", "34 of 192 documents", "hybrid BM25 + FAISS"],
   },
   {
     out: "fairscope.png",

@@ -64,8 +64,8 @@
     { id: "indiafinbench", track: "research", slug: "indiafinbench", color: "#06b6d4",
       role: "IndiaFinBench", start: [2026,2], end: [2026,4],
       bullets: [
-        "The first benchmark over Indian financial regulation: SEBI and RBI text.",
-        "406 expert-annotated items, 192 documents, 12 LLMs scored zero-shot.",
+        "Scored two ways over the same predictions, twelve LLMs show no positive rank correspondence.",
+        "406 expert-annotated items from 34 of 192 collected SEBI and RBI documents.",
         "Hybrid retrieval (FAISS + BM25, RRF) lifts Recall@5 to 0.785.",
       ] },
     { id: "aria", track: "system", color: "#4ade80", url: "project-aria.html",
@@ -80,14 +80,14 @@
       bullets: [
         "Four model families across four independently captured testbeds, five seeds each.",
         "108 of 240 cross-network evaluations score below ROC-AUC 0.5; the worst reaches 0.0697.",
-        "Eleven of twelve testbed pairs fail at the ranking, where recalibration cannot help.",
+        "Nine to eleven of twelve testbed pairs fail at the ranking, where recalibration cannot help.",
       ] },
     { id: "subgroup-fairness", track: "research", slug: "subgroup-fairness-reversal", color: "#34d399",
       role: "Higher AUC, Fewer Cases Flagged", start: [2026,7], end: [2026,8],
       bullets: [
         "Five federated strategies against a composition-matched centralised control, over ten seeds.",
-        "FedAvg narrows the White-Black AUC gap from 0.0075 to 0.0005.",
-        "At fixed screening capacity the sensitivity gap widens from 0.009 to 0.034: 542 fewer flagged per 100,000.",
+        "FedAvg narrows the White-Black AUC gap from 0.0175 to 0.0051.",
+        "At 20% screening capacity the sensitivity gap widens from 0.071 to 0.091: 437 fewer flagged per 100,000.",
       ] },
     { id: "fairscope", track: "system", color: "#e3c07e", url: "project-fairscope.html",
       role: "fairscope", company: "System · PyPI library", start: [2026, 7], end: [2026, 9],
@@ -103,6 +103,13 @@
         "174 of 351 pairwise orderings certified at a reference tolerance of 0.01, and none without the pooling assumption.",
         "15.9% of strictly ordered model pairs reversed when the leaderboard changed its verifier.",
       ] },
+    { id: "shift-alarm", track: "research", slug: "shift-alarm-safety-certificate", color: "#c9a25a",
+      role: "A Shift Alarm Is Not a Certificate", start: [2026,9], end: [2026,9],
+      bullets: [
+        "Twelve transfers, four model families, five seeds: 240 configurations.",
+        "With no attacker, detectors call a mean 68% of real attack flows benign at high confidence.",
+        "An unsafe detector passes a monitor gate in 15.0% of configurations, and a 10-flow audit in 0.03% of simulated audits.",
+      ] },
   ];
 
   /* Research bars take their venue, status and link from js/papers.js, so the
@@ -116,7 +123,7 @@
   });
 
   var Y0 = [2025, 5];            /* origin: Jun 2025 = month 0 (top) */
-  var YEND = [2026, 10];         /* axis end (padded below the last entry, Oct '26) */
+  var YEND = [2026, 11];         /* axis end (padded below the last entry's card, Oct '26) */
 
   /* ── time helpers ── */
   function ym(d) { return (d[0] - Y0[0]) * 12 + (d[1] - Y0[1]); }   /* months since origin */
@@ -381,6 +388,7 @@
   function period(e) {
     var m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     var sy = String(e.start[0]).slice(2), ey = String(e.end[0]).slice(2);
+    if (sy === ey && e.start[1] === e.end[1]) return m[e.start[1]] + " '" + sy;
     return sy === ey
       ? m[e.start[1]] + "–" + m[e.end[1]] + " '" + sy
       : m[e.start[1]] + " '" + sy + " – " + m[e.end[1]] + " '" + ey;
